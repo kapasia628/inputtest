@@ -30,13 +30,7 @@
       ],
       "identifier": "com.inputtest.app",
       "longDescription": "Universal Hardware & Input Device Tester. Test keyboard, mouse, gamepad, audio, and visual peripherals offline or online.",
-      "macOS": {
-        "entitlements": null,
-        "exceptionDomain": "",
-        "frameworks": [],
-        "providerBundleIdentifier": null,
-        "signingIdentity": null
-      },
+      "macOS": {},
       "resources": [],
       "shortDescription": "Universal Hardware & Input Device Tester",
       "targets": "all",
