@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <link rel="canonical" href="https://inputtest.online/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>InputTest.online - Universal Hardware & Input Device Tester</title>
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/">
+    <meta property="og:title" content="InputTest.online - Universal Hardware & Input Device Tester">
+    <meta property="og:description" content="Test your keyboard, mouse, microphone, webcam, and other input hardware online for free. Premium, fast, and 100% accurate device checkers.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/">
+    <meta name="twitter:title" content="InputTest.online - Universal Hardware & Input Device Tester">
+    <meta name="twitter:description" content="Test your keyboard, mouse, microphone, webcam, and other input hardware online for free. Premium, fast, and 100% accurate device checkers.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+    <meta name="title" content="InputTest.online - Universal Hardware & Input Device Tester">
+    <meta name="description" content="Test your keyboard, mouse, microphone, webcam, and other input hardware online for free. Premium, fast, and 100% accurate device checkers.">
+    <meta name="keywords" content="keyboard tester, mouse tester, click tester, cps tester, hardware test online, mic check, webcam test, input checker, printer test, scanner check, VR controller test, biometric check, USB profiler">
+    <meta name="author" content="InputTest.online">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Keyframe for subtle floating animation of the browser mockup */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(0.5deg); }
+        }
+
+        @keyframes scaleUp {
+            0% { opacity: 0; transform: scale(0.95) translateY(4px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-scaleUp {
+            animation: scaleUp 0.18s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* Modern Soft Mesh Backdrop Gradient + Grid Texture Overlay */
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.04) 0%, transparent 35%),
+                radial-gradient(circle at 85% 75%, rgba(16, 185, 129, 0.03) 0%, transparent 35%);
+            transition: background-color 0.3s ease, background-image 0.3s ease;
+        }
+
+        .dark .glow-bg {
+            background-color: #0b0f19;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%);
+        }
+        
+        /* Subtle Stripe-like tech grid overlay */
+        .tech-grid {
+            background-size: 30px 30px;
+            background-image: 
+                linear-gradient(to right, rgba(148, 163, 184, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(148, 163, 184, 0.03) 1px, transparent 1px);
+            transition: background-image 0.3s ease;
+        }
+
+        .dark .tech-grid {
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        }
+
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+    
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:text-slate-250 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg tech-grid relative overflow-x-hidden transition-colors duration-300">
+
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm dark:shadow-none transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-300">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-250">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-450 dark:text-slate-500 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+                
+                <!-- PREMIUM INTERACTIVE CENTER SEARCH BAR -->
+                <div class="hidden lg:flex items-center flex-grow max-w-sm mx-6 relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <input id="nav-search-bar" type="text" placeholder="Search tool, inputs, keys..." class="w-full bg-slate-100/60 dark:bg-slate-900/60 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 focus:bg-white dark:focus:bg-slate-950 border border-slate-200 dark:border-slate-800 focus:border-blue-500 rounded-full py-1.5 pl-10 pr-12 text-xs text-slate-700 dark:text-slate-300 font-medium tracking-wide focus:outline-none transition-all shadow-inner focus:shadow-sm" autocomplete="off">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <kbd class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-1.5 py-0.5 rounded shadow-sm">Ctrl K</kbd>
+                    </div>
+                    
+                    <!-- Search Results Dropdown -->
+                    <div id="search-dropdown-panel" class="hidden absolute top-12 left-0 right-0 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-200/40 dark:shadow-none p-2 z-50 max-h-64 overflow-y-auto space-y-1 backdrop-blur-md">
+                        <div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>
+                    </div>
+                </div>
+                
+                                <!-- Main Nav Links -->
+                <div class="hidden md:flex items-center gap-6 flex-shrink-0">
+                    <a href="/" class="text-sm py-1.5 px-1 transition-all duration-200 text-blue-600 dark:text-blue-400 border-b-2 border-blue-500 font-bold">Home</a>
+                    <a href="keyboard.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Keyboard Test</a>
+                    <a href="mouse.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Mouse & CPS</a>
+                    <a href="blog.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Blog</a>
+                    
+                    <!-- Premium More Tools Dropdown -->
+                    <div class="relative group">
+                        <button id="nav-dropdown-btn" class="flex items-center gap-1 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 py-1.5 px-1 focus:outline-none transition-all duration-200">
+                            More Tools
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 group-hover:rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu panel -->
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full mt-2 w-80 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-3 grid grid-cols-2 gap-1.5 backdrop-blur-md z-50 animate-scaleUp">
+                            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 col-span-2 mb-1.5">Top Calibration Utilities</div>
+                            
+                            <a href="display.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">📺 Display Test</a>
+                            <a href="specs.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">💻 System Specs</a>
+                            <a href="gamepad.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">🎮 Gamepad drift</a>
+                            
+                            <a href="report.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-xs font-bold text-emerald-600 dark:text-emerald-450 transition-colors col-span-2 shadow-sm">🛡️ Certified PDF Report</a>
+                            
+                            <div class="h-px bg-slate-100 dark:bg-slate-800/60 col-span-2 my-1"></div>
+                            
+                            <a href="sound.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔊 Speaker test</a>
+                            <a href="mic.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎙️ Microphone</a>
+                            <a href="webcam.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📷 Webcam Check</a>
+                            <a href="draw.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📐 Drawing Tablet</a>
+                            <a href="latency.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ Latency Check</a>
+                            <a href="usb.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔌 USB Profiler</a>
+                            <a href="biometric.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔑 Biometrics Hello</a>
+                            <a href="printer.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🖨️ Printer CMYK</a>
+                            <a href="scanner.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📄 Documents scan</a>
+                            <a href="vr.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🕶️ VR controllers</a>
+                            <a href="battery.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔋 Battery Health</a>
+                            <a href="lan.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🌐 LAN Tester</a>
+                            <a href="hdmi.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📺 HDMI & DP</a>
+                            <a href="vga.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎨 VGA Calibrator</a>
+                            <a href="usb-c.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ USB-C Profiler</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Nav CTA / Settings Indicator -->
+                <div class="flex items-center gap-3 flex-shrink-0">                    <!-- Mobile Hamburger Button -->
+                    <button id="mobile-menu-toggle" class="p-2 md:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm transition-all focus:outline-none" aria-label="Toggle Navigation Menu">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                    <!-- Premium Notification Toggle -->
+                    <button id="notification-toggle" class="relative p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm transition-all focus:outline-none" aria-label="Request diagnostic notifications">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                        <span id="notification-badge" class="absolute top-1 right-1 h-2 w-2 rounded-full bg-blue-500 border border-white dark:border-slate-900 hidden animate-pulse"></span>
+                    </button>
+
+                    <!-- Elegant Sun/Moon Theme Toggle -->
+                    <button id="theme-toggle" class="relative p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm transition-all focus:outline-none" aria-label="Toggle dark mode">
+                        <!-- Sun Icon (hidden by default, shown in dark mode) -->
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <!-- Moon Icon (shown by default, hidden in dark mode) -->
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                    
+                    <a href="privacy.html" class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hidden sm:inline-block font-mono bg-white dark:bg-slate-900 px-3 h-8 leading-8 rounded-full border border-slate-200 dark:border-slate-800 shadow-sm font-semibold">Privacy Verified</a>
+                </div>
+            </div>
+        </div>
+            <!-- Mobile Dropdown Navigation Panel -->
+    <div id="mobile-nav-panel" class="hidden md:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md px-4 py-4 space-y-3 transition-all duration-300 animate-scaleUp">
+        <div class="grid grid-cols-2 gap-3 text-xs font-bold">
+            <a href="/" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🏠 Home</a>
+            <a href="keyboard.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">⌨️ Keyboard Test</a>
+            <a href="mouse.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🖱️ Mouse & CPS</a>
+            <a href="display.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">📺 Display Test</a>
+            <a href="specs.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">💻 Hardware Specs</a>
+            <a href="report.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-450">🛡️ PDF Certificate</a>
+            <a href="blog.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/10 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 col-span-2 justify-center font-bold">📝 Diagnostic Blog & Guides</a>
+        </div>
+        
+        <div class="border-t border-slate-100 dark:border-slate-900 pt-3">
+            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-1">All Diagnostic Utilities</div>
+            <div class="grid grid-cols-2 gap-2 text-[10px] font-bold text-slate-500 dark:text-slate-400">
+                <a href="gamepad.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎮 Gamepad drift</a>
+                <a href="sound.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔊 Speaker test</a>
+                <a href="mic.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎙️ Microphone</a>
+                <a href="webcam.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📷 Webcam Check</a>
+                <a href="draw.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📐 Drawing Tablet</a>
+                <a href="latency.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ Latency Check</a>
+                <a href="usb.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔌 USB Profiler</a>
+                <a href="biometric.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔑 Biometrics Hello</a>
+                <a href="printer.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🖨️ Printer CMYK</a>
+                <a href="scanner.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📄 Documents scan</a>
+                <a href="vr.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🕶️ VR headset</a>
+                <a href="lan.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🌐 LAN Jitter Test</a>
+                <a href="hdmi.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📺 HDMI & DP</a>
+                <a href="vga.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎨 VGA Calibrator</a>
+                <a href="usb-c.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ USB-C Profiler</a>
+                <a href="battery.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔋 Battery Health</a>
+            </div>
+        </div>
+    </div>
+
+    </nav>
+
+    <!-- Top Google AdSense Banner Zone -->
+    <div class="max-w-7xl mx-auto px-4 mt-6 w-full flex justify-center">
+        <div id="top-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-md rounded-2xl overflow-hidden flex items-center justify-center animate-pulse-slow">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono select-none py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px] font-bold">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5 font-semibold">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col justify-center">
+        
+        <!-- Hero Section -->
+        <div class="text-center max-w-4xl mx-auto mb-12 relative">
+            
+            <!-- Curved abstract glowing background blobs behind hero -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[550px] h-[300px] bg-gradient-to-tr from-blue-500/10 via-indigo-500/10 to-teal-500/5 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse-slow"></div>
+
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/10 bg-blue-500/5 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-bold mb-6 tracking-wide uppercase select-none shadow-sm animate-pulse-slow">
+                <span class="flex h-2 w-2 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                100% Free Client-Side Diagnostics Suite
+            </div>
+            
+            <h1 class="text-5xl sm:text-7xl font-black tracking-tight text-slate-900 dark:text-white mb-6 leading-[1.1] select-none">
+                Universal Hardware <br>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-teal-500 dark:from-blue-400 dark:via-indigo-400 dark:to-teal-400 animate-pulse font-extrabold">& Input Device Tester</span>
+            </h1>
+            
+            <p class="text-base sm:text-lg text-slate-500 dark:text-slate-400 font-medium max-w-2xl mx-auto leading-relaxed">
+                Test your mechanical key switches, laptops, high-performance mice, scroll inputs, speaker channels, gamepads, and other peripherals instantly. Zero-delay diagnostic telemetry.
+            </p>
+        </div>
+
+        <!-- STUNNING MOCKUP: Floating Apple Mac Window Mockup -->
+        <div class="w-full max-w-4xl mx-auto mb-20 animate-float select-none">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-[0_20px_50px_rgba(15,23,42,0.08)] dark:shadow-none overflow-hidden transition-all duration-300">
+                
+                <!-- Mac Window Top Bar -->
+                <div class="bg-slate-50 dark:bg-slate-950 border-b border-slate-200/80 dark:border-slate-800 h-10 px-4 flex items-center justify-between transition-colors duration-300">
+                    <!-- Traffic Lights -->
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-3 h-3 rounded-full bg-red-400 block"></span>
+                        <span class="w-3 h-3 rounded-full bg-yellow-400 block"></span>
+                        <span class="w-3 h-3 rounded-full bg-emerald-400 block"></span>
+                    </div>
+                    <!-- Address Bar -->
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-[10px] font-mono text-slate-400 dark:text-slate-500 h-6 px-16 flex items-center justify-center gap-1.5 font-bold shadow-inner transition-colors duration-300">
+                        <span>🔒</span> <span class="brand-name">inputtest.online</span>/keyboard.html
+                    </div>
+                    <!-- Empty Right Spacer -->
+                    <div class="w-12"></div>
+                </div>
+
+                <!-- Window Content (Mockup Layout Interface) -->
+                <div class="p-6 bg-slate-50/50 dark:bg-slate-950/40 grid grid-cols-12 gap-6 items-center transition-colors duration-300">
+                    
+                    <!-- Left Mini Keyboard & Mouse Diagram (8 Columns) -->
+                    <div class="col-span-12 md:col-span-8 flex flex-col sm:flex-row gap-6 items-center justify-between">
+                        <!-- Key Matrix -->
+                        <div class="space-y-2.5 flex-grow">
+                            <!-- Key Row 1 -->
+                            <div class="flex gap-1.5">
+                                <span id="mock-key-escape" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm font-bold">Esc</span>
+                                <span id="mock-key-f1" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm">F1</span>
+                                <span id="mock-key-f2" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm">F2</span>
+                                <span id="mock-key-f3" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm">F3</span>
+                                <span id="mock-key-f4" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm">F4</span>
+                                <span id="mock-key-f5" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm">F5</span>
+                                <span id="mock-key-f6" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm">F6</span>
+                                <span id="mock-key-f7" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm">F7</span>
+                            </div>
+                            <!-- Key Row 2 -->
+                            <div class="flex gap-1.5">
+                                <span id="mock-key-q" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm font-bold">Q</span>
+                                <span id="mock-key-w" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm font-bold">W</span>
+                                <span id="mock-key-e" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm font-bold">E</span>
+                                <span id="mock-key-r" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm font-bold">R</span>
+                                <span id="mock-key-t" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm font-bold">T</span>
+                                <span id="mock-key-y" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm font-bold">Y</span>
+                                <span id="mock-key-u" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm font-bold">U</span>
+                            </div>
+                            <!-- Key Row 3 -->
+                            <div class="flex gap-1.5">
+                                <span id="mock-key-shift" class="mock-key h-7 w-[3.5rem] rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm font-bold">Shift</span>
+                                <span id="mock-key-z" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm">Z</span>
+                                <span id="mock-key-x" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm">X</span>
+                                <span id="mock-key-c" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm">C</span>
+                                <span id="mock-key-v" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm">V</span>
+                                <span id="mock-key-b" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm">B</span>
+                                <span id="mock-key-n" class="mock-key h-7 w-8 rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm font-bold">N</span>
+                                <span id="mock-key-space" class="mock-key h-7 w-[5.5rem] rounded bg-slate-200 dark:bg-slate-800 border border-slate-300/60 dark:border-slate-700 text-[8px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-center transition-all duration-150 shadow-sm font-bold">Spacebar</span>
+                            </div>
+                        </div>
+
+                        <!-- Mouse Graphic Visualizer -->
+                        <div class="shrink-0 flex items-center justify-center sm:pl-4">
+                            <svg id="mock-mouse-svg" class="h-20 w-12 text-slate-400 dark:text-slate-500 transition-all duration-150" viewBox="0 0 24 36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <!-- Mouse Body -->
+                                <rect x="2" y="2" width="20" height="32" rx="10" />
+                                <!-- Scroll Wheel -->
+                                <line id="mock-mouse-wheel" x1="12" y1="6" x2="12" y2="12" stroke-width="3" />
+                                <!-- Left click split -->
+                                <path id="mock-mouse-left" d="M12 2v10H2" />
+                                <!-- Right click split -->
+                                <path id="mock-mouse-right" d="M12 2v10h20" />
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Telemetry Hud dials (4 Columns) -->
+                    <div class="col-span-12 md:col-span-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-xl space-y-3 font-mono text-[9px] font-bold text-slate-500 dark:text-slate-400 shadow-sm transition-colors duration-300">
+                        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/80 pb-1.5">
+                            <span>SWITCH ACCURACY</span>
+                            <span id="mock-switch-accuracy" class="text-emerald-600 dark:text-emerald-400 font-extrabold text-[10px]">100% OK</span>
+                        </div>
+                        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/80 pb-1.5">
+                            <span>LATENCY SIGNAL</span>
+                            <span id="mock-latency-signal" class="text-blue-600 dark:text-blue-400 font-extrabold text-[10px]">&lt; 0.8ms</span>
+                        </div>
+                        <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/80 pb-1.5">
+                            <span>HARDWARE POLLING</span>
+                            <span id="mock-hardware-polling" class="text-slate-800 dark:text-slate-200 font-extrabold text-[10px]">1000Hz</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span>LAST KEY REGISTERED</span>
+                            <span id="mock-last-key" class="text-indigo-600 dark:text-indigo-400 font-extrabold text-[10px] uppercase">NONE</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Tool Cards Matrix Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto w-full mb-24 relative z-10">
+            
+            <!-- Tool 1: Keyboard Tester -->
+            <a href="keyboard.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-blue-500/10 dark:hover:shadow-blue-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 dark:from-blue-500/10 dark:to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-blue-500/10 dark:bg-blue-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/5 dark:from-blue-500/20 dark:to-blue-600/10 border border-blue-500/15 dark:border-blue-500/30 text-blue-600 dark:text-blue-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        ⌨️
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+                
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-blue-600 dark:group-hover:text-blue-450 transition-colors duration-300">Keyboard Tester Online</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Instantly identify dynamic switch registration, test keyboard ghosting limits, and verify laptop keys on an interactive layout.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-blue-600 dark:text-blue-450 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Keyboard Tester
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 2: Mouse & CPS Tester -->
+            <a href="mouse.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 dark:from-indigo-500/10 dark:to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-indigo-500/10 dark:bg-indigo-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500/10 to-indigo-600/5 dark:from-indigo-500/20 dark:to-indigo-600/10 border border-indigo-500/15 dark:border-indigo-500/30 text-indigo-600 dark:text-indigo-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        🖱️
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-indigo-600 dark:group-hover:text-indigo-450 transition-colors duration-300">Mouse & CPS Checker</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Test right/left clicks, scroll wheel registers, and lateral side buttons on an interactive vector model. Practice click speed.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-indigo-600 dark:text-indigo-455 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Mouse Tester
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 3: Speaker & Stereo Audio Tester -->
+            <a href="sound.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-emerald-500/10 dark:hover:shadow-emerald-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-teal-500/5 dark:from-emerald-500/10 dark:to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-emerald-500/10 dark:bg-emerald-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 dark:from-emerald-500/20 dark:to-emerald-600/10 border border-emerald-500/15 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        🔊
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-emerald-600 dark:group-hover:text-emerald-450 transition-colors duration-300">Speaker & Sound Test</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Verify Left/Right channels audio alignment, subwoofer deep bass frequency sweeps, and see live soundwave visuals.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-450 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Sound Tester
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 4: Gamepad & Joystick Checker -->
+            <a href="gamepad.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-pink-500/10 dark:hover:shadow-pink-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-pink-500/5 to-rose-500/5 dark:from-pink-500/10 dark:to-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-pink-500/10 dark:bg-pink-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-pink-500/10 to-pink-600/5 dark:from-pink-500/20 dark:to-pink-600/10 border border-pink-500/15 dark:border-pink-500/30 text-pink-600 dark:text-pink-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        🎮
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-pink-600 dark:group-hover:text-pink-450 transition-colors duration-300">Gamepad & Stick Drift</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Verify Xbox/PlayStation button registrations, evaluate analog joystick coordinate quadrants, and trigger rumble haptics.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-pink-600 dark:text-pink-455 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Gamepad Tester
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 5: Microphone Test -->
+            <a href="mic.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-purple-500/10 dark:hover:shadow-purple-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-indigo-500/5 dark:from-purple-500/10 dark:to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-purple-500/10 dark:bg-purple-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-purple-500/10 to-purple-600/5 dark:from-purple-500/20 dark:to-purple-600/10 border border-purple-500/15 dark:border-purple-500/30 text-purple-600 dark:text-purple-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        🎤
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+                
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-purple-600 dark:group-hover:text-purple-450 transition-colors duration-300">Microphone Sound Check</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Inspect browser microphone captures, analyze dynamic decibel (dB) volume thresholds, and record voice echo tests.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-purple-600 dark:text-purple-455 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Microphone Tester
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 6: Webcam Calibration -->
+            <a href="webcam.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-emerald-500/10 dark:hover:shadow-emerald-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-teal-500/5 dark:from-emerald-500/10 dark:to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-emerald-500/10 dark:bg-emerald-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 dark:from-emerald-500/20 dark:to-emerald-600/10 border border-emerald-500/15 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        📷
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-emerald-600 dark:group-hover:text-emerald-450 transition-colors duration-300">Webcam Calibration</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Test live screen cameras for active frame rate speedometers (FPS), auto-calculate aspect ratios, and calibrate lenses.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-455 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Webcam Calibrator
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 7: Display & Screen Tester -->
+            <a href="display.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 dark:from-indigo-500/10 dark:to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-indigo-500/10 dark:bg-indigo-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500/10 to-indigo-600/5 dark:from-indigo-500/20 dark:to-indigo-600/10 border border-indigo-500/15 dark:border-indigo-500/30 text-indigo-600 dark:text-indigo-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        🖥️
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-indigo-600 dark:group-hover:text-indigo-450 transition-colors duration-300">Display & Screen Tester</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Test screen refresh rate (Hz), detect dead/stuck pixels, verify contrast, and sweep burn-in parameters.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-indigo-600 dark:text-indigo-455 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Display Tester
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 8: Drawing Tablet & Touchscreen Tester -->
+            <a href="draw.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-rose-500/10 dark:hover:shadow-rose-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-rose-500/5 to-pink-500/5 dark:from-rose-500/10 dark:to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-rose-500/10 dark:bg-rose-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-rose-500/10 to-rose-600/5 dark:from-rose-500/20 dark:to-rose-600/10 border border-rose-500/15 dark:border-rose-500/30 text-rose-600 dark:text-rose-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        ✏️
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-rose-600 dark:group-hover:text-rose-450 transition-colors duration-300">Drawing Tablet & Touch</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Test stylus pen pressure sensitivity, auto-detect device pointers, and track touchscreen coordinates.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-rose-600 dark:text-rose-450 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Tablet Tester
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 9: Bluetooth & Audio Latency Tester -->
+            <a href="latency.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-indigo-500/5 dark:from-purple-500/10 dark:to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-indigo-500/10 dark:bg-indigo-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500/10 to-indigo-600/5 dark:from-indigo-500/20 dark:to-indigo-600/10 border border-indigo-500/15 dark:border-indigo-500/30 text-indigo-600 dark:text-indigo-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        🎧
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2.5 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-indigo-600 dark:group-hover:text-indigo-450 transition-colors duration-300">Bluetooth & Audio Latency</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Measure dynamic audio delay of wireless headphones. Sync audio-visual radar clicks and test response speed.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-indigo-600 dark:text-indigo-455 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Latency Tester
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 10: USB & HID Device Profiler -->
+            <a href="usb.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-slate-500/10 dark:hover:shadow-slate-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-slate-500/5 to-indigo-500/5 dark:from-slate-500/10 dark:to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-slate-500/10 dark:bg-slate-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-slate-500/10 to-indigo-600/5 dark:from-slate-500/20 dark:to-indigo-600/10 border border-slate-500/15 dark:border-slate-500/30 text-slate-700 dark:text-slate-350 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        🔌
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2.5 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-slate-800 dark:group-hover:text-slate-350 transition-colors duration-300">USB & HID Profiler</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Scan connected USB and HID devices. Retrieve Manufacturer Names, Product IDs, and check system specs.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-slate-700 dark:text-slate-350 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch USB Profiler
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 11: Biometric & Security Key Tester -->
+            <a href="biometric.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-slate-850/5 dark:from-indigo-500/10 dark:to-slate-850/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-indigo-500/10 dark:bg-indigo-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500/10 to-slate-600/5 dark:from-indigo-500/20 dark:to-slate-600/10 border border-indigo-500/15 dark:border-indigo-500/30 text-indigo-600 dark:text-indigo-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        🔑
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2.5 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-indigo-600 dark:group-hover:text-indigo-455 transition-colors duration-300">Biometric & Fingerprint</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Test fingerprint scanners, macOS Touch ID, Windows Hello, and hardware security keys via client-side WebAuthn.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-indigo-600 dark:text-indigo-455 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Biometric Tester
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 12: Printer Calibrated Test Page -->
+            <a href="printer.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-emerald-500/10 dark:hover:shadow-emerald-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-cyan-500/5 dark:from-emerald-500/10 dark:to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-emerald-500/10 dark:bg-emerald-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 dark:from-emerald-500/20 dark:to-emerald-600/10 border border-emerald-500/15 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        🖨
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2.5 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-emerald-600 dark:group-hover:text-emerald-450 transition-colors duration-300">Printer Calibrated Page</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Print dynamic CMYK/RGB color bars, grayscale zones, serif font sizes, and check alignment skews.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-450 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Printer Tester
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 13: Scanner & Document Checker -->
+            <a href="scanner.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-teal-500/10 dark:hover:shadow-teal-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-teal-500/5 dark:from-blue-500/10 dark:to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-teal-500/10 dark:bg-teal-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-teal-500/10 to-teal-600/5 dark:from-teal-500/20 dark:to-teal-600/10 border border-teal-500/15 dark:border-teal-500/30 text-teal-600 dark:text-teal-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        📄
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2.5 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-teal-600 dark:group-hover:text-teal-450 transition-colors duration-300">Scanner & Document Check</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Inspect capture camera streams, apply Xerox black-and-white photocopy filters, and scan codes.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-teal-600 dark:text-teal-450 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Scanner Checker
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 14: VR & XR Motion Controller Tester -->
+            <a href="vr.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-pink-500/10 dark:hover:shadow-pink-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-pink-500/5 to-purple-500/5 dark:from-pink-500/10 dark:to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-pink-500/10 dark:bg-pink-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-pink-500/10 to-purple-600/5 dark:from-pink-500/20 dark:to-purple-600/10 border border-pink-500/15 dark:border-pink-500/30 text-pink-600 dark:text-pink-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        🕶
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2.5 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-pink-600 dark:group-hover:text-pink-455 transition-colors duration-300">VR & XR Controller Tester</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Test spatial 6-DOF coordinates, triggers, thumbsticks, and fire controller rumble haptics.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-pink-600 dark:text-pink-455 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch VR Motion Tester
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 15: PC Hardware Specs Scanner -->
+            <a href="specs.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-blue-500/10 dark:hover:shadow-blue-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 dark:from-blue-500/10 dark:to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-blue-500/10 dark:bg-blue-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500/10 to-indigo-600/5 dark:from-blue-500/20 dark:to-indigo-600/10 border border-blue-500/15 dark:border-blue-500/30 text-blue-600 dark:text-blue-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        💻
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2.5 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-blue-600 dark:group-hover:text-blue-450 transition-colors duration-300">PC Hardware Specs</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Profile processor logical cores, detect active graphics cards/dedicated GPUs, and scan local storage drive sizes.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-blue-600 dark:text-blue-450 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Specs Scanner
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 16: Certified PDF Report -->
+            <a href="report.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-emerald-500/10 dark:hover:shadow-emerald-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-teal-500/5 dark:from-emerald-500/10 dark:to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-emerald-500/10 dark:bg-emerald-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500/10 to-teal-600/5 dark:from-emerald-500/20 dark:to-teal-600/10 border border-emerald-500/15 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        🛡️
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2.5 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-emerald-600 dark:group-hover:text-emerald-450 transition-colors duration-300">Certified PDF Report</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Generate and download a certified vector PDF diagnostic report of your PC configurations and tested device checklists.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-455 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Generate PDF Report
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 17: Battery Diagnostics -->
+            <a href="battery.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-rose-500/10 dark:hover:shadow-rose-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-rose-500/5 to-pink-500/5 dark:from-rose-500/10 dark:to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-rose-500/10 dark:bg-rose-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-rose-500/10 to-pink-650/5 dark:from-rose-500/20 dark:to-pink-650/10 border border-rose-500/15 dark:border-rose-500/30 text-rose-600 dark:text-rose-455 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        🔋
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2.5 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-rose-600 dark:group-hover:text-rose-455 transition-colors duration-300">Battery Diagnostics</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Analyze charging slopes, estimate battery health capacity, inspect charger power quality, and track active cycle logs.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-rose-600 dark:text-rose-455 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Battery Tester
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 18: LAN Port & Ethernet Jitter Tester -->
+            <a href="lan.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-blue-500/10 dark:hover:shadow-blue-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 dark:from-blue-500/10 dark:to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-blue-500/10 dark:bg-blue-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500/10 to-indigo-650/5 dark:from-blue-500/20 dark:to-indigo-650/10 border border-blue-500/15 dark:border-blue-500/30 text-blue-600 dark:text-blue-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        🌐
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2.5 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-blue-600 dark:group-hover:text-blue-450 transition-colors duration-300">LAN & Ethernet Tester</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Test physical LAN port ping stability. Estimate network latency variance, jitter metrics, and cable specifications.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-blue-600 dark:text-blue-455 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch LAN Tester
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 19: HDMI & DisplayPort Multi-Screen Analyzer -->
+            <a href="hdmi.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 dark:from-indigo-500/10 dark:to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-indigo-500/10 dark:bg-indigo-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-600/5 dark:from-indigo-500/20 dark:to-purple-600/10 border border-indigo-500/15 dark:border-indigo-500/30 text-indigo-600 dark:text-indigo-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        📺
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2.5 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-indigo-600 dark:group-hover:text-indigo-455 transition-colors duration-300">HDMI & DisplayPort</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Measure monitor refresh rate Hz parameters, check multi-display coordinates, and map spatial audio channels.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-indigo-600 dark:text-indigo-455 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Display Analyzer
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 20: VGA Analog Calibration Suite -->
+            <a href="vga.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-amber-500/10 dark:hover:shadow-amber-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-red-500/5 dark:from-amber-500/10 dark:to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-amber-500/10 dark:bg-amber-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-amber-500/10 to-red-650/5 dark:from-amber-500/20 dark:to-red-650/10 border border-amber-500/15 dark:border-amber-500/30 text-amber-600 dark:text-amber-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        🎨
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2.5 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-amber-600 dark:group-hover:text-amber-455 transition-colors duration-300">VGA Calibrator</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Remove analog phase jitter and text blur. Launch geometry grid lines, zebra stripes, and convergence color bars.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-amber-600 dark:text-amber-455 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch VGA Calibrator
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+
+            <!-- Tool 21: USB Type-C & Thunderbolt Speed Profiler -->
+            <a href="usb-c.html" class="group relative block rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 hover:bg-white dark:hover:bg-slate-900 p-5 shadow-lg shadow-slate-100 dark:shadow-none hover:shadow-xl hover:shadow-blue-500/10 dark:hover:shadow-blue-500/5 transition-all duration-300 hover:-translate-y-1.5 overflow-hidden backdrop-blur-md">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-teal-500/5 dark:from-blue-500/10 dark:to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute -right-24 -bottom-24 w-48 h-48 bg-blue-500/10 dark:bg-blue-500/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500/10 to-teal-650/5 dark:from-blue-500/20 dark:to-teal-650/10 border border-blue-500/15 dark:border-blue-500/30 text-blue-600 dark:text-teal-400 text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        ⚡
+                    </div>
+                    <span class="text-[8px] font-mono text-emerald-700 dark:text-emerald-400 font-extrabold px-2.5 py-0.5 rounded-full border border-emerald-500/10 dark:border-emerald-500/20 bg-emerald-50 dark:bg-emerald-500/10 uppercase tracking-widest flex items-center gap-1 select-none shadow-sm">
+                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Active
+                    </span>
+                </div>
+
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-4 group-hover:text-blue-600 dark:group-hover:text-blue-450 transition-colors duration-300">USB-C & Thunderbolt</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                    Profile charging Power Delivery profiles, check DisplayPort Alternate Modes, and scan device descriptors.
+                </p>
+                <div class="flex items-center gap-1 text-[11px] text-blue-600 dark:text-blue-455 mt-4 font-bold tracking-wide uppercase select-none group-hover:translate-x-1 transition-transform">
+                    Launch Port Profiler
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                    </svg>
+                </div>
+            </a>
+        </div>
+
+
+        <!-- Dynamic Statistics Counters Ribbon (Stripe style) -->
+        <section class="max-w-5xl mx-auto w-full mb-24 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center select-none">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 shadow-sm backdrop-blur-md transition-colors duration-300">
+                <div class="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-1 font-mono">12M+</div>
+                <div class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Keystrokes Validated</div>
+            </div>
+            <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 shadow-sm backdrop-blur-md transition-colors duration-300">
+                <div class="text-4xl font-extrabold text-indigo-600 dark:text-indigo-400 tracking-tight mb-1 font-mono">100%</div>
+                <div class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Client-Side Private</div>
+            </div>
+            <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 shadow-sm backdrop-blur-md transition-colors duration-300">
+                <div class="text-4xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tight mb-1 font-mono">&lt; 1ms</div>
+                <div class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Polling Accuracy</div>
+            </div>
+        </section>
+
+        <!-- SEO-optimized Peripheral Compatibility Coverage Grid -->
+        <section class="max-w-5xl mx-auto w-full mb-24 border border-slate-200/60 dark:border-slate-800/60 bg-white/60 dark:bg-slate-900/60 rounded-[2.5rem] p-8 sm:p-14 backdrop-blur-md shadow-sm relative overflow-hidden select-none transition-colors duration-300">
+            <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-teal-500/5 dark:bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="border-l-4 border-teal-500 pl-4 mb-8">
+                <span class="text-[9px] font-mono text-teal-600 dark:text-teal-400 font-extrabold uppercase tracking-widest block mb-1">Hardware Ecosystem</span>
+                <h2 class="text-2xl sm:text-3.5xl font-black text-slate-900 dark:text-white tracking-tight">
+                    Tested & Certified Device Compatibility
+                </h2>
+            </div>
+            
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium mb-8 max-w-3xl">
+                InputTest.online is mathematically optimized to diagnose and monitor high-performance gaming peripherals, office setups, and VR gear. No driver installations needed.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 font-mono text-[9px] font-bold text-slate-400 dark:text-slate-500">
+                <div class="p-4 bg-slate-50 dark:bg-slate-950/40 border border-slate-150 dark:border-slate-800 rounded-2xl space-y-2 transition-colors duration-300">
+                    <span class="text-slate-800 dark:text-slate-200 text-xs font-black block">GAMING GEAR</span>
+                    <p class="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed font-medium">Logitech G, Razer, Corsair, SteelSeries, HyperX, Glorious, Roccat.</p>
+                </div>
+                <div class="p-4 bg-slate-50 dark:bg-slate-950/40 border border-slate-150 dark:border-slate-800 rounded-2xl space-y-2 transition-colors duration-300">
+                    <span class="text-indigo-600 dark:text-indigo-400 text-xs font-black block">KEYBOARD LAYOUTS</span>
+                    <p class="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed font-medium">Keychron, Ducky, Leopold, Varmilo, Havit, custom mechanical boards, laptop TKL/ANSI.</p>
+                </div>
+                <div class="p-4 bg-slate-50 dark:bg-slate-950/40 border border-slate-150 dark:border-slate-800 rounded-2xl space-y-2 transition-colors duration-300">
+                    <span class="text-teal-600 dark:text-teal-400 text-xs font-black block">VR MOTION SENSORS</span>
+                    <p class="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed font-medium">Meta Quest (Oculus), HTC Vive, Valve Index, HP Reverb Mixed Reality controllers.</p>
+                </div>
+                <div class="p-4 bg-slate-50 dark:bg-slate-950/40 border border-slate-150 dark:border-slate-800 rounded-2xl space-y-2 transition-colors duration-300">
+                    <span class="text-purple-600 dark:text-purple-400 text-xs font-black block">BIOMETRIC DRIVERS</span>
+                    <p class="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed font-medium">Windows Hello face/finger, macOS Apple Touch ID, YubiKeys USB, Google Titan keys.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diagnostic Features Banner Section -->
+        <section class="max-w-5xl mx-auto w-full mb-24 bg-gradient-to-br from-white to-slate-100/50 dark:from-slate-900 dark:to-slate-950/50 border border-slate-200/60 dark:border-slate-850/50 rounded-[2.5rem] p-8 sm:p-14 relative overflow-hidden shadow-xl shadow-slate-100 dark:shadow-none backdrop-blur-md transition-colors duration-300">
+            <div class="absolute right-0 top-0 w-80 h-80 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <h2 class="text-2xl sm:text-3.5xl font-black text-slate-900 dark:text-white mb-8 border-l-4 border-blue-500 pl-4">
+                Universal Hardware Telemetry Built Differently
+            </h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                <div>
+                    <div class="text-blue-600 dark:text-blue-400 font-extrabold text-xl mb-2 flex items-center gap-1.5">⚡ Polling Performance</div>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                        Bypasses bloated libraries to monitor raw physical browser signals directly. Captures scroll ticks and mechanical keystrokes without UI rendering delay.
+                      </p>
+                </div>
+                <div>
+                    <div class="text-indigo-600 dark:text-indigo-400 font-extrabold text-xl mb-2 flex items-center gap-1.5">🔒 Certified Private</div>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                        Designed secure. Telemetry triggers execute entirely within your local browser memory sandbox. Absolutely zero input data is sent to external servers.
+                      </p>
+                </div>
+                <div>
+                    <div class="text-emerald-600 dark:text-emerald-400 font-extrabold text-xl mb-2 flex items-center gap-1.5">📱 Responsive Viewports</div>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                        Structured with fluid flexgrids. Move between widescreen monitor setups, gaming notebooks, and touch laptops with instant alignment updates.
+                      </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search Engine Optimized FAQs Section -->
+        <section class="max-w-3xl mx-auto w-full mb-12">
+            <h2 class="text-3xl font-black text-center text-slate-900 dark:text-white mb-10">Frequently Asked Questions</h2>
+            
+            <div class="space-y-6">
+                <div class="p-6 rounded-[1.5rem] border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-slate-900/60 shadow-sm backdrop-blur-md hover:shadow-md dark:hover:shadow-none hover:border-slate-350 dark:hover:border-slate-700 transition-all duration-300">
+                    <h3 class="text-lg font-extrabold text-slate-800 dark:text-slate-200">How do I test my mechanical keyboard?</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                        Simply navigate to our <a href="keyboard.html" class="text-blue-600 dark:text-blue-400 hover:underline font-semibold">Keyboard Tester</a>, make sure the browser page is focused, and press keys. Key switches illuminate instantly, and stay green on release to confirm double-stroke accuracy.
+                    </p>
+                </div>
+                
+                <div class="p-6 rounded-[1.5rem] border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-slate-900/60 shadow-sm backdrop-blur-md hover:shadow-md dark:hover:shadow-none hover:border-slate-350 dark:hover:border-slate-700 transition-all duration-300">
+                    <h3 class="text-lg font-extrabold text-slate-800 dark:text-slate-200">What is a good CPS score on the Click Checker?</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                        A typical office user clicks between 5 to 7 Clicks Per Second (CPS). Competitive video gamers using dynamic butterfly triggers routinely register 12 to 15+ CPS. Calibrate yours on our <a href="mouse.html" class="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">Mouse & CPS page</a>.
+                    </p>
+                </div>
+
+                <div class="p-6 rounded-[1.5rem] border border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-slate-900/60 shadow-sm backdrop-blur-md hover:shadow-md dark:hover:shadow-none hover:border-slate-350 dark:hover:border-slate-700 transition-all duration-300">
+                    <h3 class="text-lg font-extrabold text-slate-800 dark:text-slate-200">Is this keyboard tester safe to use?</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed font-medium">
+                        Yes, 100%. InputTest.online operates completely client-side. We utilize zero logins, cookies telemetry or database servers, assuring your private character sequences and patterns are completely secure.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Google AdSense Banner Zone -->
+    <div class="max-w-7xl mx-auto px-4 mb-10 w-full flex justify-center">
+        <div id="bottom-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-md rounded-2xl overflow-hidden flex items-center justify-center animate-pulse-slow">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono select-none py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px] font-bold">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5 font-semibold">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+                                <!-- Footer Area -->
+        <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 mt-auto transition-colors duration-300">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-left select-none">
+                
+                 <!-- Column 1: Brand & Logo -->
+                <div class="space-y-4">
+                    <a href="/" class="flex items-center gap-2 group w-fit transition-transform duration-200 active:scale-95">
+                        <span class="logo-emoji text-xl group-hover:rotate-12 transition-transform duration-300 inline-block">⌨️</span>
+                        <span class="brand-name font-black text-slate-900 dark:text-slate-200 text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">InputTest.online</span>
+                    </a>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed brand-slogan font-semibold">
+                        Universal Hardware & Input Device Tester
+                    </p>
+                    <p class="text-xs text-slate-400 dark:text-slate-500 leading-relaxed font-medium">
+                        Safe sandboxed hardware diagnostics. 100% private, local client-side processing.
+                    </p>
+                </div>
+                
+                 <!-- Column 2: Input Diagnostics -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Input Diagnostics</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="keyboard.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Keyboard Tester</a></li>
+                        <li><a href="mouse.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖱️ Mouse & CPS Test</a></li>
+                        <li><a href="gamepad.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎮 Gamepad & Drift</a></li>
+                        <li><a href="mic.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎙️ Microphone Check</a></li>
+                        <li><a href="webcam.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📷 Webcam Quality</a></li>
+                        <li><a href="draw.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📐 Drawing Tablet</a></li>
+                        <li><a href="usb.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔌 USB & HID Profiler</a></li>
+                        <li><a href="biometric.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔑 Biometrics Hello</a></li>
+                        <li><a href="battery.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔋 Battery Health</a></li>
+                        <li><a href="lan.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🌐 LAN Jitter Test</a></li>
+                        <li><a href="usb-c.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ USB-C Profiler</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 3: Screen & Outputs -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Screen & Outputs</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="display.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 Display & Monitor</a></li>
+                        <li><a href="latency.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ Latency & Lag</a></li>
+                        <li><a href="printer.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖨️ Printer CMYK</a></li>
+                        <li><a href="scanner.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📄 Documents Scan</a></li>
+                        <li><a href="vr.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🕶️ VR Controller</a></li>
+                        <li><a href="specs.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">💻 Hardware Specs</a></li>
+                        <li><a href="hdmi.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 HDMI Analyzer</a></li>
+                        <li><a href="vga.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎨 VGA Calibrator</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 4: Reports, Blog & Policies -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Info & Policies</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="report.html" class="text-emerald-600 dark:text-emerald-450 font-bold bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10 dark:border-emerald-500/20 hover:bg-emerald-500/10 transition-colors inline-block mb-1">🛡️ Certified PDF Report</a></li>
+                        <li><a href="blog.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📝 Blog Guides</a></li>
+                        <li><a href="privacy.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔒 Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚖️ Terms of Service</a></li>
+                        <li><a href="#" class="brand-email text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors break-all">✉️ support@inputtest.online</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="border-t border-slate-100 dark:border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-medium flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                    <span>&copy; 2026 InputTest.online. Safe sandboxed diagnostics. No data collection.</span>
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 font-extrabold border border-emerald-500/15 w-fit uppercase select-none">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-ping"></span>
+                        Version 1.2.0 (Updated: June 6, 2026)
+                    </span>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="#" class="twitter-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">Twitter</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+                    </a>
+                    <a href="#" class="github-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" clip-rule="evenodd"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Initialize Ads via config.js helper
+            setTimeout(() => {
+                SiteConfig.initAdSense('top-adsense-banner', 'topLeaderboard');
+                SiteConfig.initAdSense('bottom-adsense-banner', 'bottomLeaderboard');
+            }, 800);
+
+            // ============================================
+            // SUN/MOON SYSTEM THEME TOGGLE LOGIC
+            // ============================================
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
+
+            // Sync sun/moon icon visibility on startup
+            if (document.documentElement.classList.contains('dark')) {
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            } else {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                // Toggle dark class
+                document.documentElement.classList.toggle('dark');
+                
+                // Toggle icons visibility
+                sunIcon.classList.toggle('hidden');
+                moonIcon.classList.toggle('hidden');
+                
+                // Save setting
+                if (document.documentElement.classList.contains('dark')) {
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    localStorage.setItem('color-theme', 'light');
+                }
+            });
+
+            // ============================================
+            // INTERACTIVE KEYBOARD MOCKUP PLAYGROUND LOGIC
+            // ============================================
+            const mockupKeysMap = {
+                'escape': 'mock-key-escape',
+                'f1': 'mock-key-f1',
+                'f2': 'mock-key-f2',
+                'f3': 'mock-key-f3',
+                'f4': 'mock-key-f4',
+                'f5': 'mock-key-f5',
+                'f6': 'mock-key-f6',
+                'f7': 'mock-key-f7',
+                'keyq': 'mock-key-q',
+                'keyw': 'mock-key-w',
+                'keye': 'mock-key-e',
+                'keyr': 'mock-key-r',
+                'keyt': 'mock-key-t',
+                'keyy': 'mock-key-y',
+                'keyu': 'mock-key-u',
+                'shiftleft': 'mock-key-shift',
+                'shiftright': 'mock-key-shift',
+                'keyz': 'mock-key-z',
+                'keyx': 'mock-key-x',
+                'keyc': 'mock-key-c',
+                'keyv': 'mock-key-v',
+                'keyb': 'mock-key-b',
+                'keyn': 'mock-key-n',
+                'space': 'mock-key-space'
+            };
+
+            const pressedKeysSet = new Set();
+            let totalKeyHits = 0;
+
+            window.addEventListener('keydown', (e) => {
+                // Ignore key presses if focused on standard inputs
+                if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+                    return;
+                }
+
+                // If Ctrl + K command palette, bypass
+                if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+                    return;
+                }
+
+                const rawCode = e.code.toLowerCase();
+                const targetKeyId = mockupKeysMap[rawCode];
+
+                if (targetKeyId) {
+                    // Prevent standard scrolling on spacebar inside this local sandbox
+                    if (rawCode === 'space') {
+                        e.preventDefault();
+                    }
+
+                    const keyEl = document.getElementById(targetKeyId);
+                    if (keyEl) {
+                        // Apply active styling
+                        keyEl.classList.remove('bg-slate-200', 'dark:bg-slate-800', 'border-slate-300/60', 'dark:border-slate-700', 'text-slate-500', 'dark:text-slate-400');
+                        keyEl.classList.add('bg-gradient-to-br', 'from-emerald-450', 'to-emerald-500', 'border-emerald-500', 'text-white', 'shadow-md', 'shadow-emerald-500/20', 'scale-[1.08]');
+                        
+                        // Increment counts
+                        if (!pressedKeysSet.has(rawCode)) {
+                            pressedKeysSet.add(rawCode);
+                            totalKeyHits++;
+                        }
+                    }
+
+                    // Update HUD panel details
+                    const lastKeyEl = document.getElementById('mock-last-key');
+                    if (lastKeyEl) {
+                        lastKeyEl.textContent = e.key === ' ' ? 'SPACEBAR' : e.key.toUpperCase();
+                        lastKeyEl.classList.remove('text-indigo-600', 'dark:text-indigo-400');
+                        lastKeyEl.classList.add('text-emerald-650', 'dark:text-emerald-400');
+                    }
+
+                    // Update dynamic polling latency
+                    const latencyEl = document.getElementById('mock-latency-signal');
+                    if (latencyEl) {
+                        const simulatedLatency = (Math.random() * 0.4 + 0.35).toFixed(2);
+                        latencyEl.textContent = `${simulatedLatency}ms`;
+                        latencyEl.classList.remove('text-blue-600', 'dark:text-blue-400');
+                        latencyEl.classList.add('text-emerald-600', 'dark:text-emerald-400');
+                    }
+                }
+            });
+
+            window.addEventListener('keyup', (e) => {
+                const rawCode = e.code.toLowerCase();
+                const targetKeyId = mockupKeysMap[rawCode];
+
+                if (targetKeyId) {
+                    const keyEl = document.getElementById(targetKeyId);
+                    if (keyEl) {
+                        // Revert active, apply Tested (indigo) indicators
+                        keyEl.classList.remove('bg-gradient-to-br', 'from-emerald-450', 'to-emerald-500', 'border-emerald-500', 'scale-[1.08]');
+                        keyEl.classList.add('bg-gradient-to-br', 'from-blue-500', 'to-indigo-600', 'border-blue-600', 'text-white', 'font-semibold');
+                    }
+
+                    // Revert Last Key color state
+                    const lastKeyEl = document.getElementById('mock-last-key');
+                    if (lastKeyEl) {
+                        lastKeyEl.classList.remove('text-emerald-600', 'dark:text-emerald-400');
+                        lastKeyEl.classList.add('text-indigo-600', 'dark:text-indigo-400');
+                    }
+
+                    // Revert Latency color state
+                    const latencyEl = document.getElementById('mock-latency-signal');
+                    if (latencyEl) {
+                        latencyEl.classList.remove('text-emerald-650', 'dark:text-emerald-400');
+                        latencyEl.classList.add('text-blue-600', 'dark:text-blue-400');
+                    }
+                }
+            });
+
+            // ============================================
+            // DUAL MOUSE PLAYGROUND TELEMETRY LOGIC
+            // ============================================
+            const mouseSvg = document.getElementById('mock-mouse-svg');
+            const mouseLeft = document.getElementById('mock-mouse-left');
+            const mouseRight = document.getElementById('mock-mouse-right');
+            const mouseWheel = document.getElementById('mock-mouse-wheel');
+
+            window.addEventListener('mousedown', (e) => {
+                // Ignore if clicking input boxes or search bars
+                if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+                    return;
+                }
+
+                const lastKeyEl = document.getElementById('mock-last-key');
+                const latencyEl = document.getElementById('mock-latency-signal');
+
+                let clickName = 'MOUSE CLICK';
+                let elementToHighlight = null;
+
+                if (e.button === 0) {
+                    clickName = 'LEFT CLICK';
+                    elementToHighlight = mouseLeft;
+                } else if (e.button === 1) {
+                    clickName = 'MIDDLE CLICK';
+                    elementToHighlight = mouseWheel;
+                } else if (e.button === 2) {
+                    clickName = 'RIGHT CLICK';
+                    elementToHighlight = mouseRight;
+                }
+
+                if (elementToHighlight) {
+                    elementToHighlight.classList.add('text-emerald-500', 'stroke-[3px]');
+                    mouseSvg.classList.add('scale-[1.05]', 'text-emerald-500');
+                }
+
+                if (lastKeyEl) {
+                    lastKeyEl.textContent = clickName;
+                    lastKeyEl.classList.remove('text-indigo-600', 'dark:text-indigo-400');
+                    lastKeyEl.classList.add('text-emerald-650', 'dark:text-emerald-400');
+                }
+
+                if (latencyEl) {
+                    const simulatedLatency = (Math.random() * 0.12 + 0.08).toFixed(2);
+                    latencyEl.textContent = `${simulatedLatency}ms`;
+                    latencyEl.classList.remove('text-blue-600', 'dark:text-blue-400');
+                    latencyEl.classList.add('text-emerald-600', 'dark:text-emerald-400');
+                }
+            });
+
+            window.addEventListener('mouseup', (e) => {
+                const lastKeyEl = document.getElementById('mock-last-key');
+                const latencyEl = document.getElementById('mock-latency-signal');
+
+                // Clear highlights
+                [mouseLeft, mouseRight, mouseWheel].forEach(el => {
+                    if (el) {
+                        el.classList.remove('text-emerald-500', 'stroke-[3px]');
+                    }
+                });
+                if (mouseSvg) {
+                    mouseSvg.classList.remove('scale-[1.05]', 'text-emerald-500');
+                }
+
+                if (lastKeyEl) {
+                    lastKeyEl.classList.remove('text-emerald-600', 'dark:text-emerald-400');
+                    lastKeyEl.classList.add('text-indigo-600', 'dark:text-indigo-400');
+                }
+                if (latencyEl) {
+                    latencyEl.classList.remove('text-emerald-650', 'dark:text-emerald-400');
+                    latencyEl.classList.add('text-blue-600', 'dark:text-blue-400');
+                }
+            });
+
+            // Handle scroll wheels on mockup
+            let wheelTimer = null;
+            window.addEventListener('wheel', (e) => {
+                if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+                    return;
+                }
+
+                const lastKeyEl = document.getElementById('mock-last-key');
+                const latencyEl = document.getElementById('mock-latency-signal');
+
+                if (mouseWheel) {
+                    mouseWheel.classList.add('text-emerald-500', 'stroke-[3px]');
+                }
+                if (mouseSvg) {
+                    mouseSvg.classList.add('text-emerald-500');
+                }
+
+                if (lastKeyEl) {
+                    lastKeyEl.textContent = e.deltaY < 0 ? 'SCROLL UP' : 'SCROLL DOWN';
+                    lastKeyEl.classList.remove('text-indigo-600', 'dark:text-indigo-400');
+                    lastKeyEl.classList.add('text-emerald-650', 'dark:text-emerald-400');
+                }
+
+                if (latencyEl) {
+                    const simulatedLatency = (Math.random() * 0.15 + 0.1).toFixed(2);
+                    latencyEl.textContent = `${simulatedLatency}ms`;
+                    latencyEl.classList.remove('text-blue-600', 'dark:text-blue-400');
+                    latencyEl.classList.add('text-emerald-600', 'dark:text-emerald-400');
+                }
+
+                clearTimeout(wheelTimer);
+                wheelTimer = setTimeout(() => {
+                    if (mouseWheel) {
+                        mouseWheel.classList.remove('text-emerald-500', 'stroke-[3px]');
+                    }
+                    if (mouseSvg) {
+                        mouseSvg.classList.remove('text-emerald-500');
+                    }
+                    if (lastKeyEl) {
+                        lastKeyEl.classList.remove('text-emerald-600', 'dark:text-emerald-400');
+                        lastKeyEl.classList.add('text-indigo-600', 'dark:text-indigo-400');
+                    }
+                    if (latencyEl) {
+                        latencyEl.classList.remove('text-emerald-650', 'dark:text-emerald-400');
+                        latencyEl.classList.add('text-blue-600', 'dark:text-blue-400');
+                    }
+                }, 200);
+            }, { passive: true });
+
+            // Prevent context menu on mockup area to allow testing right clicks cleanly
+            const mockupContainer = document.getElementById('mock-mouse-svg').closest('.bg-white');
+            if (mockupContainer) {
+                mockupContainer.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                });
+            }
+
+            // ============================================
+            // INSTANT SEARCH & PARITY COMMAND PALETTE
+            // ============================================
+            const searchBar = document.getElementById("nav-search-bar");
+            const searchPanel = document.getElementById("search-dropdown-panel");
+            
+            if (searchBar && searchPanel) {
+                const searchDatabase = [
+                    { title: "Keyboard Tester Online", desc: "Test laptop & mechanical switches", url: "keyboard.html" },
+                    { title: "Mouse & CPS Checker", desc: "Test click, scroll, and speed CPS", url: "mouse.html" },
+                    { title: "Clicks Per Second Test", desc: "10-second high-score speed game", url: "mouse.html#cps" },
+                    { title: "Speaker & Sound Tester", desc: "Stereo balance frequency check", url: "sound.html" },
+                    { title: "Gamepad & Joystick Tester", desc: "Controller buttons stick drift test", url: "gamepad.html" },
+                    { title: "Microphone Voice Tester", desc: "Test decibel telemetry voice echo loop", url: "mic.html" },
+                    { title: "Webcam Calibration Check", desc: "Video test, resolution and FPS check", url: "webcam.html" },
+                    { title: "Display & Screen Tester", desc: "Check dead pixels, monitor Hz, and ghosting", url: "display.html" },
+                    { title: "Drawing Tablet & Touchscreen Tester", desc: "Check pen pressure, touchscreen multi-touch, and drawing accuracy", url: "draw.html" },
+                    { title: "Bluetooth & Audio Latency Tester", desc: "Measure delay and lag of wireless headphones or Bluetooth speakers", url: "latency.html" },
+                    { title: "USB & HID Device Info Profiler", desc: "Scan connected USB/HID peripherals and inspect system hardware capabilities", url: "usb.html" },
+                    { title: "Biometric & Fingerprint Tester", desc: "Test Windows Hello, Touch ID, or security keys via standard client-side WebAuthn diagnostics", url: "biometric.html" },
+                    { title: "Battery Health & Efficiency Analyzer", desc: "Evaluate laptop chaging slopes, power draw rates, estimated cycle health, and power source metrics", url: "battery.html" },
+                    { title: "Printer Calibrated Test Page", desc: "Print CMYK color blocks, alignment grids, and evaluate font readability", url: "printer.html" },
+                    { title: "Scanner & Document Capture Checker", desc: "Test document scanners, apply black-and-white Xerox shaders, and scan QR codes", url: "scanner.html" },
+                    { title: "VR & XR Motion Controller Tester", desc: "Test 6-DOF spatial coordinates, analog triggers, and fire rumble haptics", url: "vr.html" },
+                    { title: "PC Hardware Specs Scanner", desc: "Profile processor cores, graphics card GPU model, RAM, and storage disks sizes", url: "specs.html" },
+                    { title: "Certified Diagnostic Report", desc: "Generate secure verified hardware configuration & device checklist PDF", url: "report.html" },
+                    { title: "LAN / Ethernet Port Jitter & Type Tester", desc: "Test network jitter, ping variance, and verify physical cable reliability", url: "lan.html" },
+                    { title: "HDMI & DisplayPort Multi-Screen Analyzer", desc: "Verify monitor refresh rate Hz, display placements, and multi-channel audio", url: "hdmi.html" },
+                    { title: "VGA Analog Calibrator Test Patterns", desc: "Calibrate analog monitor focus, phase adjustment zebra lines, and color bars", url: "vga.html" },
+                    { title: "USB Type-C & Thunderbolt Speed Profiler", desc: "Test alternate mode capabilities, power delivery profiles, and verify speeds", url: "usb-c.html" },
+                    { title: "Privacy Policy Compliance", desc: "AdSense, cookies & safety disclosure", url: "privacy.html" },
+                    { title: "Terms of Service Agreement", desc: "Device diagnostic terms and client-side usage rules", url: "terms.html" },
+                    { title: "Admin Settings Panel", desc: "Export config.js & preview analytics", url: "admin.php" }
+                ];
+
+                // Global listener for Ctrl + K
+                window.addEventListener("keydown", (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+                        e.preventDefault();
+                        searchBar.focus();
+                    }
+                });
+
+                // Close panel on click outside
+                document.addEventListener("click", (e) => {
+                    if (!searchBar.contains(e.target) && !searchPanel.contains(e.target)) {
+                        searchPanel.classList.add("hidden");
+                    }
+                });
+
+                searchBar.addEventListener("focus", showResults);
+                searchBar.addEventListener("input", showResults);
+
+                function showResults() {
+                    const query = searchBar.value.toLowerCase().trim();
+                    searchPanel.innerHTML = '<div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>';
+                    
+                    const filtered = searchDatabase.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.desc.toLowerCase().includes(query)
+                    );
+
+                    if (filtered.length === 0) {
+                        searchPanel.innerHTML += `
+                            <div class="px-2 py-3 text-center text-xs text-slate-400 dark:text-slate-500 font-semibold">
+                                No results found for "${searchBar.value}"
+                            </div>
+                        `;
+                    } else {
+                        filtered.forEach(item => {
+                            const itemEl = document.createElement("a");
+                            itemEl.href = item.url;
+                            itemEl.className = "flex flex-col px-3 py-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 transition-all duration-150 select-none group";
+                            itemEl.innerHTML = `
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">${item.title}</span>
+                                <span class="text-[10px] text-slate-400 dark:text-slate-500 font-semibold">${item.desc}</span>
+                            `;
+                            searchPanel.appendChild(itemEl);
+                        });
+                    }
+                    searchPanel.classList.remove("hidden");
+                }
+            }
+
+            // ============================================
+            // PWA SERVICE WORKER REGISTRATION
+            // ============================================
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('sw.js')
+                        .then(reg => {
+                            console.log('[PWA] Service Worker registered scope:', reg.scope);
+                            // Set up sync for push notifications if allowed
+                            if (Notification.permission === 'granted') {
+                                const badge = document.getElementById('notification-badge');
+                                badge && badge.classList.remove('hidden');
+                            }
+                        })
+                        .catch(err => console.error('[PWA] Service Worker registration failed:', err));
+                });
+            }
+
+            // ============================================
+            // CUSTOM APP INSTALL PROMPT BANNER
+            // ============================================
+            let deferredPrompt = null;
+            const bannerHtml = `
+                <div id="pwa-install-banner" class="fixed bottom-6 left-6 right-6 md:left-auto md:right-6 md:max-w-sm bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border border-slate-200/50 dark:border-slate-800/80 rounded-3xl p-5 shadow-2xl z-[9999] flex flex-col gap-4 transform translate-y-24 opacity-0 transition-all duration-500 ease-out pointer-events-none">
+                    <div class="flex items-start gap-3">
+                        <div class="flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md text-white text-lg shrink-0 select-none">
+                            ⌨️
+                        </div>
+                        <div class="flex flex-col">
+                            <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-tight">Install InputTest App</h4>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 font-semibold leading-relaxed">Launches instantly from your desktop or home screen, runs full window, and works offline!</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button id="pwa-install-btn" class="flex-grow h-9 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs uppercase tracking-wide transition-all shadow-md active:scale-95 focus:outline-none select-none">Install Now</button>
+                        <button id="pwa-close-btn" class="px-3.5 h-9 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold text-xs transition-all active:scale-95 focus:outline-none select-none">Later</button>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', bannerHtml);
+
+            const pwaBanner = document.getElementById('pwa-install-banner');
+            const installBtn = document.getElementById('pwa-install-btn');
+            const closeBtn = document.getElementById('pwa-close-btn');
+
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                
+                // Show prompt only if they haven't dismissed it
+                setTimeout(() => {
+                    if (pwaBanner && !localStorage.getItem('pwa-dismissed')) {
+                        pwaBanner.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+                        pwaBanner.classList.add('translate-y-0', 'opacity-100');
+                    }
+                }, 3000);
+            });
+
+            if (installBtn) {
+                installBtn.addEventListener('click', () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        deferredPrompt.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('[PWA] User accepted installation prompt');
+                            }
+                            deferredPrompt = null;
+                            hidePwaBanner();
+                        });
+                    }
+                });
+            }
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    localStorage.setItem('pwa-dismissed', 'true');
+                    hidePwaBanner();
+                });
+            }
+
+            function hidePwaBanner() {
+                if (pwaBanner) {
+                    pwaBanner.classList.remove('translate-y-0', 'opacity-100');
+                    pwaBanner.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+                }
+            }
+
+            // ============================================
+            // LOCAL & WEB PUSH NOTIFICATIONS LOGIC
+            // ============================================
+            const notifyToggle = document.getElementById('notification-toggle');
+            const notifyBadge = document.getElementById('notification-badge');
+
+            if (notifyToggle) {
+                notifyToggle.addEventListener('click', () => {
+                    if (!('Notification' in window)) {
+                        showToast("⚠️ Notifications not supported on this browser!");
+                        return;
+                    }
+
+                    if (Notification.permission === 'granted') {
+                        showLocalNotification("🔔 Diagnostics System Active", "InputTest.online notifications are enabled!");
+                    } else if (Notification.permission !== 'denied') {
+                        Notification.requestPermission().then(permission => {
+                            if (permission === 'granted') {
+                                notifyBadge && notifyBadge.classList.remove('hidden');
+                                showLocalNotification("🎉 Notifications Enabled", "You will now receive diagnostic completions alerts!");
+                            } else {
+                                showToast("❌ Notification permission denied.");
+                            }
+                        });
+                    } else {
+                        showToast("🔒 Notification permission blocked in browser settings.");
+                    }
+                });
+            }
+
+            function showLocalNotification(title, body) {
+                if ('serviceWorker' in navigator && Notification.permission === 'granted') {
+                    navigator.serviceWorker.ready.then(registration => {
+                        registration.showNotification(title, {
+                            body: body,
+                            icon: './icon-192.png',
+                            badge: './icon-192.png',
+                            vibrate: [100, 50, 100],
+                            data: {
+                                url: './index.html'
+                            }
+                        });
+                    });
+                }
+            }
+
+            // ============================================
+            // ONESIGNAL REMOTE PUSH NOTIFICATIONS
+            // ============================================
+            if (typeof SiteConfig !== 'undefined' && SiteConfig.onesignal && SiteConfig.onesignal.enabled) {
+                if (SiteConfig.onesignal.appId && SiteConfig.onesignal.appId !== "YOUR_ONESIGNAL_APP_ID") {
+                    // Dynamically inject OneSignal SDK Script
+                    const osScript = document.createElement("script");
+                    osScript.src = "https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js";
+                    osScript.defer = true;
+                    document.head.appendChild(osScript);
+
+                    window.OneSignalDeferred = window.OneSignalDeferred || [];
+                    OneSignalDeferred.push(async function(OneSignal) {
+                        await OneSignal.init({
+                            appId: SiteConfig.onesignal.appId,
+                            allowLocalhostAsSecureDomain: true
+                        });
+                    });
+                    console.log('[PWA] OneSignal Web Push SDK registered dynamically.');
+                }
+            }
+        });
+    </script>
+<script>
+    // Interactive Mobile Menu Toggle
+    document.addEventListener("DOMContentLoaded", () => {
+        const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+        const mobileNavPanel = document.getElementById("mobile-nav-panel");
+        const hamburgerIcon = document.getElementById("hamburger-icon");
+        const hamburgerClose = document.getElementById("hamburger-close");
+
+        if (mobileMenuToggle && mobileNavPanel && hamburgerIcon && hamburgerClose) {
+            mobileMenuToggle.addEventListener("click", () => {
+                mobileNavPanel.classList.toggle("hidden");
+                hamburgerIcon.classList.toggle("hidden");
+                hamburgerClose.classList.toggle("hidden");
+            });
+        }
+    });
+</script>
+</body>
+</html>

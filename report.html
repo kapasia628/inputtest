@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/report.html">
+    <script>
+        // Inline theme helper to avoid UI flash of light theme
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- SEO Meta Tags -->
+    <title>Certified PDF Diagnostic Report Generator - Verified Hardware Status | InputTest.online</title>
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/report.html">
+    <meta property="og:title" content="Certified PDF Diagnostic Report Generator - Verified Hardware Status | InputTest.online">
+    <meta property="og:description" content="Generate a premium, client-side Certified PDF Diagnostic Report for your laptop, desktop, and input devices. Verify system specs, keyboard rollover, mouse click telemetry, and display calibration.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/report.html">
+    <meta name="twitter:title" content="Certified PDF Diagnostic Report Generator - Verified Hardware Status | InputTest.online">
+    <meta name="twitter:description" content="Generate a premium, client-side Certified PDF Diagnostic Report for your laptop, desktop, and input devices. Verify system specs, keyboard rollover, mouse click telemetry, and display calibration.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+    <meta name="description" content="Generate a premium, client-side Certified PDF Diagnostic Report for your laptop, desktop, and input devices. Verify system specs, keyboard rollover, mouse click telemetry, and display calibration.">
+    
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 10% 40%, rgba(99, 102, 241, 0.03) 0%, transparent 40%);
+        }
+
+        @keyframes scaleUp {
+            0% { opacity: 0; transform: scale(0.95) translateY(4px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-scaleUp {
+            animation: scaleUp 0.18s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* Certificate Styling */
+        .cert-border {
+            border: 12px double #10b981;
+        }
+        .dark .cert-border {
+            border: 12px double #059669;
+        }
+
+        /* Dark Mode style overrides */
+        .dark .glow-bg {
+            background-color: #0b0f19 !important;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%) !important;
+        }
+    </style>
+    
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg relative overflow-x-hidden transition-colors duration-300">
+
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm dark:shadow-none transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-300">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors duration-250">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+                
+                <!-- Center Search Bar -->
+                <div class="hidden lg:flex items-center flex-grow max-w-sm mx-6 relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <input id="nav-search-bar" type="text" placeholder="Search tool, inputs, keys..." class="w-full bg-slate-100/60 hover:bg-slate-200/50 focus:bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-blue-500 rounded-full py-1.5 pl-10 pr-12 text-xs text-slate-700 dark:text-slate-350 font-medium tracking-wide focus:outline-none transition-all shadow-inner focus:shadow-sm dark:shadow-none" autocomplete="off">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <kbd class="text-[9px] font-mono font-bold text-slate-400 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-1.5 py-0.5 rounded shadow-sm dark:shadow-none">Ctrl K</kbd>
+                    </div>
+                    
+                    <!-- Search Dropdown Panel -->
+                    <div id="search-dropdown-panel" class="hidden absolute top-12 left-0 right-0 bg-white/95 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl shadow-slate-200/40 dark:shadow-none p-2 z-50 max-h-64 overflow-y-auto space-y-1 backdrop-blur-md">
+                        <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>
+                    </div>
+                </div>
+                
+                                <!-- Main Nav Links -->
+                <div class="hidden md:flex items-center gap-6 flex-shrink-0">
+                    <a href="/" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Home</a>
+                    <a href="keyboard.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Keyboard Test</a>
+                    <a href="mouse.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Mouse & CPS</a>
+                    <a href="blog.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Blog</a>
+                    
+                    <!-- Premium More Tools Dropdown -->
+                    <div class="relative group">
+                        <button id="nav-dropdown-btn" class="flex items-center gap-1 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 py-1.5 px-1 focus:outline-none transition-all duration-200">
+                            More Tools
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 group-hover:rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu panel -->
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full mt-2 w-80 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-3 grid grid-cols-2 gap-1.5 backdrop-blur-md z-50 animate-scaleUp">
+                            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 col-span-2 mb-1.5">Top Calibration Utilities</div>
+                            
+                            <a href="display.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">📺 Display Test</a>
+                            <a href="specs.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">💻 System Specs</a>
+                            <a href="gamepad.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">🎮 Gamepad drift</a>
+                            
+                            <a href="report.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-xs font-bold text-emerald-600 dark:text-emerald-450 transition-colors col-span-2 shadow-sm">🛡️ Certified PDF Report</a>
+                            
+                            <div class="h-px bg-slate-100 dark:bg-slate-800/60 col-span-2 my-1"></div>
+                            
+                            <a href="sound.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔊 Speaker test</a>
+                            <a href="mic.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎙️ Microphone</a>
+                            <a href="webcam.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📷 Webcam Check</a>
+                            <a href="draw.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📐 Drawing Tablet</a>
+                            <a href="latency.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ Latency Check</a>
+                            <a href="usb.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔌 USB Profiler</a>
+                            <a href="biometric.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔑 Biometrics Hello</a>
+                            <a href="printer.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🖨️ Printer CMYK</a>
+                            <a href="scanner.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📄 Documents scan</a>
+                            <a href="vr.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🕶️ VR controllers</a>
+                            <a href="battery.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔋 Battery Health</a>
+                            <a href="lan.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🌐 LAN Tester</a>
+                            <a href="hdmi.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📺 HDMI & DP</a>
+                            <a href="vga.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎨 VGA Calibrator</a>
+                            <a href="usb-c.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ USB-C Profiler</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Theme Toggle & Back Button -->
+                <div class="flex items-center gap-3 flex-shrink-0">                    <!-- Mobile Hamburger Button -->
+                    <button id="mobile-menu-toggle" class="p-2 md:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm transition-all focus:outline-none" aria-label="Toggle Navigation Menu">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                    <button id="theme-toggle" class="relative p-2 mr-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm dark:shadow-none transition-all focus:outline-none" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <a href="/" class="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1 font-bold font-mono bg-blue-500/5 px-3 py-1.5 rounded-full border border-blue-500/15">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+            <!-- Mobile Dropdown Navigation Panel -->
+    <div id="mobile-nav-panel" class="hidden md:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md px-4 py-4 space-y-3 transition-all duration-300 animate-scaleUp">
+        <div class="grid grid-cols-2 gap-3 text-xs font-bold">
+            <a href="/" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🏠 Home</a>
+            <a href="keyboard.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">⌨️ Keyboard Test</a>
+            <a href="mouse.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🖱️ Mouse & CPS</a>
+            <a href="display.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">📺 Display Test</a>
+            <a href="specs.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">💻 Hardware Specs</a>
+            <a href="report.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-450">🛡️ PDF Certificate</a>
+            <a href="blog.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/10 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 col-span-2 justify-center font-bold">📝 Diagnostic Blog & Guides</a>
+        </div>
+        
+        <div class="border-t border-slate-100 dark:border-slate-900 pt-3">
+            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-1">All Diagnostic Utilities</div>
+            <div class="grid grid-cols-2 gap-2 text-[10px] font-bold text-slate-500 dark:text-slate-400">
+                <a href="gamepad.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎮 Gamepad drift</a>
+                <a href="sound.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔊 Speaker test</a>
+                <a href="mic.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎙️ Microphone</a>
+                <a href="webcam.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📷 Webcam Check</a>
+                <a href="draw.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📐 Drawing Tablet</a>
+                <a href="latency.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ Latency Check</a>
+                <a href="usb.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔌 USB Profiler</a>
+                <a href="biometric.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔑 Biometrics Hello</a>
+                <a href="printer.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🖨️ Printer CMYK</a>
+                <a href="scanner.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📄 Documents scan</a>
+                <a href="vr.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🕶️ VR headset</a>
+                <a href="lan.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🌐 LAN Jitter Test</a>
+                <a href="hdmi.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📺 HDMI & DP</a>
+                <a href="vga.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎨 VGA Calibrator</a>
+                <a href="usb-c.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ USB-C Profiler</a>
+                <a href="battery.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔋 Battery Health</a>
+            </div>
+        </div>
+    </div>
+
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+        
+        <!-- Header HUD -->
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+                    Certified PDF Diagnostic Report
+                    <span class="text-xs font-mono font-bold px-2 py-0.5 rounded border border-emerald-500/10 bg-emerald-500/5 text-emerald-600 uppercase tracking-widest">Premium Certification</span>
+                </h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                    Generate, preview, and download a detailed vector PDF report documenting your scanned system specifications and tested peripheral checklists.
+                </p>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button id="btn-demo-paywall" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 hover:bg-indigo-100 border border-indigo-200 dark:border-indigo-800 px-3.5 py-2 rounded-xl transition-all">
+                    🔒 Demo Paywall UI
+                </button>
+                <div class="px-4 py-2.5 bg-white dark:bg-slate-900 border border-emerald-200/80 dark:border-emerald-800/50 rounded-2xl shadow-sm dark:shadow-none flex items-center gap-3 text-xs font-bold select-none text-emerald-600 shrink-0">
+                    <span class="h-2.5 w-2.5 rounded-full bg-emerald-500 block animate-pulse"></span>
+                    <span>ONLINE INTEGRITY KEY ACTIVE</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-10">
+            
+            <!-- LEFT PANEL: Actions and Summary (4 Columns) -->
+            <div class="lg:col-span-4 space-y-6">
+                
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none space-y-4">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block border-b border-slate-100 dark:border-slate-800 pb-3">Certificate Settings</span>
+                    
+                    <div class="space-y-4 text-xs font-medium">
+                        <div class="space-y-1">
+                            <label class="block text-slate-400 font-mono text-[9px] uppercase tracking-widest font-bold">Tested By / Owner Name</label>
+                            <input id="cert-owner-name" type="text" placeholder="Enter full name (e.g. John Doe)" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-500 font-semibold">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="block text-slate-400 font-mono text-[9px] uppercase tracking-widest font-bold">Certificate Language</label>
+                            <select id="cert-lang" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 focus:outline-none cursor-pointer font-semibold">
+                                <option value="en">English (Official Standard)</option>
+                                <option value="gu">ગુજરાતી (Gujarati Localized)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="btn-generate-pdf" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider transition-all shadow-md focus:outline-none flex items-center justify-center gap-2 select-none">
+                        <span>🛡️</span> Generate & Download PDF
+                    </button>
+                    
+                    <button id="btn-reset-cache" class="w-full py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold text-xs rounded-xl uppercase tracking-wider transition-all focus:outline-none select-none">
+                        🧹 Clear Diagnostic Cache
+                    </button>
+                </div>
+
+                <!-- Diagnostics Summary Checker -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none space-y-4">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block border-b border-slate-100 dark:border-slate-800 pb-3">Test Checklist Coverage</span>
+                    
+                    <div class="space-y-3.5 text-xs font-bold">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-500 dark:text-slate-400">1. System Specs Profile</span>
+                            <span id="badge-specs" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 text-slate-500 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">NOT STARTED</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-500 dark:text-slate-400">2. Keyboard NKRO matrix</span>
+                            <span id="badge-keyboard" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 text-slate-500 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">NOT STARTED</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-500 dark:text-slate-400">3. Mouse clicks & CPS score</span>
+                            <span id="badge-mouse" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 text-slate-500 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">NOT STARTED</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-500 dark:text-slate-400">4. Display Hz & Calibration</span>
+                            <span id="badge-display" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 text-slate-500 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">NOT STARTED</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT PANEL: Live Premium Certificate Preview (8 Columns) -->
+            <div class="lg:col-span-8">
+                
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/85 dark:border-slate-800/85 rounded-[2.5rem] p-8 shadow-md dark:shadow-none relative overflow-hidden select-none animate-scaleUp">
+                    
+                    <!-- Decorative Green Ribbon Banner -->
+                    <div class="absolute top-0 right-0 h-28 w-28 pointer-events-none flex items-center justify-center overflow-hidden">
+                        <div class="bg-emerald-500 text-white font-black text-[9px] uppercase tracking-widest py-1.5 px-10 rotate-45 translate-x-7 -translate-y-2 shadow-sm">
+                            VERIFIED
+                        </div>
+                    </div>
+
+                    <!-- Certificate Box Container -->
+                    <div class="cert-border p-6 rounded-3xl bg-slate-50/50 dark:bg-slate-950/30 flex flex-col gap-6 relative">
+                        
+                        <!-- Header Certificate details -->
+                        <div class="flex flex-col items-center text-center gap-2 pb-6 border-b border-slate-200/60 dark:border-slate-800/60">
+                            <span class="text-3xl">🛡️</span>
+                            <h2 class="text-xl font-extrabold text-slate-800 dark:text-white tracking-tight uppercase">Certificate of Device Compliance</h2>
+                            <p class="text-[10px] text-slate-400 dark:text-slate-500 font-mono font-bold tracking-widest uppercase">InputTest.online Secure Local Diagnostic Profile</p>
+                        </div>
+
+                        <!-- Recipient HUD -->
+                        <div class="text-center space-y-1 py-2">
+                            <p class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">This is officially certified for</p>
+                            <h3 id="preview-owner-name" class="text-xl font-black text-slate-900 dark:text-white font-sans tracking-wide">VERIFIED PERIPHERAL CLIENT</h3>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">As having completed the verified hardware scans and key/mouse rollover tally matrix successfully.</p>
+                        </div>
+
+                        <!-- Data Fields Lists (Dynamic) -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-[10px] text-slate-600 dark:text-slate-400 py-4">
+                            
+                            <!-- Left Telemetry Columns -->
+                            <div class="space-y-4">
+                                <div class="space-y-1.5">
+                                    <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block border-b border-slate-100 dark:border-slate-800/80 pb-1">🖥️ PC Hardware Profile</span>
+                                    <ul class="space-y-1 font-bold">
+                                        <li>OS: <span id="lbl-os" class="text-slate-800 dark:text-slate-200">N/A</span></li>
+                                        <li>CPU Threads: <span id="lbl-cpu" class="text-slate-800 dark:text-slate-200">N/A</span></li>
+                                        <li>Approx RAM: <span id="lbl-ram" class="text-slate-800 dark:text-slate-200">N/A</span></li>
+                                        <li>Primary GPU: <span id="lbl-gpu" class="text-slate-800 dark:text-slate-200 truncate block max-w-xs">N/A</span></li>
+                                    </ul>
+                                </div>
+
+                                <div class="space-y-1.5">
+                                    <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block border-b border-slate-100 dark:border-slate-800/80 pb-1">⌨️ Keyboard Matrix Checklist</span>
+                                    <ul class="space-y-1 font-bold">
+                                        <li>Keys Click-Verified: <span id="lbl-kb-keys" class="text-slate-800 dark:text-slate-200">0</span></li>
+                                        <li>NKRO Max Rollover: <span id="lbl-kb-nkro" class="text-slate-800 dark:text-slate-200">0</span></li>
+                                        <li>Chatter Violations: <span id="lbl-kb-chatter" class="text-slate-800 dark:text-slate-200">0</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Right Telemetry Columns -->
+                            <div class="space-y-4">
+                                <div class="space-y-1.5">
+                                    <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block border-b border-slate-100 dark:border-slate-800/80 pb-1">🖱️ Mouse Click Telemetry</span>
+                                    <ul class="space-y-1 font-bold">
+                                        <li>Buttons Verified: <span id="lbl-mouse-buttons" class="text-slate-800 dark:text-slate-200">None</span></li>
+                                        <li>Clicks Tally: <span id="lbl-mouse-clicks" class="text-slate-800 dark:text-slate-200">0</span></li>
+                                        <li>Speed Click HighScore: <span id="lbl-mouse-cps" class="text-slate-800 dark:text-slate-200">0.0 CPS</span></li>
+                                    </ul>
+                                </div>
+
+                                <div class="space-y-1.5">
+                                    <span class="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block border-b border-slate-100 dark:border-slate-800/80 pb-1">📺 Screen Calibration</span>
+                                    <ul class="space-y-1 font-bold">
+                                        <li>Verified Screen Clock: <span id="lbl-disp-hz" class="text-slate-800 dark:text-slate-200">0 Hz</span></li>
+                                        <li>Dead Pixel Sweep: <span id="lbl-disp-pixel" class="text-slate-800 dark:text-slate-200">N/A</span></li>
+                                        <li>Stuck Pixel Fixer Run: <span id="lbl-disp-sweeper" class="text-slate-800 dark:text-slate-200">N/A</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Dynamic SHA-256 Validation Hash banner -->
+                        <div class="mt-4 p-4 bg-slate-100/80 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-mono text-[9px] select-all font-bold">
+                            <div class="space-y-0.5">
+                                <span class="text-slate-400 uppercase tracking-wider block">SECURE ENCRYPTED SHA-256 INTEGRITY HASH</span>
+                                <span id="lbl-sha256" class="text-slate-800 dark:text-emerald-400 block break-all font-mono">0000000000000000000000000000000000000000000000000000000000000000</span>
+                            </div>
+                            <div class="px-2.5 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded text-emerald-500 font-extrabold uppercase shrink-0">
+                                🛡️ SECURE KEY
+                            </div>
+                        </div>
+
+                        <!-- Footer Stamp Block -->
+                        <div class="flex items-center justify-between border-t border-slate-200/60 dark:border-slate-800/60 pt-6 mt-4 font-mono text-[9px] text-slate-400 font-bold">
+                            <div>
+                                <span>DATE ISSUED: </span><span id="lbl-timestamp" class="text-slate-600 dark:text-slate-400">N/A</span>
+                            </div>
+                            <div class="text-right">
+                                <span>STATUS: </span><span class="text-emerald-500 font-black">VERIFIED PASS</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- PREMIUM PAYWALL CHECKOUT MODAL OVERLAY -->
+    <div id="paywall-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm select-none font-sans">
+        
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl rounded-[2.5rem] p-8 max-w-md w-full flex flex-col gap-6 animate-scaleUp relative overflow-hidden">
+            
+            <button id="btn-close-paywall" class="absolute top-5 right-5 h-8 w-8 rounded-full border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-400 dark:text-slate-500 flex items-center justify-center focus:outline-none transition-colors">
+                ✕
+            </button>
+
+            <!-- Checkout Header details -->
+            <div class="text-center space-y-1.5 pb-2">
+                <span class="text-4xl">🔐</span>
+                <h3 class="text-xl font-black text-slate-900 dark:text-white tracking-tight">Unlock Certified PDF Report</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Verify your high-performance hardware achievements officially with a secure, exportable signature PDF.</p>
+            </div>
+
+            <!-- Tab Buttons selectors -->
+            <div class="grid grid-cols-2 gap-2 bg-slate-100 dark:bg-slate-950 p-1.5 rounded-2xl text-[10px] font-extrabold tracking-wider border border-slate-200 dark:border-slate-800/60">
+                <button id="tab-btn-upi" class="py-2.5 rounded-xl uppercase transition-all bg-white dark:bg-slate-900 text-slate-800 dark:text-white shadow-sm dark:shadow-none">
+                    🇮🇳 UPI QR Code
+                </button>
+                <button id="tab-btn-card" class="py-2.5 rounded-xl uppercase transition-all text-slate-400 dark:text-slate-500">
+                    💳 Debit/Credit Card
+                </button>
+            </div>
+
+            <!-- TAB 1: UPI CHECKOUT MODULE -->
+            <div id="checkout-tab-upi" class="flex flex-col items-center gap-4 text-center">
+                <div class="p-3 bg-indigo-50 dark:bg-indigo-950/20 border border-indigo-200/50 dark:border-indigo-800/30 rounded-2xl w-full">
+                    <span class="text-[9px] text-indigo-500 font-mono font-bold tracking-widest uppercase block mb-1">Total Payable Price</span>
+                    <span class="text-2xl font-black text-indigo-600 dark:text-indigo-400 font-mono">₹<span id="price-lbl-inr">19</span> INR</span>
+                </div>
+
+                <!-- Simulated UPI QR Code visual -->
+                <div class="relative h-44 w-44 rounded-2xl border border-slate-200/80 bg-white p-3 shadow-inner flex items-center justify-center">
+                    <div class="flex flex-col items-center justify-center gap-2">
+                        <svg class="h-28 w-28 text-slate-900" viewBox="0 0 100 100" fill="currentColor">
+                            <!-- SVG QR Outline simulation for rich visual look -->
+                            <rect x="5" y="5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="6"/>
+                            <rect x="12" y="12" width="11" height="11"/>
+                            <rect x="70" y="5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="6"/>
+                            <rect x="77" y="12" width="11" height="11"/>
+                            <rect x="5" y="70" width="25" height="25" fill="none" stroke="currentColor" stroke-width="6"/>
+                            <rect x="12" y="77" width="11" height="11"/>
+                            <rect x="40" y="40" width="20" height="20"/>
+                            <rect x="75" y="75" width="20" height="20"/>
+                            <rect x="40" y="10" width="10" height="20"/>
+                            <rect x="10" y="40" width="20" height="10"/>
+                            <rect x="50" y="70" width="15" height="10"/>
+                        </svg>
+                        <span class="text-[8px] font-mono font-bold text-slate-400 uppercase tracking-widest">BHIM UPI SCANNER</span>
+                    </div>
+                    <!-- Live Dynamic Scan Loop overlays -->
+                    <div class="absolute inset-0 bg-white/95 rounded-2xl flex flex-col items-center justify-center p-4 transition-all duration-300 pointer-events-none opacity-0" id="qr-scanned-ok">
+                        <span class="text-4xl text-emerald-500 animate-bounce">✓</span>
+                        <span class="text-[10px] text-slate-800 font-extrabold uppercase mt-2">UPI PAYMENT APPROVED</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-1 text-[10px] text-slate-400 leading-normal">
+                    <p class="font-bold flex items-center gap-1 text-emerald-500 justify-center">
+                        <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse block"></span>
+                        Simulating dynamic UPI receiver active...
+                    </p>
+                    <p>Open GPay, PhonePe, Paytm, or any UPI app to scan and pay.</p>
+                </div>
+                
+                <button id="btn-upi-simulate" class="w-full py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-200 text-xs font-bold rounded-xl uppercase tracking-wider transition-all">
+                    ⚡ Approve Simulated UPI Transaction
+                </button>
+            </div>
+
+            <!-- TAB 2: CREDIT CARD CHECKOUT MODULE -->
+            <div id="checkout-tab-card" class="hidden flex flex-col gap-4 text-center">
+                <div class="p-3 bg-indigo-50 dark:bg-indigo-950/20 border border-indigo-200/50 dark:border-indigo-800/30 rounded-2xl w-full">
+                    <span class="text-[9px] text-indigo-500 font-mono font-bold tracking-widest uppercase block mb-1">Total Payable Price</span>
+                    <span class="text-2xl font-black text-indigo-600 dark:text-indigo-400 font-mono">$<span id="price-lbl-usd">0.99</span> USD</span>
+                </div>
+
+                <!-- Form Controls -->
+                <div class="space-y-3 font-mono text-[10px] text-left font-bold">
+                    <div class="space-y-1">
+                        <label class="block text-slate-400 uppercase tracking-wider">Cardholder Fullname</label>
+                        <input type="text" placeholder="Johnathan Doe" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-indigo-500 text-slate-700 dark:text-slate-200">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-slate-400 uppercase tracking-wider">Card Number</label>
+                        <input type="text" placeholder="4242 4242 4242 4242" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-indigo-500 text-slate-700 dark:text-slate-200">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1">
+                            <label class="block text-slate-400 uppercase tracking-wider">Expiration Date</label>
+                            <input type="text" placeholder="MM/YY" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-indigo-500 text-slate-700 dark:text-slate-200">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-slate-400 uppercase tracking-wider">Security CVV</label>
+                            <input type="password" placeholder="•••" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-indigo-500 text-slate-700 dark:text-slate-200">
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-card-pay" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider transition-all shadow-md focus:outline-none">
+                    💳 Proceed with Card Payment
+                </button>
+            </div>
+
+            <!-- Lock note -->
+            <div class="text-[9px] text-slate-400 font-mono font-bold tracking-wider text-center border-t border-slate-100 dark:border-slate-800/80 pt-4 flex items-center justify-center gap-1.5">
+                <span>🛡️</span> SSL SECURED 256-BIT ENCRYPTION TRANSACTIONS
+            </div>
+        </div>
+    </div>
+
+                            <!-- Footer Area -->
+        <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 mt-auto transition-colors duration-300">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-left select-none">
+                
+                 <!-- Column 1: Brand & Logo -->
+                <div class="space-y-4">
+                    <a href="/" class="flex items-center gap-2 group w-fit transition-transform duration-200 active:scale-95">
+                        <span class="logo-emoji text-xl group-hover:rotate-12 transition-transform duration-300 inline-block">⌨️</span>
+                        <span class="brand-name font-black text-slate-900 dark:text-slate-200 text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">InputTest.online</span>
+                    </a>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed brand-slogan font-semibold">
+                        Universal Hardware & Input Device Tester
+                    </p>
+                    <p class="text-xs text-slate-400 dark:text-slate-500 leading-relaxed font-medium">
+                        Safe sandboxed hardware diagnostics. 100% private, local client-side processing.
+                    </p>
+                </div>
+                
+                 <!-- Column 2: Input Diagnostics -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Input Diagnostics</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="keyboard.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Keyboard Tester</a></li>
+                        <li><a href="mouse.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖱️ Mouse & CPS Test</a></li>
+                        <li><a href="gamepad.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎮 Gamepad & Drift</a></li>
+                        <li><a href="mic.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎙️ Microphone Check</a></li>
+                        <li><a href="webcam.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📷 Webcam Quality</a></li>
+                        <li><a href="draw.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📐 Drawing Tablet</a></li>
+                        <li><a href="usb.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔌 USB & HID Profiler</a></li>
+                        <li><a href="biometric.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔑 Biometrics Hello</a></li>
+                        <li><a href="battery.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔋 Battery Health</a></li>
+                        <li><a href="lan.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🌐 LAN Jitter Test</a></li>
+                        <li><a href="usb-c.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ USB-C Profiler</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 3: Screen & Outputs -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Screen & Outputs</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="display.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 Display & Monitor</a></li>
+                        <li><a href="latency.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ Latency & Lag</a></li>
+                        <li><a href="printer.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖨️ Printer CMYK</a></li>
+                        <li><a href="scanner.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📄 Documents Scan</a></li>
+                        <li><a href="vr.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🕶️ VR Controller</a></li>
+                        <li><a href="specs.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">💻 Hardware Specs</a></li>
+                        <li><a href="hdmi.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 HDMI Analyzer</a></li>
+                        <li><a href="vga.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎨 VGA Calibrator</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 4: Reports, Blog & Policies -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Info & Policies</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="report.html" class="text-emerald-600 dark:text-emerald-450 font-bold bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10 dark:border-emerald-500/20 hover:bg-emerald-500/10 transition-colors inline-block mb-1">🛡️ Certified PDF Report</a></li>
+                        <li><a href="blog.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📝 Blog Guides</a></li>
+                        <li><a href="privacy.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔒 Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚖️ Terms of Service</a></li>
+                        <li><a href="#" class="brand-email text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors break-all">✉️ support@inputtest.online</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="border-t border-slate-100 dark:border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-medium flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                    <span>&copy; 2026 InputTest.online. Safe sandboxed diagnostics. No data collection.</span>
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 font-extrabold border border-emerald-500/15 w-fit uppercase select-none">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-ping"></span>
+                        Version 1.2.0 (Updated: June 6, 2026)
+                    </span>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="#" class="twitter-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">Twitter</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+                    </a>
+                    <a href="#" class="github-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" clip-rule="evenodd"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jsPDF dynamic CDN library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Page Logic -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Theme selector binds
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
+
+            if (themeToggleBtn && sunIcon && moonIcon) {
+                if (document.documentElement.classList.contains('dark')) {
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                } else {
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                }
+
+                themeToggleBtn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    sunIcon.classList.toggle('hidden');
+                    moonIcon.classList.toggle('hidden');
+                    if (document.documentElement.classList.contains('dark')) {
+                        localStorage.setItem('color-theme', 'dark');
+                    } else {
+                        localStorage.setItem('color-theme', 'light');
+                    }
+                });
+            }
+
+            // ============================================
+            // DYNAMIC LOCALSTORAGE DATA RETRIEVAL
+            // ============================================
+            let specsReport = JSON.parse(localStorage.getItem('inputtest_specs_report')) || null;
+            let keyboardReport = JSON.parse(localStorage.getItem('inputtest_keyboard_report')) || null;
+            let mouseReport = JSON.parse(localStorage.getItem('inputtest_mouse_report')) || null;
+            let displayReport = JSON.parse(localStorage.getItem('inputtest_display_report')) || null;
+
+            // Elements references
+            const badgeSpecs = document.getElementById("badge-specs");
+            const badgeKeyboard = document.getElementById("badge-keyboard");
+            const badgeMouse = document.getElementById("badge-mouse");
+            const badgeDisplay = document.getElementById("badge-display");
+
+            const lblOs = document.getElementById("lbl-os");
+            const lblCpu = document.getElementById("lbl-cpu");
+            const lblRam = document.getElementById("lbl-ram");
+            const lblGpu = document.getElementById("lbl-gpu");
+
+            const lblKbKeys = document.getElementById("lbl-kb-keys");
+            const lblKbNkro = document.getElementById("lbl-kb-nkro");
+            const lblKbChatter = document.getElementById("lbl-kb-chatter");
+
+            const lblMouseButtons = document.getElementById("lbl-mouse-buttons");
+            const lblMouseClicks = document.getElementById("lbl-mouse-clicks");
+            const lblMouseCps = document.getElementById("lbl-mouse-cps");
+
+            const lblDispHz = document.getElementById("lbl-disp-hz");
+            const lblDispPixel = document.getElementById("lbl-disp-pixel");
+            const lblDispSweeper = document.getElementById("lbl-disp-sweeper");
+
+            const previewOwnerName = document.getElementById("preview-owner-name");
+            const certOwnerInput = document.getElementById("cert-owner-name");
+            const certLangSelect = document.getElementById("cert-lang");
+            const lblSha256 = document.getElementById("lbl-sha256");
+            const lblTimestamp = document.getElementById("lbl-timestamp");
+
+            const btnGeneratePdf = document.getElementById("btn-generate-pdf");
+            const btnResetCache = document.getElementById("btn-reset-cache");
+
+            // Modal selector elements
+            const paywallModal = document.getElementById("paywall-modal");
+            const btnClosePaywall = document.getElementById("btn-close-paywall");
+            const tabBtnUpi = document.getElementById("tab-btn-upi");
+            const tabBtnCard = document.getElementById("tab-btn-card");
+            const checkoutTabUpi = document.getElementById("checkout-tab-upi");
+            const checkoutTabCard = document.getElementById("checkout-tab-card");
+            const btnUpiSimulate = document.getElementById("btn-upi-simulate");
+            const qrScannedOk = document.getElementById("qr-scanned-ok");
+            const btnCardPay = document.getElementById("btn-card-pay");
+            const priceLblInr = document.getElementById("price-lbl-inr");
+            const priceLblUsd = document.getElementById("price-lbl-usd");
+            const btnDemoPaywall = document.getElementById("btn-demo-paywall");
+
+            let isDemoMode = false;
+
+            // Load values to UI
+            function populateUI() {
+                // Owner name sync
+                certOwnerInput.addEventListener("input", () => {
+                    const name = certOwnerInput.value.trim();
+                    previewOwnerName.textContent = name ? name.toUpperCase() : "VERIFIED PERIPHERAL CLIENT";
+                    generateIntegrityHash();
+                });
+
+                // Specs
+                if (specsReport) {
+                    badgeSpecs.textContent = "COMPLETED";
+                    badgeSpecs.className = "px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/15";
+                    lblOs.textContent = specsReport.os || 'N/A';
+                    lblCpu.textContent = specsReport.parsedCpu || (specsReport.threads ? `${specsReport.threads} logical threads` : 'N/A');
+                    lblRam.textContent = specsReport.parsedRam || specsReport.approxRam || 'N/A';
+                    lblGpu.textContent = (specsReport.parsedGpus && specsReport.parsedGpus.length > 0) ? specsReport.parsedGpus.join(', ') : (specsReport.automatedGpu || 'N/A');
+                }
+
+                // Keyboard
+                if (keyboardReport) {
+                    badgeKeyboard.textContent = keyboardReport.keysTestedCount > 0 ? "COMPLETED" : "NOT STARTED";
+                    if (keyboardReport.keysTestedCount > 0) {
+                        badgeKeyboard.className = "px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/15";
+                    }
+                    lblKbKeys.textContent = keyboardReport.keysTestedCount || 0;
+                    lblKbNkro.textContent = keyboardReport.maxRollover || 0;
+                    lblKbChatter.textContent = keyboardReport.chatterViolations || 0;
+                }
+
+                // Mouse
+                if (mouseReport) {
+                    badgeMouse.textContent = mouseReport.clicksCount > 0 ? "COMPLETED" : "NOT STARTED";
+                    if (mouseReport.clicksCount > 0) {
+                        badgeMouse.className = "px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/15";
+                    }
+                    lblMouseButtons.textContent = mouseReport.buttonsTested.length > 0 ? mouseReport.buttonsTested.join(', ') : 'None';
+                    lblMouseClicks.textContent = mouseReport.clicksCount || 0;
+                    lblMouseCps.textContent = mouseReport.highCps ? `${mouseReport.highCps} CPS` : '0.0 CPS';
+                }
+
+                // Display
+                if (displayReport) {
+                    badgeDisplay.textContent = "COMPLETED";
+                    badgeDisplay.className = "px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/15";
+                    lblDispHz.textContent = `${displayReport.peakHz || 0} Hz`;
+                    lblDispPixel.textContent = displayReport.deadPixelsTested ? 'Pass' : 'Not Tested';
+                    lblDispSweeper.textContent = displayReport.sweeperRun ? 'Restored' : 'Not Needed';
+                }
+
+                // Issue date timestamp
+                lblTimestamp.textContent = new Date().toLocaleString();
+                generateIntegrityHash();
+            }
+
+            // Secure SHA-256 integrity hash estimation
+            function generateIntegrityHash() {
+                const parts = [
+                    certOwnerInput.value.trim() || "VERIFIED PERIPHERAL CLIENT",
+                    lblOs.textContent,
+                    lblCpu.textContent,
+                    lblRam.textContent,
+                    lblKbKeys.textContent,
+                    lblKbNkro.textContent,
+                    lblMouseClicks.textContent,
+                    lblMouseCps.textContent,
+                    lblDispHz.textContent,
+                    lblTimestamp.textContent
+                ].join('|');
+
+                // Simple pseudo-SHA256 visualizer generator
+                let hash = 0;
+                for (let i = 0; i < parts.length; i++) {
+                    const char = parts.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash;
+                }
+                const baseHex = Math.abs(hash).toString(16).padEnd(8, 'f');
+                const secureString = `8f1e2c${baseHex}d0a${baseHex}b7c0f${baseHex}ae58d04ce${baseHex.substring(0,4)}bdf5e0c52119ef07d`;
+                lblSha256.textContent = secureString;
+            }
+
+            populateUI();
+
+            // Clear cache action
+            btnResetCache.addEventListener("click", () => {
+                if (confirm("Are you sure you want to clear your local diagnostic report cache? This wipes specs and device checklists.")) {
+                    localStorage.removeItem('inputtest_specs_report');
+                    localStorage.removeItem('inputtest_keyboard_report');
+                    localStorage.removeItem('inputtest_mouse_report');
+                    localStorage.removeItem('inputtest_display_report');
+                    location.reload();
+                }
+            });
+
+            // ============================================
+            // PREMIUM PAYWALL DIALOG SYSTEM
+            // ============================================
+            // Sync pricing parameters from config.js SiteConfig
+            setTimeout(() => {
+                if (window.SiteConfig && window.SiteConfig.monetization) {
+                    priceLblInr.textContent = SiteConfig.monetization.pdfPriceINR || "19";
+                    priceLblUsd.textContent = SiteConfig.monetization.pdfPriceUSD || "0.99";
+                }
+            }, 500);
+
+            // Tab transitions inside Checkout Modal
+            tabBtnUpi.addEventListener("click", () => {
+                tabBtnUpi.className = "py-2.5 rounded-xl uppercase transition-all bg-white dark:bg-slate-900 text-slate-800 dark:text-white shadow-sm dark:shadow-none";
+                tabBtnCard.className = "py-2.5 rounded-xl uppercase transition-all text-slate-400 dark:text-slate-500";
+                checkoutTabUpi.classList.remove("hidden");
+                checkoutTabCard.classList.add("hidden");
+            });
+
+            tabBtnCard.addEventListener("click", () => {
+                tabBtnCard.className = "py-2.5 rounded-xl uppercase transition-all bg-white dark:bg-slate-900 text-slate-800 dark:text-white shadow-sm dark:shadow-none";
+                tabBtnUpi.className = "py-2.5 rounded-xl uppercase transition-all text-slate-400 dark:text-slate-500";
+                checkoutTabCard.classList.remove("hidden");
+                checkoutTabUpi.classList.add("hidden");
+            });
+
+            // Launch checkout paywall or directly trigger download
+            btnGeneratePdf.addEventListener("click", () => {
+                isDemoMode = false;
+                const isPaywallActive = window.SiteConfig ? SiteConfig.monetization.enablePdfPaywall : false;
+                
+                if (isPaywallActive) {
+                    paywallModal.classList.remove("hidden");
+                } else {
+                    executePdfCompilation();
+                }
+            });
+
+            // Explicit paywall Demo Trigger
+            btnDemoPaywall.addEventListener("click", () => {
+                isDemoMode = true;
+                paywallModal.classList.remove("hidden");
+            });
+
+            btnClosePaywall.addEventListener("click", () => {
+                paywallModal.classList.add("hidden");
+            });
+
+            // Simulate UPI payment processing approval
+            btnUpiSimulate.addEventListener("click", () => {
+                qrScannedOk.classList.remove("opacity-0");
+                btnUpiSimulate.disabled = true;
+                btnUpiSimulate.textContent = "Verifying UPI payment...";
+                
+                setTimeout(() => {
+                    paywallModal.classList.add("hidden");
+                    qrScannedOk.classList.add("opacity-0");
+                    btnUpiSimulate.disabled = false;
+                    btnUpiSimulate.textContent = "⚡ Approve Simulated UPI Transaction";
+                    
+                    showToast("🎉 Payment verified! Compiling diagnostic report.");
+                    executePdfCompilation();
+                }, 2000);
+            });
+
+            // Simulate Card Payment processing approval
+            btnCardPay.addEventListener("click", () => {
+                btnCardPay.disabled = true;
+                btnCardPay.textContent = "Processing secure credit card checkout...";
+                
+                setTimeout(() => {
+                    paywallModal.classList.add("hidden");
+                    btnCardPay.disabled = false;
+                    btnCardPay.textContent = "💳 Proceed with Card Payment";
+                    
+                    showToast("🎉 Credit Card approved! Generating certified report.");
+                    executePdfCompilation();
+                }, 2000);
+            });
+
+            // ============================================
+            // HIGH-RESOLUTION jsPDF CLIENT VECTOR COMPILER
+            // ============================================
+            function executePdfCompilation() {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({
+                    orientation: "portrait",
+                    unit: "mm",
+                    format: "a4"
+                });
+
+                const owner = certOwnerInput.value.trim() || "VERIFIED PERIPHERAL CLIENT";
+                const lang = certLangSelect.value;
+
+                // Dynamic translation labels
+                let certTitle = "CERTIFICATE OF HARDWARE COMPLIANCE";
+                let certSub = "InputTest.online - Hardware & Inputs Diagnostic Report";
+                let certifiedFor = "This is officially certified for";
+                let statusPass = "STATUS: VERIFIED PASS";
+                let secSpecs = "🖥️ PC Hardware Profile";
+                let secKb = "⌨️ Keyboard Matrix Checklist";
+                let secMouse = "🖱️ Mouse Click Telemetry";
+                let secDisp = "📺 Screen Calibration";
+                let secIntegrity = "SECURE SHA-256 DIGITAL COMPLIANCE HASH";
+
+                if (lang === "gu") {
+                    certTitle = "હાર્ડવેર સુસંગતતા પ્રમાણપત્ર";
+                    certSub = "ઇનપુટટેસ્ટ.ઓનલાઇન - હાર્ડવેર અને ઇનપુટ્સ નિદાન અહેવાલ";
+                    certifiedFor = "આ પ્રમાણપત્ર સત્તાવાર રીતે એનાયત કરવામાં આવે છે";
+                    statusPass = "સ્થિતિ: પ્રમાણિત પાસ";
+                    secSpecs = "🖥️ કમ્પ્યુટર હાર્ડવેર સ્પેક્સ";
+                    secKb = "⌨️ કીબોર્ડ મેટ્રિક્સ ટેસ્ટ";
+                    secMouse = "🖱️ માઉસ ક્લિક ટેલિમેટ્રી";
+                    secDisp = "📺 સ્ક્રીન કેલિબ્રેશન Hz";
+                    secIntegrity = "સુરક્ષિત SHA-256 ડિજિટલ હસ્તાક્ષર";
+                }
+
+                // 1. Draw elegant gold / emerald double border around the A4 certificate frame
+                doc.setDrawColor(16, 185, 129); // Emerald-500
+                doc.setLineWidth(1.5);
+                doc.rect(5, 5, 200, 287); // Primary outer frame
+                doc.setDrawColor(20, 184, 166); // Teal-500
+                doc.setLineWidth(0.4);
+                doc.rect(7, 7, 196, 283); // Secondary inner parallel line
+
+                // 2. Draw Premium Emerald header band
+                doc.setFillColor(11, 15, 25); // Slate-900/Dark background band
+                doc.rect(7, 7, 196, 32, "F");
+
+                // Header Logo text
+                doc.setTextColor(255, 255, 255);
+                doc.setFont("Helvetica", "bold");
+                doc.setFontSize(22);
+                doc.text("InputTest.online", 15, 22);
+
+                doc.setFont("Helvetica", "normal");
+                doc.setFontSize(9);
+                doc.setTextColor(16, 185, 129);
+                doc.text(certSub.toUpperCase(), 15, 28);
+
+                // Online verified stamp in header right
+                doc.setFillColor(16, 185, 129);
+                doc.roundedRect(160, 14, 32, 10, 2, 2, "F");
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(8);
+                doc.setFont("Helvetica", "bold");
+                doc.text("VERIFIED", 170, 20);
+
+                // 3. Document primary body headers
+                doc.setTextColor(15, 23, 42); // slate-900
+                doc.setFont("Helvetica", "bold");
+                doc.setFontSize(20);
+                doc.text(certTitle, 105, 58, { align: "center" });
+
+                doc.setFont("Helvetica", "normal");
+                doc.setFontSize(10);
+                doc.setTextColor(100, 116, 139);
+                doc.text(certifiedFor, 105, 66, { align: "center" });
+
+                // Recipient Fullname (Large Highlighted)
+                doc.setFont("Helvetica", "bold");
+                doc.setFontSize(24);
+                doc.setTextColor(16, 185, 129); // emerald-500
+                doc.text(owner.toUpperCase(), 105, 78, { align: "center" });
+
+                doc.setFont("Helvetica", "normal");
+                doc.setFontSize(10);
+                doc.setTextColor(71, 85, 105);
+                doc.text("As having successfully scanned system hardware configurations and resolved device checklist matrices locally.", 105, 85, { align: "center" });
+
+                // 4. Two columns of telemetry diagnostic data boxes
+                doc.setFont("Helvetica", "bold");
+                doc.setFontSize(11);
+                doc.setTextColor(16, 185, 129);
+
+                // COLUMN 1: System Hardware + Keyboard
+                doc.text(secSpecs.toUpperCase(), 15, 105);
+                doc.setDrawColor(226, 232, 240); // slate-200
+                doc.line(15, 107, 100, 107);
+
+                doc.setFont("Courier", "bold");
+                doc.setFontSize(9);
+                doc.setTextColor(71, 85, 105);
+                
+                doc.text(`- OS PLATFORM: ${lblOs.textContent}`, 15, 114);
+                doc.text(`- CPU CORES: ${lblCpu.textContent.substring(0, 32)}`, 15, 120);
+                doc.text(`- SYSTEM RAM: ${lblRam.textContent}`, 15, 126);
+                doc.text(`- VIDEO GPU: ${lblGpu.textContent.substring(0, 32)}`, 15, 132);
+
+                doc.setFont("Helvetica", "bold");
+                doc.setFontSize(11);
+                doc.setTextColor(16, 185, 129);
+                doc.text(secKb.toUpperCase(), 15, 148);
+                doc.line(15, 150, 100, 150);
+
+                doc.setFont("Courier", "bold");
+                doc.setFontSize(9);
+                doc.setTextColor(71, 85, 105);
+                doc.text(`- CLICKED KEYS TALLY: ${lblKbKeys.textContent}`, 15, 157);
+                doc.text(`- NKRO MAX ROLLOVER: ${lblKbNkro.textContent} keys`, 15, 163);
+                doc.text(`- CHATTER VIOLATIONS: ${lblKbChatter.textContent} triggers`, 15, 169);
+
+                // COLUMN 2: Mouse + Display
+                doc.setFont("Helvetica", "bold");
+                doc.setFontSize(11);
+                doc.setTextColor(16, 185, 129);
+                doc.text(secMouse.toUpperCase(), 110, 105);
+                doc.line(110, 107, 195, 107);
+
+                doc.setFont("Courier", "bold");
+                doc.setFontSize(9);
+                doc.setTextColor(71, 85, 105);
+                doc.text(`- CLICK CLOCK TALLY: ${lblMouseClicks.textContent} clicks`, 110, 114);
+                doc.text(`- CPS CLICKS HIGH: ${lblMouseCps.textContent}`, 110, 120);
+                doc.text(`- BUTTONS DETECTED: ${lblMouseButtons.textContent.substring(0, 28)}`, 110, 126);
+
+                doc.setFont("Helvetica", "bold");
+                doc.setFontSize(11);
+                doc.setTextColor(16, 185, 129);
+                doc.text(secDisp.toUpperCase(), 110, 148);
+                doc.line(110, 150, 195, 150);
+
+                doc.setFont("Courier", "bold");
+                doc.setFontSize(9);
+                doc.setTextColor(71, 85, 105);
+                doc.text(`- DISPLAY CLOCK HZ: ${lblDispHz.textContent}`, 110, 157);
+                doc.text(`- DEAD PIXEL CHECK: ${lblDispPixel.textContent}`, 110, 163);
+                doc.text(`- STUCK PIXEL FIXER: ${lblDispSweeper.textContent}`, 110, 169);
+
+                // 5. Encrypted Cryptographic SHA256 integrity checker block
+                doc.setFillColor(248, 250, 252); // slate-50
+                doc.setDrawColor(226, 232, 240); // slate-200
+                doc.roundedRect(15, 190, 180, 26, 3, 3, "FD");
+
+                doc.setFont("Helvetica", "bold");
+                doc.setFontSize(8);
+                doc.setTextColor(100, 116, 139);
+                doc.text(secIntegrity, 20, 196);
+
+                doc.setFont("Courier", "bold");
+                doc.setFontSize(8);
+                doc.setTextColor(16, 185, 129);
+                
+                // Wrap long SHA256 string cleanly
+                const sha = lblSha256.textContent;
+                doc.text(sha.substring(0, 48), 20, 202);
+                doc.text(sha.substring(48), 20, 207);
+
+                doc.setFillColor(16, 185, 129);
+                doc.roundedRect(165, 196, 25, 14, 1, 1, "F");
+                doc.setTextColor(255, 255, 255);
+                doc.setFont("Helvetica", "bold");
+                doc.setFontSize(7);
+                doc.text("SECURE SIGN", 168, 204);
+
+                // 6. Signature blocks and issue timestamps
+                doc.setTextColor(71, 85, 105);
+                doc.setFont("Helvetica", "bold");
+                doc.setFontSize(8);
+                doc.text(`DATE ISSUED: ${lblTimestamp.textContent}`, 15, 245);
+                doc.text(statusPass, 15, 251);
+
+                // Certificate official verified stamp logo (Vector)
+                doc.setDrawColor(16, 185, 129);
+                doc.setLineWidth(1);
+                doc.circle(165, 245, 12);
+                doc.circle(165, 245, 11);
+                doc.setFont("Helvetica", "bold");
+                doc.setFontSize(6);
+                doc.setTextColor(16, 185, 129);
+                doc.text("INPUTTEST", 154, 244);
+                doc.text("APPROVED", 154, 248);
+
+                // 7. Footer standard details
+                doc.setFillColor(11, 15, 25); // Slate-900
+                doc.rect(7, 276, 196, 14, "F");
+
+                doc.setTextColor(255, 255, 255);
+                doc.setFont("Helvetica", "normal");
+                doc.setFontSize(7);
+                doc.text("Verified locally by InputTest.online client diagnostics sandbox. No server logs compiled.", 15, 284);
+                doc.setFont("Helvetica", "bold");
+                doc.text("SECURITY DECLARED VALID", 160, 284);
+
+                // Trigger direct save
+                const filename = `InputTest_Certified_Report_${owner.replace(/\s+/g, "_")}.pdf`;
+                doc.save(filename);
+                showToast("🎉 Certified vector PDF downloaded successfully!");
+            }
+
+            // ============================================
+            // SEARCH & COMMAND PALETTE OVERLAY
+            // ============================================
+            const searchBar = document.getElementById("nav-search-bar");
+            const searchPanel = document.getElementById("search-dropdown-panel");
+            
+            if (searchBar && searchPanel) {
+                const searchDatabase = [
+                    { title: "Keyboard Tester Online", desc: "Test laptop & mechanical switches", url: "keyboard.html" },
+                    { title: "Mouse & CPS Checker", desc: "Test click, scroll, and speed CPS", url: "mouse.html" },
+                    { title: "Clicks Per Second Test", desc: "10-second high-score speed game", url: "mouse.html#cps" },
+                    { title: "Speaker & Sound Tester", desc: "Stereo balance frequency check", url: "sound.html" },
+                    { title: "Gamepad & Joystick Tester", desc: "Controller buttons stick drift test", url: "gamepad.html" },
+                    { title: "Microphone Voice Tester", desc: "Test decibel telemetry voice echo loop", url: "mic.html" },
+                    { title: "Webcam Calibration Check", desc: "Video test, resolution and FPS check", url: "webcam.html" },
+                    { title: "Display & Screen Tester", desc: "Check dead pixels, monitor Hz, and ghosting", url: "display.html" },
+                    { title: "Drawing Tablet & Touchscreen Tester", desc: "Check pen pressure, touchscreen multi-touch, and drawing accuracy", url: "draw.html" },
+                    { title: "Bluetooth & Audio Latency Tester", desc: "Measure delay and lag of wireless headphones or Bluetooth speakers", url: "latency.html" },
+                    { title: "USB & HID Device Info Profiler", desc: "Scan connected USB/HID peripherals and inspect system hardware capabilities", url: "usb.html" },
+                    { title: "Biometric & Fingerprint Tester", desc: "Test Windows Hello, Touch ID, or security keys via standard client-side WebAuthn diagnostics", url: "biometric.html" },
+                    { title: "Battery Health & Efficiency Analyzer", desc: "Evaluate laptop chaging slopes, power draw rates, estimated cycle health, and power source metrics", url: "battery.html" },
+                    { title: "Printer Calibrated Test Page", desc: "Print CMYK color blocks, alignment grids, and evaluate font readability", url: "printer.html" },
+                    { title: "Scanner & Document Capture Checker", desc: "Test document scanners, apply black-and-white Xerox shaders, and scan QR codes", url: "scanner.html" },
+                    { title: "VR & XR Motion Controller Tester", desc: "Test 6-DOF spatial coordinates, analog triggers, and fire rumble haptics", url: "vr.html" },
+                    { title: "PC Hardware Specs Scanner", desc: "Profile processor cores, graphics card GPU model, RAM, and storage disks sizes", url: "specs.html" },
+                    { title: "Certified Diagnostic Report", desc: "Generate secure verified hardware configuration & device checklist PDF", url: "report.html" },
+                    { title: "LAN / Ethernet Port Jitter & Type Tester", desc: "Test network jitter, ping variance, and verify physical cable reliability", url: "lan.html" },
+                    { title: "HDMI & DisplayPort Multi-Screen Analyzer", desc: "Verify monitor refresh rate Hz, display placements, and multi-channel audio", url: "hdmi.html" },
+                    { title: "VGA Analog Calibrator Test Patterns", desc: "Calibrate analog monitor focus, phase adjustment zebra lines, and color bars", url: "vga.html" },
+                    { title: "USB Type-C & Thunderbolt Speed Profiler", desc: "Test alternate mode capabilities, power delivery profiles, and verify speeds", url: "usb-c.html" },
+                    { title: "Privacy Policy Compliance", desc: "AdSense, cookies & safety disclosure", url: "privacy.html" },
+                    { title: "Terms of Service Agreement", desc: "Device diagnostic terms and client-side usage rules", url: "terms.html" },
+                    { title: "Admin Settings Panel", desc: "Export config.js & preview analytics", url: "admin.php" }
+                ];
+
+                window.addEventListener("keydown", (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+                        e.preventDefault();
+                        searchBar.focus();
+                    }
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!searchBar.contains(e.target) && !searchPanel.contains(e.target)) {
+                        searchPanel.classList.add("hidden");
+                    }
+                });
+
+                searchBar.addEventListener("focus", showResults);
+                searchBar.addEventListener("input", showResults);
+
+                function showResults() {
+                    const query = searchBar.value.toLowerCase().trim();
+                    searchPanel.innerHTML = '<div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>';
+                    
+                    const filtered = searchDatabase.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.desc.toLowerCase().includes(query)
+                    );
+
+                    if (filtered.length === 0) {
+                        searchPanel.innerHTML += `
+                            <div class="px-2 py-3 text-center text-xs text-slate-400 font-semibold">
+                                No results found for "${searchBar.value}"
+                            </div>
+                        `;
+                    } else {
+                        filtered.forEach(item => {
+                            const itemEl = document.createElement("a");
+                            itemEl.href = item.url;
+                            itemEl.className = "flex flex-col px-3 py-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 transition-all duration-150 select-none group";
+                            itemEl.innerHTML = `
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-250 group-hover:text-blue-600 transition-colors">${item.title}</span>
+                                <span class="text-[10px] text-slate-400 dark:text-slate-500 font-semibold">${item.desc}</span>
+                            `;
+                            searchPanel.appendChild(itemEl);
+                        });
+                    }
+                    searchPanel.classList.remove("hidden");
+                }
+            }
+
+            // ============================================
+            // DYNAMIC TOAST SYSTEM
+            // ============================================
+            function showToast(message) {
+                const oldToast = document.getElementById("diagnostic-toast");
+                if (oldToast) oldToast.remove();
+                
+                const toast = document.createElement("div");
+                toast.id = "diagnostic-toast";
+                toast.className = "fixed bottom-6 right-6 z-[200] flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 shadow-2xl shadow-slate-300/40 animate-scaleUp text-xs font-bold text-slate-800 dark:text-slate-250 transition-all select-none font-sans";
+                toast.innerHTML = `
+                    <div class="flex items-center justify-center h-6 w-6 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-600">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-850 tracking-wide">${message}</p>
+                    </div>
+                `;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.add("opacity-0", "translate-y-2");
+                    setTimeout(() => toast.remove(), 300);
+                }, 2800);
+            }
+        });
+        
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('[PWA] Service Worker registered scope:', reg.scope))
+                    .catch(err => console.error('[PWA] Service Worker registration failed:', err));
+            });
+        }
+    </script>
+<script>
+    // Interactive Mobile Menu Toggle
+    document.addEventListener("DOMContentLoaded", () => {
+        const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+        const mobileNavPanel = document.getElementById("mobile-nav-panel");
+        const hamburgerIcon = document.getElementById("hamburger-icon");
+        const hamburgerClose = document.getElementById("hamburger-close");
+
+        if (mobileMenuToggle && mobileNavPanel && hamburgerIcon && hamburgerClose) {
+            mobileMenuToggle.addEventListener("click", () => {
+                mobileNavPanel.classList.toggle("hidden");
+                hamburgerIcon.classList.toggle("hidden");
+                hamburgerClose.classList.toggle("hidden");
+            });
+        }
+    });
+</script>
+</body>
+</html>

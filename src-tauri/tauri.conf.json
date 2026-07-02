@@ -1,0 +1,65 @@
+{
+  "build": {
+    "distDir": "../",
+    "devPath": "../",
+    "beforeDevCommand": "",
+    "beforeBuildCommand": ""
+  },
+  "package": {
+    "version": "1.0.0",
+    "productName": "InputTest"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false
+    },
+    "bundle": {
+      "active": true,
+      "category": "Utility",
+      "copyright": "Copyright 2026 InputTest.online",
+      "deb": {
+        "depends": []
+      },
+      "externalBin": [],
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
+      "identifier": "com.inputtest.app",
+      "longDescription": "Universal Hardware & Input Device Tester. Test keyboard, mouse, gamepad, audio, and visual peripherals offline or online.",
+      "macOS": {
+        "entitlements": null,
+        "exceptionDomain": "",
+        "frameworks": [],
+        "providerBundleIdentifier": null,
+        "signingIdentity": null
+      },
+      "resources": [],
+      "shortDescription": "Universal Hardware & Input Device Tester",
+      "targets": "all",
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": ""
+      }
+    },
+    "security": {
+      "csp": null
+    },
+    "updater": {
+      "active": false
+    },
+    "windows": [
+      {
+        "fullscreen": false,
+        "height": 720,
+        "resizable": true,
+        "title": "InputTest.online - Desktop Device Tester",
+        "width": 1080
+      }
+    ]
+  }
+}

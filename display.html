@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/display.html">
+    <script>
+        // Inline theme helper to avoid UI flash of light theme
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- SEO Meta Tags -->
+    <title>Display & Screen Quality Tester - Monitor Hz, Dead Pixels & Ghosting | InputTest.online</title>
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/display.html">
+    <meta property="og:title" content="Display & Screen Quality Tester - Monitor Hz, Dead Pixels & Ghosting | InputTest.online">
+    <meta property="og:description" content="Free online display tester. Calibrate monitor refresh rate Hz speeds, sweep dead pixels, test dynamic contrast gradients, measure response trails, and sweep stuck screen burn-in.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/display.html">
+    <meta name="twitter:title" content="Display & Screen Quality Tester - Monitor Hz, Dead Pixels & Ghosting | InputTest.online">
+    <meta name="twitter:description" content="Free online display tester. Calibrate monitor refresh rate Hz speeds, sweep dead pixels, test dynamic contrast gradients, measure response trails, and sweep stuck screen burn-in.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+    <meta name="description" content="Free online display tester. Calibrate monitor refresh rate Hz speeds, sweep dead pixels, test dynamic contrast gradients, measure response trails, and sweep stuck screen burn-in.">
+
+    <!-- JSON-LD Structured Data for FAQ Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How do I accurately test my monitor's refresh rate (Hz)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our high-precision online speedometer calculates your screen refresh rate in real-time using high-resolution browser requestAnimationFrame intervals. Make sure your browser hardware acceleration is enabled in settings to get absolute Hz values."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is the difference between a dead pixel and a stuck pixel?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A dead pixel is a completely failed transistor that remains permanently black across all solid background sweeps. A stuck pixel is a temporarily malfunctioning sub-pixel that remains frozen on a single color (typically red, green, or blue)."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Can a screen burn-in or stuck pixel be fixed online?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, many stuck pixels can be restored by cycling high-frequency colors. Our stuck pixel sweeper flashes pure red, green, blue, and white sub-pixels at rapid rates, stimulating the frozen liquid crystal molecules to regain dynamic range."
+        }
+      }, {
+        "@type": "Question",
+        "name": "How does monitor ghosting and response time impact gaming?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Monitor ghosting creates a blurry trailing shadow behind fast-moving elements. This is caused by slow pixel response times (G2G delay), where physical pixels cannot cycle colors as fast as the monitor refresh clock (e.g. 144Hz/240Hz)."
+        }
+      }]
+    }
+    </script>
+    
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 10% 40%, rgba(16, 185, 129, 0.03) 0%, transparent 40%);
+        }
+
+        @keyframes scaleUp {
+            0% { opacity: 0; transform: scale(0.9) translateY(2px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-scaleUp {
+            animation: scaleUp 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* Speedometer gauge animations */
+        .gauge-trail {
+            stroke-dasharray: 251.2;
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 0.3s ease;
+        }
+
+        /* Screen Sweeper Flickers */
+        @keyframes pixelSweep {
+            0% { background-color: #ff0000; }
+            33% { background-color: #00ff00; }
+            66% { background-color: #0000ff; }
+            100% { background-color: #ffffff; }
+        }
+        .sweeper-active {
+            animation: pixelSweep 0.08s infinite steps(4, end);
+        }
+
+        /* Custom Scrollbar for dynamic lists */
+        .console-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .console-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .console-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+            /* Dark Mode style overrides */
+        .dark .glow-bg {
+            background-color: #0b0f19 !important;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%) !important;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #0f172a !important;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155 !important;
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #475569 !important;
+        }
+    </style>
+    
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+
+    <!-- JSON-LD Structured Data for WebApplication Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Display & Screen Quality Tester",
+        "description": "Free online display tester. Calibrate monitor refresh rate Hz speeds, sweep dead pixels, test dynamic contrast gradients, measure response trails, and sweep stuck screen burn-in.",
+        "url": "https://inputtest.online/display.html",
+        "image": "https://inputtest.online/icon-512.png",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires HTML5 compatible browser",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:text-slate-250 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg relative overflow-x-hidden transition-colors duration-300">
+
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm dark:shadow-none transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-300">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-slate-250 group-hover:text-blue-600 transition-colors duration-250">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+                
+                <!-- Interactive Center Search Bar -->
+                <div class="hidden lg:flex items-center flex-grow max-w-sm mx-6 relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <input id="nav-search-bar" type="text" placeholder="Search tool, inputs, keys..." class="w-full bg-slate-100/60 hover:bg-slate-200/50 focus:bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-blue-500 rounded-full py-1.5 pl-10 pr-12 text-xs text-slate-700 dark:text-slate-350 font-medium tracking-wide focus:outline-none transition-all shadow-inner focus:shadow-sm dark:shadow-none" autocomplete="off">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <kbd class="text-[9px] font-mono font-bold text-slate-400 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-1.5 py-0.5 rounded shadow-sm dark:shadow-none">Ctrl K</kbd>
+                    </div>
+                    
+                    <!-- Search Dropdown Panel -->
+                    <div id="search-dropdown-panel" class="hidden absolute top-12 left-0 right-0 bg-white/95 border border-slate-200 rounded-2xl shadow-xl shadow-slate-200/40 p-2 z-50 max-h-64 overflow-y-auto space-y-1 backdrop-blur-md">
+                        <div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>
+                    </div>
+                </div>
+                
+                                <!-- Main Nav Links -->
+                <div class="hidden md:flex items-center gap-6 flex-shrink-0">
+                    <a href="/" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Home</a>
+                    <a href="keyboard.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Keyboard Test</a>
+                    <a href="mouse.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Mouse & CPS</a>
+                    <a href="blog.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Blog</a>
+                    
+                    <!-- Premium More Tools Dropdown -->
+                    <div class="relative group">
+                        <button id="nav-dropdown-btn" class="flex items-center gap-1 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 py-1.5 px-1 focus:outline-none transition-all duration-200">
+                            More Tools
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 group-hover:rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu panel -->
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full mt-2 w-80 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-3 grid grid-cols-2 gap-1.5 backdrop-blur-md z-50 animate-scaleUp">
+                            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 col-span-2 mb-1.5">Top Calibration Utilities</div>
+                            
+                            <a href="display.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">📺 Display Test</a>
+                            <a href="specs.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">💻 System Specs</a>
+                            <a href="gamepad.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">🎮 Gamepad drift</a>
+                            
+                            <a href="report.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-xs font-bold text-emerald-600 dark:text-emerald-450 transition-colors col-span-2 shadow-sm">🛡️ Certified PDF Report</a>
+                            
+                            <div class="h-px bg-slate-100 dark:bg-slate-800/60 col-span-2 my-1"></div>
+                            
+                            <a href="sound.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔊 Speaker test</a>
+                            <a href="mic.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎙️ Microphone</a>
+                            <a href="webcam.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📷 Webcam Check</a>
+                            <a href="draw.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📐 Drawing Tablet</a>
+                            <a href="latency.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ Latency Check</a>
+                            <a href="usb.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔌 USB Profiler</a>
+                            <a href="biometric.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔑 Biometrics Hello</a>
+                            <a href="printer.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🖨️ Printer CMYK</a>
+                            <a href="scanner.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📄 Documents scan</a>
+                            <a href="vr.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🕶️ VR controllers</a>
+                            <a href="battery.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔋 Battery Health</a>
+                            <a href="lan.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🌐 LAN Tester</a>
+                            <a href="hdmi.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📺 HDMI & DP</a>
+                            <a href="vga.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎨 VGA Calibrator</a>
+                            <a href="usb-c.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ USB-C Profiler</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Back Home -->
+                <div class="flex items-center gap-3 flex-shrink-0">                    <!-- Mobile Hamburger Button -->
+                    <button id="mobile-menu-toggle" class="p-2 md:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm transition-all focus:outline-none" aria-label="Toggle Navigation Menu">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                                        <!-- Elegant Sun/Moon Theme Toggle -->
+                    <button id="theme-toggle" class="relative p-2 mr-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm dark:shadow-none transition-all focus:outline-none" aria-label="Toggle dark mode">
+                        <!-- Sun Icon (hidden by default, shown in dark mode) -->
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <!-- Moon Icon (shown by default, hidden in dark mode) -->
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <a href="/" class="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1 font-bold font-mono bg-blue-500/5 px-3 py-1.5 rounded-full border border-blue-500/15">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+            <!-- Mobile Dropdown Navigation Panel -->
+    <div id="mobile-nav-panel" class="hidden md:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md px-4 py-4 space-y-3 transition-all duration-300 animate-scaleUp">
+        <div class="grid grid-cols-2 gap-3 text-xs font-bold">
+            <a href="/" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🏠 Home</a>
+            <a href="keyboard.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">⌨️ Keyboard Test</a>
+            <a href="mouse.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🖱️ Mouse & CPS</a>
+            <a href="display.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">📺 Display Test</a>
+            <a href="specs.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">💻 Hardware Specs</a>
+            <a href="report.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-450">🛡️ PDF Certificate</a>
+            <a href="blog.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/10 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 col-span-2 justify-center font-bold">📝 Diagnostic Blog & Guides</a>
+        </div>
+        
+        <div class="border-t border-slate-100 dark:border-slate-900 pt-3">
+            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-1">All Diagnostic Utilities</div>
+            <div class="grid grid-cols-2 gap-2 text-[10px] font-bold text-slate-500 dark:text-slate-400">
+                <a href="gamepad.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎮 Gamepad drift</a>
+                <a href="sound.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔊 Speaker test</a>
+                <a href="mic.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎙️ Microphone</a>
+                <a href="webcam.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📷 Webcam Check</a>
+                <a href="draw.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📐 Drawing Tablet</a>
+                <a href="latency.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ Latency Check</a>
+                <a href="usb.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔌 USB Profiler</a>
+                <a href="biometric.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔑 Biometrics Hello</a>
+                <a href="printer.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🖨️ Printer CMYK</a>
+                <a href="scanner.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📄 Documents scan</a>
+                <a href="vr.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🕶️ VR headset</a>
+                <a href="lan.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🌐 LAN Jitter Test</a>
+                <a href="hdmi.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📺 HDMI & DP</a>
+                <a href="vga.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎨 VGA Calibrator</a>
+                <a href="usb-c.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ USB-C Profiler</a>
+                <a href="battery.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔋 Battery Health</a>
+            </div>
+        </div>
+    </div>
+
+    </nav>
+
+    <!-- AdSense Banner -->
+    <div class="max-w-7xl mx-auto px-4 mt-6 w-full flex justify-center">
+        <div id="top-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-sm dark:shadow-none rounded-2xl overflow-hidden flex items-center justify-center animate-pulse-slow">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px]">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+        
+        <!-- Header HUD -->
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+                    Display & Screen Quality Tester 
+                    <span class="text-xs font-mono font-bold px-2 py-0.5 rounded border border-indigo-500/10 bg-indigo-50 text-indigo-600 uppercase tracking-widest">Refresh Rate & Panel Calibration</span>
+                </h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                    Analyze active monitor refresh rate Hz, identify dead/stuck pixels, test dynamic contrast dynamic range, and sweep screen burn-in.
+                </p>
+            </div>
+
+            <!-- Connection Status -->
+            <div class="px-4 py-2.5 bg-white border border-emerald-200/80 rounded-2xl shadow-sm dark:shadow-none flex items-center gap-3 text-xs font-bold select-none text-emerald-600 shrink-0">
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-500 block animate-pulse"></span>
+                <span>MONITOR DETECTED ACTIVE</span>
+            </div>
+        </div>
+
+        <!-- Dashboard Matrix Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-10">
+            
+            <!-- LEFT COLUMN: Real-time Refresh Rate Hz Speedometer (5 Columns) -->
+            <div class="lg:col-span-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none flex flex-col justify-between h-full select-none">
+                <div>
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block border-b border-slate-100 pb-3 mb-6">1. Precision Refresh Rate Speedometer</span>
+                    
+                    <!-- Gauge visualizer center container -->
+                    <div class="flex flex-col items-center justify-center py-6 relative">
+                        <svg viewBox="0 0 100 100" class="w-48 h-48 drop-shadow-md dark:shadow-none">
+                            <!-- Background ring -->
+                            <circle cx="50" cy="50" r="40" stroke="#f1f5f9" stroke-width="6" fill="transparent" stroke-dasharray="188.4 62.8" stroke-linecap="round" transform="rotate(135 50 50)" />
+                            <!-- Value ring indicator -->
+                            <circle id="hz-gauge-indicator" cx="50" cy="50" r="40" stroke="#6366f1" stroke-width="6.5" fill="transparent" stroke-dasharray="0 251.2" stroke-linecap="round" transform="rotate(135 50 50)" class="gauge-trail" />
+                            
+                            <!-- Inside HUD Text values -->
+                            <text x="50" y="47" text-anchor="middle" class="fill-slate-800 font-extrabold text-2xl font-mono" id="label-live-hz">0</text>
+                            <text x="50" y="60" text-anchor="middle" class="fill-slate-400 font-extrabold text-[8px] font-mono uppercase tracking-widest">FPS / Hz</text>
+                        </svg>
+                        
+                        <div class="mt-4 px-3.5 py-1 bg-indigo-50 border border-indigo-150 rounded-full text-[10px] font-bold text-indigo-600 font-mono" id="hz-rating-tag">
+                            DETECTING SIGNAL...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Clock Telemetry list -->
+                <div class="grid grid-cols-2 gap-4 mt-6 font-mono text-xs text-slate-500 dark:text-slate-400 font-bold">
+                    <div class="p-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl text-center">
+                        <span class="text-[9px] text-slate-400 uppercase tracking-wider block mb-0.5">Average Paint Interval</span>
+                        <span id="label-frame-ms" class="text-slate-800 dark:text-slate-250 text-xs font-black">0.00 ms</span>
+                    </div>
+                    <div class="p-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl text-center">
+                        <span class="text-[9px] text-slate-400 uppercase tracking-wider block mb-0.5">Highest Peak Captured</span>
+                        <span id="label-peak-hz" class="text-slate-800 dark:text-slate-250 text-xs font-black">0.0 Hz</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Dashboard Test Modules Launcher (7 Columns) -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- Main Grid Options -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    
+                    <!-- Dead Pixel Tester Card -->
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none flex flex-col justify-between hover:shadow-md dark:shadow-none transition-shadow relative overflow-hidden group">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-3xl">🔲</span>
+                                <span class="text-[9px] font-mono text-indigo-700 font-bold px-2 py-0.5 rounded border border-indigo-100 bg-indigo-50 uppercase tracking-widest">Modal Check</span>
+                            </div>
+                            <h3 class="text-base font-extrabold text-slate-800 dark:text-slate-250">Dead Pixel Checker</h3>
+                            <p class="text-xs text-slate-400 font-medium leading-relaxed">Cycle pure fullscreen screens to check backlight bleeding or stuck pixel nodes.</p>
+                        </div>
+                        <button id="btn-launch-pixels" class="mt-5 w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider transition-all shadow-sm dark:shadow-none focus:outline-none select-none">
+                            🖥️ Launch Fullscreen
+                        </button>
+                    </div>
+
+                    <!-- Stuck Pixel Burn-in Sweeper Card -->
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none flex flex-col justify-between hover:shadow-md dark:shadow-none transition-shadow relative overflow-hidden group">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-3xl animate-pulse">💫</span>
+                                <span class="text-[9px] font-mono text-emerald-700 font-bold px-2 py-0.5 rounded border border-emerald-100 bg-emerald-50 uppercase tracking-widest">Pixel Fixer</span>
+                            </div>
+                            <h3 class="text-base font-extrabold text-slate-800 dark:text-slate-250">Stuck Pixel Sweeper</h3>
+                            <p class="text-xs text-slate-400 font-medium leading-relaxed">Flickers sub-pixels dynamically at high frequency to restore screen retention nodes.</p>
+                        </div>
+                        <button id="btn-launch-sweeper" class="mt-5 w-full py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider transition-all shadow-sm dark:shadow-none focus:outline-none select-none">
+                            ⚡ Launch Pixel Sweeper
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Contrast Calibrator Rails -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none space-y-4">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block border-b border-slate-100 pb-3">2. Panel Contrast Dynamic Range Calibrator</span>
+                    
+                    <!-- Dynamic range calibration bars -->
+                    <div class="space-y-3 font-mono text-[9px] text-slate-400 font-bold select-none">
+                        <!-- Pure Grayscale gradient -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between"><span>GRAYSCALE DEPTH RANGE (0% - 100%)</span><span>GAMMA CHECK</span></div>
+                            <div class="h-6 w-full rounded-lg bg-gradient-to-r from-black via-slate-500 to-white border border-slate-200"></div>
+                        </div>
+                        <!-- RGB Contrast Bars -->
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="space-y-1">
+                                <span>RED RANGE</span>
+                                <div class="h-5 w-full rounded-lg bg-gradient-to-r from-black to-red-600 border border-slate-200"></div>
+                            </div>
+                            <div class="space-y-1">
+                                <span>GREEN RANGE</span>
+                                <div class="h-5 w-full rounded-lg bg-gradient-to-r from-black to-emerald-600 border border-slate-200"></div>
+                            </div>
+                            <div class="space-y-1">
+                                <span>BLUE RANGE</span>
+                                <div class="h-5 w-full rounded-lg bg-gradient-to-r from-black to-blue-600 border border-slate-200"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ghosting & Motion Response Tester -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none space-y-4">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3 select-none">
+                        <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block">3. Motion Ghosting & Response Lag simulator</span>
+                        
+                        <div class="flex items-center gap-4">
+                            <!-- Toggle simulator -->
+                            <button id="btn-toggle-ghosting" class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 border border-indigo-200 font-bold text-[9px] rounded-lg uppercase tracking-wider transition-all focus:outline-none">
+                                Simulator: Active
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Motion Arena Canvas -->
+                    <div class="w-full h-32 bg-slate-950 border border-slate-900 rounded-2xl overflow-hidden relative shadow-inner">
+                        <canvas id="ghosting-canvas" class="w-full h-full"></canvas>
+                    </div>
+
+                    <!-- Ghosting settings -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-[9px] text-slate-400 font-bold select-none">
+                        <div class="space-y-1">
+                            <div class="flex justify-between">
+                                <span>BLOCK SPEED RATE</span>
+                                <span class="text-slate-800 dark:text-slate-250" id="label-ghosting-speed">8 px/frame</span>
+                            </div>
+                            <input id="slider-ghosting-speed" type="range" min="2" max="25" value="8" class="w-full h-1 bg-slate-200 rounded appearance-none cursor-pointer accent-indigo-600 focus:outline-none">
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between">
+                                <span>BLOCK COLOR SET</span>
+                                <span class="text-indigo-600" id="label-ghosting-color">Emerald on Black</span>
+                            </div>
+                            <select id="select-ghosting-theme" class="w-full bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-xl p-1 text-[9px] font-bold text-slate-700 dark:text-slate-350 cursor-pointer focus:outline-none">
+                                <option value="emerald-black">Emerald on Black (High Contrast)</option>
+                                <option value="white-blue">White on Indigo (Standard)</option>
+                                <option value="gray-gray">Gray on Light Gray (Ghosting Test)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             🔒 PREMIUM SEO DIAGNOSTIC GUIDE & FAQ SECTION
+             ============================================ -->
+        <section class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start w-full relative z-10">
+            
+            <!-- Left 7-Column: Mini-Blog / Comprehensive Diagnostic Guide -->
+            <div class="lg:col-span-7 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 shadow-sm backdrop-blur-md transition-colors duration-300">
+                <span class="text-[9px] font-mono text-blue-600 dark:text-blue-400 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-850 pb-3 mb-6">📚 Technical Diagnostic Guide</span>
+                
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-4 tracking-tight leading-tight select-none">
+                    How to Calibrate Display Refresh Rates, Stuck Pixels, & Contrast G2G online
+                </h2>
+                
+                <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 space-y-4 leading-relaxed">
+                    <p>
+                        A monitor is the primary visual feedback system for every computer user. Whether you are gaming, designing, or working, verifying your display panel's health (refresh rate, dead pixels, Stuck nodes, and contrast levels) is vital. Our advanced <strong>Online Display Tester</strong> provides dynamic client-side diagnostics to evaluate panel performance directly inside your browser sandbox.
+                    </p>
+                    
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        🖥️ Precision Monitor Refresh Rate (Hz) Speedometer
+                    </h3>
+                    <p>
+                        Monitor refresh rate, measured in Hertz (Hz), represents the number of times your screen updates its image every second. Standard displays refresh at 60Hz, while high-performance gaming screens support 144Hz, 240Hz, or 360Hz. We calculate your active refresh clock in real-time by tracing frame paint intervals. To ensure accurate readings, disable battery saver profiles and enable hardware acceleration inside your browser configurations.
+                    </p>
+
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        🔲 Sweeping Screen Backlights for Dead & Stuck Pixels
+                    </h3>
+                    <p>
+                        LCD, LED, and OLED screens are composed of millions of tiny red, green, and blue sub-pixels. A <strong>dead pixel</strong> is a permanently dead transistor that registers as black, while a <strong>stuck pixel</strong> remains frozen on a single solid color. Launch our full-screen color sweep module to test your display. By cycling pure backgrounds (red, green, blue, black, white), stuck or dead sub-pixels become instantly visible to the eye.
+                    </p>
+
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        ⚡ How Stuck Pixel Sweepers Stimulate LCD/OLED Panels
+                    </h3>
+                    <p>
+                        Stuck pixels can often be fixed by rapidly stimulating the sub-pixel transistors. Our <strong>Stuck Pixel Sweeper</strong> flashes intense sub-pixel color bars at high frequencies. This rapid state transition triggers frozen liquid crystal nodes to loosen up, restoring full dynamic range color response safely without requiring physical panel massage techniques.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right 5-Column: Elegant Interactive FAQ Accordion -->
+            <div class="lg:col-span-5 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 shadow-sm backdrop-blur-md transition-colors duration-300 space-y-6">
+                <span class="text-[9px] font-mono text-emerald-600 dark:text-emerald-455 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-850 pb-3">❓ Frequently Asked Questions</span>
+                
+                <div class="space-y-4">
+                    
+                    <!-- FAQ 1 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">How do I accurately test my monitor's refresh rate (Hz)?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Our high-precision online speedometer calculates your screen refresh rate in real-time using high-resolution browser requestAnimationFrame intervals. Make sure your browser hardware acceleration is enabled in settings to get absolute Hz values.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">What is the difference between a dead pixel and a stuck pixel?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            A dead pixel is a completely failed transistor that remains permanently black across all solid background sweeps. A stuck pixel is a temporarily malfunctioning sub-pixel that remains frozen on a single color (typically red, green, or blue).
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Can a screen burn-in or stuck pixel be fixed online?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Yes, many stuck pixels can be restored by cycling high-frequency colors. Our stuck pixel sweeper flashes pure red, green, blue, and white sub-pixels at rapid rates, stimulating the frozen liquid crystal molecules to regain dynamic range.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 4 -->
+                    <div class="pb-2">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">How does monitor ghosting and response time impact gaming?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Monitor ghosting creates a blurry trailing shadow behind fast-moving elements. This is caused by slow pixel response times (G2G delay), where physical pixels cannot cycle colors as fast as the monitor refresh clock (e.g. 144Hz/240Hz).
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FULLSCREEN MODALS -->
+    
+    <!-- Dead Pixel Checker Modal Overlay (Full-viewport pure color canvas) -->
+    <div id="modal-pixel-checker" class="hidden fixed inset-0 z-[200] cursor-pointer bg-black flex flex-col justify-between p-6 select-none font-mono">
+        <!-- Floating overlay info HUD (disappears on hover or timer) -->
+        <div id="pixel-hud" class="max-w-md mx-auto p-4 bg-slate-900/90 border border-slate-800 text-white rounded-2xl flex flex-col gap-1.5 shadow-2xl backdrop-blur-md opacity-90 transition-opacity duration-300">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-1.5 mb-1.5">
+                <span class="text-[9px] uppercase font-bold text-slate-400">Dead Pixel Calibration Mode</span>
+                <span class="text-[8px] bg-slate-800 px-1.5 py-0.5 rounded text-slate-300 border border-slate-700 tracking-wider">ACTIVE</span>
+            </div>
+            <p class="text-[10px] text-slate-300 leading-relaxed font-bold">
+                👉 **Click anywhere** to sweep to the next solid color calibration.
+            </p>
+            <p class="text-[10px] text-slate-400 leading-relaxed">
+                👉 Press **Arrow Left / Right** to toggle colors manual.
+            </p>
+            <p class="text-[10px] text-slate-400 leading-relaxed">
+                👉 Press **ESC** or **double click** to return back to dashboard.
+            </p>
+            <div class="mt-2 text-[9px] uppercase text-indigo-400 font-extrabold" id="label-pixel-color">
+                ACTIVE COLOR: RED (#FF0000)
+            </div>
+        </div>
+        <div class="flex-grow"></div>
+    </div>
+
+    <!-- Stuck Pixel Sweeper Modal Overlay -->
+    <div id="modal-burnin-sweeper" class="hidden fixed inset-0 z-[200] flex items-center justify-center select-none font-mono relative overflow-hidden bg-black">
+        <!-- Flashing Canvas Sweeper -->
+        <div id="sweeper-canvas-flicker" class="absolute inset-0 bg-red-600"></div>
+
+        <!-- Float Sweeper Control panel -->
+        <div class="absolute p-6 bg-slate-900/95 border border-slate-800 text-white rounded-[2rem] max-w-sm w-full flex flex-col gap-4 shadow-2xl backdrop-blur-md z-10 text-center animate-scaleUp">
+            <span class="text-4xl animate-bounce">⚡</span>
+            <h2 class="text-lg font-black tracking-tight text-white">Stuck Pixel Restoration Active</h2>
+            <p class="text-xs text-slate-400 leading-relaxed font-medium">
+                High-frequency dynamic flicker stimulates individual sub-pixels (R, G, B, W) to restore screen color retention blocks.
+            </p>
+
+            <div class="py-3 bg-slate-950 border border-slate-800/80 rounded-2xl flex flex-col gap-0.5">
+                <span class="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">Time Remaining</span>
+                <span class="text-2xl font-black text-emerald-500" id="sweeper-countdown">05:00</span>
+            </div>
+
+            <!-- Pre-defined Timers row -->
+            <div class="grid grid-cols-3 gap-2 font-mono text-[9px] font-bold">
+                <button class="py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 tracking-wider btn-sweeper-time" data-mins="1">1 MINUTE</button>
+                <button class="py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 tracking-wider btn-sweeper-time" data-mins="5">5 MINUTES</button>
+                <button class="py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 tracking-wider btn-sweeper-time" data-mins="10">10 MINUTES</button>
+            </div>
+
+            <button id="btn-close-sweeper" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider transition-colors shadow-sm dark:shadow-none focus:outline-none">
+                ⏹️ Stop & Close Sweeper
+            </button>
+        </div>
+    </div>
+
+    <!-- AdSense Banner Bottom -->
+    <div class="max-w-7xl mx-auto px-4 mb-10 w-full flex justify-center">
+        <div id="bottom-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-sm dark:shadow-none rounded-2xl overflow-hidden flex items-center justify-center">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px]">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+                                <!-- Footer Area -->
+        <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 mt-auto transition-colors duration-300">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-left select-none">
+                
+                 <!-- Column 1: Brand & Logo -->
+                <div class="space-y-4">
+                    <a href="/" class="flex items-center gap-2 group w-fit transition-transform duration-200 active:scale-95">
+                        <span class="logo-emoji text-xl group-hover:rotate-12 transition-transform duration-300 inline-block">⌨️</span>
+                        <span class="brand-name font-black text-slate-900 dark:text-slate-200 text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">InputTest.online</span>
+                    </a>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed brand-slogan font-semibold">
+                        Universal Hardware & Input Device Tester
+                    </p>
+                    <p class="text-xs text-slate-400 dark:text-slate-500 leading-relaxed font-medium">
+                        Safe sandboxed hardware diagnostics. 100% private, local client-side processing.
+                    </p>
+                </div>
+                
+                 <!-- Column 2: Input Diagnostics -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Input Diagnostics</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="keyboard.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Keyboard Tester</a></li>
+                        <li><a href="mouse.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖱️ Mouse & CPS Test</a></li>
+                        <li><a href="gamepad.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎮 Gamepad & Drift</a></li>
+                        <li><a href="mic.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎙️ Microphone Check</a></li>
+                        <li><a href="webcam.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📷 Webcam Quality</a></li>
+                        <li><a href="draw.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📐 Drawing Tablet</a></li>
+                        <li><a href="usb.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔌 USB & HID Profiler</a></li>
+                        <li><a href="biometric.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔑 Biometrics Hello</a></li>
+                        <li><a href="battery.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔋 Battery Health</a></li>
+                        <li><a href="lan.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🌐 LAN Jitter Test</a></li>
+                        <li><a href="usb-c.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ USB-C Profiler</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 3: Screen & Outputs -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Screen & Outputs</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="display.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 Display & Monitor</a></li>
+                        <li><a href="latency.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ Latency & Lag</a></li>
+                        <li><a href="printer.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖨️ Printer CMYK</a></li>
+                        <li><a href="scanner.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📄 Documents Scan</a></li>
+                        <li><a href="vr.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🕶️ VR Controller</a></li>
+                        <li><a href="specs.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">💻 Hardware Specs</a></li>
+                        <li><a href="hdmi.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 HDMI Analyzer</a></li>
+                        <li><a href="vga.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎨 VGA Calibrator</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 4: Reports, Blog & Policies -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Info & Policies</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="report.html" class="text-emerald-600 dark:text-emerald-450 font-bold bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10 dark:border-emerald-500/20 hover:bg-emerald-500/10 transition-colors inline-block mb-1">🛡️ Certified PDF Report</a></li>
+                        <li><a href="blog.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📝 Blog Guides</a></li>
+                        <li><a href="privacy.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔒 Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚖️ Terms of Service</a></li>
+                        <li><a href="#" class="brand-email text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors break-all">✉️ support@inputtest.online</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="border-t border-slate-100 dark:border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-medium flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                    <span>&copy; 2026 InputTest.online. Safe sandboxed diagnostics. No data collection.</span>
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 font-extrabold border border-emerald-500/15 w-fit uppercase select-none">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-ping"></span>
+                        Version 1.2.0 (Updated: June 6, 2026)
+                    </span>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="#" class="twitter-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">Twitter</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+                    </a>
+                    <a href="#" class="github-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" clip-rule="evenodd"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+                document.addEventListener("DOMContentLoaded", () => {
+            // ============================================
+            // SUN/MOON SYSTEM THEME TOGGLE LOGIC
+            // ============================================
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
+
+            if (themeToggleBtn && sunIcon && moonIcon) {
+                // Sync sun/moon icon visibility on startup
+                if (document.documentElement.classList.contains('dark')) {
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                } else {
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                }
+
+                themeToggleBtn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    sunIcon.classList.toggle('hidden');
+                    moonIcon.classList.toggle('hidden');
+                    if (document.documentElement.classList.contains('dark')) {
+                        localStorage.setItem('color-theme', 'dark');
+                    } else {
+                        localStorage.setItem('color-theme', 'light');
+                    }
+                });
+            }
+            // Initialize Ads via config.js helper
+            setTimeout(() => {
+                SiteConfig.initAdSense('top-adsense-banner', 'topLeaderboard');
+                SiteConfig.initAdSense('bottom-adsense-banner', 'bottomLeaderboard');
+            }, 800);
+
+            // ============================================
+            // DYNAMIC SELECTORS & STATE
+            // ============================================
+            const labelLiveHz = document.getElementById("label-live-hz");
+            const indicatorHz = document.getElementById("hz-gauge-indicator");
+            const ratingHz = document.getElementById("hz-rating-tag");
+            const labelFrameMs = document.getElementById("label-frame-ms");
+            const labelPeakHz = document.getElementById("label-peak-hz");
+
+            // Modal Dead Pixel Checker selectors
+            const btnLaunchPixels = document.getElementById("btn-launch-pixels");
+            const modalPixelChecker = document.getElementById("modal-pixel-checker");
+            const labelPixelColor = document.getElementById("label-pixel-color");
+            const pixelHud = document.getElementById("pixel-hud");
+
+            // Modal Burn-in Sweeper selectors
+            const btnLaunchSweeper = document.getElementById("btn-launch-sweeper");
+            const modalBurninSweeper = document.getElementById("modal-burnin-sweeper");
+            const sweeperFlicker = document.getElementById("sweeper-canvas-flicker");
+            const sweeperCountdown = document.getElementById("sweeper-countdown");
+            const btnCloseSweeper = document.getElementById("btn-close-sweeper");
+
+            // Ghosting Simulator selectors
+            const btnToggleGhosting = document.getElementById("btn-toggle-ghosting");
+            const ghostingCanvas = document.getElementById("ghosting-canvas");
+            const sliderGhostingSpeed = document.getElementById("slider-ghosting-speed");
+            const selectGhostingTheme = document.getElementById("select-ghosting-theme");
+            const labelGhostingSpeed = document.getElementById("label-ghosting-speed");
+            const labelGhostingColor = document.getElementById("label-ghosting-color");
+
+            // Precision Clock state
+            let frameTimes = [];
+            let peakFps = 0;
+            let currentLiveFps = 0;
+            let lastTickTime = performance.now();
+
+            // PWA Report Metrics
+            let deadPixelsTested = false;
+            let sweeperRun = false;
+            let ghostingTested = false;
+
+            function saveDisplayReport() {
+                const report = {
+                    peakHz: peakFps,
+                    deadPixelsTested: deadPixelsTested,
+                    sweeperRun: sweeperRun,
+                    ghostingTested: ghostingTested,
+                    status: `${peakFps} Hz verified` + (deadPixelsTested ? " | Dead pixels sweep" : "") + (sweeperRun ? " | Sweeper run" : "") + (ghostingTested ? " | Ghosting simulated" : ""),
+                    timestamp: new Date().toLocaleString()
+                };
+                localStorage.setItem('inputtest_display_report', JSON.stringify(report));
+                console.log('[PWA] Saved display diagnostics to localStorage.');
+            }
+
+            // ============================================
+            // HIGH-PRECISION HZ / REFRESH RATE ESTIMATION
+            // ============================================
+            function runHzTracker() {
+                const now = performance.now();
+                const delta = now - lastTickTime;
+                lastTickTime = now;
+
+                if (delta > 0) {
+                    frameTimes.push(delta);
+                }
+
+                // Maintain history sample size of 120 frames
+                if (frameTimes.length > 120) {
+                    frameTimes.shift();
+                }
+
+                // Average frames delta and calculate FPS
+                const sum = frameTimes.reduce((a, b) => a + b, 0);
+                const avgDelta = sum / frameTimes.length;
+                currentLiveFps = Math.round(1000 / avgDelta);
+
+                if (currentLiveFps > 10 && frameTimes.length >= 60) {
+                    labelLiveHz.textContent = currentLiveFps;
+                    labelFrameMs.textContent = `${avgDelta.toFixed(2)} ms`;
+                    
+                    // Track absolute peak Hz
+                    if (currentLiveFps > peakFps) {
+                        peakFps = currentLiveFps;
+                        labelPeakHz.textContent = `${peakFps} Hz`;
+                        saveDisplayReport();
+                    }
+
+                    // Dynamically map Speedometer indicator dial (max 240 index)
+                    const normalizedFps = Math.min(240, currentLiveFps);
+                    const targetStrokeOffset = 251.2 - (normalizedFps / 240) * 188.4;
+                    indicatorHz.style.strokeDashoffset = targetStrokeOffset;
+
+                    // Update dynamic level rating tags
+                    let labelRating = "Standard Office (60Hz)";
+                    ratingHz.className = "mt-4 px-3.5 py-1 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-full text-[10px] font-bold text-slate-600 dark:text-slate-400 font-mono";
+                    
+                    if (currentLiveFps >= 240) {
+                        labelRating = "Pro Esports Grade (240Hz+)";
+                        ratingHz.className = "mt-4 px-3.5 py-1 bg-purple-50 border border-purple-150 rounded-full text-[10px] font-bold text-purple-600 font-mono animate-bounce";
+                    } else if (currentLiveFps >= 144) {
+                        labelRating = "High-FPS Gaming Panel (144Hz+)";
+                        ratingHz.className = "mt-4 px-3.5 py-1 bg-emerald-50 border border-emerald-150 rounded-full text-[10px] font-bold text-emerald-600 font-mono";
+                    } else if (currentLiveFps >= 90) {
+                        labelRating = "Fluid Smooth Panel (90Hz+)";
+                        ratingHz.className = "mt-4 px-3.5 py-1 bg-blue-50 border border-blue-150 rounded-full text-[10px] font-bold text-blue-600 font-mono";
+                    } else if (currentLiveFps >= 75) {
+                        labelRating = "Medium Refresh Rate (75Hz)";
+                        ratingHz.className = "mt-4 px-3.5 py-1 bg-indigo-50 border border-indigo-150 rounded-full text-[10px] font-bold text-indigo-600 font-mono";
+                    }
+                    ratingHz.textContent = labelRating;
+                }
+
+                requestAnimationFrame(runHzTracker);
+            }
+
+            requestAnimationFrame(runHzTracker);
+
+            // ============================================
+            // DEAD PIXEL CHECKER OVERLAY SYSTEM
+            // ============================================
+            const colors = [
+                { hex: "#ff0000", name: "Solid Red" },
+                { hex: "#00ff00", name: "Solid Green" },
+                { hex: "#0000ff", name: "Solid Blue" },
+                { hex: "#000000", name: "Solid Black" },
+                { hex: "#ffffff", name: "Solid White" },
+                { hex: "#ffff00", name: "Solid Yellow" },
+                { hex: "#ff00ff", name: "Solid Magenta" }
+            ];
+            let activeColorIndex = 0;
+
+            btnLaunchPixels.addEventListener("click", () => {
+                modalPixelChecker.classList.remove("hidden");
+                // Attempt standard fullscreen
+                if (modalPixelChecker.requestFullscreen) {
+                    modalPixelChecker.requestFullscreen();
+                } else if (modalPixelChecker.webkitRequestFullscreen) {
+                    modalPixelChecker.webkitRequestFullscreen();
+                }
+                activeColorIndex = 0;
+                applyCheckerColor();
+                
+                // Show tooltip and fade out after 3 seconds
+                pixelHud.style.opacity = "0.9";
+                setTimeout(() => {
+                    pixelHud.style.opacity = "0";
+                }, 3500);
+
+                deadPixelsTested = true;
+                saveDisplayReport();
+            });
+
+            // Disappear overlay guide on hover
+            pixelHud.addEventListener("mouseenter", () => {
+                pixelHud.style.opacity = "0.9";
+            });
+
+            function applyCheckerColor() {
+                const item = colors[activeColorIndex];
+                modalPixelChecker.style.backgroundColor = item.hex;
+                labelPixelColor.textContent = `ACTIVE COLOR: ${item.name.toUpperCase()} (${item.hex.toUpperCase()})`;
+            }
+
+            function nextPixelColor() {
+                activeColorIndex = (activeColorIndex + 1) % colors.length;
+                applyCheckerColor();
+            }
+
+            function prevPixelColor() {
+                activeColorIndex = (activeColorIndex - 1 + colors.length) % colors.length;
+                applyCheckerColor();
+            }
+
+            modalPixelChecker.addEventListener("click", (e) => {
+                // Ensure clicks on the floating HUD itself do not cycle colors
+                if (pixelHud.contains(e.target)) return;
+                nextPixelColor();
+            });
+
+            modalPixelChecker.addEventListener("dblclick", () => {
+                closePixelChecker();
+            });
+
+            function closePixelChecker() {
+                modalPixelChecker.classList.add("hidden");
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(() => {});
+                }
+            }
+
+            // Keyboard navigation binds
+            window.addEventListener("keydown", (e) => {
+                if (!modalPixelChecker.classList.contains("hidden")) {
+                    if (e.key === "ArrowRight" || e.key === " ") {
+                        nextPixelColor();
+                    } else if (e.key === "ArrowLeft") {
+                        prevPixelColor();
+                    } else if (e.key === "Escape") {
+                        closePixelChecker();
+                    }
+                }
+            });
+
+            // ============================================
+            // STUCK PIXEL BURN-IN RESTORATION METHOD
+            // ============================================
+            let sweeperActive = false;
+            let sweeperTimer = null;
+            let remainingSweeperSeconds = 300; // default 5 mins
+
+            btnLaunchSweeper.addEventListener("click", () => {
+                modalBurninSweeper.classList.remove("hidden");
+                
+                // Attempt Fullscreen
+                if (modalBurninSweeper.requestFullscreen) {
+                    modalBurninSweeper.requestFullscreen();
+                }
+                
+                sweeperActive = true;
+                sweeperFlicker.classList.add("sweeper-active");
+                remainingSweeperSeconds = 300; // 5 mins default
+                startSweeperTimer();
+
+                sweeperRun = true;
+                saveDisplayReport();
+            });
+
+            function startSweeperTimer() {
+                if (sweeperTimer) clearInterval(sweeperTimer);
+                
+                updateSweeperTimerLabel();
+                sweeperTimer = setInterval(() => {
+                    if (!sweeperActive) {
+                        clearInterval(sweeperTimer);
+                        return;
+                    }
+                    
+                    remainingSweeperSeconds--;
+                    updateSweeperTimerLabel();
+
+                    if (remainingSweeperSeconds <= 0) {
+                        stopBurnInSweeper();
+                        showToast("🎉 Pixel sweep calibration complete!");
+                    }
+                }, 1000);
+            }
+
+            function updateSweeperTimerLabel() {
+                const mins = Math.floor(remainingSweeperSeconds / 60);
+                const secs = remainingSweeperSeconds % 60;
+                sweeperCountdown.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+
+            document.querySelectorAll(".btn-sweeper-time").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    const mins = parseInt(btn.getAttribute("data-mins"));
+                    remainingSweeperSeconds = mins * 60;
+                    startSweeperTimer();
+                });
+            });
+
+            btnCloseSweeper.addEventListener("click", stopBurnInSweeper);
+
+            function stopBurnInSweeper() {
+                sweeperActive = false;
+                sweeperFlicker.classList.remove("sweeper-active");
+                modalBurninSweeper.classList.add("hidden");
+                if (sweeperTimer) clearInterval(sweeperTimer);
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(() => {});
+                }
+            }
+
+            // ============================================
+            // GHOSTING SIMULATOR LOGIC
+            // ============================================
+            let ghostingActive = true;
+            let ghostCanvasCtx = ghostingCanvas.getContext("2d");
+            
+            let blockX = 0;
+            let blockSpeed = 8;
+            let ghostTheme = "emerald-black";
+
+            function resizeGhostingCanvas() {
+                const dpr = window.devicePixelRatio || 1;
+                const rect = ghostingCanvas.getBoundingClientRect();
+                ghostingCanvas.width = rect.width * dpr;
+                ghostingCanvas.height = rect.height * dpr;
+                ghostCanvasCtx.scale(dpr, dpr);
+            }
+
+            window.addEventListener("resize", resizeGhostingCanvas);
+            resizeGhostingCanvas();
+
+            // Handle parameters binds
+            sliderGhostingSpeed.addEventListener("input", () => {
+                blockSpeed = parseInt(sliderGhostingSpeed.value);
+                labelGhostingSpeed.textContent = `${blockSpeed} px/frame`;
+                ghostingTested = true;
+                saveDisplayReport();
+            });
+
+            selectGhostingTheme.addEventListener("change", () => {
+                ghostTheme = selectGhostingTheme.value;
+                const optText = selectGhostingTheme.options[selectGhostingTheme.selectedIndex].text;
+                labelGhostingColor.textContent = optText.split(" (")[0];
+                ghostingTested = true;
+                saveDisplayReport();
+            });
+
+            btnToggleGhosting.addEventListener("click", () => {
+                ghostingActive = !ghostingActive;
+                if (ghostingActive) {
+                    btnToggleGhosting.textContent = "Simulator: Active";
+                    btnToggleGhosting.className = "px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 border border-indigo-200 font-bold text-[9px] rounded-lg uppercase tracking-wider transition-all focus:outline-none";
+                    drawGhostingFrame();
+                } else {
+                    btnToggleGhosting.textContent = "Simulator: Stopped";
+                    btnToggleGhosting.className = "px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 dark:text-slate-350 border border-slate-200 font-bold text-[9px] rounded-lg uppercase tracking-wider transition-all focus:outline-none";
+                }
+            });
+
+            function drawGhostingFrame() {
+                if (!ghostingActive) return;
+
+                const width = ghostingCanvas.width / (window.devicePixelRatio || 1);
+                const height = ghostingCanvas.height / (window.devicePixelRatio || 1);
+
+                // Set themes background and text accents
+                let bgStyle = "#020617"; // slate-950
+                let blockStyle = "#10b981"; // emerald-500
+                
+                if (ghostTheme === "white-blue") {
+                    bgStyle = "#312e81"; // indigo-900
+                    blockStyle = "#ffffff"; // white
+                } else if (ghostTheme === "gray-gray") {
+                    bgStyle = "#475569"; // slate-600
+                    blockStyle = "#94a3b8"; // slate-400 (ghosting sensitive)
+                }
+
+                // Clear/Paint Background
+                ghostCanvasCtx.fillStyle = bgStyle;
+                ghostCanvasCtx.fillRect(0, 0, width, height);
+
+                // Draw moving blocks at heights
+                blockX = (blockX + blockSpeed) % (width + 60);
+
+                const actualX = blockX - 60;
+
+                // Draw Top block
+                ghostCanvasCtx.fillStyle = blockStyle;
+                ghostCanvasCtx.fillRect(actualX, 15, 60, 30);
+
+                // Draw Bottom block (offset horizontally to spot differential trailing trails)
+                ghostCanvasCtx.fillRect((actualX + width/2) % (width + 60) - 60, 65, 60, 30);
+
+                // Grid vertical guidelines to spot sync lines
+                ghostCanvasCtx.strokeStyle = "rgba(255, 255, 255, 0.04)";
+                ghostCanvasCtx.lineWidth = 1;
+                for (let i = 0; i < width; i += 40) {
+                    ghostCanvasCtx.beginPath();
+                    ghostCanvasCtx.moveTo(i, 0);
+                    ghostCanvasCtx.lineTo(i, height);
+                    ghostCanvasCtx.stroke();
+                }
+
+                requestAnimationFrame(drawGhostingFrame);
+            }
+
+            drawGhostingFrame();
+
+            // ============================================
+            // SEARCH & COMMAND PALETTE OVERLAY
+            // ============================================
+            const searchBar = document.getElementById("nav-search-bar");
+            const searchPanel = document.getElementById("search-dropdown-panel");
+            
+            if (searchBar && searchPanel) {
+                const searchDatabase = [
+                    { title: "Keyboard Tester Online", desc: "Test laptop & mechanical switches", url: "keyboard.html" },
+                    { title: "Mouse & CPS Checker", desc: "Test click, scroll, and speed CPS", url: "mouse.html" },
+                    { title: "Clicks Per Second Test", desc: "10-second high-score speed game", url: "mouse.html#cps" },
+                    { title: "Speaker & Sound Tester", desc: "Stereo balance frequency check", url: "sound.html" },
+                    { title: "Gamepad & Joystick Tester", desc: "Controller buttons stick drift test", url: "gamepad.html" },
+                    { title: "Microphone Voice Tester", desc: "Test decibel telemetry voice echo loop", url: "mic.html" },
+                    { title: "Webcam Calibration Check", desc: "Video test, resolution and FPS check", url: "webcam.html" },
+                    { title: "Display & Screen Tester", desc: "Check dead pixels, monitor Hz, and ghosting", url: "display.html" },
+                    { title: "Drawing Tablet & Touchscreen Tester", desc: "Check pen pressure, touchscreen multi-touch, and drawing accuracy", url: "draw.html" },
+                    { title: "Bluetooth & Audio Latency Tester", desc: "Measure delay and lag of wireless headphones or Bluetooth speakers", url: "latency.html" },
+                    { title: "USB & HID Device Info Profiler", desc: "Scan connected USB/HID peripherals and inspect system hardware capabilities", url: "usb.html" },
+                    { title: "Biometric & Fingerprint Tester", desc: "Test Windows Hello, Touch ID, or security keys via standard client-side WebAuthn diagnostics", url: "biometric.html" },
+                    { title: "Battery Health & Efficiency Analyzer", desc: "Evaluate laptop chaging slopes, power draw rates, estimated cycle health, and power source metrics", url: "battery.html" },
+                    { title: "Printer Calibrated Test Page", desc: "Print CMYK color blocks, alignment grids, and evaluate font readability", url: "printer.html" },
+                    { title: "Scanner & Document Capture Checker", desc: "Test document scanners, apply black-and-white Xerox shaders, and scan QR codes", url: "scanner.html" },
+                    { title: "VR & XR Motion Controller Tester", desc: "Test 6-DOF spatial coordinates, analog triggers, and fire rumble haptics", url: "vr.html" },
+                    { title: "PC Hardware Specs Scanner", desc: "Profile processor cores, graphics card GPU model, RAM, and storage disks sizes", url: "specs.html" },
+                    { title: "Certified Diagnostic Report", desc: "Generate secure verified hardware configuration & device checklist PDF", url: "report.html" },
+                    { title: "LAN / Ethernet Port Jitter & Type Tester", desc: "Test network jitter, ping variance, and verify physical cable reliability", url: "lan.html" },
+                    { title: "HDMI & DisplayPort Multi-Screen Analyzer", desc: "Verify monitor refresh rate Hz, display placements, and multi-channel audio", url: "hdmi.html" },
+                    { title: "VGA Analog Calibrator Test Patterns", desc: "Calibrate analog monitor focus, phase adjustment zebra lines, and color bars", url: "vga.html" },
+                    { title: "USB Type-C & Thunderbolt Speed Profiler", desc: "Test alternate mode capabilities, power delivery profiles, and verify speeds", url: "usb-c.html" },
+                    { title: "Privacy Policy Compliance", desc: "AdSense, cookies & safety disclosure", url: "privacy.html" },
+                    { title: "Terms of Service Agreement", desc: "Device diagnostic terms and client-side usage rules", url: "terms.html" },
+                    { title: "Admin Settings Panel", desc: "Export config.js & preview analytics", url: "admin.php" }
+                ];
+
+                window.addEventListener("keydown", (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+                        e.preventDefault();
+                        searchBar.focus();
+                    }
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!searchBar.contains(e.target) && !searchPanel.contains(e.target)) {
+                        searchPanel.classList.add("hidden");
+                    }
+                });
+
+                searchBar.addEventListener("focus", showResults);
+                searchBar.addEventListener("input", showResults);
+
+                function showResults() {
+                    const query = searchBar.value.toLowerCase().trim();
+                    searchPanel.innerHTML = '<div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>';
+                    
+                    const filtered = searchDatabase.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.desc.toLowerCase().includes(query)
+                    );
+
+                    if (filtered.length === 0) {
+                        searchPanel.innerHTML += `
+                            <div class="px-2 py-3 text-center text-xs text-slate-400 font-semibold">
+                                No results found for "${searchBar.value}"
+                            </div>
+                        `;
+                    } else {
+                        filtered.forEach(item => {
+                            const itemEl = document.createElement("a");
+                            itemEl.href = item.url;
+                            itemEl.className = "flex flex-col px-3 py-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all duration-150 select-none group";
+                            itemEl.innerHTML = `
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-250 group-hover:text-blue-600 transition-colors">${item.title}</span>
+                                <span class="text-[10px] text-slate-400 font-semibold">${item.desc}</span>
+                            `;
+                            searchPanel.appendChild(itemEl);
+                        });
+                    }
+                    searchPanel.classList.remove("hidden");
+                }
+            }
+
+            // ============================================
+            // DYNAMIC TOAST SYSTEM
+            // ============================================
+            function showToast(message) {
+                const oldToast = document.getElementById("diagnostic-toast");
+                if (oldToast) oldToast.remove();
+                
+                const toast = document.createElement("div");
+                toast.id = "diagnostic-toast";
+                toast.className = "fixed bottom-6 right-6 z-[100] flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 shadow-2xl shadow-slate-300/40 animate-scaleUp text-xs font-bold text-slate-800 dark:text-slate-250 transition-all select-none font-sans";
+                toast.innerHTML = `
+                    <div class="flex items-center justify-center h-6 w-6 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-600">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-850 tracking-wide">${message}</p>
+                    </div>
+                `;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.add("opacity-0", "translate-y-2");
+                    setTimeout(() => toast.remove(), 300);
+                }, 2800);
+            }
+        });
+    
+            // Register Service Worker for PWA
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('sw.js')
+                        .then(reg => console.log('[PWA] Service Worker registered scope:', reg.scope))
+                        .catch(err => console.error('[PWA] Service Worker registration failed:', err));
+                });
+            }
+    </script>
+<script>
+    // Interactive Mobile Menu Toggle & FAQ Accordions
+    document.addEventListener("DOMContentLoaded", () => {
+        const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+        const mobileNavPanel = document.getElementById("mobile-nav-panel");
+        const hamburgerIcon = document.getElementById("hamburger-icon");
+        const hamburgerClose = document.getElementById("hamburger-close");
+
+        if (mobileMenuToggle && mobileNavPanel && hamburgerIcon && hamburgerClose) {
+            mobileMenuToggle.addEventListener("click", () => {
+                mobileNavPanel.classList.toggle("hidden");
+                hamburgerIcon.classList.toggle("hidden");
+                hamburgerClose.classList.toggle("hidden");
+            });
+        }
+
+        // FAQ Accordion toggles
+        const faqButtons = document.querySelectorAll('.faq-btn');
+        faqButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const answer = btn.nextElementSibling;
+                const icon = btn.querySelector('.faq-icon');
+                
+                if (answer.classList.contains('hidden')) {
+                    answer.classList.remove('hidden');
+                    icon.textContent = "➖";
+                    icon.style.transform = "rotate(180deg)";
+                } else {
+                    answer.classList.add('hidden');
+                    icon.textContent = "➕";
+                    icon.style.transform = "rotate(0deg)";
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

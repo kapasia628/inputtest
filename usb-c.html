@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/usb-c.html">
+    <script>
+        // Inline theme helper to avoid UI flash of light theme
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- SEO Meta Tags -->
+    <title>USB Type-C & Thunderbolt Speed Profiler - Check Port Specs | InputTest.online</title>
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/usb-c.html">
+    <meta property="og:title" content="USB Type-C & Thunderbolt Speed Profiler - Check Port Specs | InputTest.online">
+    <meta property="og:description" content="Test your USB-C and Thunderbolt ports online. Scan connected USB accessories, simulate Power Delivery (PD) wattages, check Alt-Mode monitor configurations, and verify lane speeds.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/usb-c.html">
+    <meta name="twitter:title" content="USB Type-C & Thunderbolt Speed Profiler - Check Port Specs | InputTest.online">
+    <meta name="twitter:description" content="Test your USB-C and Thunderbolt ports online. Scan connected USB accessories, simulate Power Delivery (PD) wattages, check Alt-Mode monitor configurations, and verify lane speeds.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+    <meta name="description" content="Test your USB-C and Thunderbolt ports online. Scan connected USB accessories, simulate Power Delivery (PD) wattages, check Alt-Mode monitor configurations, and verify lane speeds.">
+    <meta name="keywords" content="usb-c tester, thunderbolt checker, test type-c port online, usb-c speed test, power delivery pd tester, usb4 bandwidth simulator, displayport alt-mode test, check thunderbolt version">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How do I test my USB-C or Thunderbolt port speed online?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Connect a USB device to your Type-C port and click 'Scan USB-C Device'. If supported, the WebUSB API will query the device's speed indicators, descriptor versions, and vendor attributes to verify port specifications."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is USB-C Alternate Mode (Alt-Mode)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Alternate Mode allows a physical USB-C port to carry non-USB signals, such as DisplayPort or HDMI video data and PCIe lanes, enabling a single cable connection to support 4K displays and external GPU enclosures."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is USB Power Delivery (USB-PD) and how many watts can it carry?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "USB Power Delivery is a protocol enabling dynamic voltage negotiation up to 100W under standard rules, and up to 240W (Extended Power Range - EPR) in newer USB-C specifications to power high-draw laptops."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is the difference between USB4 and Thunderbolt 4?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Thunderbolt 4 mandates strict hardware configurations, requiring dual 4K monitor support, 40 Gbps bandwidth, and PCIe data tunneling, whereas USB4 specifications make some of these features optional for manufacturers."
+        }
+      }]
+    }
+    </script>
+    
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 10% 40%, rgba(139, 92, 246, 0.03) 0%, transparent 40%);
+        }
+
+        @keyframes scaleUp {
+            0% { opacity: 0; transform: scale(0.95) translateY(4px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-scaleUp {
+            animation: scaleUp 0.18s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .dark .glow-bg {
+            background-color: #0b0f19 !important;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%) !important;
+        }
+    </style>
+    
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg relative overflow-x-hidden transition-colors duration-300">
+
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm dark:shadow-none transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-300">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-slate-250 group-hover:text-blue-600 transition-colors duration-250">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="hidden lg:flex items-center flex-grow max-w-sm mx-6 relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <input id="nav-search-bar" type="text" placeholder="Search tool, inputs, keys..." class="w-full bg-slate-100/60 hover:bg-slate-200/50 focus:bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-blue-500 rounded-full py-1.5 pl-10 pr-12 text-xs text-slate-700 dark:text-slate-350 font-medium tracking-wide focus:outline-none transition-all shadow-inner focus:shadow-sm dark:shadow-none" autocomplete="off">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <kbd class="text-[9px] font-mono font-bold text-slate-400 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-1.5 py-0.5 rounded shadow-sm dark:shadow-none">Ctrl K</kbd>
+                    </div>
+                    
+                    <!-- Search Dropdown Panel -->
+                    <div id="search-dropdown-panel" class="hidden absolute top-12 left-0 right-0 bg-white/95 border border-slate-200 rounded-2xl shadow-xl shadow-slate-200/40 p-2 z-50 max-h-64 overflow-y-auto space-y-1 backdrop-blur-md">
+                        <div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>
+                    </div>
+                </div>
+                
+                <!-- Main Nav Links -->
+                <div class="hidden md:flex items-center gap-6 flex-shrink-0">
+                    <a href="/" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Home</a>
+                    <a href="keyboard.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Keyboard Test</a>
+                    <a href="mouse.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Mouse & CPS</a>
+                    <a href="blog.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Blog</a>
+                    
+                    <!-- Premium More Tools Dropdown -->
+                    <div class="relative group">
+                        <button id="nav-dropdown-btn" class="flex items-center gap-1 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 py-1.5 px-1 focus:outline-none transition-all duration-200">
+                            More Tools
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 group-hover:rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu panel -->
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full mt-2 w-80 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-3 grid grid-cols-2 gap-1.5 backdrop-blur-md z-50 animate-scaleUp">
+                            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 col-span-2 mb-1.5">Top Calibration Utilities</div>
+                            
+                            <a href="display.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">📺 Display Test</a>
+                            <a href="specs.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">💻 System Specs</a>
+                            <a href="gamepad.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">🎮 Gamepad drift</a>
+                            
+                            <a href="report.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-xs font-bold text-emerald-600 dark:text-emerald-450 transition-colors col-span-2 shadow-sm">🛡️ Certified PDF Report</a>
+                            
+                            <div class="h-px bg-slate-100 dark:bg-slate-800/60 col-span-2 my-1"></div>
+                            
+                            <a href="sound.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔊 Speaker test</a>
+                            <a href="mic.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎙️ Microphone</a>
+                            <a href="webcam.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📷 Webcam Check</a>
+                            <a href="draw.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📐 Drawing Tablet</a>
+                            <a href="latency.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ Latency Check</a>
+                            <a href="usb.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔌 USB Profiler</a>
+                            <a href="biometric.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔑 Biometrics Hello</a>
+                            <a href="printer.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🖨️ Printer CMYK</a>
+                            <a href="scanner.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📄 Documents scan</a>
+                            <a href="vr.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🕶️ VR controllers</a>
+                            <a href="battery.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔋 Battery Health</a>
+                            <a href="lan.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🌐 LAN Tester</a>
+                            <a href="hdmi.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📺 HDMI & DP</a>
+                            <a href="vga.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎨 VGA Calibrator</a>
+                            <a href="usb-c.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ USB-C Profiler</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Back Home -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <!-- Mobile Hamburger Button -->
+                    <button id="mobile-menu-toggle" class="p-2 md:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm transition-all focus:outline-none" aria-label="Toggle Navigation Menu">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                    <!-- Sun/Moon Theme Toggle -->
+                    <button id="theme-toggle" class="relative p-2 mr-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-455 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm dark:shadow-none transition-all focus:outline-none" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <a href="/" class="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1 font-bold font-mono bg-blue-500/5 px-3 py-1.5 rounded-full border border-blue-500/15">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation Panel -->
+    <div id="mobile-nav-panel" class="hidden md:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md px-4 py-4 space-y-3 transition-all duration-300 animate-scaleUp">
+        <div class="grid grid-cols-2 gap-3 text-xs font-bold">
+            <a href="/" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🏠 Home</a>
+            <a href="keyboard.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">⌨️ Keyboard Test</a>
+            <a href="mouse.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🖱️ Mouse & CPS</a>
+            <a href="display.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">📺 Display Test</a>
+            <a href="specs.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">💻 Hardware Specs</a>
+            <a href="report.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-450">🛡️ PDF Certificate</a>
+            <a href="blog.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/10 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 col-span-2 justify-center font-bold">📝 Diagnostic Blog & Guides</a>
+        </div>
+        
+        <div class="border-t border-slate-100 dark:border-slate-900 pt-3">
+            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-1">All Diagnostic Utilities</div>
+            <div class="grid grid-cols-2 gap-2 text-[10px] font-bold text-slate-500 dark:text-slate-400">
+                <a href="gamepad.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎮 Gamepad drift</a>
+                <a href="sound.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔊 Speaker test</a>
+                <a href="mic.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎙️ Microphone</a>
+                <a href="webcam.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📷 Webcam Check</a>
+                <a href="draw.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📐 Drawing Tablet</a>
+                <a href="latency.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ Latency Check</a>
+                <a href="usb.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔌 USB Profiler</a>
+                <a href="biometric.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔑 Biometrics Hello</a>
+                <a href="printer.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🖨️ Printer CMYK</a>
+                <a href="scanner.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📄 Documents scan</a>
+                <a href="vr.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🕶️ VR headset</a>
+                <a href="lan.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🌐 LAN Jitter Test</a>
+                <a href="hdmi.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📺 HDMI & DP</a>
+                <a href="vga.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎨 VGA Calibrator</a>
+                <a href="usb-c.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ USB-C Profiler</a>
+                <a href="battery.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔋 Battery Health</a>
+            </div>
+        </div>
+    </div>
+
+    </nav>
+
+    <!-- AdSense Banner -->
+    <div class="max-w-7xl mx-auto px-4 mt-6 w-full flex justify-center">
+        <div id="top-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-sm dark:shadow-none rounded-2xl overflow-hidden flex items-center justify-center animate-pulse-slow">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px]">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+        
+        <!-- Header HUD -->
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+                    USB-C & Thunderbolt Speed Profiler
+                    <span class="text-xs font-mono font-bold px-2 py-0.5 rounded border border-blue-500/10 bg-blue-50 text-blue-600 uppercase tracking-widest">Type-C Protocol Suite</span>
+                </h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                    Analyze physical link bandwidth, scan connected USB-C peripherals, simulate Power Delivery profiles, and evaluate display lane allocations.
+                </p>
+            </div>
+
+            <!-- API HUD status -->
+            <div id="profiler-banner" class="px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/85 rounded-2xl shadow-sm dark:shadow-none flex items-center gap-3 text-xs font-bold select-none text-slate-500 dark:text-slate-400 shrink-0">
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-500 block animate-pulse" id="profiler-status-dot"></span>
+                <span id="profiler-status-text">TYPE-C PORTS ACTIVE</span>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Matrix -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-10">
+            
+            <!-- LEFT COLUMN: Port Visualizer & Interactive simulator (7 Columns) -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- USB-C Port Simulator Card -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none select-none space-y-6">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block border-b border-slate-100 pb-3">1. Interactive Connection Simulator Sandbox</span>
+                    
+                    <div class="flex flex-col items-center justify-center py-8 bg-slate-50 dark:bg-slate-950/40 border border-slate-150 dark:border-slate-800 rounded-3xl relative overflow-hidden">
+                        
+                        <!-- USB-C Port SVG -->
+                        <div class="w-64 h-32 relative flex items-center justify-center">
+                            <svg id="usbc-port-svg" class="w-full h-full text-slate-350 dark:text-slate-700 transition-all duration-300" viewBox="0 0 160 80" fill="none" stroke="currentColor" stroke-width="2">
+                                <!-- Type-C Port Outer boundary -->
+                                <rect x="10" y="20" width="140" height="40" rx="20" fill="currentColor" fill-opacity="0.03" stroke-width="4" />
+                                
+                                <!-- Internal Tongue -->
+                                <rect x="25" y="30" width="110" height="20" rx="10" fill="currentColor" fill-opacity="0.1" stroke-width="3" />
+                                
+                                <!-- Contacts (24 pin rows) -->
+                                <line x1="38" y1="36" x2="38" y2="44" stroke-width="1.5" stroke="currentColor" />
+                                <line x1="44" y1="36" x2="44" y2="44" stroke-width="1.5" stroke="currentColor" />
+                                <line x1="50" y1="36" x2="50" y2="44" stroke-width="1.5" stroke="currentColor" />
+                                <line x1="56" y1="36" x2="56" y2="44" stroke-width="1.5" stroke="currentColor" />
+                                <line x1="62" y1="36" x2="62" y2="44" stroke-width="1.5" stroke="currentColor" />
+                                <line x1="68" y1="36" x2="68" y2="44" stroke-width="1.5" stroke="currentColor" />
+                                <line x1="74" y1="36" x2="74" y2="44" stroke-width="1.5" stroke="currentColor" />
+                                <line x1="80" y1="36" x2="80" y2="44" stroke-width="1.5" stroke="currentColor" />
+                                <line x1="86" y1="36" x2="86" y2="44" stroke-width="1.5" stroke="currentColor" />
+                                <line x1="92" y1="36" x2="92" y2="44" stroke-width="1.5" stroke="currentColor" />
+                                <line x1="98" y1="36" x2="98" y2="44" stroke-width="1.5" stroke="currentColor" />
+                                <line x1="104" y1="36" x2="104" y2="44" stroke-width="1.5" stroke="currentColor" />
+                                <line x1="110" y1="36" x2="110" y2="44" stroke-width="1.5" stroke="currentColor" />
+                                <line x1="116" y1="36" x2="116" y2="44" stroke-width="1.5" stroke="currentColor" />
+                                <line x1="122" y1="36" x2="122" y2="44" stroke-width="1.5" stroke="currentColor" />
+
+                                <!-- Port Indicator Led -->
+                                <circle cx="80" cy="12" r="3" fill="#cbd5e1" id="port-led" class="transition-colors duration-300" />
+                            </svg>
+                        </div>
+
+                        <!-- Lane traffic speed bar -->
+                        <div class="w-11/12 max-w-sm h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden relative mb-4">
+                            <div id="lane-speed-fill" class="h-full bg-blue-500 w-0 transition-all duration-500"></div>
+                        </div>
+
+                        <div class="text-center space-y-1">
+                            <span class="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider block" id="sim-protocol-title">PORT CONFIGURATION: DISCONNECTED</span>
+                            <p class="text-[10px] text-slate-400 font-semibold" id="sim-lane-desc">Configure alternate mode variables below to update port status.</p>
+                        </div>
+                    </div>
+
+                    <!-- Simulator control dials -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <!-- Protocol -->
+                        <div class="space-y-1.5">
+                            <label class="text-[9px] font-mono text-slate-400 font-bold uppercase tracking-widest block">Cable Protocol</label>
+                            <select id="select-protocol" class="w-full h-10 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold focus:outline-none">
+                                <option value="usb3">USB 3.2 Gen 1 (5Gbps)</option>
+                                <option value="usb32">USB 3.2 Gen 2 (10Gbps)</option>
+                                <option value="tb3">Thunderbolt 3 (40Gbps)</option>
+                                <option value="tb4">Thunderbolt 4 (40Gbps)</option>
+                                <option value="usb4">USB4 Gen 3x2 (40Gbps)</option>
+                            </select>
+                        </div>
+
+                        <!-- Power Delivery -->
+                        <div class="space-y-1.5">
+                            <label class="text-[9px] font-mono text-slate-400 font-bold uppercase tracking-widest block">Power Profile</label>
+                            <select id="select-power" class="w-full h-10 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold focus:outline-none">
+                                <option value="15">15W (5V @ 3A)</option>
+                                <option value="45">45W (15V @ 3A)</option>
+                                <option value="60">60W (20V @ 3A)</option>
+                                <option value="100">100W (20V @ 5A)</option>
+                                <option value="240">240W EPR (48V @ 5A)</option>
+                            </select>
+                        </div>
+
+                        <!-- Alternate Display Mode -->
+                        <div class="space-y-1.5">
+                            <label class="text-[9px] font-mono text-slate-400 font-bold uppercase tracking-widest block">Alternate Display</label>
+                            <select id="select-display" class="w-full h-10 px-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold focus:outline-none">
+                                <option value="none">Disabled (Data Only)</option>
+                                <option value="dp14">DisplayPort 1.4 Alt-Mode (4K 60Hz)</option>
+                                <option value="dp20">DisplayPort 2.0 Alt-Mode (8K 60Hz)</option>
+                                <option value="hdmi">HDMI 2.0 Alt-Mode (4K 60Hz)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WebUSB Poller Card -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none select-none space-y-6">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                        <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block">2. WebUSB Accessory Device Scanner</span>
+                        <button id="btn-scan-usbc" class="h-9 px-4 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider transition-all focus:outline-none select-none">
+                            🔌 Scan Port Devices
+                        </button>
+                    </div>
+
+                    <div id="device-container-usbc" class="space-y-3">
+                        <div class="p-8 border border-dashed border-slate-200/80 bg-slate-50/50 dark:bg-slate-950/20 rounded-2xl text-center flex flex-col items-center justify-center">
+                            <span class="text-4xl mb-2">📋</span>
+                            <span class="text-xs font-bold text-slate-700 dark:text-slate-350">No Authorized Port Accessories Found</span>
+                            <p class="text-[10px] text-slate-400 font-medium max-w-xs mt-1">Connect accessories to your port, click scan, and authorize the browser to query device IDs.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: Thermal Profiler & Status Panel (5 Columns) -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <!-- Port Speeds HUD Card -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none select-none flex flex-col gap-4">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block border-b border-slate-100 pb-3">3. Active Link State Telemetry</span>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        
+                        <!-- Maximum bandwidth speed -->
+                        <div class="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col justify-between gap-1 shadow-sm">
+                            <span class="text-[8px] text-slate-400 font-bold uppercase tracking-wider font-mono">Max Port Speed</span>
+                            <span id="telemetry-speed" class="text-base font-black text-slate-800 dark:text-slate-250">5 Gbps</span>
+                        </div>
+
+                        <!-- Wattage charging capacity -->
+                        <div class="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col justify-between gap-1 shadow-sm">
+                            <span class="text-[8px] text-slate-400 font-bold uppercase tracking-wider font-mono">Charging Profile</span>
+                            <span id="telemetry-power" class="text-base font-black text-blue-600 dark:text-blue-400">15W</span>
+                        </div>
+
+                        <!-- Thermal state -->
+                        <div class="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col justify-between gap-1 shadow-sm">
+                            <span class="text-[8px] text-slate-400 font-bold uppercase tracking-wider font-mono">Thermal Profile</span>
+                            <span id="telemetry-thermal" class="text-[11px] font-extrabold text-slate-700 dark:text-slate-350">Cool (Nominal)</span>
+                        </div>
+
+                        <!-- Lane configuration -->
+                        <div class="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col justify-between gap-1 shadow-sm">
+                            <span class="text-[8px] text-slate-400 font-bold uppercase tracking-wider font-mono">Display Lanes</span>
+                            <span id="telemetry-lanes" class="text-[11px] font-extrabold text-slate-700 dark:text-slate-350">0 active video lanes</span>
+                        </div>
+
+                        <!-- Pin layout allocations -->
+                        <div class="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col justify-between gap-1 shadow-sm sm:col-span-2">
+                            <span class="text-[8px] text-slate-400 font-bold uppercase tracking-wider font-mono">Active Channel Pin Allocations</span>
+                            <div class="flex items-center justify-between text-xs font-extrabold text-slate-700 dark:text-slate-350 mt-0.5">
+                                <span id="telemetry-pins">Pins A1-A12 (TX1/RX1 CC Data)</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- WebUSB check -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none select-none flex flex-col gap-4">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block border-b border-slate-100 pb-3">4. Browser WebUSB Compatibility</span>
+                    
+                    <div class="space-y-2.5 font-semibold text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+                        <div class="flex justify-between border-b border-slate-100 dark:border-slate-900 pb-1.5">
+                            <span>WebUSB Interface:</span>
+                            <span id="api-usbd-status" class="text-slate-800 dark:text-white font-bold">Scanning...</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>System Driver Sandbox:</span>
+                            <span class="text-slate-800 dark:text-white font-bold">SANDBOXED ACTIVE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Profile json -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none select-none flex flex-col gap-4 text-center">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block border-b border-slate-100 pb-3 text-left">5. Port Profile Exporter</span>
+                    <p class="text-[11px] text-slate-400 font-medium leading-relaxed">
+                        Export the simulated configuration profile, selected Power Delivery profiles, and WebUSB devices parameters to a local file.
+                    </p>
+                    <button id="btn-export-profile" class="h-12 bg-slate-900 hover:bg-slate-800 active:scale-[0.98] text-white font-extrabold text-xs rounded-xl uppercase tracking-wider transition-all shadow-md dark:shadow-none flex items-center justify-center gap-2 focus:outline-none">
+                        📥 Download Port Profile (.json)
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ============================================
+             PREMIUM SEO DIAGNOSTIC GUIDE & FAQ SECTION
+             ============================================ -->
+        <section class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start w-full relative z-10 text-left">
+            
+            <!-- Left 7-Column: Mini-Blog / Comprehensive Diagnostic Guide -->
+            <div class="lg:col-span-7 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 shadow-sm backdrop-blur-md transition-colors duration-300">
+                <span class="text-[9px] font-mono text-blue-600 dark:text-blue-400 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-850 pb-3 mb-6">📚 Technical Diagnostic Guide</span>
+                
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-4 tracking-tight leading-tight select-none">
+                    USB-C vs Thunderbolt: Guide to Bandwidths, Power Delivery, Alt-Modes & Lanes
+                </h2>
+                
+                <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 space-y-4 leading-relaxed">
+                    <p>
+                        The USB Type-C physical connector is a universal standard, but the underlying protocols define its capabilities. A single USB-C port might only carry USB 2.0 speeds (480 Mbps) on a budget phone, while a matching port on a professional notebook might support **Thunderbolt 4** or **USB4** speeds (40 to 80 Gbps).
+                    </p>
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        ⚡ Bandwidths and Protocol Speeds (5Gbps to 80Gbps)
+                    </h3>
+                    <p>
+                        The interface version determines data capacities. Standard **USB 3.2 Gen 1** provides 5 Gbps, **Gen 2** provides 10 Gbps, and dual-lane **Gen 2x2** reaches 20 Gbps. High-performance **Thunderbolt 3**, **Thunderbolt 4**, and **USB4** integrate PCIe data tunneling to achieve 40 Gbps, whereas newer **USB4 V2** standards deliver up to 80 Gbps symmetric bandwidth over copper wire interfaces.
+                    </p>
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        🔌 Power Delivery Negotiation (USB-PD & EPR)
+                    </h3>
+                    <p>
+                        USB Power Delivery allows connected devices to negotiate voltage profiles dynamically. Older profiles maxed out at 100W (20V @ 5A). The newer **Extended Power Range (EPR)** standard permits voltage steps up to 48V at 5A, allowing compatible USB-C cables to supply up to 240W of power to high-performance gaming laptops.
+                    </p>
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        📺 DisplayPort Alt-Mode and Active Lane Allocation
+                    </h3>
+                    <p>
+                        A USB Type-C connector features 4 high-speed differential signal lanes. Under DisplayPort Alternate Mode, the system can allocate lanes dynamically. For instance, it can assign 2 lanes to carry 4K video data, leaving the remaining 2 lanes for standard USB 3.2 data. Alternatively, it can dedicate all 4 lanes to video to support dual 4K or single 8K displays.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Right 5-Column: FAQ Accordion -->
+            <div class="lg:col-span-5 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 shadow-sm backdrop-blur-md transition-colors duration-300 space-y-6">
+                <span class="text-[9px] font-mono text-emerald-600 dark:text-emerald-455 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-850 pb-3">❓ Frequently Asked Questions</span>
+                
+                <div class="space-y-4">                    
+                    <!-- FAQ 1 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">How do I test my USB-C or Thunderbolt port speed online?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Connect a USB device to your Type-C port and click 'Scan USB-C Device'. If supported, the WebUSB API will query the device's speed indicators, descriptor versions, and vendor attributes to verify port specifications.
+                        </div>
+                    </div>                    
+                    <!-- FAQ 2 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">What is USB-C Alternate Mode (Alt-Mode)?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Alternate Mode allows a physical USB-C port to carry non-USB signals, such as DisplayPort or HDMI video data and PCIe lanes, enabling a single cable connection to support 4K displays and external GPU enclosures.
+                        </div>
+                    </div>                    
+                    <!-- FAQ 3 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">What is USB Power Delivery (USB-PD) and how many watts can it carry?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            USB Power Delivery is a protocol enabling dynamic voltage negotiation up to 100W under standard rules, and up to 240W (Extended Power Range - EPR) in newer USB-C specifications to power high-draw laptops.
+                        </div>
+                    </div>                    
+                    <!-- FAQ 4 -->
+                    <div class="pb-2">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">What is the difference between USB4 and Thunderbolt 4?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Thunderbolt 4 mandates strict hardware configurations, requiring dual 4K monitor support, 40 Gbps bandwidth, and PCIe data tunneling, whereas USB4 specifications make some of these features optional for manufacturers.
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            
+        </section>
+
+    </main>
+
+    <!-- Bottom Google AdSense Banner Zone -->
+    <div class="max-w-7xl mx-auto px-4 mb-10 w-full flex justify-center">
+        <div id="bottom-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-md rounded-2xl overflow-hidden flex items-center justify-center animate-pulse-slow">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono select-none py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px] font-bold">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5 font-semibold">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Area -->
+        <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 mt-auto transition-colors duration-300">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-left select-none">
+                
+                 <!-- Column 1: Brand & Logo -->
+                <div class="space-y-4">
+                    <a href="/" class="flex items-center gap-2 group w-fit transition-transform duration-200 active:scale-95">
+                        <span class="logo-emoji text-xl group-hover:rotate-12 transition-transform duration-300 inline-block">⌨️</span>
+                        <span class="brand-name font-black text-slate-900 dark:text-slate-200 text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">InputTest.online</span>
+                    </a>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed brand-slogan font-semibold">
+                        Universal Hardware & Input Device Tester
+                    </p>
+                    <p class="text-xs text-slate-400 dark:text-slate-500 leading-relaxed font-medium">
+                        Safe sandboxed hardware diagnostics. 100% private, local client-side processing.
+                    </p>
+                </div>
+                
+                 <!-- Column 2: Input Diagnostics -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Input Diagnostics</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="keyboard.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Keyboard Tester</a></li>
+                        <li><a href="mouse.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖱️ Mouse & CPS Test</a></li>
+                        <li><a href="gamepad.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎮 Gamepad & Drift</a></li>
+                        <li><a href="mic.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎙️ Microphone Check</a></li>
+                        <li><a href="webcam.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📷 Webcam Quality</a></li>
+                        <li><a href="draw.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📐 Drawing Tablet</a></li>
+                        <li><a href="usb.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔌 USB & HID Profiler</a></li>
+                        <li><a href="biometric.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔑 Biometrics Hello</a></li>
+                        <li><a href="battery.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔋 Battery Health</a></li>
+                        <li><a href="lan.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🌐 LAN Jitter Test</a></li>
+                        <li><a href="usb-c.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ USB-C Profiler</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 3: Screen & Outputs -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Screen & Outputs</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="display.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 Display & Monitor</a></li>
+                        <li><a href="latency.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ Latency & Lag</a></li>
+                        <li><a href="printer.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖨️ Printer CMYK</a></li>
+                        <li><a href="scanner.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📄 Documents Scan</a></li>
+                        <li><a href="vr.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🕶️ VR Controller</a></li>
+                        <li><a href="specs.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">💻 Hardware Specs</a></li>
+                        <li><a href="hdmi.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 HDMI Analyzer</a></li>
+                        <li><a href="vga.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎨 VGA Calibrator</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 4: Reports, Blog & Policies -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Info & Policies</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="report.html" class="text-emerald-600 dark:text-emerald-450 font-bold bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10 dark:border-emerald-500/20 hover:bg-emerald-500/10 transition-colors inline-block mb-1">🛡️ Certified PDF Report</a></li>
+                        <li><a href="blog.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📝 Blog Guides</a></li>
+                        <li><a href="privacy.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔒 Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚖️ Terms of Service</a></li>
+                        <li><a href="#" class="brand-email text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors break-all">✉️ support@inputtest.online</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="border-t border-slate-100 dark:border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-medium flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                    <span>&copy; 2026 InputTest.online. Safe sandboxed diagnostics. No data collection.</span>
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 font-extrabold border border-emerald-500/15 w-fit uppercase select-none">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-ping"></span>
+                        Version 1.2.0 (Updated: June 6, 2026)
+                    </span>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="#" class="twitter-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">Twitter</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+                    </a>
+                    <a href="#" class="github-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" clip-rule="evenodd"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive script logic -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Initialize Ads via config.js helper
+            setTimeout(() => {
+                SiteConfig.initAdSense('top-adsense-banner', 'topLeaderboard');
+                SiteConfig.initAdSense('bottom-adsense-banner', 'bottomLeaderboard');
+            }, 800);
+
+            // Theme Toggle Logic
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
+
+            if (document.documentElement.classList.contains('dark')) {
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            } else {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+                sunIcon.classList.toggle('hidden');
+                moonIcon.classList.toggle('hidden');
+                if (document.documentElement.classList.contains('dark')) {
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    localStorage.setItem('color-theme', 'light');
+                }
+            });
+
+            // Mobile menu toggle
+            const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+            const mobileNavPanel = document.getElementById("mobile-nav-panel");
+            const hamburgerIcon = document.getElementById("hamburger-icon");
+            const hamburgerClose = document.getElementById("hamburger-close");
+
+            if (mobileMenuToggle && mobileNavPanel && hamburgerIcon && hamburgerClose) {
+                mobileMenuToggle.addEventListener("click", () => {
+                    mobileNavPanel.classList.toggle("hidden");
+                    hamburgerIcon.classList.toggle("hidden");
+                    hamburgerClose.classList.toggle("hidden");
+                });
+            }
+
+            // FAQ Accordion toggles
+            const faqButtons = document.querySelectorAll('.faq-btn');
+            faqButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const answer = btn.nextElementSibling;
+                    const icon = btn.querySelector('.faq-icon');
+                    if (answer.classList.contains('hidden')) {
+                        answer.classList.remove('hidden');
+                        icon.textContent = "➖";
+                        icon.style.transform = "rotate(180deg)";
+                    } else {
+                        answer.classList.add('hidden');
+                        icon.textContent = "➕";
+                        icon.style.transform = "rotate(0deg)";
+                    }
+                });
+            });
+
+            // ============================================
+            // DYNAMIC TOAST SYSTEM
+            // ============================================
+            function showToast(message) {
+                const oldToast = document.getElementById("diagnostic-toast");
+                if (oldToast) oldToast.remove();
+                
+                const toast = document.createElement("div");
+                toast.id = "diagnostic-toast";
+                toast.className = "fixed bottom-6 right-6 z-[100] flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 shadow-2xl shadow-slate-300/40 animate-scaleUp text-xs font-bold text-slate-800 dark:text-slate-250 transition-all select-none font-sans";
+                toast.innerHTML = `
+                    <div class="flex items-center justify-center h-6 w-6 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-600">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-850 tracking-wide">${message}</p>
+                    </div>
+                `;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.add("opacity-0", "translate-y-2");
+                    setTimeout(() => toast.remove(), 300);
+                }, 2800);
+            }
+
+            // ============================================
+            // SEARCH & COMMAND PALETTE OVERLAY
+            // ============================================
+            const searchBar = document.getElementById("nav-search-bar");
+            const searchPanel = document.getElementById("search-dropdown-panel");
+            
+            if (searchBar && searchPanel) {
+                const searchDatabase = [
+                    { title: "Keyboard Tester Online", desc: "Test laptop & mechanical switches", url: "keyboard.html" },
+                    { title: "Mouse & CPS Checker", desc: "Test click, scroll, and speed CPS", url: "mouse.html" },
+                    { title: "Clicks Per Second Test", desc: "10-second high-score speed game", url: "mouse.html#cps" },
+                    { title: "Speaker & Sound Tester", desc: "Stereo balance frequency check", url: "sound.html" },
+                    { title: "Gamepad & Joystick Tester", desc: "Controller buttons stick drift test", url: "gamepad.html" },
+                    { title: "Microphone Voice Tester", desc: "Test decibel telemetry voice echo loop", url: "mic.html" },
+                    { title: "Webcam Calibration Check", desc: "Video test, resolution and FPS check", url: "webcam.html" },
+                    { title: "Display & Screen Tester", desc: "Check dead pixels, monitor Hz, and ghosting", url: "display.html" },
+                    { title: "Drawing Tablet & Touchscreen Tester", desc: "Check pen pressure, touchscreen multi-touch, and drawing accuracy", url: "draw.html" },
+                    { title: "Bluetooth & Audio Latency Tester", desc: "Measure delay and lag of wireless headphones or Bluetooth speakers", url: "latency.html" },
+                    { title: "USB & HID Device Info Profiler", desc: "Scan connected USB/HID peripherals and inspect system hardware capabilities", url: "usb.html" },
+                    { title: "Biometric & Fingerprint Tester", desc: "Test Windows Hello, Touch ID, or security keys via standard client-side WebAuthn diagnostics", url: "biometric.html" },
+                    { title: "Battery Health & Efficiency Analyzer", desc: "Evaluate laptop charging slopes, power draw rates, estimated cycle health, and power source metrics", url: "battery.html" },
+                    { title: "Printer Calibrated Test Page", desc: "Print CMYK color blocks, alignment grids, and evaluate font readability", url: "printer.html" },
+                    { title: "Scanner & Document Capture Checker", desc: "Test document scanners, apply black-and-white Xerox shaders, and scan QR codes", url: "scanner.html" },
+                    { title: "VR & XR Motion Controller Tester", desc: "Test 6-DOF spatial coordinates, analog triggers, and fire rumble haptics", url: "vr.html" },
+                    { title: "PC Hardware Specs Scanner", desc: "Profile processor cores, graphics card GPU model, RAM, and storage disks sizes", url: "specs.html" },
+                    { title: "Certified Diagnostic Report", desc: "Generate secure verified hardware configuration & device checklist PDF", url: "report.html" },
+                    { title: "LAN / Ethernet Port Jitter & Type Tester", desc: "Test network jitter, ping variance, and verify physical cable reliability", url: "lan.html" },
+                    { title: "HDMI & DisplayPort Multi-Screen Analyzer", desc: "Verify monitor refresh rate Hz, display placements, and multi-channel audio", url: "hdmi.html" },
+                    { title: "VGA Analog Calibrator Test Patterns", desc: "Calibrate analog monitor focus, phase adjustment zebra lines, and color bars", url: "vga.html" },
+                    { title: "USB Type-C & Thunderbolt Speed Profiler", desc: "Test alternate mode capabilities, power delivery profiles, and verify speeds", url: "usb-c.html" },
+                    { title: "Privacy Policy Compliance", desc: "AdSense, cookies & safety disclosure", url: "privacy.html" },
+                    { title: "Terms of Service Agreement", desc: "Device diagnostic terms and client-side usage rules", url: "terms.html" },
+                    { title: "Admin Settings Panel", desc: "Export config.js & preview analytics", url: "admin.php" }
+                ];
+
+                window.addEventListener("keydown", (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+                        e.preventDefault();
+                        searchBar.focus();
+                    }
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!searchBar.contains(e.target) && !searchPanel.contains(e.target)) {
+                        searchPanel.classList.add("hidden");
+                    }
+                });
+
+                searchBar.addEventListener("focus", showResults);
+                searchBar.addEventListener("input", showResults);
+
+                function showResults() {
+                    const query = searchBar.value.toLowerCase().trim();
+                    searchPanel.innerHTML = '<div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>';
+                    
+                    const filtered = searchDatabase.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.desc.toLowerCase().includes(query)
+                    );
+
+                    if (filtered.length === 0) {
+                        searchPanel.innerHTML += `
+                            <div class="px-2 py-3 text-center text-xs text-slate-400 font-semibold">
+                                No results found for "${searchBar.value}"
+                            </div>
+                        `;
+                    } else {
+                        filtered.forEach(item => {
+                            const itemEl = document.createElement("a");
+                            itemEl.href = item.url;
+                            itemEl.className = "flex flex-col px-3 py-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all duration-150 select-none group";
+                            itemEl.innerHTML = `
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-250 group-hover:text-blue-600 transition-colors">${item.title}</span>
+                                <span class="text-[10px] text-slate-400 font-semibold">${item.desc}</span>
+                            `;
+                            searchPanel.appendChild(itemEl);
+                        });
+                    }
+                    searchPanel.classList.remove("hidden");
+                }
+            }
+
+            // ============================================
+            // WEBUSB CABLE / DEVICE POLLER
+            // ============================================
+            const btnScan = document.getElementById("btn-scan-usbc");
+            const deviceContainer = document.getElementById("device-container-usbc");
+            const apiStatus = document.getElementById("api-usbd-status");
+
+            const hasWebUSB = !!navigator.usb;
+            apiStatus.textContent = hasWebUSB ? "WebUSB API AVAILABLE" : "N/A (API Restricted)";
+
+            async function displayDevices() {
+                if (!hasWebUSB) return;
+                try {
+                    const devices = await navigator.usb.getDevices();
+                    if (devices.length === 0) {
+                        deviceContainer.innerHTML = `
+                            <div class="p-8 border border-dashed border-slate-200/80 bg-slate-50/50 dark:bg-slate-950/20 rounded-2xl text-center flex flex-col items-center justify-center">
+                                <span class="text-4xl mb-2">📋</span>
+                                <span class="text-xs font-bold text-slate-700 dark:text-slate-350">No Authorized Port Accessories Found</span>
+                                <p class="text-[10px] text-slate-400 font-medium max-w-xs mt-1">Connect accessories to your port, click scan, and authorize the browser to query device IDs.</p>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    deviceContainer.innerHTML = "";
+                    devices.forEach(device => {
+                        const card = document.createElement("div");
+                        card.className = "p-4 border border-slate-200/80 bg-slate-50 dark:bg-slate-950/40 rounded-2xl flex items-start gap-4 animate-scaleUp";
+                        card.innerHTML = `
+                            <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 text-2xl shrink-0 font-bold">🔌</div>
+                            <div class="flex-grow space-y-1">
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-250 truncate block">${device.productName || 'Unknown USB-C Device'}</span>
+                                <div class="grid grid-cols-2 gap-x-4 gap-y-1 font-mono text-[9px] font-bold text-slate-400">
+                                    <div>MANUFACTURER: <span class="text-slate-600 dark:text-slate-400">${device.manufacturerName || 'N/A'}</span></div>
+                                    <div>USB REVISION: <span class="text-slate-600 dark:text-slate-400">${device.usbVersionMajor}.${device.usbVersionMinor}</span></div>
+                                    <div>VENDOR ID (VID): <span class="text-slate-700 dark:text-slate-300">0x${device.vendorId.toString(16).toUpperCase().padStart(4, '0')}</span></div>
+                                    <div>PRODUCT ID (PID): <span class="text-slate-700 dark:text-slate-300">0x${device.productId.toString(16).toUpperCase().padStart(4, '0')}</span></div>
+                                </div>
+                            </div>
+                        `;
+                        deviceContainer.appendChild(card);
+                    });
+                } catch (e) {
+                    console.warn(e);
+                }
+            }
+
+            if (hasWebUSB) {
+                displayDevices();
+                navigator.usb.addEventListener("connect", displayDevices);
+                navigator.usb.addEventListener("disconnect", displayDevices);
+            }
+
+            btnScan.addEventListener("click", async () => {
+                if (!hasWebUSB) {
+                    showToast("🔒 WebUSB is not supported or blocked on this browser!");
+                    return;
+                }
+                try {
+                    const device = await navigator.usb.requestDevice({ filters: [] });
+                    showToast(`✔ Connected to ${device.productName || 'USB Accessory'}`);
+                    displayDevices();
+                } catch (err) {
+                    if (err.name === "NotFoundError") {
+                        showToast("❌ Scanning cancelled by user");
+                    } else {
+                        showToast(`❌ Error: ${err.message}`);
+                    }
+                }
+            });
+
+            // ============================================
+            // PORT SIMULATOR LOGIC
+            // ============================================
+            const selectProtocol = document.getElementById("select-protocol");
+            const selectPower = document.getElementById("select-power");
+            const selectDisplay = document.getElementById("select-display");
+
+            const portLed = document.getElementById("port-led");
+            const laneSpeedFill = document.getElementById("lane-speed-fill");
+            const simTitle = document.getElementById("sim-protocol-title");
+            const simDesc = document.getElementById("sim-lane-desc");
+
+            const telemetrySpeed = document.getElementById("telemetry-speed");
+            const telemetryPower = document.getElementById("telemetry-power");
+            const telemetryThermal = document.getElementById("telemetry-thermal");
+            const telemetryLanes = document.getElementById("telemetry-lanes");
+            const telemetryPins = document.getElementById("telemetry-pins");
+
+            function updateSimulation() {
+                const protocol = selectProtocol.value;
+                const power = parseInt(selectPower.value);
+                const display = selectDisplay.value;
+
+                // Color of Led indicator based on selected power and protocol
+                if (protocol === "tb4" || protocol === "tb3" || protocol === "usb4") {
+                    portLed.setAttribute("fill", "#10b981"); // Green for high speed Thunderbolt / USB4
+                } else {
+                    portLed.setAttribute("fill", "#3b82f6"); // Blue for standard USB3
+                }
+
+                // Bandwidth and lane allocations parameters
+                let speedGbps = 5;
+                let protocolTxt = "";
+                let progressWidth = "12%";
+                if (protocol === "usb3") {
+                    speedGbps = 5;
+                    protocolTxt = "USB 3.2 Gen 1 SuperSpeed";
+                    progressWidth = "12%";
+                } else if (protocol === "usb32") {
+                    speedGbps = 10;
+                    protocolTxt = "USB 3.2 Gen 2 SuperSpeed+";
+                    progressWidth = "25%";
+                } else if (protocol === "tb3") {
+                    speedGbps = 40;
+                    protocolTxt = "Thunderbolt 3 Port Architecture";
+                    progressWidth = "80%";
+                } else if (protocol === "tb4") {
+                    speedGbps = 40;
+                    protocolTxt = "Thunderbolt 4 Certified Port Link";
+                    progressWidth = "85%";
+                } else if (protocol === "usb4") {
+                    speedGbps = 40;
+                    protocolTxt = "USB4 Gen 3x2 High Speed Link";
+                    progressWidth = "82%";
+                }
+
+                telemetrySpeed.textContent = `${speedGbps} Gbps`;
+                telemetryPower.textContent = `${power}W`;
+
+                // Display outputs allocation
+                let lanesText = "0 active video lanes";
+                let pinAllocation = "Pins A1-A12, B1-B12 (TX1/RX1 CC Data Channels)";
+                if (display !== "none") {
+                    if (display === "dp14") {
+                        lanesText = "2 active video lanes (4K @ 60Hz)";
+                        pinAllocation = "Lanes 0 & 1 allocated to DP 1.4 video. Lanes 2 & 3 for data.";
+                    } else if (display === "dp20") {
+                        lanesText = "4 active video lanes (8K @ 60Hz)";
+                        pinAllocation = "All 4 high-speed lanes routed to DP 2.0. Data limited to USB 2.0.";
+                    } else if (display === "hdmi") {
+                        lanesText = "2 active video lanes (HDMI 2.0 Alt-Mode)";
+                        pinAllocation = "Lanes 0 & 1 routed to HDMI. CC pin negotiates video framing.";
+                    }
+                }
+                telemetryLanes.textContent = lanesText;
+                telemetryPins.textContent = pinAllocation;
+
+                // Thermal evaluation based on speed and power
+                let thermalText = "Cool (Nominal)";
+                let thermalClass = "text-slate-800 dark:text-slate-200 font-extrabold";
+                if (power >= 100 || speedGbps >= 40) {
+                    if (power === 240 && speedGbps === 40) {
+                        thermalText = "Hot (High Draw Activity)";
+                        thermalClass = "text-red-500 font-extrabold";
+                    } else {
+                        thermalText = "Warm (Active Data + Charge)";
+                        thermalClass = "text-amber-500 font-bold";
+                    }
+                }
+                telemetryThermal.textContent = thermalText;
+                telemetryThermal.className = thermalClass;
+
+                // Update Port description HUD
+                simTitle.textContent = `PORT CONFIGURATION: ${protocolTxt.toUpperCase()}`;
+                simDesc.textContent = `Active Speed: ${speedGbps}Gbps | Power Profile: ${power}W | Display: ${display === 'none' ? 'None' : display.toUpperCase()}`;
+                laneSpeedFill.style.width = progressWidth;
+            }
+
+            // Bind listeners
+            [selectProtocol, selectPower, selectDisplay].forEach(el => {
+                el.addEventListener("change", updateSimulation);
+            });
+
+            // Initial simulation state
+            updateSimulation();
+
+            // Export USB-C Profile Report
+            document.getElementById("btn-export-profile").addEventListener("click", () => {
+                const report = {
+                    metadata: {
+                        site: "InputTest.online",
+                        service: "USB Type-C & Thunderbolt Speed Profiler",
+                        timestamp: new Date().toISOString(),
+                        userAgent: navigator.userAgent
+                    },
+                    simulatedParameters: {
+                        protocolSelected: selectProtocol.value,
+                        powerDeliveryWatts: selectPower.value,
+                        altModeDisplay: selectDisplay.value,
+                        estimatedSpeedGbps: telemetrySpeed.textContent,
+                        estimatedThermalState: telemetryThermal.textContent
+                    },
+                    webUsbAvailable: hasWebUSB
+                };
+
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(report, null, 4));
+                const downloadAnchor = document.createElement('a');
+                downloadAnchor.setAttribute("href", dataStr);
+                downloadAnchor.setAttribute("download", `inputtest_port_profile_${Math.floor(Date.now() / 1000)}.json`);
+                document.body.appendChild(downloadAnchor);
+                downloadAnchor.click();
+                downloadAnchor.remove();
+
+                showToast("📥 Diagnostics profile download started");
+            });
+        });
+    </script>
+</body>
+</html>

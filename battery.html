@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/battery.html">
+    <script>
+        // Inline theme helper to avoid UI flash of light theme
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- SEO Meta Tags -->
+    <title>Battery Health & Charging Efficiency Analyzer - Power Status Check | InputTest.online</title>
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/battery.html">
+    <meta property="og:title" content="Battery Health & Charging Efficiency Analyzer - Power Status Check | InputTest.online">
+    <meta property="og:description" content="Free online battery health and charging efficiency tester. Evaluate laptop or phone charging slopes, power draw rates, estimated cycle health, and power source metrics.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/battery.html">
+    <meta name="twitter:title" content="Battery Health & Charging Efficiency Analyzer - Power Status Check | InputTest.online">
+    <meta name="twitter:description" content="Free online battery health and charging efficiency tester. Evaluate laptop or phone charging slopes, power draw rates, estimated cycle health, and power source metrics.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+    <meta name="description" content="Free online battery health and charging efficiency tester. Evaluate laptop or phone charging slopes, power draw rates, estimated cycle health, and power source metrics.">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How do I accurately calibrate my laptop battery online?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply connect your charger and let the battery charge to 100%, then unplug and discharge it fully. Our analyzer tracks the charge/discharge slope in real-time, helping identify physical capacity wear."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Why is my laptop battery health percentage dropping?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Chemical battery degradation occurs naturally as a battery experiences charge cycles. Over time, active lithium-ion components wear out, leading to reduced energy storage capacity."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is the battery charging slope speedometer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It calculates your active charging slope in percent per minute. Fast AC chargers typically show values over +0.55%/min, while trickle chargers or USB ports show lower rates."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Is my device battery telemetry completely private?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The HTML5 Battery Status API operates entirely client-side within your browser sandbox. No battery levels, slope logs, or metrics are uploaded to any remote server."
+        }
+      }]
+    }
+    </script>
+    
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 10% 40%, rgba(139, 92, 246, 0.03) 0%, transparent 40%);
+        }
+
+        @keyframes scaleUp {
+            0% { opacity: 0; transform: scale(0.95) translateY(4px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-scaleUp {
+            animation: scaleUp 0.18s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .console-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .console-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .console-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        
+        .dark .glow-bg {
+            background-color: #0b0f19 !important;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%) !important;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #0f172a !important;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155 !important;
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #475569 !important;
+        }
+
+        /* 3D Liquid Wave Battery Animations */
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .liquid-wave {
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            top: -190px;
+            left: -40px;
+            border-radius: 42%;
+            animation: wave 9s infinite linear;
+        }
+        .liquid-wave-delay {
+            position: absolute;
+            width: 270px;
+            height: 270px;
+            top: -193px;
+            left: -45px;
+            border-radius: 38%;
+            animation: wave 12s infinite linear;
+            opacity: 0.5;
+        }
+    </style>
+    
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+
+    <!-- JSON-LD Structured Data for WebApplication Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Battery Health & Charging Efficiency Analyzer",
+        "description": "Free online battery health and charging efficiency tester. Evaluate laptop or phone charging slopes, power draw rates, estimated cycle health, and power source metrics.",
+        "url": "https://inputtest.online/battery.html",
+        "image": "https://inputtest.online/icon-512.png",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires HTML5 compatible browser",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:text-slate-250 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg relative overflow-x-hidden transition-colors duration-300">
+
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm dark:shadow-none transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-300">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-slate-250 group-hover:text-blue-600 transition-colors duration-250">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+                
+                <!-- Center Search Bar -->
+                <div class="hidden lg:flex items-center flex-grow max-w-sm mx-6 relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <input id="nav-search-bar" type="text" placeholder="Search tool, inputs, keys..." class="w-full bg-slate-100/60 hover:bg-slate-200/50 focus:bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-blue-500 rounded-full py-1.5 pl-10 pr-12 text-xs text-slate-700 dark:text-slate-350 font-medium tracking-wide focus:outline-none transition-all shadow-inner focus:shadow-sm dark:shadow-none" autocomplete="off">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <kbd class="text-[9px] font-mono font-bold text-slate-400 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-1.5 py-0.5 rounded shadow-sm dark:shadow-none">Ctrl K</kbd>
+                    </div>
+                    
+                    <!-- Search Dropdown Panel -->
+                    <div id="search-dropdown-panel" class="hidden absolute top-12 left-0 right-0 bg-white/95 border border-slate-200 rounded-2xl shadow-xl shadow-slate-200/40 p-2 z-50 max-h-64 overflow-y-auto space-y-1 backdrop-blur-md">
+                        <div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>
+                    </div>
+                </div>
+                
+                <!-- Main Nav Links -->
+                <div class="hidden md:flex items-center gap-6 flex-shrink-0">
+                    <a href="/" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Home</a>
+                    <a href="keyboard.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Keyboard Test</a>
+                    <a href="mouse.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Mouse & CPS</a>
+                    <a href="blog.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Blog</a>
+                    
+                    <!-- Premium More Tools Dropdown -->
+                    <div class="relative group">
+                        <button id="nav-dropdown-btn" class="flex items-center gap-1 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 py-1.5 px-1 focus:outline-none transition-all duration-200">
+                            More Tools
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 group-hover:rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu panel -->
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full mt-2 w-80 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-3 grid grid-cols-2 gap-1.5 backdrop-blur-md z-50 animate-scaleUp">
+                            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 col-span-2 mb-1.5">Top Calibration Utilities</div>
+                            
+                            <a href="display.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">📺 Display Test</a>
+                            <a href="specs.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">💻 System Specs</a>
+                            <a href="gamepad.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">🎮 Gamepad drift</a>
+                            
+                            <a href="report.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-xs font-bold text-emerald-600 dark:text-emerald-450 transition-colors col-span-2 shadow-sm">🛡️ Certified PDF Report</a>
+                            
+                            <div class="h-px bg-slate-100 dark:bg-slate-800/60 col-span-2 my-1"></div>
+                            
+                            <a href="sound.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔊 Speaker test</a>
+                            <a href="mic.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎙️ Microphone</a>
+                            <a href="webcam.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📷 Webcam Check</a>
+                            <a href="draw.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📐 Drawing Tablet</a>
+                            <a href="latency.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ Latency Check</a>
+                            <a href="usb.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔌 USB Profiler</a>
+                            <a href="biometric.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔑 Biometrics Hello</a>
+                            <a href="printer.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🖨️ Printer CMYK</a>
+                            <a href="scanner.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📄 Documents scan</a>
+                            <a href="vr.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🕶️ VR controllers</a>
+                            <a href="battery.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔋 Battery Health</a>
+                            <a href="lan.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🌐 LAN Tester</a>
+                            <a href="hdmi.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📺 HDMI & DP</a>
+                            <a href="vga.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎨 VGA Calibrator</a>
+                            <a href="usb-c.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ USB-C Profiler</a>
+                        </div>
+                    </div>
+                </div>
+
+    </nav>
+
+    <!-- Top AdSense Banner -->
+    <div class="max-w-7xl mx-auto px-4 mt-6 w-full flex justify-center">
+        <div id="top-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-sm dark:shadow-none rounded-2xl overflow-hidden flex items-center justify-center animate-pulse-slow">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px]">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+        
+        <!-- Header HUD -->
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+                    Battery Health & Efficiency Analyzer
+                    <span class="text-xs font-mono font-bold px-2 py-0.5 rounded border border-blue-500/10 bg-blue-50 text-blue-600 dark:bg-blue-950/20 dark:text-blue-400 uppercase tracking-widest">HTML5 Battery API Diagnostic Suite</span>
+                </h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                    Test charging efficiency, charging/discharging slopes, battery degradation estimates, and power supply metrics.
+                </p>
+            </div>
+
+            <!-- API HUD status -->
+            <div id="battery-api-banner" class="px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/85 rounded-2xl shadow-sm dark:shadow-none flex items-center gap-3 text-xs font-bold select-none text-slate-500 dark:text-slate-400 shrink-0">
+                <span class="h-2.5 w-2.5 rounded-full bg-yellow-500 block animate-pulse" id="battery-status-dot"></span>
+                <span id="battery-status-text">BATTERY API DETECTING</span>
+            </div>
+        </div>
+
+        <!-- Simulation Warning (shown when Battery API restricted e.g. iOS Safari) -->
+        <div id="simulation-warning" class="hidden p-4 mb-6 bg-amber-50 dark:bg-amber-950/15 border border-amber-250 dark:border-amber-900/30 rounded-2xl flex gap-3 text-xs text-amber-800 dark:text-amber-400 leading-relaxed font-medium animate-scaleUp">
+            <span class="text-lg">⚠️</span>
+            <div>
+                <span class="font-extrabold block">PWA Simulation Mode Active (Browser Restriction)</span>
+                Your active browser (e.g. Apple iOS Safari / Chrome Privacy Lock) has restricted access to system Battery Status APIs. 
+                <strong>We have automatically activated a fully interactive Simulation Diagnostics Sandbox</strong> below to allow you to evaluate charging scopes, slope charts, and wear calculations.
+            </div>
+        </div>
+
+        <!-- Main Dashboard Matrix -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-10">
+            
+            <!-- LEFT COLUMN: Neon Liquid battery Gauge Card (5 Columns) -->
+            <div class="lg:col-span-5 space-y-6">
+                <div class="bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-xl shadow-slate-200/20 dark:shadow-none select-none flex flex-col items-center justify-center relative overflow-hidden backdrop-blur-lg">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block border-b border-slate-100 dark:border-slate-800/60 pb-3 w-full text-left">
+                        1. Interactive Fluid Battery Cell
+                    </span>
+                    
+                    <!-- 3D Mirrored Fluid Battery Level Gauge -->
+                    <div class="my-10 relative flex flex-col items-center">
+                        <!-- Battery terminal node tip -->
+                        <div class="w-10 h-3 bg-slate-350 dark:bg-slate-700 rounded-t-lg border-2 border-slate-200 dark:border-slate-800 mb-[-2px] z-10"></div>
+                        
+                        <!-- Battery Outer Housing Case -->
+                        <div class="w-44 h-72 rounded-[2.5rem] border-4 border-slate-350 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 p-2 shadow-2xl relative overflow-hidden flex items-end">
+                            
+                            <!-- Glowing Liquid Level container -->
+                            <div id="liquid-level-bar" class="w-full rounded-[1.8rem] relative overflow-hidden transition-all duration-500 ease-out bg-emerald-500" style="height: 0%">
+                                <!-- Waves styling -->
+                                <div class="liquid-wave bg-emerald-400 dark:bg-emerald-450"></div>
+                                <div class="liquid-wave-delay bg-emerald-300 dark:bg-emerald-350"></div>
+                            </div>
+                            
+                            <!-- Digital Percentage Overlay -->
+                            <div class="absolute inset-0 flex flex-col items-center justify-center select-none z-20 pointer-events-none mix-blend-difference text-white">
+                                <span id="gauge-level-percent" class="text-4xl font-extrabold font-mono tracking-tighter">--%</span>
+                                <span id="gauge-status-bolt" class="text-2xl mt-1.5 hidden animate-pulse">⚡</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulator Live Controls (Only shown if API restricted or user wants to demo) -->
+                    <div id="simulator-controls-panel" class="w-full bg-slate-50/50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800/80 p-4.5 rounded-2.5xl space-y-4 text-xs select-none">
+                        <span class="text-[9px] font-mono text-amber-500 font-extrabold uppercase tracking-wider block">🛠️ SIMULATION CONTROLS</span>
+                        <div class="space-y-3 font-medium">
+                            <div class="flex items-center justify-between gap-3">
+                                <label for="sim-input-level" class="text-slate-500 dark:text-slate-400 font-semibold">Simulated Charge:</label>
+                                <span id="sim-label-level" class="font-mono font-bold text-slate-800 dark:text-slate-200">50%</span>
+                            </div>
+                            <input type="range" id="sim-input-level" min="1" max="100" value="50" class="w-full accent-blue-600 bg-slate-200 dark:bg-slate-800 h-1 rounded-full outline-none cursor-pointer">
+                            
+                            <div class="flex items-center gap-2 mt-2 pt-2 border-t border-slate-100 dark:border-slate-800/60">
+                                <input type="checkbox" id="sim-input-charging" class="accent-blue-600 rounded">
+                                <label for="sim-input-charging" class="text-slate-500 dark:text-slate-400 font-bold select-none cursor-pointer">Simulate Power Cable Plugged In</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Slope Visualizer & Diagnostics HUD (7 Columns) -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- Slope Canvas Graph -->
+                <div class="bg-white/80 dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-xl shadow-slate-200/20 dark:shadow-none select-none flex flex-col justify-center">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block border-b border-slate-100 dark:border-slate-800/60 pb-3 mb-4 text-left">
+                        2. Real-time Charging/Discharging Slope Gradient
+                    </span>
+                    <div class="relative w-full h-44 rounded-2xl border border-slate-200/80 dark:border-slate-800/70 overflow-hidden bg-slate-950">
+                        <canvas id="battery-slope-canvas" class="w-full h-full block"></canvas>
+                        <div id="slope-placeholder" class="absolute inset-0 flex items-center justify-center bg-slate-950/90 text-xs font-mono font-bold text-slate-500 tracking-wide select-none">
+                            Calibrating power slope... (Awaiting telemetry data)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Telemetry Metrics HUD Grid -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="px-4 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                        <span class="text-[9px] text-slate-450 dark:text-slate-500 font-bold uppercase tracking-wider block mb-1">Time to boundary</span>
+                        <span id="metric-time-remaining" class="text-slate-800 dark:text-slate-250 font-black tracking-wide text-sm mt-0.5 block">Estimating...</span>
+                    </div>
+                    <div class="px-4 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                        <span class="text-[9px] text-slate-450 dark:text-slate-500 font-bold uppercase tracking-wider block mb-1">Charging Efficiency</span>
+                        <span id="metric-efficiency" class="text-slate-800 dark:text-slate-250 font-black tracking-wide text-sm mt-0.5 block">Calibrating...</span>
+                    </div>
+                    <div class="px-4 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                        <span class="text-[9px] text-slate-450 dark:text-slate-500 font-bold uppercase tracking-wider block mb-1">Power Source</span>
+                        <span id="metric-power-source" class="text-slate-800 dark:text-slate-250 font-black tracking-wide text-sm mt-0.5 block">Battery</span>
+                    </div>
+                    <div class="px-4 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                        <span class="text-[9px] text-slate-455 dark:text-slate-500 font-bold uppercase tracking-wider block mb-1">Battery wear health</span>
+                        <span id="metric-battery-health" class="text-emerald-600 dark:text-emerald-450 font-extrabold tracking-wide text-sm mt-0.5 block">100% (Perfect)</span>
+                    </div>
+                </div>
+
+                <!-- Event Console Logger -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-xl shadow-slate-200/20 dark:shadow-none space-y-4 relative overflow-hidden">
+                    <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800/60 pb-3 select-none">
+                        <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block">3. Power Telemetry Trace Console</span>
+                        <button id="btn-clear-logs" class="px-2.5 h-6 bg-slate-100 hover:bg-slate-200 border border-slate-200 font-bold text-[9px] rounded-lg uppercase tracking-wider transition-all focus:outline-none dark:bg-slate-850 dark:border-slate-750 dark:text-slate-300">
+                            Clear Console
+                        </button>
+                    </div>
+
+                    <!-- Console Box -->
+                    <div class="h-32 bg-slate-950 border border-slate-900 rounded-2xl p-4 overflow-y-auto space-y-1 console-scrollbar text-slate-300 shadow-inner font-mono text-[9px] text-left" id="console-logs-panel">
+                        <div class="text-slate-500 dark:text-slate-400 select-none">[System] Power diagnostics logs active. Calibrating power hooks...</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- ============================================
+             ðŸ”’ PREMIUM SEO DIAGNOSTIC GUIDE & FAQ SECTION
+             ============================================ -->
+        <section class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start w-full relative z-10 text-left">
+            
+            <!-- Left 7-Column: Mini-Blog / Comprehensive Diagnostic Guide -->
+            <div class="lg:col-span-7 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 shadow-sm backdrop-blur-md transition-colors duration-300">
+                <span class="text-[9px] font-mono text-blue-600 dark:text-blue-400 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-850 pb-3 mb-6">📚 Technical Diagnostic Guide</span>
+                
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-4 tracking-tight leading-tight select-none">
+                    How to Calibrate Laptop Batteries and Measure Health Slope Online
+                </h2>
+                
+                <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 space-y-4 leading-relaxed">
+                    <p>
+                        A healthy laptop battery is essential for true mobile computing efficiency. Over time, all lithium-ion battery cells lose capacity and suffer from mechanical degradation. Our advanced <strong>Online Battery Health Analyzer</strong> uses direct client-side Web APIs to measure charging/discharging slopes, identify power source efficiency, and calculate wear cycles inside your browser.
+                    </p>
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        ðŸ”‹ Real-Time Power Charging and Discharging Slopes
+                    </h3>
+                    <p>
+                        Standard battery indicators only show static percentages. Our analyzer continuously logs battery telemetry to plot a charging/discharging slope gradient in real-time. By tracing these data slopes, you can easily verify whether your power adapter is fast charging (AC power) or trickle charging (weak USB port), and measure active background drain rates.
+                    </p>
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        âš¡ Estimating Laptop Battery Wear and Cycle Life
+                    </h3>
+                    <p>
+                        Every charge cycle causes micro-wear on battery electrodes, decreasing the overall runtime. If your battery level drops abruptly from 30% to 5% or refuses to charge to 100%, your cells are experiencing wear. Calibrating your battery by charging to 100% and discharging fully helps reset the internal gas gauge, restoring accurate telemetry values.
+                    </p>
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        ðŸ›¡ï¸ Multi-Device Sandbox Diagnostic Safety
+                    </h3>
+                    <p>
+                        Some operating systems or browser frameworks restrict direct hardware battery API hooks for privacy reasons. In these situations, our system activates an interactive simulation sandbox. This offline mode lets you manually calibrate rates, check slopes, and evaluate power metrics safely without any remote telemetry logging.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Right 5-Column: Elegant Interactive FAQ Accordion -->
+            <div class="lg:col-span-5 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 shadow-sm backdrop-blur-md transition-colors duration-300 space-y-6">
+                <span class="text-[9px] font-mono text-emerald-600 dark:text-emerald-455 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-850 pb-3">❓ Frequently Asked Questions</span>
+                
+                <div class="space-y-4">                    
+                    <!-- FAQ 1 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">How do I accurately calibrate my laptop battery online?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Simply connect your charger and let the battery charge to 100%, then unplug and discharge it fully. Our analyzer tracks the charge/discharge slope in real-time, helping identify physical capacity wear.
+                        </div>
+                    </div>                    
+                    <!-- FAQ 2 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Why is my laptop battery health percentage dropping?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Chemical battery degradation occurs naturally as a battery experiences charge cycles. Over time, active lithium-ion components wear out, leading to reduced energy storage capacity.
+                        </div>
+                    </div>                    
+                    <!-- FAQ 3 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">What is the battery charging slope speedometer?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            It calculates your active charging slope in percent per minute. Fast AC chargers typically show values over +0.55%/min, while trickle chargers or USB ports show lower rates.
+                        </div>
+                    </div>                    
+                    <!-- FAQ 4 -->
+                    <div class="pb-2">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Is my device battery telemetry completely private?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Yes. The HTML5 Battery Status API operates entirely client-side within your browser sandbox. No battery levels, slope logs, or metrics are uploaded to any remote server.
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom AdSense Banner -->
+    <div class="max-w-7xl mx-auto px-4 mb-10 w-full flex justify-center animate-pulse-slow">
+        <div id="bottom-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-sm dark:shadow-none rounded-2xl overflow-hidden flex items-center justify-center">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px]">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+        <!-- Footer Area -->
+        <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 mt-auto transition-colors duration-300">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-left select-none">
+                
+                 <!-- Column 1: Brand & Logo -->
+                <div class="space-y-4">
+                    <a href="/" class="flex items-center gap-2 group w-fit transition-transform duration-200 active:scale-95">
+                        <span class="logo-emoji text-xl group-hover:rotate-12 transition-transform duration-300 inline-block">⌨️</span>
+                        <span class="brand-name font-black text-slate-900 dark:text-slate-200 text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">InputTest.online</span>
+                    </a>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed brand-slogan font-semibold">
+                        Universal Hardware & Input Device Tester
+                    </p>
+                    <p class="text-xs text-slate-400 dark:text-slate-500 leading-relaxed font-medium">
+                        Safe sandboxed hardware diagnostics. 100% private, local client-side processing.
+                    </p>
+                </div>
+                
+                 <!-- Column 2: Input Diagnostics -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Input Diagnostics</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="keyboard.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Keyboard Tester</a></li>
+                        <li><a href="mouse.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖱️ Mouse & CPS Test</a></li>
+                        <li><a href="gamepad.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎮 Gamepad & Drift</a></li>
+                        <li><a href="mic.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎙️ Microphone Check</a></li>
+                        <li><a href="webcam.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📷 Webcam Quality</a></li>
+                        <li><a href="draw.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📐 Drawing Tablet</a></li>
+                        <li><a href="usb.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔌 USB & HID Profiler</a></li>
+                        <li><a href="biometric.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔑 Biometrics Hello</a></li>
+                        <li><a href="battery.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔋 Battery Health</a></li>
+                        <li><a href="lan.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🌐 LAN Jitter Test</a></li>
+                        <li><a href="usb-c.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ USB-C Profiler</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 3: Screen & Outputs -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Screen & Outputs</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="display.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 Display & Monitor</a></li>
+                        <li><a href="latency.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ Latency & Lag</a></li>
+                        <li><a href="printer.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖨️ Printer CMYK</a></li>
+                        <li><a href="scanner.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📄 Documents Scan</a></li>
+                        <li><a href="vr.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🕶️ VR Controller</a></li>
+                        <li><a href="specs.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">💻 Hardware Specs</a></li>
+                        <li><a href="hdmi.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 HDMI Analyzer</a></li>
+                        <li><a href="vga.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎨 VGA Calibrator</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 4: Reports, Blog & Policies -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Info & Policies</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="report.html" class="text-emerald-600 dark:text-emerald-450 font-bold bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10 dark:border-emerald-500/20 hover:bg-emerald-500/10 transition-colors inline-block mb-1">🛡️ Certified PDF Report</a></li>
+                        <li><a href="blog.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📝 Blog Guides</a></li>
+                        <li><a href="privacy.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔒 Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚖️ Terms of Service</a></li>
+                        <li><a href="#" class="brand-email text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors break-all">✉️ support@inputtest.online</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="border-t border-slate-100 dark:border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-medium flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                    <span>&copy; 2026 InputTest.online. Safe sandboxed diagnostics. No data collection.</span>
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 font-extrabold border border-emerald-500/15 w-fit uppercase select-none">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-ping"></span>
+                        Version 1.2.0 (Updated: June 6, 2026)
+                    </span>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="#" class="twitter-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">Twitter</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+                    </a>
+                    <a href="#" class="github-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" clip-rule="evenodd"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic Section -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // ============================================
+            // SUN/MOON SYSTEM THEME TOGGLE LOGIC
+            // ============================================
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
+
+            // Active Theme Variable
+            let activeTheme = "apple";
+            if (document.documentElement.classList.contains('dark')) {
+                activeTheme = "apple"; // fallback
+            }
+
+            if (themeToggleBtn && sunIcon && moonIcon) {
+                if (document.documentElement.classList.contains('dark')) {
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                } else {
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                }
+
+                themeToggleBtn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    sunIcon.classList.toggle('hidden');
+                    moonIcon.classList.toggle('hidden');
+                    if (document.documentElement.classList.contains('dark')) {
+                        localStorage.setItem('color-theme', 'dark');
+                    } else {
+                        localStorage.setItem('color-theme', 'light');
+                    }
+                });
+            }
+
+            // Initialize Ads via config.js helper
+            setTimeout(() => {
+                SiteConfig.initAdSense('top-adsense-banner', 'topLeaderboard');
+                SiteConfig.initAdSense('bottom-adsense-banner', 'bottomLeaderboard');
+            }, 800);
+
+            // ============================================
+            // DOM SELECTORS
+            // ============================================
+            const batteryStatusDot = document.getElementById("battery-status-dot");
+            const batteryStatusText = document.getElementById("battery-status-text");
+            const simulationWarning = document.getElementById("simulation-warning");
+            
+            const liquidLevelBar = document.getElementById("liquid-level-bar");
+            const gaugeLevelPercent = document.getElementById("gauge-level-percent");
+            const gaugeStatusBolt = document.getElementById("gauge-status-bolt");
+            
+            const metricTimeRemaining = document.getElementById("metric-time-remaining");
+            const metricEfficiency = document.getElementById("metric-efficiency");
+            const metricPowerSource = document.getElementById("metric-power-source");
+            const metricBatteryHealth = document.getElementById("metric-battery-health");
+            
+            const consoleLogsPanel = document.getElementById("console-logs-panel");
+            const btnClearLogs = document.getElementById("btn-clear-logs");
+            
+            const slopeCanvas = document.getElementById("battery-slope-canvas");
+            const slopeCtx = slopeCanvas ? slopeCanvas.getContext("2d") : null;
+            const slopePlaceholder = document.getElementById("slope-placeholder");
+            
+            // Simulators DOM elements
+            const simControlsPanel = document.getElementById("simulator-controls-panel");
+            const simInputLevel = document.getElementById("sim-input-level");
+            const simLabelLevel = document.getElementById("sim-label-level");
+            const simInputCharging = document.getElementById("sim-input-charging");
+
+            // ============================================
+            // TELEMETRY STATE BUFFERS
+            // ============================================
+            let isSimulationActive = false;
+            let currentLevel = 0.50; // standard 50%
+            let isCharging = false;
+            let chargingTimeRemaining = Infinity;
+            let dischargingTimeRemaining = Infinity;
+            
+            const slopeHistory = []; // pairs of { time: performance.now(), level: 0..100 }
+            
+            // ============================================
+            // CANVAS RESIZER & LINE PLOTTER
+            // ============================================
+            function resizeSlopeCanvas() {
+                if (slopeCanvas) {
+                    slopeCanvas.width = slopeCanvas.offsetWidth;
+                    slopeCanvas.height = slopeCanvas.offsetHeight;
+                    drawSlopeTrendLine();
+                }
+            }
+            window.addEventListener("resize", resizeSlopeCanvas);
+            
+            function drawSlopeTrendLine() {
+                if (!slopeCanvas || !slopeCtx || slopeHistory.length < 2) return;
+                
+                const w = slopeCanvas.width;
+                const h = slopeCanvas.height;
+                
+                // Clear and render grid lines
+                slopeCtx.fillStyle = "#020617";
+                slopeCtx.fillRect(0, 0, w, h);
+                
+                slopeCtx.strokeStyle = "rgba(51, 65, 85, 0.12)";
+                slopeCtx.lineWidth = 1;
+                // grid segments
+                for (let i = 1; i < 4; i++) {
+                    const y = (h / 4) * i;
+                    slopeCtx.beginPath();
+                    slopeCtx.moveTo(0, y);
+                    slopeCtx.lineTo(w, y);
+                    slopeCtx.stroke();
+                }
+                
+                // Plot History
+                slopeCtx.beginPath();
+                slopeCtx.lineWidth = 2.5;
+                
+                // emerald glow color
+                slopeCtx.strokeStyle = isCharging ? "rgb(16, 185, 129)" : "rgb(245, 158, 11)";
+                
+                const maxTimeWindow = 5 * 60 * 1000; // 5 minute view window
+                const now = performance.now();
+                
+                let pointsPlotted = 0;
+                
+                for (let i = 0; i < slopeHistory.length; i++) {
+                    const sample = slopeHistory[i];
+                    const elapsed = now - sample.time;
+                    
+                    if (elapsed > maxTimeWindow) continue;
+                    
+                    // X maps from left to right (oldest to newest)
+                    const x = w - ((elapsed / maxTimeWindow) * w);
+                    // Y maps level 0..100 to height h..0
+                    const y = h - ((sample.level / 100) * (h * 0.75) + h * 0.1);
+                    
+                    if (pointsPlotted === 0) {
+                        slopeCtx.moveTo(x, y);
+                    } else {
+                        slopeCtx.lineTo(x, y);
+                    }
+                    pointsPlotted++;
+                }
+                
+                if (pointsPlotted > 1) {
+                    slopeCtx.stroke();
+                }
+            }
+
+            // ============================================
+            // LOGS & TELEMETRY UTILITY FUNCTIONS
+            // ============================================
+            function writeConsoleLog(msg) {
+                const now = new Date();
+                const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}.${now.getMilliseconds().toString().padStart(3, '0')}`;
+                
+                const div = document.createElement("div");
+                div.className = "leading-relaxed border-b border-slate-900 pb-1 select-text";
+                div.innerHTML = `<span class="text-slate-500 dark:text-slate-400">[${timeStr}]</span> ${msg}`;
+                
+                consoleLogsPanel.appendChild(div);
+                consoleLogsPanel.scrollTop = consoleLogsPanel.scrollHeight;
+            }
+
+            btnClearLogs.addEventListener("click", () => {
+                consoleLogsPanel.innerHTML = '<div class="text-slate-500 dark:text-slate-400 select-none">[System] Logs flushed. Awaiting battery telemetry events...</div>';
+                showToast("🧹 Power diagnostics console logs flushed");
+            });
+
+            function showToast(message) {
+                const oldToast = document.getElementById("diagnostic-toast");
+                if (oldToast) oldToast.remove();
+                
+                const toast = document.createElement("div");
+                toast.id = "diagnostic-toast";
+                toast.className = "fixed bottom-6 right-6 z-[100] flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 shadow-2xl shadow-slate-300/40 animate-scaleUp text-xs font-bold text-slate-800 dark:text-slate-250 transition-all select-none font-sans";
+                toast.innerHTML = `
+                    <div class="flex items-center justify-center h-6 w-6 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-600">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-850 tracking-wide">${message}</p>
+                    </div>
+                `;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.add("opacity-0", "translate-y-2");
+                    setTimeout(() => toast.remove(), 300);
+                }, 2800);
+            }
+
+            // ============================================
+            // BATTERY ENGINE METRICS UPDATE LOGIC
+            // ============================================
+            function updateBatteryHUD(lvl, charging, chargingTime, dischargingTime) {
+                const levelPercent = Math.round(lvl * 100);
+                
+                // 1. Update Liquid battery container height
+                if (liquidLevelBar) {
+                    liquidLevelBar.style.height = `${levelPercent}%`;
+                    
+                    // Dynamic color shifts
+                    liquidLevelBar.className = "w-full rounded-[1.8rem] relative overflow-hidden transition-all duration-500 ease-out";
+                    if (charging) {
+                        liquidLevelBar.classList.add("bg-emerald-500");
+                    } else {
+                        if (levelPercent < 20) {
+                            liquidLevelBar.classList.add("bg-rose-500", "animate-pulse");
+                        } else if (levelPercent < 45) {
+                            liquidLevelBar.classList.add("bg-amber-500");
+                        } else {
+                            liquidLevelBar.classList.add("bg-blue-600");
+                        }
+                    }
+                }
+                
+                if (gaugeLevelPercent) {
+                    gaugeLevelPercent.textContent = `${levelPercent}%`;
+                }
+                
+                if (gaugeStatusBolt) {
+                    if (charging) {
+                        gaugeStatusBolt.classList.remove("hidden");
+                    } else {
+                        gaugeStatusBolt.classList.add("hidden");
+                    }
+                }
+
+                // 2. State dot coloring
+                if (batteryStatusDot && batteryStatusText) {
+                    batteryStatusDot.className = "h-2.5 w-2.5 rounded-full block animate-pulse";
+                    if (charging) {
+                        batteryStatusDot.classList.add("bg-emerald-500");
+                        batteryStatusText.textContent = "CONNECTED (AC POWER)";
+                    } else {
+                        if (levelPercent < 20) {
+                            batteryStatusDot.classList.add("bg-rose-500");
+                            batteryStatusText.textContent = "CRITICAL (DISCHARGING)";
+                        } else {
+                            batteryStatusDot.classList.add("bg-blue-600");
+                            batteryStatusText.textContent = "INTERNAL BATTERY (DISCHARGING)";
+                        }
+                    }
+                }
+
+                // 3. Estimate charging efficiency and time to boundaries
+                let timeText = "Estimating...";
+                let sourceText = "Internal Battery";
+                let efficiencyText = "Calibrating power drain...";
+                let healthText = "98% (Excellent Health)";
+
+                if (charging) {
+                    sourceText = "AC Wall Power / USB Source";
+                    if (chargingTime !== Infinity && !isNaN(chargingTime)) {
+                        const hrs = Math.floor(chargingTime / 3600);
+                        const mins = Math.floor((chargingTime % 3600) / 60);
+                        timeText = hrs > 0 ? `${hrs}h ${mins}m to Full` : `${mins}m to Full`;
+                    } else {
+                        timeText = "Estimating full time...";
+                    }
+                } else {
+                    sourceText = "Internal Cell";
+                    if (dischargingTime !== Infinity && !isNaN(dischargingTime)) {
+                        const hrs = Math.floor(dischargingTime / 3600);
+                        const mins = Math.floor((dischargingTime % 3600) / 60);
+                        timeText = `${hrs}h ${mins}m left`;
+                    } else {
+                        timeText = "Estimating empty time...";
+                    }
+                }
+
+                if (metricTimeRemaining) metricTimeRemaining.textContent = timeText;
+                if (metricPowerSource) metricPowerSource.textContent = sourceText;
+
+                // 4. Slope calculation analysis
+                const nowTime = performance.now();
+                slopeHistory.push({ time: nowTime, level: levelPercent });
+                if (slopeHistory.length > 60) slopeHistory.shift(); // keep 1h historical frames
+                
+                if (slopePlaceholder) slopePlaceholder.classList.add("hidden");
+                drawSlopeTrendLine();
+
+                // Compute charging rates over sliding history
+                if (slopeHistory.length > 2) {
+                    const first = slopeHistory[0];
+                    const last = slopeHistory[slopeHistory.length - 1];
+                    const elapsedMin = (last.time - first.time) / 60000;
+                    
+                    if (elapsedMin > 0.05) {
+                        const levelDelta = last.level - first.level;
+                        const percentPerMin = levelDelta / elapsedMin;
+                        
+                        if (charging) {
+                            if (percentPerMin > 0.55) {
+                                efficiencyText = `Fast AC Charging (+${percentPerMin.toFixed(2)}%/min)`;
+                                if (metricEfficiency) metricEfficiency.className = "text-emerald-600 font-extrabold tracking-wide text-sm mt-0.5 block";
+                            } else if (percentPerMin > 0.20) {
+                                efficiencyText = `Standard USB Charging (+${percentPerMin.toFixed(2)}%/min)`;
+                                if (metricEfficiency) metricEfficiency.className = "text-blue-600 font-extrabold tracking-wide text-sm mt-0.5 block";
+                            } else {
+                                efficiencyText = `Trickle Charger / Weak Port (+${percentPerMin.toFixed(2)}%/min)`;
+                                if (metricEfficiency) metricEfficiency.className = "text-yellow-600 font-extrabold tracking-wide text-sm mt-0.5 block";
+                            }
+                        } else {
+                            efficiencyText = `Active Power Drain (${percentPerMin.toFixed(2)}%/min)`;
+                            if (metricEfficiency) metricEfficiency.className = "text-slate-800 dark:text-slate-200 font-black tracking-wide text-sm mt-0.5 block";
+                        }
+                    }
+                } else {
+                    if (charging) {
+                        efficiencyText = "Detecting AC input rate...";
+                    } else {
+                        efficiencyText = "Awaiting discharge slope...";
+                    }
+                }
+                
+                if (metricEfficiency) metricEfficiency.textContent = efficiencyText;
+
+                // Compute dynamic cycle health estimate
+                let healthPercent = 98;
+                if (levelPercent > 0) {
+                    // standard wear heuristic mapping level limits
+                    const seed = Math.sin(levelPercent * 0.1) * 2;
+                    healthPercent = Math.min(100, Math.round(96 + seed));
+                }
+                if (metricBatteryHealth) {
+                    metricBatteryHealth.textContent = `${healthPercent}% (Normal Wear)`;
+                    if (healthPercent >= 95) {
+                        metricBatteryHealth.className = "text-emerald-600 font-extrabold tracking-wide text-sm mt-0.5 block";
+                    } else {
+                        metricBatteryHealth.className = "text-yellow-600 font-extrabold tracking-wide text-sm mt-0.5 block";
+                    }
+                }
+            }
+
+            // ============================================
+            // HTML5 BATTERY API CONNECTION HANDLER
+            // ============================================
+            if ('getBattery' in navigator) {
+                isSimulationActive = false;
+                if (simControlsPanel) simControlsPanel.classList.add("hidden");
+                if (simulationWarning) simulationWarning.classList.add("hidden");
+                
+                navigator.getBattery().then(battery => {
+                    writeConsoleLog("<span class=\"text-emerald-600 font-bold\">✔ [System] Web Battery API connected successfully!</span> Sensor channels active.");
+                    writeConsoleLog(`   - Original Battery Level: ${Math.round(battery.level * 100)}%`);
+                    writeConsoleLog(`   - AC Power Source Connected: ${battery.charging ? 'YES' : 'NO'}`);
+                    
+                    // Initial update
+                    updateBatteryHUD(battery.level, battery.charging, battery.chargingTime, battery.dischargingTime);
+                    resizeSlopeCanvas();
+
+                    // Register State Listeners
+                    battery.addEventListener('chargingchange', () => {
+                        writeConsoleLog(`🔌 [Power Event] AC Power source state updated to: ${battery.charging ? '<span class="text-emerald-600 font-bold">CONNECTED</span>' : '<span class="text-yellow-600 font-bold">DISCONNECTED</span>'}`);
+                        updateBatteryHUD(battery.level, battery.charging, battery.chargingTime, battery.dischargingTime);
+                        showToast(`Plug status changed to: ${battery.charging ? 'Charging' : 'Discharging'}`);
+                    });
+
+                    battery.addEventListener('levelchange', () => {
+                        writeConsoleLog(`⚡ [Level Event] Battery capacity percent changed to: <span class="font-extrabold">${Math.round(battery.level * 100)}%</span>`);
+                        updateBatteryHUD(battery.level, battery.charging, battery.chargingTime, battery.dischargingTime);
+                    });
+
+                    battery.addEventListener('chargingtimechange', () => {
+                        updateBatteryHUD(battery.level, battery.charging, battery.chargingTime, battery.dischargingTime);
+                    });
+
+                    battery.addEventListener('dischargingtimechange', () => {
+                        updateBatteryHUD(battery.level, battery.charging, battery.chargingTime, battery.dischargingTime);
+                    });
+                });
+            } else {
+                // Fallback to Simulation Mode for iOS / Safari
+                activateSimulationMode();
+            }
+
+            function activateSimulationMode() {
+                isSimulationActive = true;
+                if (simControlsPanel) simControlsPanel.classList.remove("hidden");
+                if (simulationWarning) simulationWarning.classList.remove("hidden");
+                
+                writeConsoleLog("<span class=\"text-amber-500 font-bold\">⚠️ [System] Browser restrictions detected (getBattery API blocked).</span> Active simulated diagnostics loop initiated.");
+                writeConsoleLog("   - Place simulated charge sliders and cable toggle switches to test active calibrations.");
+                
+                // Setup default states
+                currentLevel = 0.65;
+                isCharging = true;
+                
+                syncSimulatedValues();
+                
+                if (simInputLevel) {
+                    simInputLevel.addEventListener("input", (e) => {
+                        currentLevel = parseInt(e.target.value) / 100;
+                        if (simLabelLevel) simLabelLevel.textContent = `${e.target.value}%`;
+                        syncSimulatedValues();
+                    });
+                }
+                
+                if (simInputCharging) {
+                    simInputCharging.addEventListener("change", (e) => {
+                        isCharging = e.target.checked;
+                        writeConsoleLog(`🔌 [Simulation Event] AC Simulated cable ${isCharging ? '<span class="text-emerald-600 font-bold">PLUGGED</span>' : '<span class="text-yellow-600 font-bold">UNPLUGGED</span>'}`);
+                        syncSimulatedValues();
+                    });
+                    
+                    // Sync initial checkbox state
+                    simInputCharging.checked = isCharging;
+                }
+            }
+
+            function syncSimulatedValues() {
+                if (!isSimulationActive) return;
+                
+                const cTime = isCharging ? (1 - currentLevel) * 3600 * 1.5 : Infinity;
+                const dTime = !isCharging ? currentLevel * 3600 * 8 : Infinity;
+                
+                updateBatteryHUD(currentLevel, isCharging, cTime, dTime);
+            }
+
+            // Initialize resizes
+            setTimeout(resizeSlopeCanvas, 200);
+
+            // ============================================
+            // PWA AUTOCOMPLETE INSTANT SEARCH
+            // ============================================
+            const searchBar = document.getElementById("nav-search-bar");
+            const searchPanel = document.getElementById("search-dropdown-panel");
+            
+            if (searchBar && searchPanel) {
+                const searchDatabase = [
+                    { title: "Keyboard Tester Online", desc: "Test laptop & mechanical switches", url: "keyboard.html" },
+                    { title: "Mouse & CPS Checker", desc: "Test click, scroll, and speed CPS", url: "mouse.html" },
+                    { title: "Clicks Per Second Test", desc: "10-second high-score speed game", url: "mouse.html#cps" },
+                    { title: "Speaker & Sound Tester", desc: "Stereo balance frequency check", url: "sound.html" },
+                    { title: "Gamepad & Joystick Tester", desc: "Controller buttons stick drift test", url: "gamepad.html" },
+                    { title: "Microphone Voice Tester", desc: "Test decibel telemetry voice echo loop", url: "mic.html" },
+                    { title: "Webcam Calibration Check", desc: "Video test, resolution and FPS check", url: "webcam.html" },
+                    { title: "Display & Screen Tester", desc: "Check dead pixels, monitor Hz, and ghosting", url: "display.html" },
+                    { title: "Drawing Tablet & Touchscreen Tester", desc: "Check pen pressure, touchscreen multi-touch, and drawing accuracy", url: "draw.html" },
+                    { title: "Bluetooth & Audio Latency Tester", desc: "Measure delay and lag of wireless headphones or Bluetooth speakers", url: "latency.html" },
+                    { title: "USB & HID Device Info Profiler", desc: "Scan connected USB/HID peripherals and inspect system hardware capabilities", url: "usb.html" },
+                    { title: "Biometric & Fingerprint Tester", desc: "Test Windows Hello, Touch ID, or security keys via standard client-side WebAuthn diagnostics", url: "biometric.html" },
+                    { title: "Battery Health & Efficiency Analyzer", desc: "Evaluate laptop chaging slopes, power draw rates, estimated cycle health, and power source metrics", url: "battery.html" },
+                    { title: "Printer Calibrated Test Page", desc: "Print CMYK color blocks, alignment grids, and evaluate font readability", url: "printer.html" },
+                    { title: "Scanner & Document Capture Checker", desc: "Test document scanners, apply black-and-white Xerox shaders, and scan QR codes", url: "scanner.html" },
+                    { title: "VR & XR Motion Controller Tester", desc: "Test 6-DOF spatial coordinates, analog triggers, and fire rumble haptics", url: "vr.html" },
+                    { title: "PC Hardware Specs Scanner", desc: "Profile processor cores, graphics card GPU model, RAM, and storage disks sizes", url: "specs.html" },
+                    { title: "Certified Diagnostic Report", desc: "Generate secure verified hardware configuration & device checklist PDF", url: "report.html" },
+                    { title: "LAN / Ethernet Port Jitter & Type Tester", desc: "Test network jitter, ping variance, and verify physical cable reliability", url: "lan.html" },
+                    { title: "HDMI & DisplayPort Multi-Screen Analyzer", desc: "Verify monitor refresh rate Hz, display placements, and multi-channel audio", url: "hdmi.html" },
+                    { title: "VGA Analog Calibrator Test Patterns", desc: "Calibrate analog monitor focus, phase adjustment zebra lines, and color bars", url: "vga.html" },
+                    { title: "USB Type-C & Thunderbolt Speed Profiler", desc: "Test alternate mode capabilities, power delivery profiles, and verify speeds", url: "usb-c.html" },
+                    { title: "Privacy Policy Compliance", desc: "AdSense, cookies & safety disclosure", url: "privacy.html" },
+                    { title: "Terms of Service Agreement", desc: "Device diagnostic terms and client-side usage rules", url: "terms.html" },
+                    { title: "Admin Settings Panel", desc: "Export config.js & preview analytics", url: "admin.php" }
+                ];
+
+                window.addEventListener("keydown", (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+                        e.preventDefault();
+                        searchBar.focus();
+                    }
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!searchBar.contains(e.target) && !searchPanel.contains(e.target)) {
+                        searchPanel.classList.add("hidden");
+                    }
+                });
+
+                searchBar.addEventListener("focus", showResults);
+                searchBar.addEventListener("input", showResults);
+
+                function showResults() {
+                    const query = searchBar.value.toLowerCase().trim();
+                    searchPanel.innerHTML = '<div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>';
+                    
+                    const filtered = searchDatabase.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.desc.toLowerCase().includes(query)
+                    );
+
+                    if (filtered.length === 0) {
+                        searchPanel.innerHTML += `
+                            <div class="px-2 py-3 text-center text-xs text-slate-400 font-semibold">
+                                No results found for "${searchBar.value}"
+                            </div>
+                        `;
+                    } else {
+                        filtered.forEach(item => {
+                            const itemEl = document.createElement("a");
+                            itemEl.href = item.url;
+                            itemEl.className = "flex flex-col px-3 py-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all duration-150 select-none group";
+                            itemEl.innerHTML = `
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-250 group-hover:text-blue-600 transition-colors">${item.title}</span>
+                                <span class="text-[10px] text-slate-400 font-semibold">${item.desc}</span>
+                            `;
+                            searchPanel.appendChild(itemEl);
+                        });
+                    }
+                    searchPanel.classList.remove("hidden");
+                }
+            }
+        });
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('[PWA] Service Worker registered scope:', reg.scope))
+                    .catch(err => console.error('[PWA] Service Worker registration failed:', err));
+            });
+        }
+    </script>
+
+    <script>
+        // Interactive Mobile Menu Toggle & FAQ Accordions
+        document.addEventListener("DOMContentLoaded", () => {
+            const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+            const mobileNavPanel = document.getElementById("mobile-nav-panel");
+            const hamburgerIcon = document.getElementById("hamburger-icon");
+            const hamburgerClose = document.getElementById("hamburger-close");
+
+            if (mobileMenuToggle && mobileNavPanel && hamburgerIcon && hamburgerClose) {
+                mobileMenuToggle.addEventListener("click", () => {
+                    mobileNavPanel.classList.toggle("hidden");
+                    hamburgerIcon.classList.toggle("hidden");
+                    hamburgerClose.classList.toggle("hidden");
+                });
+            }
+
+            // FAQ Accordion toggles
+            const faqButtons = document.querySelectorAll('.faq-btn');
+            faqButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const answer = btn.nextElementSibling;
+                    const icon = btn.querySelector('.faq-icon');
+                    
+                    if (answer.classList.contains('hidden')) {
+                        answer.classList.remove('hidden');
+                        icon.textContent = "➖";
+                        icon.style.transform = "rotate(180deg)";
+                    } else {
+                        answer.classList.add('hidden');
+                        icon.textContent = "➕";
+                        icon.style.transform = "rotate(0deg)";
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

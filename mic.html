@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/mic.html">
+    <script>
+        // Inline theme helper to avoid UI flash of light theme
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- SEO Meta Tags -->
+    <title>Online Microphone Tester - Check Mic & Echo Test | InputTest.online</title>
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/mic.html">
+    <meta property="og:title" content="Online Microphone Tester - Check Mic & Echo Test | InputTest.online">
+    <meta property="og:description" content="Free online microphone tester. Capture live audio stream, analyze decibel volume peaks, view real-time soundwave visualizer, and record a 5-second echo test.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/mic.html">
+    <meta name="twitter:title" content="Online Microphone Tester - Check Mic & Echo Test | InputTest.online">
+    <meta name="twitter:description" content="Free online microphone tester. Capture live audio stream, analyze decibel volume peaks, view real-time soundwave visualizer, and record a 5-second echo test.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+    <meta name="description" content="Free online microphone tester. Capture live audio stream, analyze decibel volume peaks, view real-time soundwave visualizer, and record a 5-second echo test.">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How do I authorize microphone permissions online?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Click 'Start Microphone Test'. When the browser displays the security prompt, select 'Allow'. If you previously blocked access, click the lock (🔒) icon in the URL bar, allow 'Microphone', and refresh the page."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Why is my recorded voice sounding distorted or clipping?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Distortion or clipping occurs when the microphone input gain is set too high (registering near 0 dBFS). Open your system sound control settings, navigate to input device properties, and lower the volume slider."
+        }
+      }, {
+        "@type": "Question",
+        "name": "How can I reduce static hiss and background noise?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Static hiss can be reduced by moving away from electronic fans, utilizing a USB microphone instead of an analog 3.5mm jack, and enabling software noise suppression features like echo cancellation in your system settings."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Is my voice recording stored or sent to any server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. All sound waveforms, decibel computations, and voice recording echo tests are processed strictly within your local browser memory sandbox. No data is stored or transmitted, maintaining 100% offline privacy."
+        }
+      }]
+    }
+    </script>
+    
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 10% 40%, rgba(99, 102, 241, 0.03) 0%, transparent 40%);
+        }
+
+        @keyframes scaleUp {
+            0% { opacity: 0; transform: scale(0.85) translateY(2px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-scaleUp {
+            animation: scaleUp 0.12s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* Wave pulse animation for microphone icon */
+        @keyframes wavePulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.15); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+        .mic-active-pulse {
+            animation: wavePulse 1.8s infinite ease-in-out;
+        }
+
+        /* Fallback explicit style for permission request button */
+        #btn-request-permission {
+            background-color: #7c3aed !important; /* solid purple-600 */
+            color: #ffffff !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+        }
+        #btn-request-permission:hover {
+            background-color: #6d28d9 !important; /* solid purple-700 */
+        }
+            /* Dark Mode style overrides */
+        .dark .glow-bg {
+            background-color: #0b0f19 !important;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%) !important;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #0f172a !important;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155 !important;
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #475569 !important;
+        }
+    </style>
+    
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+
+    <!-- JSON-LD Structured Data for WebApplication Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Online Microphone Tester",
+        "description": "Free online microphone tester. Capture live audio stream, analyze decibel volume peaks, view real-time soundwave visualizer, and record a 5-second echo test.",
+        "url": "https://inputtest.online/mic.html",
+        "image": "https://inputtest.online/icon-512.png",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires HTML5 compatible browser",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:text-slate-250 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg relative overflow-x-hidden transition-colors duration-300">
+
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm dark:shadow-none transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-300">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-slate-250 group-hover:text-blue-600 transition-colors duration-250">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+                
+                <!-- Interactive Search Bar -->
+                <div class="hidden lg:flex items-center flex-grow max-w-sm mx-6 relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <input id="nav-search-bar" type="text" placeholder="Search tool, inputs, keys..." class="w-full bg-slate-100/60 hover:bg-slate-200/50 focus:bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-blue-500 rounded-full py-1.5 pl-10 pr-12 text-xs text-slate-700 dark:text-slate-350 font-medium tracking-wide focus:outline-none transition-all shadow-inner focus:shadow-sm dark:shadow-none" autocomplete="off">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <kbd class="text-[9px] font-mono font-bold text-slate-400 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-1.5 py-0.5 rounded shadow-sm dark:shadow-none">Ctrl K</kbd>
+                    </div>
+                    
+                    <!-- Search Dropdown -->
+                    <div id="search-dropdown-panel" class="hidden absolute top-12 left-0 right-0 bg-white/95 border border-slate-200 rounded-2xl shadow-xl shadow-slate-200/40 p-2 z-50 max-h-64 overflow-y-auto space-y-1 backdrop-blur-md">
+                        <div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>
+                    </div>
+                </div>
+                
+                                <!-- Main Nav Links -->
+                <div class="hidden md:flex items-center gap-6 flex-shrink-0">
+                    <a href="/" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Home</a>
+                    <a href="keyboard.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Keyboard Test</a>
+                    <a href="mouse.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Mouse & CPS</a>
+                    <a href="blog.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Blog</a>
+                    
+                    <!-- Premium More Tools Dropdown -->
+                    <div class="relative group">
+                        <button id="nav-dropdown-btn" class="flex items-center gap-1 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 py-1.5 px-1 focus:outline-none transition-all duration-200">
+                            More Tools
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 group-hover:rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu panel -->
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full mt-2 w-80 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-3 grid grid-cols-2 gap-1.5 backdrop-blur-md z-50 animate-scaleUp">
+                            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 col-span-2 mb-1.5">Top Calibration Utilities</div>
+                            
+                            <a href="display.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">📺 Display Test</a>
+                            <a href="specs.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">💻 System Specs</a>
+                            <a href="gamepad.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">🎮 Gamepad drift</a>
+                            
+                            <a href="report.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-xs font-bold text-emerald-600 dark:text-emerald-450 transition-colors col-span-2 shadow-sm">🛡️ Certified PDF Report</a>
+                            
+                            <div class="h-px bg-slate-100 dark:bg-slate-800/60 col-span-2 my-1"></div>
+                            
+                            <a href="sound.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔊 Speaker test</a>
+                            <a href="mic.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎙️ Microphone</a>
+                            <a href="webcam.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📷 Webcam Check</a>
+                            <a href="draw.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📐 Drawing Tablet</a>
+                            <a href="latency.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ Latency Check</a>
+                            <a href="usb.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔌 USB Profiler</a>
+                            <a href="biometric.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔑 Biometrics Hello</a>
+                            <a href="printer.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🖨️ Printer CMYK</a>
+                            <a href="scanner.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📄 Documents scan</a>
+                            <a href="vr.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🕶️ VR controllers</a>
+                            <a href="battery.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔋 Battery Health</a>
+                            <a href="lan.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🌐 LAN Tester</a>
+                            <a href="hdmi.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📺 HDMI & DP</a>
+                            <a href="vga.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎨 VGA Calibrator</a>
+                            <a href="usb-c.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ USB-C Profiler</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Back Home Action -->
+                <div class="flex items-center gap-3 flex-shrink-0">                    <!-- Mobile Hamburger Button -->
+                    <button id="mobile-menu-toggle" class="p-2 md:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm transition-all focus:outline-none" aria-label="Toggle Navigation Menu">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                                        <!-- Elegant Sun/Moon Theme Toggle -->
+                    <button id="theme-toggle" class="relative p-2 mr-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm dark:shadow-none transition-all focus:outline-none" aria-label="Toggle dark mode">
+                        <!-- Sun Icon (hidden by default, shown in dark mode) -->
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <!-- Moon Icon (shown by default, hidden in dark mode) -->
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <a href="/" class="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1 font-bold font-mono bg-blue-500/5 px-3 py-1.5 rounded-full border border-blue-500/15">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+            <!-- Mobile Dropdown Navigation Panel -->
+    <div id="mobile-nav-panel" class="hidden md:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md px-4 py-4 space-y-3 transition-all duration-300 animate-scaleUp">
+        <div class="grid grid-cols-2 gap-3 text-xs font-bold">
+            <a href="/" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🏠 Home</a>
+            <a href="keyboard.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">⌨️ Keyboard Test</a>
+            <a href="mouse.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🖱️ Mouse & CPS</a>
+            <a href="display.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">📺 Display Test</a>
+            <a href="specs.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">💻 Hardware Specs</a>
+            <a href="report.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-450">🛡️ PDF Certificate</a>
+            <a href="blog.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/10 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 col-span-2 justify-center font-bold">📝 Diagnostic Blog & Guides</a>
+        </div>
+        
+        <div class="border-t border-slate-100 dark:border-slate-900 pt-3">
+            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-1">All Diagnostic Utilities</div>
+            <div class="grid grid-cols-2 gap-2 text-[10px] font-bold text-slate-500 dark:text-slate-400">
+                <a href="gamepad.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎮 Gamepad drift</a>
+                <a href="sound.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔊 Speaker test</a>
+                <a href="mic.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎙️ Microphone</a>
+                <a href="webcam.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📷 Webcam Check</a>
+                <a href="draw.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📐 Drawing Tablet</a>
+                <a href="latency.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ Latency Check</a>
+                <a href="usb.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔌 USB Profiler</a>
+                <a href="biometric.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔑 Biometrics Hello</a>
+                <a href="printer.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🖨️ Printer CMYK</a>
+                <a href="scanner.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📄 Documents scan</a>
+                <a href="vr.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🕶️ VR headset</a>
+                <a href="lan.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🌐 LAN Jitter Test</a>
+                <a href="hdmi.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📺 HDMI & DP</a>
+                <a href="vga.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎨 VGA Calibrator</a>
+                <a href="usb-c.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ USB-C Profiler</a>
+                <a href="battery.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔋 Battery Health</a>
+            </div>
+        </div>
+    </div>
+
+    </nav>
+
+    <!-- AdSense Slot Banner -->
+    <div class="max-w-7xl mx-auto px-4 mt-6 w-full flex justify-center">
+        <div id="top-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-sm dark:shadow-none rounded-2xl overflow-hidden flex items-center justify-center animate-pulse-slow">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px]">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+        
+        <!-- Header & State HUD -->
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+                    Microphone Hardware Tester 
+                    <span class="text-xs font-mono font-bold px-2 py-0.5 rounded border border-purple-500/10 bg-purple-500/5 text-purple-600 uppercase tracking-widest">Client-Side Audio Check</span>
+                </h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                    Inspect browser microphone capture, analyze decibel volume amplitude levels, view live soundwaves, and test voice playback.
+                </p>
+            </div>
+
+            <!-- Microphone Connected status -->
+            <div id="perm-banner" class="px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl shadow-sm dark:shadow-none flex items-center gap-3 text-xs font-bold select-none text-slate-500 dark:text-slate-400 shrink-0">
+                <span class="h-2.5 w-2.5 rounded-full bg-slate-300 block animate-pulse" id="perm-status-dot"></span>
+                <span id="perm-status-text">AWAITING MIC ACCESS</span>
+            </div>
+        </div>
+
+        <div id="mic-unauthorized-prompt" class="p-12 mb-10 text-center border-2 border-dashed border-slate-200 bg-white rounded-[2rem] flex flex-col items-center justify-center select-none shadow-sm dark:shadow-none">
+            <div class="relative flex items-center justify-center h-16 w-16 bg-purple-50 border border-purple-100 rounded-full text-3xl mb-4 text-purple-600">
+                🎤
+                <span class="absolute -top-1 -right-1 flex h-4 w-4">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-4 w-4 bg-purple-500 border-2 border-white"></span>
+                </span>
+            </div>
+            <h2 class="text-lg font-extrabold text-slate-800 dark:text-slate-250">Microphone Permission Required</h2>
+            <p class="text-xs text-slate-400 mt-1.5 font-medium max-w-md">Click start button below to authorize mic access. All hardware analytics are computed strictly in your local browser.</p>
+            <button id="btn-request-permission" class="mt-6 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider transition-all shadow-md dark:shadow-none shadow-purple-500/10 focus:outline-none">
+                🎙️ Start Microphone Test
+            </button>
+        </div>
+        
+        <!-- Helpful Troubleshooting Alert for Blocked Permissions -->
+        <div id="mic-troubleshoot-alert" class="hidden p-6 mb-8 bg-amber-500/10 border border-amber-500/20 rounded-[2rem] text-xs text-amber-800 dark:text-amber-300 leading-relaxed font-medium animate-scaleUp max-w-xl mx-auto dark:bg-amber-500/5">
+            <div class="flex gap-4 items-start text-left">
+                <span class="text-2xl select-none">💡</span>
+                <div class="space-y-1.5">
+                    <span class="font-extrabold text-sm block">How to Fix This:</span>
+                    <p id="mic-troubleshoot-text">
+                        Your browser is blocking microphone permissions. Please click the <strong>Lock (🔒) icon</strong> or <strong>Settings icon</strong> in the top left of the address bar next to the website URL, change <strong>Microphone</strong> to <strong>Allow</strong>, and reload the page.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Dashboard Columns (Initially Hidden until mic is authorized) -->
+        <div id="mic-dashboard-matrix" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-10">
+            
+            <!-- LEFT PANEL: Oscilloscope Wave and Live Visual Bar Meter (5 Columns) -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <!-- Decibel visual meter -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none flex flex-col justify-start">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block border-b border-slate-100 pb-3 mb-4 select-none">1. Live Volume & dB Spectrum</span>
+                    
+                    <div class="flex gap-6 items-center h-48">
+                        <!-- Vertical progress bar decibel scale -->
+                        <div class="w-8 h-full bg-slate-100 rounded-full border border-slate-200 relative overflow-hidden flex flex-col justify-end p-0.5">
+                            <div id="db-vertical-bar" class="w-full bg-gradient-to-t from-emerald-500 via-yellow-400 to-red-500 rounded-full transition-all duration-75" style="height: 0%"></div>
+                        </div>
+                        
+                        <!-- Telemetry text logs -->
+                        <div class="flex-grow space-y-4 font-mono text-xs select-none">
+                            <div class="p-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl">
+                                <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mb-0.5">RMS Amplitude Volume</span>
+                                <span id="label-rms" class="text-slate-800 dark:text-slate-250 font-black text-base">0.00%</span>
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl">
+                                <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mb-0.5">Decibel Sound Pressure</span>
+                                <span id="label-db" class="text-slate-800 dark:text-slate-250 font-black text-base">-Infinity dB</span>
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl">
+                                <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mb-0.5">Peak Volume Registered</span>
+                                <span id="label-peak" class="text-purple-600 font-black text-base">0.00%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Canvas Frequency Oscilloscope -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-5 shadow-sm dark:shadow-none">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block mb-3.5 select-none">2. Live Audio Waveform Stream</span>
+                    <div class="w-full bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden h-32 flex items-center justify-center relative shadow-inner">
+                        <canvas id="mic-canvas" class="w-full h-full block"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL: Device Options, Echo recorder controls (7 Columns) -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- Audio Device Selector Dropdown -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none space-y-3">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block border-b border-slate-100 pb-3">3. Audio Input Device Connection</span>
+                    
+                    <div class="flex flex-col gap-1.5 font-mono select-none">
+                        <label for="device-select" class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Select Active Microphone</label>
+                        <select id="device-select" class="w-full bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 focus:border-purple-500 rounded-xl py-2.5 px-3 text-xs font-bold text-slate-700 dark:text-slate-350 focus:outline-none transition-all cursor-pointer">
+                            <!-- Populated dynamically -->
+                            <option value="">Default Microphone</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Voice Recording Loop Echo test -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none space-y-5">
+                    <div>
+                        <h2 class="text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                            🎤 5-Second Voice Echo Test
+                        </h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Record a quick 5-second sample to listen back and evaluate mic static levels, hums, and delays.</p>
+                    </div>
+                    
+                    <!-- Recorder Controls ribbon -->
+                    <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl justify-between flex-wrap sm:flex-nowrap font-mono">
+                        
+                        <!-- Progress info / Status -->
+                        <div class="flex items-center gap-3 select-none flex-grow">
+                            <div class="h-8 w-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-xs shrink-0" id="recorder-icon-status">
+                                ⏺️
+                            </div>
+                            <div class="flex flex-col">
+                                <span id="label-record-status" class="text-xs font-bold text-slate-800 dark:text-slate-250 uppercase tracking-wide">Ready to Record</span>
+                                <span id="label-record-time" class="text-[10px] text-slate-400 font-bold">0.0s / 5.0s</span>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Buttons -->
+                        <div class="flex gap-2.5 shrink-0 select-none">
+                            <button id="btn-rec-start" class="h-10 px-4 bg-purple-600 hover:bg-purple-700 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider transition-colors focus:outline-none shadow-md dark:shadow-none shadow-purple-500/10">
+                                🎤 Record
+                            </button>
+                            <button id="btn-rec-stop" class="h-10 px-4 bg-slate-200 hover:bg-slate-300 text-slate-700 dark:text-slate-350 font-extrabold text-xs rounded-xl uppercase tracking-wider transition-colors focus:outline-none hidden">
+                                ⏹️ Stop
+                            </button>
+                            <button id="btn-rec-play" class="h-10 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider transition-colors focus:outline-none hidden">
+                                ▶️ Play Echo
+                            </button>
+                        </div>
+
+                    </div>
+                    
+                    <!-- Dynamic audio player for echo loop -->
+                    <div class="hidden" id="echo-audio-container">
+                        <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block mb-2 select-none">Echo Audio Playback</span>
+                        <audio id="echo-audio-player" class="w-full h-8" controls></audio>
+                    </div>
+
+                </div>
+
+                <!-- Client-Side Sandbox Guarantee banner -->
+                <div class="bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-100 rounded-[2rem] p-5 flex items-start gap-4 shadow-sm dark:shadow-none select-none">
+                    <span class="text-3xl text-purple-600">🛡️</span>
+                    <div>
+                        <h4 class="text-xs font-extrabold text-purple-800 uppercase tracking-wider">100% Client-Side Privacy</h4>
+                        <p class="text-[11px] text-purple-600/80 mt-1 font-medium leading-relaxed">
+                            No voice data, recordings, or spectral diagnostics are transmitted to any server. Audio captures operate purely within local browser contexts and are erased immediately upon closing this tab.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ============================================
+             🔒 PREMIUM SEO DIAGNOSTIC GUIDE & FAQ SECTION
+             ============================================ -->
+        <section class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start w-full relative z-10">
+            
+            <!-- Left 7-Column: Mini-Blog / Comprehensive Diagnostic Guide -->
+            <div class="lg:col-span-7 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 shadow-sm backdrop-blur-md transition-colors duration-300">
+                <span class="text-[9px] font-mono text-blue-600 dark:text-blue-400 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-850 pb-3 mb-6">📚 Technical Diagnostic Guide</span>
+                
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-4 tracking-tight leading-tight select-none">
+                    How to Test Microphone Audio, Decibel Levels, and Voice Echo Online
+                </h2>
+                
+                <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 space-y-4 leading-relaxed">
+                    <p>
+                        A high-quality microphone is crucial for remote work, voice recording, online education, and team gaming communication. Ensuring your microphone is properly connected, testing static noise thresholds, and checking capture sensitivity online can save you from audio transmission failures. Our <strong>Online Microphone Tester</strong> provides real-time client-side decibel analytics and audio wave visualization inside your browser sandbox.
+                    </p>
+                    
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        🎙️ Real-time Decibel (dB) Sound Pressure Monitoring
+                    </h3>
+                    <p>
+                        Decibels measure sound pressure level (SPL) or audio signal amplitude. In computer diagnostics, microphone input levels are measured in dBFS (decibels relative to full scale), where 0 dB represents the maximum digital limit before clipping. Testing your peak decibels ensures that your microphone capture is set at an optimal level, preventing voice distortion or inaudible low-volume issues.
+                    </p>
+                    
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        📈 Analyzing Live Soundwave Oscilloscopes
+                    </h3>
+                    <p>
+                        An oscilloscope visualizes raw sound pressure waves over time. Inspecting your microphone's waveform allows you to detect mechanical hums, static interference, and transient pops. A smooth sine-wave-like curve indicates clean vocal delivery, while a blocky or clipped flatline indicates that the input volume is too high, leading to standard distortion.
+                    </p>
+                    
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        🔁 The Importance of a 5-Second Voice Echo Loop
+                    </h3>
+                    <p>
+                        While level bars are helpful, hearing your own recorded voice is the ultimate diagnostic test. Our client-side 5-second voice echo recorder registers vocal samples locally and plays them back. This loop lets you immediately spot background noise, hardware-induced static hiss, and verify the overall audio quality before entering active video conferences.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Right 5-Column: Elegant Interactive FAQ Accordion -->
+            <div class="lg:col-span-5 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 shadow-sm backdrop-blur-md transition-colors duration-300 space-y-6">
+                <span class="text-[9px] font-mono text-emerald-600 dark:text-emerald-455 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-850 pb-3">❓ Frequently Asked Questions</span>
+                
+                <div class="space-y-4">
+                    
+                    <!-- FAQ 1 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">How do I authorize microphone permissions online?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Click 'Start Microphone Test'. When the browser displays the security prompt, select 'Allow'. If you previously blocked access, click the lock (🔒) icon in the URL bar, allow 'Microphone', and refresh the page.
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 2 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Why is my recorded voice sounding distorted or clipping?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Distortion or clipping occurs when the microphone input gain is set too high (registering near 0 dBFS). Open your system sound control settings, navigate to input device properties, and lower the volume slider.
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 3 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">How can I reduce static hiss and background noise?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Static hiss can be reduced by moving away from electronic fans, utilizing a USB microphone instead of an analog 3.5mm jack, and enabling software noise suppression features like echo cancellation in your system settings.
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 4 -->
+                    <div class="pb-2">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Is my voice recording stored or sent to any server?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            No. All sound waveforms, decibel computations, and voice recording echo tests are processed strictly within your local browser memory sandbox. No data is stored or transmitted, maintaining 100% offline privacy.
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Google AdSense Banner Zone -->
+    <div class="max-w-7xl mx-auto px-4 mb-10 w-full flex justify-center">
+        <div id="bottom-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-sm dark:shadow-none rounded-2xl overflow-hidden flex items-center justify-center">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px]">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+                                <!-- Footer Area -->
+        <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 mt-auto transition-colors duration-300">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-left select-none">
+                
+                 <!-- Column 1: Brand & Logo -->
+                <div class="space-y-4">
+                    <a href="/" class="flex items-center gap-2 group w-fit transition-transform duration-200 active:scale-95">
+                        <span class="logo-emoji text-xl group-hover:rotate-12 transition-transform duration-300 inline-block">⌨️</span>
+                        <span class="brand-name font-black text-slate-900 dark:text-slate-200 text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">InputTest.online</span>
+                    </a>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed brand-slogan font-semibold">
+                        Universal Hardware & Input Device Tester
+                    </p>
+                    <p class="text-xs text-slate-400 dark:text-slate-500 leading-relaxed font-medium">
+                        Safe sandboxed hardware diagnostics. 100% private, local client-side processing.
+                    </p>
+                </div>
+                
+                 <!-- Column 2: Input Diagnostics -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Input Diagnostics</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="keyboard.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Keyboard Tester</a></li>
+                        <li><a href="mouse.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖱️ Mouse & CPS Test</a></li>
+                        <li><a href="gamepad.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎮 Gamepad & Drift</a></li>
+                        <li><a href="mic.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎙️ Microphone Check</a></li>
+                        <li><a href="webcam.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📷 Webcam Quality</a></li>
+                        <li><a href="draw.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📐 Drawing Tablet</a></li>
+                        <li><a href="usb.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔌 USB & HID Profiler</a></li>
+                        <li><a href="biometric.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔑 Biometrics Hello</a></li>
+                        <li><a href="battery.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔋 Battery Health</a></li>
+                        <li><a href="lan.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🌐 LAN Jitter Test</a></li>
+                        <li><a href="usb-c.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ USB-C Profiler</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 3: Screen & Outputs -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Screen & Outputs</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="display.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 Display & Monitor</a></li>
+                        <li><a href="latency.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ Latency & Lag</a></li>
+                        <li><a href="printer.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖨️ Printer CMYK</a></li>
+                        <li><a href="scanner.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📄 Documents Scan</a></li>
+                        <li><a href="vr.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🕶️ VR Controller</a></li>
+                        <li><a href="specs.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">💻 Hardware Specs</a></li>
+                        <li><a href="hdmi.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 HDMI Analyzer</a></li>
+                        <li><a href="vga.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎨 VGA Calibrator</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 4: Reports, Blog & Policies -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Info & Policies</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="report.html" class="text-emerald-600 dark:text-emerald-450 font-bold bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10 dark:border-emerald-500/20 hover:bg-emerald-500/10 transition-colors inline-block mb-1">🛡️ Certified PDF Report</a></li>
+                        <li><a href="blog.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📝 Blog Guides</a></li>
+                        <li><a href="privacy.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔒 Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚖️ Terms of Service</a></li>
+                        <li><a href="#" class="brand-email text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors break-all">✉️ support@inputtest.online</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="border-t border-slate-100 dark:border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-medium flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                    <span>&copy; 2026 InputTest.online. Safe sandboxed diagnostics. No data collection.</span>
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 font-extrabold border border-emerald-500/15 w-fit uppercase select-none">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-ping"></span>
+                        Version 1.2.0 (Updated: June 6, 2026)
+                    </span>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="#" class="twitter-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">Twitter</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+                    </a>
+                    <a href="#" class="github-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" clip-rule="evenodd"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic Section -->
+    <script>
+                document.addEventListener("DOMContentLoaded", () => {
+            // ============================================
+            // SUN/MOON SYSTEM THEME TOGGLE LOGIC
+            // ============================================
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
+
+            if (themeToggleBtn && sunIcon && moonIcon) {
+                // Sync sun/moon icon visibility on startup
+                if (document.documentElement.classList.contains('dark')) {
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                } else {
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                }
+
+                themeToggleBtn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    sunIcon.classList.toggle('hidden');
+                    moonIcon.classList.toggle('hidden');
+                    if (document.documentElement.classList.contains('dark')) {
+                        localStorage.setItem('color-theme', 'dark');
+                    } else {
+                        localStorage.setItem('color-theme', 'light');
+                    }
+                });
+            }
+            // Initialize Ads via config.js helper
+            setTimeout(() => {
+                SiteConfig.initAdSense('top-adsense-banner', 'topLeaderboard');
+                SiteConfig.initAdSense('bottom-adsense-banner', 'bottomLeaderboard');
+            }, 800);
+
+            // ============================================
+            // WEB AUDIO / RECORDER STATE & SELECTORS
+            // ============================================
+            const unconnectedPrompt = document.getElementById("mic-unauthorized-prompt");
+            const dashboardMatrix = document.getElementById("mic-dashboard-matrix");
+            const btnRequestPermission = document.getElementById("btn-request-permission");
+            const troubleshootAlert = document.getElementById("mic-troubleshoot-alert");
+            const troubleshootText = document.getElementById("mic-troubleshoot-text");
+
+            
+            const permBanner = document.getElementById("perm-banner");
+            const permStatusDot = document.getElementById("perm-status-dot");
+            const permStatusText = document.getElementById("perm-status-text");
+            
+            const deviceSelect = document.getElementById("device-select");
+            
+            const dbVerticalBar = document.getElementById("db-vertical-bar");
+            const labelRms = document.getElementById("label-rms");
+            const labelDb = document.getElementById("label-db");
+            const labelPeak = document.getElementById("label-peak");
+            
+            const btnRecStart = document.getElementById("btn-rec-start");
+            const btnRecStop = document.getElementById("btn-rec-stop");
+            const btnRecPlay = document.getElementById("btn-rec-play");
+            const recIconStatus = document.getElementById("recorder-icon-status");
+            const labelRecStatus = document.getElementById("label-record-status");
+            const labelRecTime = document.getElementById("label-record-time");
+            
+            const echoAudioContainer = document.getElementById("echo-audio-container");
+            const echoAudioPlayer = document.getElementById("echo-audio-player");
+
+            let activeStream = null;
+            let audioCtx = null;
+            let analyser = null;
+            let source = null;
+            let animationFrameId = null;
+            
+            // Recorder state
+            let mediaRecorder = null;
+            let audioChunks = [];
+            let recordInterval = null;
+            let recordStartTimestamp = 0;
+            const recordMaxDuration = 5000; // 5 seconds
+            let recordedBlobUrl = null;
+            let maxPeakVolume = 0;
+
+            // Trigger Permission Request
+            btnRequestPermission.addEventListener("click", initMicCapture);
+            deviceSelect.addEventListener("change", () => {
+                if (deviceSelect.value) {
+                    initMicCapture(deviceSelect.value);
+                }
+            });
+
+            // ============================================
+            // CORE MICROPHONE AUDIOSTREAM HANDLER
+            // ============================================
+            async function initMicCapture(deviceId = null) {
+                // Clear any existing stream
+                stopMicCapture();
+                if (typeof deviceId !== 'string') deviceId = null;
+                if (troubleshootAlert) troubleshootAlert.classList.add("hidden");
+                
+                try {
+
+
+                    const constraints = {
+                        audio: deviceId ? { deviceId: { exact: deviceId } } : true
+                    };
+
+                    
+                    activeStream = await navigator.mediaDevices.getUserMedia(constraints);
+                    
+                    showToast("🎙️ Microphone connected successfully!");
+                    
+                    // Show Dashboard & Update banners
+                    unconnectedPrompt.classList.add("hidden");
+                    dashboardMatrix.classList.remove("hidden");
+                    
+                    permStatusDot.className = "h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse block";
+                    permStatusText.textContent = "MICROPHONE CONNECTED";
+                    permBanner.className = "px-4 py-2.5 bg-white border border-emerald-200/80 rounded-2xl shadow-sm dark:shadow-none flex items-center gap-3 text-xs font-bold text-emerald-600 shrink-0";
+                    
+                    // Initialize Analyser Nodes
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    if (audioCtx.state === 'suspended') {
+                        await audioCtx.resume();
+                    }
+                    analyser = audioCtx.createAnalyser();
+                    analyser.fftSize = 512;
+                    
+                    source = audioCtx.createMediaStreamSource(activeStream);
+                    source.connect(analyser);
+
+                    
+                    // List Audio input devices
+                    enumerateAudioDevices();
+                    
+                    // Trigger Live telemetry looping
+                    drawAnalyser();
+                    
+                    } catch (err) {
+                    console.error("Microphone initialization error: ", err);
+                    showToast("❌ Microphone access denied or not found.");
+                    
+                    permStatusDot.className = "h-2.5 w-2.5 rounded-full bg-rose-500 block";
+                    permStatusText.textContent = "PERMISSION DENIED";
+                    permBanner.className = "px-4 py-2.5 bg-white border border-rose-200/80 rounded-2xl shadow-sm dark:shadow-none flex items-center gap-3 text-xs font-bold text-rose-600 shrink-0";
+                    
+                    // Show helpful customized warning alert
+                    if (troubleshootAlert && troubleshootText) {
+                        let errorMsg = `<div class="mb-3 p-3 rounded-xl border border-rose-500/10 bg-rose-500/5 font-mono text-[10px] text-rose-600 dark:text-rose-400 select-text"><strong>Error Details:</strong> ${err.name}: ${err.message}</div>`;
+                        
+                        if (window.location.protocol === 'file:') {
+                            troubleshootText.innerHTML = errorMsg + "You are running this site directly from local computer files (<code>file:///</code>). Modern browsers completely disable microphone capture on local files due to privacy security policies. Please upload the compiled <strong>inputtest.zip</strong> to your hosting panel (<code>https://...</code>) or run via a local server (<code>http://localhost/...</code>) to test securely.";
+                        } else if (window.location.protocol === 'http:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                            troubleshootText.innerHTML = errorMsg + "You are running this site over an unsecure <strong>HTTP connection</strong>. Modern browsers block all camera and microphone access on non-secure connections for privacy. Please configure an SSL certificate (<strong>https://</strong>) on your web host, or test locally via <strong>localhost</strong>.";
+                        } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
+                            troubleshootText.innerHTML = errorMsg + "Your microphone is physically blocked or currently occupied by another program (like Zoom, Teams, Discord, or a game). Please close those programs, unplug and plug the microphone back in, and try again.";
+                        } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+                            troubleshootText.innerHTML = errorMsg + "No microphone hardware was detected. Please check if your microphone is physically plugged in or if your laptop's physical microphone switch (Fn key shortcut) is turned on.";
+                        } else {
+                            troubleshootText.innerHTML = errorMsg + "Your browser is blocking microphone access. Please click the <strong>Lock (🔒) icon</strong> or the <strong>Settings icon</strong> in the top-left of the address bar next to the website URL, change <strong>Microphone</strong> to <strong>Allow</strong>, and then reload the page to start diagnostics.";
+                        }
+                        troubleshootAlert.classList.remove("hidden");
+                    }
+                }
+
+
+
+
+            }
+
+            function stopMicCapture() {
+                if (animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                }
+                
+                if (activeStream) {
+                    activeStream.getTracks().forEach(track => track.stop());
+                    activeStream = null;
+                }
+                
+                if (audioCtx) {
+                    audioCtx.close();
+                    audioCtx = null;
+                }
+            }
+
+            // ============================================
+            // AUDIO DEVICE ENUMERATION LISTER
+            // ============================================
+            async function enumerateAudioDevices() {
+                try {
+                    const devices = await navigator.mediaDevices.enumerateDevices();
+                    const audioInputs = devices.filter(d => d.kind === 'audioinput');
+                    
+                    deviceSelect.innerHTML = "";
+                    audioInputs.forEach((device, index) => {
+                        const opt = document.createElement("option");
+                        opt.value = device.deviceId;
+                        opt.textContent = device.label || `Microphone ${index + 1}`;
+                        if (activeStream && activeStream.getAudioTracks()[0].label === device.label) {
+                            opt.selected = true;
+                        }
+                        deviceSelect.appendChild(opt);
+                    });
+                } catch (e) {
+                    console.warn("Failed to enumerate media devices", e);
+                }
+            }
+
+            // ============================================
+            // TELEMETRY & DECIBELS METER DRAWING
+            // ============================================
+            const canvas = document.getElementById("mic-canvas");
+            const canvasCtx = canvas.getContext("2d");
+            
+            function resizeCanvas() {
+                canvas.width = canvas.clientWidth;
+                canvas.height = canvas.clientHeight;
+            }
+            resizeCanvas();
+            window.addEventListener("resize", resizeCanvas);
+
+            function drawAnalyser() {
+                animationFrameId = requestAnimationFrame(drawAnalyser);
+                
+                if (!analyser) return;
+                
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                analyser.getByteTimeDomainData(dataArray);
+                
+                // --- 1. Draw live oscilloscope trace in glow vector style ---
+                canvasCtx.fillStyle = "rgba(248, 250, 252, 0.3)"; // Fade out trail
+                canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                canvasCtx.lineWidth = 3;
+                canvasCtx.strokeStyle = "#8b5cf6"; // elegant purple-500 line trace
+                canvasCtx.beginPath();
+                
+                const sliceWidth = canvas.width * 1.0 / bufferLength;
+                let x = 0;
+                
+                for (let i = 0; i < bufferLength; i++) {
+                    const v = dataArray[i] / 128.0;
+                    const y = v * canvas.height / 2;
+                    
+                    if (i === 0) {
+                        canvasCtx.moveTo(x, y);
+                    } else {
+                        canvasCtx.lineTo(x, y);
+                    }
+                    x += sliceWidth;
+                }
+                canvasCtx.lineTo(canvas.width, canvas.height / 2);
+                canvasCtx.stroke();
+                
+                // --- 2. Compute RMS Volume & Decibels Telemetry ---
+                let sumSq = 0;
+                for (let i = 0; i < bufferLength; i++) {
+                    const val = (dataArray[i] - 128) / 128; // Normalize bounds between -1.0 to 1.0
+                    sumSq += val * val;
+                }
+                const rms = Math.sqrt(sumSq / bufferLength);
+                
+                // RMS scaled to percentage
+                const rmsPercentage = rms * 100 * 2.5; // Scale volume sensitivity slightly
+                const finalVolume = Math.min(Math.max(rmsPercentage, 0), 100);
+                
+                // Keep record of highest peak volume
+                if (finalVolume > maxPeakVolume) {
+                    maxPeakVolume = finalVolume;
+                    labelPeak.textContent = `${maxPeakVolume.toFixed(2)}%`;
+                }
+
+                labelRms.textContent = `${finalVolume.toFixed(2)}%`;
+                
+                // Compute Decibel Level
+                // Standard formula: 20 * log10(RMS)
+                let db = -Infinity;
+                if (rms > 0) {
+                    db = 20 * Math.log10(rms);
+                }
+                
+                if (db === -Infinity) {
+                    labelDb.textContent = "-Infinity dB";
+                } else {
+                    labelDb.textContent = `${db.toFixed(1)} dB`;
+                }
+                
+                // Animate decibel vertical meter height
+                dbVerticalBar.style.height = `${finalVolume}%`;
+            }
+
+            // ============================================
+            // 5-SECOND RECORDING ECHO CONTROLLERS
+            // ============================================
+            btnRecStart.addEventListener("click", () => {
+                if (!activeStream) {
+                    showToast("❌ Active stream is required to record!");
+                    return;
+                }
+                
+                audioChunks = [];
+                recordedBlobUrl = null;
+                echoAudioContainer.classList.add("hidden");
+                
+                try {
+                    mediaRecorder = new MediaRecorder(activeStream);
+                    
+                    mediaRecorder.ondataavailable = (event) => {
+                        if (event.data.size > 0) {
+                            audioChunks.push(event.data);
+                        }
+                    };
+                    
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                        recordedBlobUrl = URL.createObjectURL(audioBlob);
+                        echoAudioPlayer.src = recordedBlobUrl;
+                        
+                        recIconStatus.textContent = "✅";
+                        labelRecStatus.textContent = "Echo Sample Ready";
+                        
+                        btnRecStop.classList.add("hidden");
+                        btnRecStart.classList.remove("hidden");
+                        btnRecPlay.classList.remove("hidden");
+                        echoAudioContainer.classList.remove("hidden");
+                        
+                        showToast("🎙️ Loop recording finished! Ready for play.");
+                    };
+                    
+                    // Boot Recorder
+                    mediaRecorder.start();
+                    recordStartTimestamp = Date.now();
+                    
+                    recIconStatus.textContent = "🔴";
+                    recIconStatus.classList.add("mic-active-pulse");
+                    labelRecStatus.textContent = "RECORDING VOICE...";
+                    
+                    btnRecStart.classList.add("hidden");
+                    btnRecPlay.classList.add("hidden");
+                    btnRecStop.classList.remove("hidden");
+                    
+                    showToast("🎤 Recording 5-second audio test block...");
+                    
+                    // Interval ticker count for 5 seconds limit
+                    recordInterval = setInterval(() => {
+                        const elapsed = Date.now() - recordStartTimestamp;
+                        const progressSec = (elapsed / 1000).toFixed(1);
+                        labelRecTime.textContent = `${progressSec}s / 5.0s`;
+                        
+                        if (elapsed >= recordMaxDuration) {
+                            stopVoiceRecording();
+                        }
+                    }, 100);
+                    
+                } catch (e) {
+                    console.error("Recording start error", e);
+                    showToast("⚠️ Recording not supported or failed on this browser.");
+                }
+            });
+
+            btnRecStop.addEventListener("click", stopVoiceRecording);
+
+            function stopVoiceRecording() {
+                if (recordInterval) {
+                    clearInterval(recordInterval);
+                    recordInterval = null;
+                }
+                
+                recIconStatus.classList.remove("mic-active-pulse");
+                labelRecTime.textContent = "5.0s / 5.0s";
+                
+                if (mediaRecorder && mediaRecorder.state === "recording") {
+                    mediaRecorder.stop();
+                }
+            }
+
+            btnRecPlay.addEventListener("click", () => {
+                if (recordedBlobUrl) {
+                    echoAudioPlayer.play();
+                    showToast("🔊 Playing your 5-second voice echo...");
+                }
+            });
+
+            // ============================================
+            // DYNAMIC FLOATING TOAST SYSTEM
+            // ============================================
+            function showToast(message) {
+                const oldToast = document.getElementById("diagnostic-toast");
+                if (oldToast) oldToast.remove();
+                
+                const toast = document.createElement("div");
+                toast.id = "diagnostic-toast";
+                toast.className = "fixed bottom-6 right-6 z-[100] flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 shadow-2xl shadow-slate-300/40 animate-scaleUp text-xs font-bold text-slate-800 dark:text-slate-250 transition-all select-none";
+                toast.innerHTML = `
+                    <div class="flex items-center justify-center h-6 w-6 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-600">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-850 tracking-wide">${message}</p>
+                    </div>
+                `;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.add("opacity-0", "translate-y-2");
+                    setTimeout(() => toast.remove(), 300);
+                }, 2800);
+            }
+
+            // ============================================
+            // SEARCH & COMMAND PALETTE OVERLAY
+            // ============================================
+            const searchBar = document.getElementById("nav-search-bar");
+            const searchPanel = document.getElementById("search-dropdown-panel");
+            
+            if (searchBar && searchPanel) {
+                const searchDatabase = [
+                    { title: "Keyboard Tester Online", desc: "Test laptop & mechanical switches", url: "keyboard.html" },
+                    { title: "Mouse & CPS Checker", desc: "Test click, scroll, and speed CPS", url: "mouse.html" },
+                    { title: "Clicks Per Second Test", desc: "10-second high-score speed game", url: "mouse.html#cps" },
+                    { title: "Speaker & Sound Tester", desc: "Stereo balance frequency check", url: "sound.html" },
+                    { title: "Gamepad & Joystick Tester", desc: "Controller buttons stick drift test", url: "gamepad.html" },
+                    { title: "Microphone Voice Tester", desc: "Test decibel telemetry voice echo loop", url: "mic.html" },
+                    { title: "Webcam Calibration Check", desc: "Video test, resolution and FPS check", url: "webcam.html" },
+                    { title: "Display & Screen Tester", desc: "Check dead pixels, monitor Hz, and ghosting", url: "display.html" },
+                    { title: "Drawing Tablet & Touchscreen Tester", desc: "Check pen pressure, touchscreen multi-touch, and drawing accuracy", url: "draw.html" },
+                    { title: "Bluetooth & Audio Latency Tester", desc: "Measure delay and lag of wireless headphones or Bluetooth speakers", url: "latency.html" },
+                    { title: "USB & HID Device Info Profiler", desc: "Scan connected USB/HID peripherals and inspect system hardware capabilities", url: "usb.html" },
+                    { title: "Biometric & Fingerprint Tester", desc: "Test Windows Hello, Touch ID, or security keys via standard client-side WebAuthn diagnostics", url: "biometric.html" },
+                    { title: "Battery Health & Efficiency Analyzer", desc: "Evaluate laptop chaging slopes, power draw rates, estimated cycle health, and power source metrics", url: "battery.html" },
+                    { title: "Printer Calibrated Test Page", desc: "Print CMYK color blocks, alignment grids, and evaluate font readability", url: "printer.html" },
+                    { title: "Scanner & Document Capture Checker", desc: "Test document scanners, apply black-and-white Xerox shaders, and scan QR codes", url: "scanner.html" },
+                    { title: "VR & XR Motion Controller Tester", desc: "Test 6-DOF spatial coordinates, analog triggers, and fire rumble haptics", url: "vr.html" },
+                    { title: "PC Hardware Specs Scanner", desc: "Profile processor cores, graphics card GPU model, RAM, and storage disks sizes", url: "specs.html" },
+                    { title: "Certified Diagnostic Report", desc: "Generate secure verified hardware configuration & device checklist PDF", url: "report.html" },
+                    { title: "LAN / Ethernet Port Jitter & Type Tester", desc: "Test network jitter, ping variance, and verify physical cable reliability", url: "lan.html" },
+                    { title: "HDMI & DisplayPort Multi-Screen Analyzer", desc: "Verify monitor refresh rate Hz, display placements, and multi-channel audio", url: "hdmi.html" },
+                    { title: "VGA Analog Calibrator Test Patterns", desc: "Calibrate analog monitor focus, phase adjustment zebra lines, and color bars", url: "vga.html" },
+                    { title: "USB Type-C & Thunderbolt Speed Profiler", desc: "Test alternate mode capabilities, power delivery profiles, and verify speeds", url: "usb-c.html" },
+                    { title: "Privacy Policy Compliance", desc: "AdSense, cookies & safety disclosure", url: "privacy.html" },
+                    { title: "Terms of Service Agreement", desc: "Device diagnostic terms and client-side usage rules", url: "terms.html" },
+                    { title: "Admin Settings Panel", desc: "Export config.js & preview analytics", url: "admin.php" }
+                ];
+
+                window.addEventListener("keydown", (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+                        e.preventDefault();
+                        searchBar.focus();
+                    }
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!searchBar.contains(e.target) && !searchPanel.contains(e.target)) {
+                        searchPanel.classList.add("hidden");
+                    }
+                });
+
+                searchBar.addEventListener("focus", showResults);
+                searchBar.addEventListener("input", showResults);
+
+                function showResults() {
+                    const query = searchBar.value.toLowerCase().trim();
+                    searchPanel.innerHTML = '<div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>';
+                    
+                    const filtered = searchDatabase.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.desc.toLowerCase().includes(query)
+                    );
+
+                    if (filtered.length === 0) {
+                        searchPanel.innerHTML += `
+                            <div class="px-2 py-3 text-center text-xs text-slate-400 font-semibold">
+                                No results found for "${searchBar.value}"
+                            </div>
+                        `;
+                    } else {
+                        filtered.forEach(item => {
+                            const itemEl = document.createElement("a");
+                            itemEl.href = item.url;
+                            itemEl.className = "flex flex-col px-3 py-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all duration-150 select-none group";
+                            itemEl.innerHTML = `
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-250 group-hover:text-purple-600 transition-colors">${item.title}</span>
+                                <span class="text-[10px] text-slate-400 font-semibold">${item.desc}</span>
+                            `;
+                            searchPanel.appendChild(itemEl);
+                        });
+                    }
+                    searchPanel.classList.remove("hidden");
+                }
+            }
+        });
+    
+            // Register Service Worker for PWA
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('sw.js')
+                        .then(reg => console.log('[PWA] Service Worker registered scope:', reg.scope))
+                        .catch(err => console.error('[PWA] Service Worker registration failed:', err));
+                });
+            }
+    </script>
+<script>
+    // Interactive Mobile Menu Toggle & FAQ Accordions
+    document.addEventListener("DOMContentLoaded", () => {
+        const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+        const mobileNavPanel = document.getElementById("mobile-nav-panel");
+        const hamburgerIcon = document.getElementById("hamburger-icon");
+        const hamburgerClose = document.getElementById("hamburger-close");
+
+        if (mobileMenuToggle && mobileNavPanel && hamburgerIcon && hamburgerClose) {
+            mobileMenuToggle.addEventListener("click", () => {
+                mobileNavPanel.classList.toggle("hidden");
+                hamburgerIcon.classList.toggle("hidden");
+                hamburgerClose.classList.toggle("hidden");
+            });
+        }
+
+        // FAQ Accordion toggles
+        const faqButtons = document.querySelectorAll('.faq-btn');
+        faqButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const answer = btn.nextElementSibling;
+                const icon = btn.querySelector('.faq-icon');
+                
+                if (answer.classList.contains('hidden')) {
+                    answer.classList.remove('hidden');
+                    icon.textContent = "➖";
+                    icon.style.transform = "rotate(180deg)";
+                } else {
+                    answer.classList.add('hidden');
+                    icon.textContent = "➕";
+                    icon.style.transform = "rotate(0deg)";
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

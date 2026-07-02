@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/sound.html">
+    <script>
+        // Inline theme helper to avoid UI flash of light theme
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- SEO Meta Tags -->
+    <title>Online Speaker & Sound Tester - Stereo Left/Right & Frequency Check | InputTest.online</title>
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/sound.html">
+    <meta property="og:title" content="Online Speaker & Sound Tester - Stereo Left/Right & Frequency Check | InputTest.online">
+    <meta property="og:description" content="Free online speaker and sound tester. Inspect left/right stereo channels, subwoofer bass rumble sweeps, tweeters treble response, and live waveform customizers.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/sound.html">
+    <meta name="twitter:title" content="Online Speaker & Sound Tester - Stereo Left/Right & Frequency Check | InputTest.online">
+    <meta name="twitter:description" content="Free online speaker and sound tester. Inspect left/right stereo channels, subwoofer bass rumble sweeps, tweeters treble response, and live waveform customizers.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+    <meta name="description" content="Free online speaker and sound tester. Inspect left/right stereo channels, subwoofer bass rumble sweeps, tweeters treble response, and live waveform customizers.">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How do I perform a stereo speaker left/right balance test?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply select the 'Left Channel' or 'Right Channel' audio triggers inside our Sound Tester dashboard. The sound should only emit from the corresponding physical speaker driver, helping you verify accurate stereo wiring and channel balances."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is the human audio frequency sweep range?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A standard human ear detects frequencies between 20Hz and 20,000Hz (20kHz). Bass rumbles are best tested below 150Hz using subwoofers, while treble pitch sensitivity is tested from 1,000Hz up to 20,000Hz using tweeters."
+        }
+      }, {
+        "@type": "Question",
+        "name": "How can I test if my subwoofers support deep bass sweeps?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use our custom frequency oscillator sweep tool. Gradually increase the frequency slider from 20Hz up to 120Hz. If your subwoofer is healthy, you will feel a deep, physical vibration without distortion or cabinet rattling."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Why is sound panning or stereo balance uneven on my headset?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Uneven audio panning can be caused by physical driver failures, incorrect OS spatial audio settings, dust accumulation, or incorrect balance slider configurations inside your system's playback device controls."
+        }
+      }]
+    }
+    </script>
+    
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 10% 40%, rgba(99, 102, 241, 0.03) 0%, transparent 40%);
+        }
+
+        @keyframes scaleUp {
+            0% { opacity: 0; transform: scale(0.85) translateY(2px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-scaleUp {
+            animation: scaleUp 0.12s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* 🎧 SVG Glowing Headphone Animations */
+        @keyframes pulseGlow {
+            0% { r: 24px; opacity: 1; stroke-opacity: 0.8; }
+            100% { r: 42px; opacity: 0; stroke-opacity: 0; }
+        }
+        .active-glow-ring {
+            animation: pulseGlow 1.2s infinite;
+            stroke: #2563eb;
+            fill: rgba(37, 99, 235, 0.05);
+        }
+        
+        .active-earcup {
+            fill: #eff6ff !important;
+            stroke: #2563eb !important;
+            filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.3));
+        }
+            /* Dark Mode style overrides */
+        .dark .glow-bg {
+            background-color: #0b0f19 !important;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%) !important;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #0f172a !important;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155 !important;
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #475569 !important;
+        }
+    </style>
+    
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+
+    <!-- JSON-LD Structured Data for WebApplication Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Online Speaker & Sound Tester",
+        "description": "Free online speaker and sound tester. Inspect left/right stereo channels, subwoofer bass rumble sweeps, tweeters treble response, and live waveform customizers.",
+        "url": "https://inputtest.online/sound.html",
+        "image": "https://inputtest.online/icon-512.png",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires HTML5 compatible browser",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:text-slate-250 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg relative overflow-x-hidden transition-colors duration-300">
+
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm dark:shadow-none transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- UPGRADED PREMIUM LOGO -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-300">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-slate-250 group-hover:text-blue-600 transition-colors duration-250">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+                
+                <!-- PREMIUM INTERACTIVE CENTER SEARCH BAR -->
+                <div class="hidden lg:flex items-center flex-grow max-w-sm mx-6 relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <input id="nav-search-bar" type="text" placeholder="Search tool, inputs, keys..." class="w-full bg-slate-100/60 hover:bg-slate-200/50 focus:bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-blue-500 rounded-full py-1.5 pl-10 pr-12 text-xs text-slate-700 dark:text-slate-350 font-medium tracking-wide focus:outline-none transition-all shadow-inner focus:shadow-sm dark:shadow-none" autocomplete="off">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <kbd class="text-[9px] font-mono font-bold text-slate-400 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-1.5 py-0.5 rounded shadow-sm dark:shadow-none">Ctrl K</kbd>
+                    </div>
+                    
+                    <!-- Search Results Dropdown -->
+                    <div id="search-dropdown-panel" class="hidden absolute top-12 left-0 right-0 bg-white/95 border border-slate-200 rounded-2xl shadow-xl shadow-slate-200/40 p-2 z-50 max-h-64 overflow-y-auto space-y-1 backdrop-blur-md">
+                        <div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>
+                    </div>
+                </div>
+                
+                                <!-- Main Nav Links -->
+                <div class="hidden md:flex items-center gap-6 flex-shrink-0">
+                    <a href="/" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Home</a>
+                    <a href="keyboard.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Keyboard Test</a>
+                    <a href="mouse.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Mouse & CPS</a>
+                    <a href="blog.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Blog</a>
+                    
+                    <!-- Premium More Tools Dropdown -->
+                    <div class="relative group">
+                        <button id="nav-dropdown-btn" class="flex items-center gap-1 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 py-1.5 px-1 focus:outline-none transition-all duration-200">
+                            More Tools
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 group-hover:rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu panel -->
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full mt-2 w-80 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-3 grid grid-cols-2 gap-1.5 backdrop-blur-md z-50 animate-scaleUp">
+                            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 col-span-2 mb-1.5">Top Calibration Utilities</div>
+                            
+                            <a href="display.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">📺 Display Test</a>
+                            <a href="specs.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">💻 System Specs</a>
+                            <a href="gamepad.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">🎮 Gamepad drift</a>
+                            
+                            <a href="report.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-xs font-bold text-emerald-600 dark:text-emerald-450 transition-colors col-span-2 shadow-sm">🛡️ Certified PDF Report</a>
+                            
+                            <div class="h-px bg-slate-100 dark:bg-slate-800/60 col-span-2 my-1"></div>
+                            
+                            <a href="sound.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔊 Speaker test</a>
+                            <a href="mic.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎙️ Microphone</a>
+                            <a href="webcam.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📷 Webcam Check</a>
+                            <a href="draw.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📐 Drawing Tablet</a>
+                            <a href="latency.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ Latency Check</a>
+                            <a href="usb.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔌 USB Profiler</a>
+                            <a href="biometric.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔑 Biometrics Hello</a>
+                            <a href="printer.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🖨️ Printer CMYK</a>
+                            <a href="scanner.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📄 Documents scan</a>
+                            <a href="vr.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🕶️ VR controllers</a>
+                            <a href="battery.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔋 Battery Health</a>
+                            <a href="lan.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🌐 LAN Tester</a>
+                            <a href="hdmi.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📺 HDMI & DP</a>
+                            <a href="vga.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎨 VGA Calibrator</a>
+                            <a href="usb-c.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ USB-C Profiler</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Nav CTA -->
+                <div class="flex items-center gap-3 flex-shrink-0">                    <!-- Mobile Hamburger Button -->
+                    <button id="mobile-menu-toggle" class="p-2 md:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm transition-all focus:outline-none" aria-label="Toggle Navigation Menu">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                                        <!-- Elegant Sun/Moon Theme Toggle -->
+                    <button id="theme-toggle" class="relative p-2 mr-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm dark:shadow-none transition-all focus:outline-none" aria-label="Toggle dark mode">
+                        <!-- Sun Icon (hidden by default, shown in dark mode) -->
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <!-- Moon Icon (shown by default, hidden in dark mode) -->
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <a href="/" class="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1 font-bold font-mono bg-blue-500/5 px-3 py-1.5 rounded-full border border-blue-500/15">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+            <!-- Mobile Dropdown Navigation Panel -->
+    <div id="mobile-nav-panel" class="hidden md:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md px-4 py-4 space-y-3 transition-all duration-300 animate-scaleUp">
+        <div class="grid grid-cols-2 gap-3 text-xs font-bold">
+            <a href="/" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🏠 Home</a>
+            <a href="keyboard.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">⌨️ Keyboard Test</a>
+            <a href="mouse.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🖱️ Mouse & CPS</a>
+            <a href="display.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">📺 Display Test</a>
+            <a href="specs.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">💻 Hardware Specs</a>
+            <a href="report.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-450">🛡️ PDF Certificate</a>
+            <a href="blog.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/10 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 col-span-2 justify-center font-bold">📝 Diagnostic Blog & Guides</a>
+        </div>
+        
+        <div class="border-t border-slate-100 dark:border-slate-900 pt-3">
+            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-1">All Diagnostic Utilities</div>
+            <div class="grid grid-cols-2 gap-2 text-[10px] font-bold text-slate-500 dark:text-slate-400">
+                <a href="gamepad.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎮 Gamepad drift</a>
+                <a href="sound.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔊 Speaker test</a>
+                <a href="mic.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎙️ Microphone</a>
+                <a href="webcam.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📷 Webcam Check</a>
+                <a href="draw.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📐 Drawing Tablet</a>
+                <a href="latency.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ Latency Check</a>
+                <a href="usb.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔌 USB Profiler</a>
+                <a href="biometric.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔑 Biometrics Hello</a>
+                <a href="printer.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🖨️ Printer CMYK</a>
+                <a href="scanner.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📄 Documents scan</a>
+                <a href="vr.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🕶️ VR headset</a>
+                <a href="lan.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🌐 LAN Jitter Test</a>
+                <a href="hdmi.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📺 HDMI & DP</a>
+                <a href="vga.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎨 VGA Calibrator</a>
+                <a href="usb-c.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ USB-C Profiler</a>
+                <a href="battery.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔋 Battery Health</a>
+            </div>
+        </div>
+    </div>
+
+    </nav>
+
+    <!-- Top Google AdSense Banner Zone -->
+    <div class="max-w-7xl mx-auto px-4 mt-6 w-full flex justify-center">
+        <div id="top-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-sm dark:shadow-none rounded-2xl overflow-hidden flex items-center justify-center animate-pulse-slow">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px]">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+        
+        <!-- Header & Description -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+                Speaker & Sound Frequency Tester 
+                <span class="text-xs font-mono font-bold px-2 py-0.5 rounded border border-blue-500/10 bg-blue-500/5 text-blue-600 uppercase tracking-widest">Stereo & Freq Diagnostics</span>
+            </h1>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                Verify left/right speaker balance, test bass thresholds, Tweeter treble clarity, and explore custom synthesized soundwave frequencies.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-10">
+            
+            <!-- LEFT PANEL: Dynamic Headphone Visualizer and Oscilloscope (5 Columns) -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <!-- Headphone Graphic Panel -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-8 flex flex-col items-center justify-center shadow-sm dark:shadow-none select-none min-h-[300px]">
+                    <div class="relative flex items-center justify-center">
+                        <svg viewBox="0 0 200 200" class="w-52 h-52 text-slate-300 transition-all duration-300">
+                            <!-- Arch Headband -->
+                            <path d="M 40,110 A 60,60 0 0,1 160,110" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" />
+                            
+                            <!-- Left glow ring -->
+                            <circle id="left-glow-ring" cx="40" cy="115" r="24" class="fill-none stroke-none stroke-3 transition-all duration-300" />
+                            <!-- Left ear cup -->
+                            <rect id="left-earcup" x="25" y="95" width="30" height="45" rx="15" class="fill-slate-100 stroke-slate-200 stroke-2 transition-all duration-300" />
+                            <rect x="33" y="105" width="14" height="25" rx="7" class="fill-slate-200" />
+                            
+                            <!-- Right glow ring -->
+                            <circle id="right-glow-ring" cx="160" cy="115" r="24" class="fill-none stroke-none stroke-3 transition-all duration-300" />
+                            <!-- Right ear cup -->
+                            <rect id="right-earcup" x="145" y="95" width="30" height="45" rx="15" class="fill-slate-100 stroke-slate-200 stroke-2 transition-all duration-300" />
+                            <rect x="153" y="105" width="14" height="25" rx="7" class="fill-slate-200" />
+                            
+                            <text x="100" y="175" text-anchor="middle" class="fill-slate-400 font-mono text-[10px] font-bold tracking-widest uppercase">Visualizer</text>
+                        </svg>
+                    </div>
+                    
+                    <div class="flex items-center gap-6 mt-4 font-mono text-[11px] font-bold tracking-widest text-slate-400">
+                        <span id="label-left-channel" class="transition-colors duration-200">LEFT SPEAKER</span>
+                        <span class="text-slate-200">|</span>
+                        <span id="label-right-channel" class="transition-colors duration-200">RIGHT SPEAKER</span>
+                    </div>
+                </div>
+
+                <!-- Canvas Waveform Oscilloscope -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-5 shadow-sm dark:shadow-none">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block mb-3.5 select-none">🎞️ Real-time Soundwave Oscilloscope</span>
+                    <div class="w-full bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden h-32 flex items-center justify-center relative shadow-inner">
+                        <canvas id="oscilloscope-canvas" class="w-full h-full block"></canvas>
+                        <div id="oscilloscope-placeholder" class="absolute inset-0 flex items-center justify-center text-xs text-slate-400 font-semibold font-mono pointer-events-none transition-opacity duration-200">Awaiting audio trigger signal...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL: Precision Diagnostics controls (7 Columns) -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- Module 1: Stereo Channels Balancing tester -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-6 shadow-sm dark:shadow-none space-y-4">
+                    <div>
+                        <h2 class="text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                            🎧 Stereo Channel Balance Test
+                        </h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Alternates sound between Left and Right channels to verify earphone alignment.</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-4">
+                        <button id="btn-play-left" class="h-12 border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300/60 rounded-2xl flex flex-col items-center justify-center text-slate-700 dark:text-slate-350 font-bold transition-all text-xs focus:outline-none">
+                            <span>🔊 Test Left Channel</span>
+                        </button>
+                        <button id="btn-play-right" class="h-12 border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300/60 rounded-2xl flex flex-col items-center justify-center text-slate-700 dark:text-slate-350 font-bold transition-all text-xs focus:outline-none">
+                            <span>🔊 Test Right Channel</span>
+                        </button>
+                        <button id="btn-play-alternate" class="h-12 border border-slate-200 bg-slate-50 hover:bg-blue-50 hover:border-blue-300/60 rounded-2xl flex flex-col items-center justify-center text-slate-700 dark:text-slate-350 font-bold transition-all text-xs focus:outline-none">
+                            <span>🔄 Alternate Loop</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Module 2: Subwoofer Bass Sweep and Tweeter Treble Sweeps -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-6 shadow-sm dark:shadow-none space-y-5">
+                    
+                    <!-- Bass Sweep -->
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-sm font-extrabold text-slate-800 dark:text-slate-250 flex items-center gap-1.5">🔊 Subwoofer Bass Sweep</h3>
+                                <p class="text-[11px] text-slate-400">Sweeps from 20Hz (low hum) to 150Hz (deep rumble).</p>
+                            </div>
+                            <span id="bass-freq-label" class="text-xs font-mono font-extrabold px-2 py-0.5 rounded border border-slate-200 bg-slate-50 text-slate-700 dark:text-slate-350">60 Hz</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <input id="slider-bass" type="range" min="20" max="150" value="60" class="flex-grow h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-blue-600 focus:outline-none">
+                            <button id="btn-sweep-bass" class="px-4 py-1.5 bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-600 font-bold text-xs rounded-xl uppercase tracking-wider transition-colors focus:outline-none shrink-0 select-none">
+                                🚀 Auto Sweep
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="h-px bg-slate-100"></div>
+
+                    <!-- Treble Sweep -->
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-sm font-extrabold text-slate-800 dark:text-slate-250 flex items-center gap-1.5">🔊 Tweeter Treble Sweep</h3>
+                                <p class="text-[11px] text-slate-400">Sweeps from 1,000Hz to 20,000Hz (extreme high pitch).</p>
+                            </div>
+                            <span id="treble-freq-label" class="text-xs font-mono font-extrabold px-2 py-0.5 rounded border border-slate-200 bg-slate-50 text-slate-700 dark:text-slate-350">8000 Hz</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <input id="slider-treble" type="range" min="1000" max="20000" step="50" value="8000" class="flex-grow h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-blue-600 focus:outline-none">
+                            <button id="btn-sweep-treble" class="px-4 py-1.5 bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-600 font-bold text-xs rounded-xl uppercase tracking-wider transition-colors focus:outline-none shrink-0 select-none">
+                                🚀 Auto Sweep
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Module 3: Custom Synthesizer & Waveform generator -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-6 shadow-sm dark:shadow-none space-y-5">
+                    <div>
+                        <h2 class="text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                            🎹 Precision Waveform Customizer
+                        </h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Synthesizes any precise audio frequency using standard Web Audio oscillators.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <!-- Col A: Wave type Select -->
+                        <div class="flex flex-col gap-2">
+                            <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold select-none">〰️ Select Waveform</span>
+                            <div class="inline-flex bg-slate-100 p-1 rounded-2xl border border-slate-200 text-[10px] font-bold font-mono w-full select-none">
+                                <button id="btn-wave-sine" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">Sine</button>
+                                <button id="btn-wave-triangle" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">Triangle</button>
+                                <button id="btn-wave-square" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">Square</button>
+                                <button id="btn-wave-sawtooth" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">Sawtooth</button>
+                            </div>
+                        </div>
+
+                        <!-- Col B: Custom Frequency input -->
+                        <div class="flex flex-col gap-2">
+                            <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold select-none">🎼 Frequency Input</span>
+                            <div class="relative flex items-center">
+                                <input id="custom-freq-input" type="number" min="20" max="22000" value="440" class="w-full bg-slate-100 border border-slate-200 focus:border-blue-500 rounded-2xl py-2 pl-4 pr-12 text-xs font-mono font-bold text-slate-800 dark:text-slate-250 focus:outline-none transition-all">
+                                <span class="absolute right-4 text-[10px] font-mono font-bold text-slate-400 select-none">Hz</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Volume and Play ribbon -->
+                    <div class="flex items-center gap-6 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl justify-between flex-wrap md:flex-nowrap">
+                        <div class="flex items-center gap-3 flex-grow select-none">
+                            <span class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest shrink-0">🔊 Volume</span>
+                            <input id="slider-volume" type="range" min="0" max="1" step="0.05" value="0.5" class="flex-grow h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600 focus:outline-none">
+                            <span id="volume-label" class="text-xs font-mono font-extrabold text-slate-600 dark:text-slate-400 w-8 text-right">50%</span>
+                        </div>
+                        
+                        <div class="h-8 w-px bg-slate-200 hidden md:block"></div>
+
+                        <div class="flex gap-3 shrink-0">
+                            <button id="btn-toggle-tone" class="h-10 px-6 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider transition-colors focus:outline-none shadow-md dark:shadow-none shadow-blue-500/10">
+                                ▶️ Play Frequency
+                            </button>
+                            <button id="btn-stop-audio" class="h-10 px-6 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-extrabold text-xs rounded-xl uppercase tracking-wider transition-colors focus:outline-none">
+                                ⏹️ Mute Sound
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ============================================
+             🔒 PREMIUM SEO DIAGNOSTIC GUIDE & FAQ SECTION
+             ============================================ -->
+        <section class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start w-full relative z-10">
+            
+            <!-- Left 7-Column: Mini-Blog / Comprehensive Diagnostic Guide -->
+            <div class="lg:col-span-7 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 shadow-sm backdrop-blur-md transition-colors duration-300">
+                <span class="text-[9px] font-mono text-blue-600 dark:text-blue-400 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-850 pb-3 mb-6">📚 Technical Diagnostic Guide</span>
+                
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-4 tracking-tight leading-tight select-none">
+                    How to Test Stereo Sound, Speaker Frequencies, and Subwoofer Bass Online
+                </h2>
+                
+                <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 space-y-4 leading-relaxed">
+                    <p>
+                        High-quality speakers and headphones are the backbone of dynamic modern media experiences. From spatial gaming environments to detailed acoustic recordings, having calibrated audio outputs is essential. Our advanced <strong>Online Speaker & Sound Tester</strong> provides instant client-side signal oscillators and channel sweeps to benchmark your audio hardware inside your browser sandbox.
+                    </p>
+                    
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        🔊 Stereo Left and Right Speaker Channel Diagnostics
+                    </h3>
+                    <p>
+                        Stereo sound relies on separation between left and right audio channels to create an immersive, spatial soundstage. Our custom dynamic channel triggers allow you to isolate individual channels instantly. Testing each channel independently is critical for verifying correct speaker phase alignment, physical headphone wiring, and catching unbalanced sound panners inside your system controls.
+                    </p>
+                    
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        🎵 Subwoofer Bass Frequency Sweeps (20Hz - 150Hz)
+                    </h3>
+                    <p>
+                        The lowest spectrum of human hearing is dedicated to bass, managed by subwoofers or dynamic low-frequency drivers. Standard subwoofers operate between 20Hz and 150Hz. Running a smooth low-frequency oscillator sweep helps diagnose physical speaker rattling, voice coil distortion, and measures the roll-off frequency where your room or speaker cabinet loses efficiency.
+                    </p>
+                    
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        ⚡ Treble Tweeter Performance and Pitch Limits
+                    </h3>
+                    <p>
+                        High-frequency audio ranges between 1kHz up to 20kHz, handled by dedicated tweeter drivers. As speakers age or experience high-volume stress, tweeters can develop high-frequency crackles or fail entirely. Sweep high-pitch tones to evaluate speaker clarity, crossover network efficiency, and check if your high-frequency response drops prematurely.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Right 5-Column: Elegant Interactive FAQ Accordion -->
+            <div class="lg:col-span-5 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 shadow-sm backdrop-blur-md transition-colors duration-300 space-y-6">
+                <span class="text-[9px] font-mono text-emerald-600 dark:text-emerald-455 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-850 pb-3">❓ Frequently Asked Questions</span>
+                
+                <div class="space-y-4">
+                    
+                    <!-- FAQ 1 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">How do I perform a stereo speaker left/right balance test?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Simply select the 'Left Channel' or 'Right Channel' audio triggers inside our Sound Tester dashboard. The sound should only emit from the corresponding physical speaker driver, helping you verify accurate stereo wiring and channel balances.
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 2 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">What is the human audio frequency sweep range?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            A standard human ear detects frequencies between 20Hz and 20,000Hz (20kHz). Bass rumbles are best tested below 150Hz using subwoofers, while treble pitch sensitivity is tested from 1,000Hz up to 20,000Hz using tweeters.
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 3 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">How can I test if my subwoofers support deep bass sweeps?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Use our custom frequency oscillator sweep tool. Gradually increase the frequency slider from 20Hz up to 120Hz. If your subwoofer is healthy, you will feel a deep, physical vibration without distortion or cabinet rattling.
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 4 -->
+                    <div class="pb-2">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Why is sound panning or stereo balance uneven on my headset?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Uneven audio panning can be caused by physical driver failures, incorrect OS spatial audio settings, dust accumulation, or incorrect balance slider configurations inside your system's playback device controls.
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Google AdSense Banner Zone -->
+    <div class="max-w-7xl mx-auto px-4 mb-10 w-full flex justify-center">
+        <div id="bottom-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-sm dark:shadow-none rounded-2xl overflow-hidden flex items-center justify-center">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px]">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+                                <!-- Footer Area -->
+        <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 mt-auto transition-colors duration-300">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-left select-none">
+                
+                 <!-- Column 1: Brand & Logo -->
+                <div class="space-y-4">
+                    <a href="/" class="flex items-center gap-2 group w-fit transition-transform duration-200 active:scale-95">
+                        <span class="logo-emoji text-xl group-hover:rotate-12 transition-transform duration-300 inline-block">⌨️</span>
+                        <span class="brand-name font-black text-slate-900 dark:text-slate-200 text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">InputTest.online</span>
+                    </a>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed brand-slogan font-semibold">
+                        Universal Hardware & Input Device Tester
+                    </p>
+                    <p class="text-xs text-slate-400 dark:text-slate-500 leading-relaxed font-medium">
+                        Safe sandboxed hardware diagnostics. 100% private, local client-side processing.
+                    </p>
+                </div>
+                
+                 <!-- Column 2: Input Diagnostics -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Input Diagnostics</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="keyboard.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Keyboard Tester</a></li>
+                        <li><a href="mouse.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖱️ Mouse & CPS Test</a></li>
+                        <li><a href="gamepad.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎮 Gamepad & Drift</a></li>
+                        <li><a href="mic.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎙️ Microphone Check</a></li>
+                        <li><a href="webcam.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📷 Webcam Quality</a></li>
+                        <li><a href="draw.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📐 Drawing Tablet</a></li>
+                        <li><a href="usb.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔌 USB & HID Profiler</a></li>
+                        <li><a href="biometric.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔑 Biometrics Hello</a></li>
+                        <li><a href="battery.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔋 Battery Health</a></li>
+                        <li><a href="lan.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🌐 LAN Jitter Test</a></li>
+                        <li><a href="usb-c.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ USB-C Profiler</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 3: Screen & Outputs -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Screen & Outputs</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="display.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 Display & Monitor</a></li>
+                        <li><a href="latency.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ Latency & Lag</a></li>
+                        <li><a href="printer.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖨️ Printer CMYK</a></li>
+                        <li><a href="scanner.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📄 Documents Scan</a></li>
+                        <li><a href="vr.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🕶️ VR Controller</a></li>
+                        <li><a href="specs.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">💻 Hardware Specs</a></li>
+                        <li><a href="hdmi.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 HDMI Analyzer</a></li>
+                        <li><a href="vga.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎨 VGA Calibrator</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 4: Reports, Blog & Policies -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Info & Policies</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="report.html" class="text-emerald-600 dark:text-emerald-450 font-bold bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10 dark:border-emerald-500/20 hover:bg-emerald-500/10 transition-colors inline-block mb-1">🛡️ Certified PDF Report</a></li>
+                        <li><a href="blog.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📝 Blog Guides</a></li>
+                        <li><a href="privacy.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔒 Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚖️ Terms of Service</a></li>
+                        <li><a href="#" class="brand-email text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors break-all">✉️ support@inputtest.online</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="border-t border-slate-100 dark:border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-medium flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                    <span>&copy; 2026 InputTest.online. Safe sandboxed diagnostics. No data collection.</span>
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 font-extrabold border border-emerald-500/15 w-fit uppercase select-none">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-ping"></span>
+                        Version 1.2.0 (Updated: June 6, 2026)
+                    </span>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="#" class="twitter-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">Twitter</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+                    </a>
+                    <a href="#" class="github-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" clip-rule="evenodd"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic Section -->
+    <script>
+                document.addEventListener("DOMContentLoaded", () => {
+            // ============================================
+            // SUN/MOON SYSTEM THEME TOGGLE LOGIC
+            // ============================================
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
+
+            if (themeToggleBtn && sunIcon && moonIcon) {
+                // Sync sun/moon icon visibility on startup
+                if (document.documentElement.classList.contains('dark')) {
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                } else {
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                }
+
+                themeToggleBtn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    sunIcon.classList.toggle('hidden');
+                    moonIcon.classList.toggle('hidden');
+                    if (document.documentElement.classList.contains('dark')) {
+                        localStorage.setItem('color-theme', 'dark');
+                    } else {
+                        localStorage.setItem('color-theme', 'light');
+                    }
+                });
+            }
+            // Initialize Ads via config.js helper
+            setTimeout(() => {
+                SiteConfig.initAdSense('top-adsense-banner', 'topLeaderboard');
+                SiteConfig.initAdSense('bottom-adsense-banner', 'bottomLeaderboard');
+            }, 800);
+
+            // ============================================
+            // WEB AUDIO NODES SETUP
+            // ============================================
+            let audioCtx = null;
+            let oscNode = null;
+            let pannerNode = null;
+            let gainNode = null;
+            let analyserNode = null;
+            let isGeneratingTone = false;
+            let currentWaveType = "sine";
+            
+            // Audio elements caching
+            const btnPlayLeft = document.getElementById("btn-play-left");
+            const btnPlayRight = document.getElementById("btn-play-right");
+            const btnPlayAlternate = document.getElementById("btn-play-alternate");
+            
+            const sliderBass = document.getElementById("slider-bass");
+            const bassFreqLabel = document.getElementById("bass-freq-label");
+            const btnSweepBass = document.getElementById("btn-sweep-bass");
+            
+            const sliderTreble = document.getElementById("slider-treble");
+            const trebleFreqLabel = document.getElementById("treble-freq-label");
+            const btnSweepTreble = document.getElementById("btn-sweep-treble");
+            
+            const btnWaveSine = document.getElementById("btn-wave-sine");
+            const btnWaveTriangle = document.getElementById("btn-wave-triangle");
+            const btnWaveSquare = document.getElementById("btn-wave-square");
+            const btnWaveSawtooth = document.getElementById("btn-wave-sawtooth");
+            
+            const customFreqInput = document.getElementById("custom-freq-input");
+            const sliderVolume = document.getElementById("slider-volume");
+            const volumeLabel = document.getElementById("volume-label");
+            
+            const btnToggleTone = document.getElementById("btn-toggle-tone");
+            const btnStopAudio = document.getElementById("btn-stop-audio");
+
+            const leftEarcup = document.getElementById("left-earcup");
+            const leftGlowRing = document.getElementById("left-glow-ring");
+            const rightEarcup = document.getElementById("right-earcup");
+            const rightGlowRing = document.getElementById("right-glow-ring");
+            
+            const labelLeft = document.getElementById("label-left-channel");
+            const labelRight = document.getElementById("label-right-channel");
+            const oscPlaceholder = document.getElementById("oscilloscope-placeholder");
+
+            const waveButtons = {
+                "sine": btnWaveSine,
+                "triangle": btnWaveTriangle,
+                "square": btnWaveSquare,
+                "sawtooth": btnWaveSawtooth
+            };
+
+            // Initialize audio system
+            function initAudio() {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    analyserNode = audioCtx.createAnalyser();
+                    analyserNode.fftSize = 256;
+                    
+                    pannerNode = audioCtx.createStereoPanner ? audioCtx.createStereoPanner() : null;
+                    gainNode = audioCtx.createGain();
+                    gainNode.gain.value = parseFloat(sliderVolume.value);
+                    
+                    // Route connections
+                    // Analyser connects to gain, gain to context destination
+                    gainNode.connect(audioCtx.destination);
+                    
+                    drawOscilloscope();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+            }
+
+            // Stop all audio signals cleanly
+            function stopAllAudio() {
+                isGeneratingTone = false;
+                btnToggleTone.innerHTML = "▶️ Play Frequency";
+                btnToggleTone.className = "h-10 px-6 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider transition-colors focus:outline-none shadow-md dark:shadow-none shadow-blue-500/10";
+                
+                if (oscNode) {
+                    try {
+                        oscNode.stop();
+                    } catch (e) {}
+                    oscNode.disconnect();
+                    oscNode = null;
+                }
+                
+                // Clear visualizer animations
+                clearGlowEffects();
+                
+                if (oscPlaceholder) oscPlaceholder.style.opacity = "1";
+            }
+
+            function clearGlowEffects() {
+                leftEarcup.classList.remove("active-earcup");
+                leftGlowRing.classList.remove("active-glow-ring");
+                rightEarcup.classList.remove("active-earcup");
+                rightGlowRing.classList.remove("active-glow-ring");
+                labelLeft.className = "transition-colors duration-200 text-slate-400";
+                labelRight.className = "transition-colors duration-200 text-slate-400";
+            }
+
+            function triggerLeftVisual() {
+                clearGlowEffects();
+                leftEarcup.classList.add("active-earcup");
+                leftGlowRing.classList.add("active-glow-ring");
+                labelLeft.className = "transition-colors duration-200 text-blue-600 font-extrabold";
+            }
+
+            function triggerRightVisual() {
+                clearGlowEffects();
+                rightEarcup.classList.add("active-earcup");
+                rightGlowRing.classList.add("active-glow-ring");
+                labelRight.className = "transition-colors duration-200 text-blue-600 font-extrabold";
+            }
+
+            function triggerStereoVisual() {
+                clearGlowEffects();
+                leftEarcup.classList.add("active-earcup");
+                leftGlowRing.classList.add("active-glow-ring");
+                rightEarcup.classList.add("active-earcup");
+                rightGlowRing.classList.add("active-glow-ring");
+                labelLeft.className = "transition-colors duration-200 text-blue-600 font-extrabold";
+                labelRight.className = "transition-colors duration-200 text-blue-600 font-extrabold";
+            }
+
+            // ============================================
+            // PRECISION OSCILLATOR GENERATOR
+            // ============================================
+            function startOscillator(freq, panVal = 0.0) {
+                initAudio();
+                stopAllAudio();
+                
+                oscNode = audioCtx.createOscillator();
+                oscNode.type = currentWaveType;
+                oscNode.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                
+                // Connection Routing depending on Stereo Panner availability
+                if (pannerNode) {
+                    pannerNode.pan.setValueAtTime(panVal, audioCtx.currentTime);
+                    
+                    oscNode.connect(pannerNode);
+                    pannerNode.connect(analyserNode);
+                } else {
+                    // Fallback to direct mono connection if Panner isn't supported
+                    oscNode.connect(analyserNode);
+                }
+                
+                analyserNode.connect(gainNode);
+                
+                oscNode.start();
+                
+                // Trigger visualizers
+                if (panVal < -0.1) {
+                    triggerLeftVisual();
+                } else if (panVal > 0.1) {
+                    triggerRightVisual();
+                } else {
+                    triggerStereoVisual();
+                }
+                
+                if (oscPlaceholder) oscPlaceholder.style.opacity = "0";
+            }
+
+            // ============================================
+            // INTERACTIVE STEREO CHANNEL TESTS
+            // ============================================
+            btnPlayLeft.addEventListener("click", () => {
+                startOscillator(440, -1.0); // 440Hz Left channel
+                showToast("Testing Left Audio Channel (440Hz)...");
+            });
+
+            btnPlayRight.addEventListener("click", () => {
+                startOscillator(440, 1.0); // 440Hz Right channel
+                showToast("Testing Right Audio Channel (440Hz)...");
+            });
+
+            let alternateTimer = null;
+            btnPlayAlternate.addEventListener("click", () => {
+                initAudio();
+                stopAllAudio();
+                showToast("Starting alternating stereo balance test...");
+                
+                let isLeft = true;
+                function alternateLoop() {
+                    const pan = isLeft ? -1.0 : 1.0;
+                    startOscillator(440, pan);
+                    isLeft = !isLeft;
+                    alternateTimer = setTimeout(alternateLoop, 1500);
+                }
+                alternateLoop();
+            });
+
+            // ============================================
+            // FREQUENCY SLIDERS & AUTO SWEEPERS
+            // ============================================
+            sliderBass.addEventListener("input", () => {
+                const val = sliderBass.value;
+                bassFreqLabel.textContent = `${val} Hz`;
+                if (oscNode && currentWaveType === "sine") {
+                    oscNode.frequency.setValueAtTime(val, audioCtx.currentTime);
+                    triggerStereoVisual();
+                }
+            });
+
+            btnSweepBass.addEventListener("click", () => {
+                initAudio();
+                stopAllAudio();
+                showToast("Initiating Subwoofer Bass sweep (20Hz - 150Hz)...");
+                
+                startOscillator(20, 0.0);
+                
+                let currentFreq = 20;
+                function runBass() {
+                    if (!oscNode || currentFreq >= 150) {
+                        stopAllAudio();
+                        showToast("Subwoofer bass sweep completed.");
+                        return;
+                    }
+                    currentFreq += 2;
+                    sliderBass.value = currentFreq;
+                    bassFreqLabel.textContent = `${currentFreq} Hz`;
+                    oscNode.frequency.setValueAtTime(currentFreq, audioCtx.currentTime);
+                    setTimeout(runBass, 50);
+                }
+                runBass();
+            });
+
+            sliderTreble.addEventListener("input", () => {
+                const val = sliderTreble.value;
+                trebleFreqLabel.textContent = `${val} Hz`;
+                if (oscNode) {
+                    oscNode.frequency.setValueAtTime(val, audioCtx.currentTime);
+                    triggerStereoVisual();
+                }
+            });
+
+            btnSweepTreble.addEventListener("click", () => {
+                initAudio();
+                stopAllAudio();
+                showToast("Initiating Tweeter Treble clean sweep (1kHz - 20kHz)...");
+                
+                startOscillator(1000, 0.0);
+                
+                let currentFreq = 1000;
+                function runTreble() {
+                    if (!oscNode || currentFreq >= 20000) {
+                        stopAllAudio();
+                        showToast("Tweeter treble sweep completed.");
+                        return;
+                    }
+                    currentFreq += 250;
+                    sliderTreble.value = currentFreq;
+                    trebleFreqLabel.textContent = `${currentFreq} Hz`;
+                    oscNode.frequency.setValueAtTime(currentFreq, audioCtx.currentTime);
+                    setTimeout(runTreble, 60);
+                }
+                runTreble();
+            });
+
+            // ============================================
+            // CUSTOM WAVEFORM SYNTHESIZER
+            // ============================================
+            function selectWave(type) {
+                currentWaveType = type;
+                Object.keys(waveButtons).forEach(w => {
+                    const btn = waveButtons[w];
+                    if (w === type) {
+                        btn.className = "flex-1 py-2 rounded-xl bg-white text-blue-600 shadow-sm dark:shadow-none border border-slate-200/50 dark:border-slate-800/50 transition-all font-extrabold focus:outline-none";
+                    } else {
+                        btn.className = "flex-1 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-slate-250 transition-all font-bold focus:outline-none";
+                    }
+                });
+                
+                if (oscNode) {
+                    oscNode.type = type;
+                }
+            }
+
+            btnWaveSine.addEventListener("click", () => selectWave("sine"));
+            btnWaveTriangle.addEventListener("click", () => selectWave("triangle"));
+            btnWaveSquare.addEventListener("click", () => selectWave("square"));
+            btnWaveSawtooth.addEventListener("click", () => selectWave("sawtooth"));
+
+            sliderVolume.addEventListener("input", () => {
+                const volVal = sliderVolume.value;
+                volumeLabel.textContent = `${Math.round(volVal * 100)}%`;
+                if (gainNode) {
+                    gainNode.gain.setValueAtTime(parseFloat(volVal), audioCtx.currentTime);
+                }
+            });
+
+            btnToggleTone.addEventListener("click", () => {
+                initAudio();
+                
+                if (isGeneratingTone) {
+                    stopAllAudio();
+                } else {
+                    const freq = parseInt(customFreqInput.value);
+                    if (freq < 20 || freq > 22000) {
+                        showToast("⚠️ Out of range! Set between 20Hz and 22kHz.");
+                        return;
+                    }
+                    
+                    isGeneratingTone = true;
+                    btnToggleTone.innerHTML = "⏸️ Stop Waveform";
+                    btnToggleTone.className = "h-10 px-6 bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs rounded-xl uppercase tracking-wider transition-colors focus:outline-none shadow-md dark:shadow-none shadow-red-500/10";
+                    
+                    startOscillator(freq, 0.0);
+                    showToast(`Playing custom ${currentWaveType} wave at ${freq}Hz...`);
+                }
+            });
+
+            btnStopAudio.addEventListener("click", () => {
+                if (alternateTimer) clearTimeout(alternateTimer);
+                stopAllAudio();
+                showToast("Audio diagnostics muted.");
+            });
+
+            // Initialize custom wave selection on load
+            selectWave("sine");
+
+            // ============================================
+            // CANVAS REAL-TIME OSCILLOSCOPE DRAWING LOOP
+            // ============================================
+            const canvas = document.getElementById("oscilloscope-canvas");
+            const canvasCtx = canvas.getContext("2d");
+            
+            // Adjust canvas bounding resolution
+            function resizeCanvas() {
+                canvas.width = canvas.clientWidth;
+                canvas.height = canvas.clientHeight;
+            }
+            resizeCanvas();
+            window.addEventListener("resize", resizeCanvas);
+
+            function drawOscilloscope() {
+                requestAnimationFrame(drawOscilloscope);
+                
+                if (!analyserNode) return;
+                
+                const bufferLength = analyserNode.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+                analyserNode.getByteTimeDomainData(dataArray);
+                
+                canvasCtx.fillStyle = "rgba(248, 250, 252, 0.3)"; // slate-50 trace fading
+                canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                canvasCtx.lineWidth = 3;
+                canvasCtx.strokeStyle = "#2563eb"; // vibrant blue-600 trace line
+                canvasCtx.beginPath();
+                
+                const sliceWidth = canvas.width * 1.0 / bufferLength;
+                let x = 0;
+                
+                for (let i = 0; i < bufferLength; i++) {
+                    const v = dataArray[i] / 128.0;
+                    const y = v * canvas.height / 2;
+                    
+                    if (i === 0) {
+                        canvasCtx.moveTo(x, y);
+                    } else {
+                        canvasCtx.lineTo(x, y);
+                    }
+                    
+                    x += sliceWidth;
+                }
+                
+                canvasCtx.lineTo(canvas.width, canvas.height / 2);
+                canvasCtx.stroke();
+            }
+
+            // ============================================
+            // DYNAMIC FLOATING TOAST SYSTEM
+            // ============================================
+            function showToast(message) {
+                const oldToast = document.getElementById("diagnostic-toast");
+                if (oldToast) oldToast.remove();
+                
+                const toast = document.createElement("div");
+                toast.id = "diagnostic-toast";
+                toast.className = "fixed bottom-6 right-6 z-[100] flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 shadow-2xl shadow-slate-300/40 animate-scaleUp text-xs font-bold text-slate-800 dark:text-slate-250 transition-all select-none";
+                toast.innerHTML = `
+                    <div class="flex items-center justify-center h-6 w-6 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-600">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-850 tracking-wide">${message}</p>
+                    </div>
+                `;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.add("opacity-0", "translate-y-2");
+                    setTimeout(() => toast.remove(), 300);
+                }, 2800);
+            }
+
+            // ============================================
+            // SEARCH & COMMAND PALETTE OVERLAY
+            // ============================================
+            const searchBar = document.getElementById("nav-search-bar");
+            const searchPanel = document.getElementById("search-dropdown-panel");
+            
+            if (searchBar && searchPanel) {
+                const searchDatabase = [
+                    { title: "Keyboard Tester Online", desc: "Test laptop & mechanical switches", url: "keyboard.html" },
+                    { title: "Mouse & CPS Checker", desc: "Test click, scroll, and speed CPS", url: "mouse.html" },
+                    { title: "Clicks Per Second Test", desc: "10-second high-score speed game", url: "mouse.html#cps" },
+                    { title: "Speaker & Sound Tester", desc: "Stereo balance frequency check", url: "sound.html" },
+                    { title: "Gamepad & Joystick Tester", desc: "Controller buttons stick drift test", url: "gamepad.html" },
+                    { title: "Microphone Voice Tester", desc: "Test decibel telemetry voice echo loop", url: "mic.html" },
+                    { title: "Webcam Calibration Check", desc: "Video test, resolution and FPS check", url: "webcam.html" },
+                    { title: "Display & Screen Tester", desc: "Check dead pixels, monitor Hz, and ghosting", url: "display.html" },
+                    { title: "Drawing Tablet & Touchscreen Tester", desc: "Check pen pressure, touchscreen multi-touch, and drawing accuracy", url: "draw.html" },
+                    { title: "Bluetooth & Audio Latency Tester", desc: "Measure delay and lag of wireless headphones or Bluetooth speakers", url: "latency.html" },
+                    { title: "USB & HID Device Info Profiler", desc: "Scan connected USB/HID peripherals and inspect system hardware capabilities", url: "usb.html" },
+                    { title: "Biometric & Fingerprint Tester", desc: "Test Windows Hello, Touch ID, or security keys via standard client-side WebAuthn diagnostics", url: "biometric.html" },
+                    { title: "Battery Health & Efficiency Analyzer", desc: "Evaluate laptop chaging slopes, power draw rates, estimated cycle health, and power source metrics", url: "battery.html" },
+                    { title: "Printer Calibrated Test Page", desc: "Print CMYK color blocks, alignment grids, and evaluate font readability", url: "printer.html" },
+                    { title: "Scanner & Document Capture Checker", desc: "Test document scanners, apply black-and-white Xerox shaders, and scan QR codes", url: "scanner.html" },
+                    { title: "VR & XR Motion Controller Tester", desc: "Test 6-DOF spatial coordinates, analog triggers, and fire rumble haptics", url: "vr.html" },
+                    { title: "PC Hardware Specs Scanner", desc: "Profile processor cores, graphics card GPU model, RAM, and storage disks sizes", url: "specs.html" },
+                    { title: "Certified Diagnostic Report", desc: "Generate secure verified hardware configuration & device checklist PDF", url: "report.html" },
+                    { title: "LAN / Ethernet Port Jitter & Type Tester", desc: "Test network jitter, ping variance, and verify physical cable reliability", url: "lan.html" },
+                    { title: "HDMI & DisplayPort Multi-Screen Analyzer", desc: "Verify monitor refresh rate Hz, display placements, and multi-channel audio", url: "hdmi.html" },
+                    { title: "VGA Analog Calibrator Test Patterns", desc: "Calibrate analog monitor focus, phase adjustment zebra lines, and color bars", url: "vga.html" },
+                    { title: "USB Type-C & Thunderbolt Speed Profiler", desc: "Test alternate mode capabilities, power delivery profiles, and verify speeds", url: "usb-c.html" },
+                    { title: "Privacy Policy Compliance", desc: "AdSense, cookies & safety disclosure", url: "privacy.html" },
+                    { title: "Terms of Service Agreement", desc: "Device diagnostic terms and client-side usage rules", url: "terms.html" },
+                    { title: "Admin Settings Panel", desc: "Export config.js & preview analytics", url: "admin.php" }
+                ];
+
+                window.addEventListener("keydown", (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+                        e.preventDefault();
+                        searchBar.focus();
+                    }
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!searchBar.contains(e.target) && !searchPanel.contains(e.target)) {
+                        searchPanel.classList.add("hidden");
+                    }
+                });
+
+                searchBar.addEventListener("focus", showResults);
+                searchBar.addEventListener("input", showResults);
+
+                function showResults() {
+                    const query = searchBar.value.toLowerCase().trim();
+                    searchPanel.innerHTML = '<div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>';
+                    
+                    const filtered = searchDatabase.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.desc.toLowerCase().includes(query)
+                    );
+
+                    if (filtered.length === 0) {
+                        searchPanel.innerHTML += `
+                            <div class="px-2 py-3 text-center text-xs text-slate-400 font-semibold">
+                                No results found for "${searchBar.value}"
+                            </div>
+                        `;
+                    } else {
+                        filtered.forEach(item => {
+                            const itemEl = document.createElement("a");
+                            itemEl.href = item.url;
+                            itemEl.className = "flex flex-col px-3 py-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all duration-150 select-none group";
+                            itemEl.innerHTML = `
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-250 group-hover:text-blue-600 transition-colors">${item.title}</span>
+                                <span class="text-[10px] text-slate-400 font-semibold">${item.desc}</span>
+                            `;
+                            searchPanel.appendChild(itemEl);
+                        });
+                    }
+                    searchPanel.classList.remove("hidden");
+                }
+            }
+        });
+    
+            // Register Service Worker for PWA
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('sw.js')
+                        .then(reg => console.log('[PWA] Service Worker registered scope:', reg.scope))
+                        .catch(err => console.error('[PWA] Service Worker registration failed:', err));
+                });
+            }
+    </script>
+<script>
+    // Interactive Mobile Menu Toggle & FAQ Accordions
+    document.addEventListener("DOMContentLoaded", () => {
+        const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+        const mobileNavPanel = document.getElementById("mobile-nav-panel");
+        const hamburgerIcon = document.getElementById("hamburger-icon");
+        const hamburgerClose = document.getElementById("hamburger-close");
+
+        if (mobileMenuToggle && mobileNavPanel && hamburgerIcon && hamburgerClose) {
+            mobileMenuToggle.addEventListener("click", () => {
+                mobileNavPanel.classList.toggle("hidden");
+                hamburgerIcon.classList.toggle("hidden");
+                hamburgerClose.classList.toggle("hidden");
+            });
+        }
+
+        // FAQ Accordion toggles
+        const faqButtons = document.querySelectorAll('.faq-btn');
+        faqButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const answer = btn.nextElementSibling;
+                const icon = btn.querySelector('.faq-icon');
+                
+                if (answer.classList.contains('hidden')) {
+                    answer.classList.remove('hidden');
+                    icon.textContent = "➖";
+                    icon.style.transform = "rotate(180deg)";
+                } else {
+                    answer.classList.add('hidden');
+                    icon.textContent = "➕";
+                    icon.style.transform = "rotate(0deg)";
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

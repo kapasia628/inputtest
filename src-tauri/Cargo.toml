@@ -1,0 +1,21 @@
+[package]
+name = "inputtest"
+version = "1.0.0"
+description = "Universal Hardware & Input Device Tester"
+authors = ["InputTest.online"]
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "1.5" }
+
+[dependencies]
+tauri = { version = "1.5", features = [ "shell-all" ] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "z"
+strip = true

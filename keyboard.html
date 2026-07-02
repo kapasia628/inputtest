@@ -1,0 +1,2416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/keyboard.html">
+    <script>
+        // Inline theme helper to avoid UI flash of light theme
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- SEO Meta Tags -->
+    <title>Online Keyboard Tester - Test Laptop & Mechanical Keys | InputTest.online</title>
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/keyboard.html">
+    <meta property="og:title" content="Online Keyboard Tester - Test Laptop & Mechanical Keys | InputTest.online">
+    <meta property="og:description" content="Free online keyboard tester. Instantly check if your laptop or mechanical keyboard keys are working properly with our interactive live layout.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/keyboard.html">
+    <meta name="twitter:title" content="Online Keyboard Tester - Test Laptop & Mechanical Keys | InputTest.online">
+    <meta name="twitter:description" content="Free online keyboard tester. Instantly check if your laptop or mechanical keyboard keys are working properly with our interactive live layout.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+    <meta name="description" content="Free online keyboard tester. Instantly check if your laptop or mechanical keyboard keys are working properly with our interactive live layout.">
+
+    <!-- JSON-LD Structured Data for FAQ Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Is this online keyboard tester safe to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, absolutely. Our keyboard tester operates completely client-side in your local browser sandbox memory. We utilize zero logins, cookies, or database logging. No typed characters or key sequences are ever transmitted, ensuring 100% privacy and credential safety."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is key chatter, and how do I detect it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Key chatter occurs when a mechanical switch double-registers a single keystroke (e.g., typing 'kkey' instead of 'key'). This is usually caused by leaf oxidation or spring fatigue. You can detect chatter by testing your keyboard on our layout; physical clicks will be cross-referenced with your microphone transients, logging any anomaly in the Acoustic Tape."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Why are some F-keys not registering on my laptop?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "On many modern office laptops, the F-keys (F1–F12) are mapped by default to media control functions (brightness, volume, play/pause). To register the raw F-key signals on our virtual layout, hold down the physical 'Fn' modifier key while pressing the respective F-key, or toggle Fn-Lock."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Does this tool support Mac Command & Option keys?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, it does! Select the 'macOS' layout toggle in the top-right header options of the keyboard container. This will dynamically swap key legends and layouts to match standard Apple keyboards, fully supporting Command (⌘), Option (⌥), Control, and Escape."
+        }
+      }]
+    }
+    </script>
+    
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 10% 40%, rgba(99, 102, 241, 0.03) 0%, transparent 40%);
+        }
+        
+        /* Interactive chiclet-keys styling (Light Mode) */
+        .key-normal {
+            background-color: #ffffff;
+            border-color: #e2e8f0;
+            color: #475569;
+            box-shadow: 
+                0 2px 3px rgba(15, 23, 42, 0.05), 
+                inset 0 1.5px 0px #ffffff;
+            border-bottom-width: 3px;
+        }
+        .key-normal:hover {
+            border-color: #cbd5e1;
+            color: #1e293b;
+        }
+        .key-active {
+            background-color: #2563eb !important;
+            border-color: #1d4ed8 !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 12px rgba(37, 99, 235, 0.4) !important;
+            border-bottom-width: 1px !important;
+            transform: translateY(2px) scale(0.97);
+        }
+        .key-tested {
+            background-color: #065f46 !important;
+            border-color: #047857 !important;
+            color: #ffffff !important;
+            box-shadow: 
+                0 3px 5px rgba(6, 95, 70, 0.15), 
+                inset 0 1.5px 0px rgba(255, 255, 255, 0.25) !important;
+            border-bottom-width: 3px !important;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+        }
+        @keyframes scaleUp {
+            0% { opacity: 0; transform: scale(0.85) translateY(2px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-scaleUp {
+            animation: scaleUp 0.12s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* 🔮 RGB WAVE CYBERPUNK SKIN STYLING */
+        .theme-cyber {
+            background-color: #0b0f17 !important;
+            border-color: #1e293b !important;
+            box-shadow: 0 10px 40px rgba(244, 63, 94, 0.15) !important;
+        }
+        .theme-cyber .key-normal {
+            background-color: #0f172a;
+            border-color: #1e293b;
+            border-bottom-color: #020617;
+            color: #38bdf8;
+            box-shadow: 0 0 6px rgba(56, 189, 248, 0.1), inset 0 1px 0px rgba(255, 255, 255, 0.05);
+        }
+        .theme-cyber .key-normal:hover {
+            border-color: #f43f5e;
+            color: #f43f5e;
+            box-shadow: 0 0 10px rgba(244, 63, 94, 0.3);
+        }
+        .theme-cyber .key-active {
+            background-color: #f43f5e !important;
+            border-color: #e11d48 !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 18px rgba(244, 63, 94, 0.7) !important;
+            border-bottom-width: 1px !important;
+        }
+        .theme-cyber .key-tested {
+            background-color: #093325 !important;
+            border-color: #059669 !important;
+            color: #34d399 !important;
+            box-shadow: 0 0 12px rgba(52, 211, 153, 0.4) !important;
+            border-bottom-width: 3px !important;
+        }
+
+        /* 💾 VINTAGE IBM MODEL M RETRO BEIGE SKIN STYLING */
+        .theme-retro {
+            background-color: #e6e6da !important;
+            border-color: #bcbcb0 !important;
+            box-shadow: inset 0px 4px 10px rgba(0,0,0,0.1) !important;
+            border-radius: 1rem !important;
+        }
+        .theme-retro .key-normal {
+            background-color: #e0e0d6;
+            border-color: #bfbfae;
+            border-bottom-color: #8c8c7c;
+            color: #272722;
+            border-radius: 6px !important;
+            box-shadow: inset 1.5px 1.5px 0px #ffffff;
+            font-family: 'Fira Code', monospace;
+            font-weight: 700;
+        }
+        .theme-retro .key-normal:hover {
+            background-color: #d6d6ca;
+        }
+        .theme-retro .key-active {
+            background-color: #8c8c7c !important;
+            border-color: #636355 !important;
+            color: #ffffff !important;
+            border-radius: 6px !important;
+            border-bottom-width: 1px !important;
+            box-shadow: none !important;
+            transform: translateY(2px);
+        }
+        .theme-retro .key-tested {
+            background-color: #1e3a1e !important;
+            border-color: #132413 !important;
+            color: #7ef57e !important;
+            border-radius: 6px !important;
+            border-bottom-width: 3px !important;
+            border-bottom-color: #132413 !important;
+            box-shadow: none !important;
+        }
+        
+        /* 💡 DYNAMIC RGB WAVE LED BACKLIGHT EFFECT */
+        @keyframes rgbWave {
+            0% { border-color: #3b82f6; box-shadow: 0 0 5px rgba(59, 130, 246, 0.35); }
+            25% { border-color: #ec4899; box-shadow: 0 0 5px rgba(236, 72, 153, 0.35); }
+            50% { border-color: #10b981; box-shadow: 0 0 5px rgba(16, 185, 129, 0.35); }
+            75% { border-color: #f59e0b; box-shadow: 0 0 5px rgba(245, 158, 11, 0.35); }
+            100% { border-color: #3b82f6; box-shadow: 0 0 5px rgba(59, 130, 246, 0.35); }
+        }
+        .rgb-wave-key {
+            animation: rgbWave 3s linear infinite !important;
+        }
+
+        /* 💡 DYNAMIC REACTIVE GLOW KEYS */
+        .reactive-glow-key-active {
+            box-shadow: 0 0 16px rgba(37, 99, 235, 0.7) !important;
+        }
+        .reactive-glow-key-tested {
+            box-shadow: 0 0 16px rgba(6, 95, 70, 0.6) !important;
+        }
+
+        /* 🔥 DYNAMIC KEYSTROKE HEATMAP LEVELS */
+        .heat-1 {
+            background-color: #ecfeff !important;
+            border-color: #06b6d4 !important;
+            color: #0891b2 !important;
+            box-shadow: 0 0 8px rgba(6, 182, 212, 0.4) !important;
+        }
+        .heat-2 {
+            background-color: #f5f3ff !important;
+            border-color: #8b5cf6 !important;
+            color: #7c3aed !important;
+            box-shadow: 0 0 12px rgba(139, 92, 246, 0.5) !important;
+        }
+        .heat-3 {
+            background-color: #fff1f2 !important;
+            border-color: #f43f5e !important;
+            color: #e11d48 !important;
+            box-shadow: 0 0 16px rgba(244, 63, 94, 0.7) !important;
+        }
+
+        /* Set keys to relative positioning for chatter warning badge attachment */
+        .key-normal, .key-active, .key-tested {
+            position: relative !important;
+        }
+            /* Dark Mode style overrides */
+        .dark .glow-bg {
+            background-color: #0b0f19 !important;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%) !important;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #0f172a !important;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155 !important;
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #475569 !important;
+        }
+    </style>
+    
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+
+    <!-- JSON-LD Structured Data for WebApplication Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Online Keyboard Tester",
+        "description": "Free online keyboard tester. Instantly check if your laptop or mechanical keyboard keys are working properly with our interactive live layout.",
+        "url": "https://inputtest.online/keyboard.html",
+        "image": "https://inputtest.online/icon-512.png",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires HTML5 compatible browser",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:text-slate-250 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg relative overflow-x-hidden transition-colors duration-300">
+
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm dark:shadow-none transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- UPGRADED PREMIUM LOGO -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-300">
+                            <!-- SVG Keyboard Icon inside logo -->
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-slate-250 group-hover:text-blue-600 transition-colors duration-250">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+                
+                <!-- PREMIUM INTERACTIVE CENTER SEARCH BAR -->
+                <div class="hidden lg:flex items-center flex-grow max-w-sm mx-6 relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <input id="nav-search-bar" type="text" placeholder="Search tool, inputs, keys..." class="w-full bg-slate-100/60 hover:bg-slate-200/50 focus:bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-blue-500 rounded-full py-1.5 pl-10 pr-12 text-xs text-slate-700 dark:text-slate-350 font-medium tracking-wide focus:outline-none transition-all shadow-inner focus:shadow-sm dark:shadow-none" autocomplete="off">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <kbd class="text-[9px] font-mono font-bold text-slate-400 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-1.5 py-0.5 rounded shadow-sm dark:shadow-none">Ctrl K</kbd>
+                    </div>
+                    
+                    <!-- Search Results Dropdown -->
+                    <div id="search-dropdown-panel" class="hidden absolute top-12 left-0 right-0 bg-white/95 border border-slate-200 rounded-2xl shadow-xl shadow-slate-200/40 p-2 z-50 max-h-64 overflow-y-auto space-y-1 backdrop-blur-md">
+                        <div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>
+                    </div>
+                </div>
+                
+                                <!-- Main Nav Links -->
+                <div class="hidden md:flex items-center gap-6 flex-shrink-0">
+                    <a href="/" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Home</a>
+                    <a href="keyboard.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-blue-600 dark:text-blue-400 border-b-2 border-blue-500 font-bold">Keyboard Test</a>
+                    <a href="mouse.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Mouse & CPS</a>
+                    <a href="blog.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Blog</a>
+                    
+                    <!-- Premium More Tools Dropdown -->
+                    <div class="relative group">
+                        <button id="nav-dropdown-btn" class="flex items-center gap-1 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 py-1.5 px-1 focus:outline-none transition-all duration-200">
+                            More Tools
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 group-hover:rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu panel -->
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full mt-2 w-80 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-3 grid grid-cols-2 gap-1.5 backdrop-blur-md z-50 animate-scaleUp">
+                            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 col-span-2 mb-1.5">Top Calibration Utilities</div>
+                            
+                            <a href="display.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">📺 Display Test</a>
+                            <a href="specs.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">💻 System Specs</a>
+                            <a href="gamepad.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">🎮 Gamepad drift</a>
+                            
+                            <a href="report.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-xs font-bold text-emerald-600 dark:text-emerald-450 transition-colors col-span-2 shadow-sm">🛡️ Certified PDF Report</a>
+                            
+                            <div class="h-px bg-slate-100 dark:bg-slate-800/60 col-span-2 my-1"></div>
+                            
+                            <a href="sound.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔊 Speaker test</a>
+                            <a href="mic.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎙️ Microphone</a>
+                            <a href="webcam.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📷 Webcam Check</a>
+                            <a href="draw.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📐 Drawing Tablet</a>
+                            <a href="latency.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ Latency Check</a>
+                            <a href="usb.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔌 USB Profiler</a>
+                            <a href="biometric.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔑 Biometrics Hello</a>
+                            <a href="printer.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🖨️ Printer CMYK</a>
+                            <a href="scanner.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📄 Documents scan</a>
+                            <a href="vr.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🕶️ VR controllers</a>
+                            <a href="battery.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔋 Battery Health</a>
+                            <a href="lan.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🌐 LAN Tester</a>
+                            <a href="hdmi.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📺 HDMI & DP</a>
+                            <a href="vga.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎨 VGA Calibrator</a>
+                            <a href="usb-c.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ USB-C Profiler</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Nav CTA -->
+                <div class="flex items-center gap-3 flex-shrink-0">                    <!-- Mobile Hamburger Button -->
+                    <button id="mobile-menu-toggle" class="p-2 md:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm transition-all focus:outline-none" aria-label="Toggle Navigation Menu">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                                        <!-- Elegant Sun/Moon Theme Toggle -->
+                    <button id="theme-toggle" class="relative p-2 mr-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm dark:shadow-none transition-all focus:outline-none" aria-label="Toggle dark mode">
+                        <!-- Sun Icon (hidden by default, shown in dark mode) -->
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <!-- Moon Icon (shown by default, hidden in dark mode) -->
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <a href="/" class="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1 font-bold font-mono bg-blue-500/5 px-3 py-1.5 rounded-full border border-blue-500/15">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+            <!-- Mobile Dropdown Navigation Panel -->
+    <div id="mobile-nav-panel" class="hidden md:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md px-4 py-4 space-y-3 transition-all duration-300 animate-scaleUp">
+        <div class="grid grid-cols-2 gap-3 text-xs font-bold">
+            <a href="/" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🏠 Home</a>
+            <a href="keyboard.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">⌨️ Keyboard Test</a>
+            <a href="mouse.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🖱️ Mouse & CPS</a>
+            <a href="display.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">📺 Display Test</a>
+            <a href="specs.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">💻 Hardware Specs</a>
+            <a href="report.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-450">🛡️ PDF Certificate</a>
+            <a href="blog.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/10 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 col-span-2 justify-center font-bold">📝 Diagnostic Blog & Guides</a>
+        </div>
+        
+        <div class="border-t border-slate-100 dark:border-slate-900 pt-3">
+            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-1">All Diagnostic Utilities</div>
+            <div class="grid grid-cols-2 gap-2 text-[10px] font-bold text-slate-500 dark:text-slate-400">
+                <a href="gamepad.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎮 Gamepad drift</a>
+                <a href="sound.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔊 Speaker test</a>
+                <a href="mic.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎙️ Microphone</a>
+                <a href="webcam.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📷 Webcam Check</a>
+                <a href="draw.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📐 Drawing Tablet</a>
+                <a href="latency.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ Latency Check</a>
+                <a href="usb.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔌 USB Profiler</a>
+                <a href="biometric.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔑 Biometrics Hello</a>
+                <a href="printer.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🖨️ Printer CMYK</a>
+                <a href="scanner.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📄 Documents scan</a>
+                <a href="vr.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🕶️ VR headset</a>
+                <a href="lan.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🌐 LAN Jitter Test</a>
+                <a href="hdmi.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📺 HDMI & DP</a>
+                <a href="vga.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎨 VGA Calibrator</a>
+                <a href="usb-c.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ USB-C Profiler</a>
+                <a href="battery.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔋 Battery Health</a>
+            </div>
+        </div>
+    </div>
+
+    </nav>
+
+    <!-- Top Google AdSense Banner Zone -->
+    <div class="max-w-7xl mx-auto px-4 mt-6 w-full flex justify-center">
+        <div id="top-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-sm dark:shadow-none rounded-2xl overflow-hidden flex items-center justify-center animate-pulse-slow">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px]">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+        
+        <!-- Header & Action Ribbon -->
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+                    Keyboard Matrix Tester 
+                    <span id="keyboard-layout-header-badge" class="text-xs font-mono font-bold px-2 py-0.5 rounded border border-blue-500/10 bg-blue-500/5 text-blue-600 uppercase tracking-widest">Windows - 100% Full-Size Layout</span>
+                </h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                    Press any key to test dynamic switches, multi-key ghosting, and signal latency. Interception active.
+                </p>
+            </div>
+            
+            <div class="flex items-center gap-4 w-full md:w-auto">
+                <!-- Tested Tracker -->
+                <div class="px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl shadow-sm dark:shadow-none flex items-center gap-6 text-xs font-mono select-none">
+                    <div>
+                        <span class="text-slate-400 block text-[9px] font-bold uppercase tracking-wider">REGISTERED</span>
+                        <span id="keys-registered-count" class="font-extrabold text-slate-800 dark:text-slate-250 text-lg">0</span>
+                        <span id="keys-total-count-label" class="text-slate-400">/ 104</span>
+                    </div>
+                    <div class="h-8 w-px bg-slate-200"></div>
+                    <div>
+                        <span class="text-slate-400 block text-[9px] font-bold uppercase tracking-wider">CURRENT DOWN</span>
+                        <span id="keys-down-count" class="font-extrabold text-blue-600 text-lg">0</span>
+                    </div>
+                </div>
+                
+                <button id="export-report-btn" class="px-4 h-11 bg-blue-50 hover:bg-blue-100 border border-blue-200 text-blue-600 hover:text-blue-700 font-bold text-xs rounded-2xl uppercase tracking-wider transition-colors flex items-center gap-1.5 focus:outline-none select-none">
+                    📋 Health Report
+                </button>
+                <button id="reset-keyboard-btn" class="px-4 h-11 bg-red-50 hover:bg-red-100/80 border border-red-200 text-red-600 hover:text-red-700 font-bold text-xs rounded-2xl uppercase tracking-wider transition-colors flex items-center gap-1.5 focus:outline-none select-none">
+                    🔲 Reset Board
+                </button>
+            </div>
+        </div>
+
+        <!-- Diagnostics Telemetry HUD with Embedded Real-time Key Tape -->
+        <div class="p-4 mb-6 bg-white/70 border border-slate-200/80 rounded-3xl shadow-sm dark:shadow-none backdrop-blur-md space-y-4">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="px-3 py-2 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                    <span class="text-[9px] text-slate-450 font-bold uppercase tracking-wider block mb-1">Last Code</span>
+                    <span id="diagnostic-code" class="text-slate-800 dark:text-slate-250 font-bold tracking-wide text-sm">-</span>
+                </div>
+                <div class="px-3 py-2 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                    <span class="text-[9px] text-slate-455 font-bold uppercase tracking-wider block mb-1">Last Key</span>
+                    <span id="diagnostic-key" class="text-slate-800 dark:text-slate-250 font-bold tracking-wide text-sm">-</span>
+                </div>
+                <div class="px-3 py-2 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                    <span class="text-[9px] text-slate-455 font-bold uppercase tracking-wider block mb-1">KeyCode</span>
+                    <span id="diagnostic-keycode" class="text-slate-800 dark:text-slate-250 font-bold tracking-wide text-sm">-</span>
+                </div>
+                <div class="px-3 py-2 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                    <span class="text-[9px] text-slate-455 font-bold uppercase tracking-wider block mb-1">Location ID</span>
+                    <span id="diagnostic-location" class="text-slate-800 dark:text-slate-250 font-bold tracking-wide text-sm">-</span>
+                </div>
+                <div class="px-3 py-2 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                    <span class="text-[9px] text-slate-455 font-bold uppercase tracking-wider block mb-1">Max NKRO Rollover</span>
+                    <span id="diagnostic-nkro" class="text-blue-600 font-extrabold tracking-wide text-sm">0</span>
+                </div>
+                <div class="px-3 py-2 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                    <span class="text-[9px] text-slate-455 font-bold uppercase tracking-wider block mb-1">Live Speed (KPS)</span>
+                    <span id="diagnostic-kps" class="text-emerald-600 font-extrabold tracking-wide text-sm">0.0</span>
+                </div>
+            </div>
+            
+            <!-- Real-time Rolling Key Tape -->
+            <div class="px-3.5 py-2 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-between gap-4 font-mono text-xs overflow-hidden select-none">
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <span class="text-[9px] text-slate-455 font-bold uppercase tracking-widest flex items-center gap-1.5 select-none font-bold">🎞️ Key Log Tape</span>
+                </div>
+                <div id="key-log-stream" class="flex items-center gap-1.5 flex-grow overflow-x-auto whitespace-nowrap py-1 scroll-smooth select-none flex-row justify-start pl-2">
+                    <span class="text-[10px] text-slate-400 font-semibold select-none">Awaiting mechanical switch keystrokes...</span>
+                </div>
+                <button id="clear-tape-btn" class="text-[9px] font-bold text-slate-400 hover:text-red-500 uppercase tracking-widest cursor-pointer focus:outline-none flex-shrink-0 transition-colors select-none font-bold">🧹 Clear</button>
+            </div>
+        </div>
+
+        <!-- Elegant Layout & Switch Sound Control Ribbon -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-5 p-5 mb-8 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl shadow-sm dark:shadow-none">
+            <!-- Col 1: OS Preset Layout -->
+            <div class="flex flex-col gap-2">
+                <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold flex items-center gap-1 select-none">💻 OS Preset Layout</span>
+                <div class="inline-flex bg-slate-100 p-1 rounded-2xl border border-slate-200 text-xs font-bold font-mono w-full select-none">
+                    <button id="btn-os-windows" class="flex-1 px-2.5 py-2 rounded-xl transition-all focus:outline-none font-bold">Win / PC</button>
+                    <button id="btn-os-mac" class="flex-1 px-2.5 py-2 rounded-xl transition-all focus:outline-none font-bold">Apple Mac</button>
+                </div>
+            </div>
+            
+            <!-- Col 2: Form Factor Layout -->
+            <div class="flex flex-col gap-2">
+                <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold flex items-center gap-1 select-none">📏 Form Factor Preset</span>
+                <div class="inline-flex bg-slate-100 p-1 rounded-2xl border border-slate-200 text-xs font-bold font-mono w-full select-none">
+                    <button id="btn-ff-tkl" class="flex-1 px-2.5 py-2 rounded-xl transition-all focus:outline-none font-bold">⌨️ TKL</button>
+                    <button id="btn-ff-full" class="flex-1 px-2.5 py-2 rounded-xl transition-all focus:outline-none font-bold">🔢 Full</button>
+                </div>
+            </div>
+
+            <!-- Col 3: Audio Switch Sound Synthesizer (Premium Customizer) -->
+            <div class="flex flex-col gap-2">
+                <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold flex items-center gap-1 select-none">🔊 Switch Sound</span>
+                <div class="inline-flex bg-slate-100 p-1 rounded-2xl border border-slate-200 text-[10px] font-bold font-mono w-full select-none">
+                    <button id="btn-sound-mute" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">Mute</button>
+                    <button id="btn-sound-blue" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">Blue</button>
+                    <button id="btn-sound-brown" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">Brown</button>
+                    <button id="btn-sound-red" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">Red</button>
+                </div>
+            </div>
+
+            <!-- Col 4: Ambient Style Skin Themes (NEW Premium Addition) -->
+            <div class="flex flex-col gap-2">
+                <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold flex items-center gap-1 select-none">🎨 Theme Skin</span>
+                <div class="inline-flex bg-slate-100 p-1 rounded-2xl border border-slate-200 text-[10px] font-bold font-mono w-full select-none">
+                    <button id="btn-theme-apple" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">Apple</button>
+                    <button id="btn-theme-cyber" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">Cyber</button>
+                    <button id="btn-theme-retro" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">IBM</button>
+                </div>
+            </div>
+
+            <!-- Col 5: RGB LED Underglow (NEW) -->
+            <div class="flex flex-col gap-2">
+                <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold flex items-center gap-1 select-none">💡 LED Underglow</span>
+                <div class="inline-flex bg-slate-100 p-1 rounded-2xl border border-slate-200 text-[10px] font-bold font-mono w-full select-none">
+                    <button id="btn-led-none" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">Off</button>
+                    <button id="btn-led-rainbow" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">🌈 RGB</button>
+                    <button id="btn-led-reactive" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">🌟 Glow</button>
+                </div>
+            </div>
+
+            <!-- Col 6: Diagnostic Session Modes (NEW) -->
+            <div class="flex flex-col gap-2">
+                <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold flex items-center gap-1 select-none">🔥 Diagnostic Mode</span>
+                <div class="inline-flex bg-slate-100 p-1 rounded-2xl border border-slate-200 text-[10px] font-bold font-mono w-full select-none">
+                    <button id="btn-mode-standard" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">Standard</button>
+                    <button id="btn-mode-heatmap" class="flex-1 py-2 rounded-xl transition-all focus:outline-none font-bold">Heatmap</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Physical Keyboard Layout Container -->
+        <div class="w-full bg-slate-100/50 border-2 border-slate-200/70 rounded-[2rem] p-4 md:p-6 shadow-xl shadow-slate-200/50 relative backdrop-blur-lg select-none mb-10 overflow-x-auto">
+            <div id="keyboard-wrapper-grid" class="min-w-[1120px] space-y-3.5 transition-all duration-300">
+                
+                <!-- Main Keyboard Row Split: Alphanumeric (Left) & Nav Cluster (Right) -->
+                <div class="flex gap-6 justify-center">
+                    
+                    <!-- LEFT COLUMN: Alphanumeric block (Main 60% standard) -->
+                    <div class="w-[45.5rem] flex-shrink-0 space-y-2.5">
+                        
+                        <!-- Row 0: Function Keys Row -->
+                        <div class="flex items-center gap-1.5 h-11">
+                            <div id="Escape" class="key-normal w-12 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">Esc</div>
+                            <div class="w-5"></div> <!-- Spacer gap -->
+                            <div id="F1" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">F1</div>
+                            <div id="F2" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">F2</div>
+                            <div id="F3" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">F3</div>
+                            <div id="F4" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">F4</div>
+                            <div class="w-3.5"></div> <!-- Spacer gap -->
+                            <div id="F5" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">F5</div>
+                            <div id="F6" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">F6</div>
+                            <div id="F7" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">F7</div>
+                            <div id="F8" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">F8</div>
+                            <div class="w-3.5"></div> <!-- Spacer gap -->
+                            <div id="F9" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">F9</div>
+                            <div id="F10" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">F10</div>
+                            <div id="F11" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">F11</div>
+                            <div id="F12" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">F12</div>
+                        </div>
+
+                        <!-- Row 1: Alphanumeric Numbers row -->
+                        <div class="flex items-center gap-1.5">
+                            <div id="Backquote" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>~</span><span>`</span></div>
+                            <div id="Digit1" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>!</span><span>1</span></div>
+                            <div id="Digit2" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>@</span><span>2</span></div>
+                            <div id="Digit3" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>#</span><span>3</span></div>
+                            <div id="Digit4" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>$</span><span>4</span></div>
+                            <div id="Digit5" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>%</span><span>5</span></div>
+                            <div id="Digit6" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>^</span><span>6</span></div>
+                            <div id="Digit7" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>&</span><span>7</span></div>
+                            <div id="Digit8" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>*</span><span>8</span></div>
+                            <div id="Digit9" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>(</span><span>9</span></div>
+                            <div id="Digit0" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>)</span><span>0</span></div>
+                            <div id="Minus" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>_</span><span>-</span></div>
+                            <div id="Equal" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>+</span><span>=</span></div>
+                            <div id="Backspace" class="key-normal w-[4.9rem] h-11 flex items-center justify-end pr-3.5 rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Backspace</div>
+                        </div>
+
+                        <!-- Row 2: Qwerty Row -->
+                        <div class="flex items-center gap-1.5">
+                            <div id="Tab" class="key-normal w-[3.75rem] h-11 flex items-center justify-start pl-2.5 rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Tab</div>
+                            <div id="KeyQ" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">Q</div>
+                            <div id="KeyW" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">W</div>
+                            <div id="KeyE" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">E</div>
+                            <div id="KeyR" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">R</div>
+                            <div id="KeyT" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">T</div>
+                            <div id="KeyY" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">Y</div>
+                            <div id="KeyU" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">U</div>
+                            <div id="KeyI" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">I</div>
+                            <div id="KeyO" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">O</div>
+                            <div id="KeyP" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">P</div>
+                            <div id="BracketLeft" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>{</span><span>[</span></div>
+                            <div id="BracketRight" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>}</span><span>]</span></div>
+                            <div id="Backslash" class="key-normal w-[2.9rem] h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>|</span><span>\</span></div>
+                        </div>
+
+                        <!-- Row 3: Asdf Row -->
+                        <div class="flex items-center gap-1.5">
+                            <div id="CapsLock" class="key-normal w-[4.4rem] h-11 flex items-center justify-start pl-2 rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Caps</div>
+                            <div id="KeyA" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">A</div>
+                            <div id="KeyS" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">S</div>
+                            <div id="KeyD" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">D</div>
+                            <div id="KeyF" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">F</div>
+                            <div id="KeyG" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">G</div>
+                            <div id="KeyH" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">H</div>
+                            <div id="KeyJ" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">J</div>
+                            <div id="KeyK" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">K</div>
+                            <div id="KeyL" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">L</div>
+                            <div id="Semicolon" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>:</span><span>;</span></div>
+                            <div id="Quote" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>"</span><span>'</span></div>
+                            <div id="Enter" class="key-normal w-[5.3rem] h-11 flex items-center justify-end pr-4 rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Enter</div>
+                        </div>
+
+                        <!-- Row 4: Zxcv Row -->
+                        <div class="flex items-center gap-1.5">
+                            <div id="ShiftLeft" class="key-normal w-[5.5rem] h-11 flex items-center justify-start pl-2.5 rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Shift</div>
+                            <div id="KeyZ" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">Z</div>
+                            <div id="KeyX" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">X</div>
+                            <div id="KeyC" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">C</div>
+                            <div id="KeyV" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">V</div>
+                            <div id="KeyB" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">B</div>
+                            <div id="KeyN" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">N</div>
+                            <div id="KeyM" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono font-bold select-none cursor-default transition-all duration-100">M</div>
+                            <div id="Comma" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>&lt;</span><span>,</span></div>
+                            <div id="Period" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>&gt;</span><span>.</span></div>
+                            <div id="Slash" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>?</span><span>/</span></div>
+                            <div id="ShiftRight" class="key-normal w-[6.7rem] h-11 flex items-center justify-end pr-3.5 rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Shift</div>
+                        </div>
+
+                        <!-- Row 5: Modifier Row -->
+                        <div class="flex items-center gap-1.5">
+                            <div id="ControlLeft" class="key-normal w-[3.5rem] h-11 flex items-center justify-start pl-2 rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Ctrl</div>
+                            <div id="MetaLeft" class="key-normal w-[3.1rem] h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Win</div>
+                            <div id="AltLeft" class="key-normal w-[3.1rem] h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Alt</div>
+                            <div id="Space" class="key-normal w-[17.2rem] h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Spacebar</div>
+                            <div id="AltRight" class="key-normal w-[3.1rem] h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Alt</div>
+                            <div id="MetaRight" class="key-normal w-[3.1rem] h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Win</div>
+                            <div id="ContextMenu" class="key-normal w-[3.1rem] h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Menu</div>
+                            <div id="ControlRight" class="key-normal w-[3.5rem] h-11 flex items-center justify-end pr-2 rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Ctrl</div>
+                        </div>
+
+                    </div>
+
+                    <!-- RIGHT COLUMN: Navigation Cluster (Insert/Delete, Arrows) -->
+                    <div class="w-[8.75rem] flex-shrink-0 space-y-2.5">
+                        
+                        <!-- Row 0: Utilities / Media Spacer Block -->
+                        <div class="flex items-center gap-1.5 h-11">
+                            <div id="PrintScreen" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-[9px] font-mono leading-3 select-none cursor-default transition-all duration-100 text-center">Prt<br>Sc</div>
+                            <div id="ScrollLock" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-[9px] font-mono leading-3 select-none cursor-default transition-all duration-100 text-center">Scr<br>Lk</div>
+                            <div id="Pause" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-[9px] font-mono leading-3 select-none cursor-default transition-all duration-100 text-center">Pse<br>Brk</div>
+                        </div>
+
+                        <!-- Row 1: Nav Top (Insert, Home, PageUp) -->
+                        <div class="flex items-center gap-1.5">
+                            <div id="Insert" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Ins</div>
+                            <div id="Home" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Hm</div>
+                            <div id="PageUp" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">PU</div>
+                        </div>
+
+                        <!-- Row 2: Nav Bottom (Delete, End, PageDown) -->
+                        <div class="flex items-center gap-1.5">
+                            <div id="Delete" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Del</div>
+                            <div id="End" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">End</div>
+                            <div id="PageDown" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">PD</div>
+                        </div>
+
+                        <!-- Space gaps aligning arrows perfectly -->
+                        <div class="h-11"></div>
+
+                        <!-- Row 4: Arrow Up -->
+                        <div class="flex justify-center">
+                            <div id="ArrowUp" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">▲</div>
+                        </div>
+
+                        <!-- Row 5: Arrows Left, Down, Right -->
+                        <div class="flex items-center gap-1.5">
+                            <div id="ArrowLeft" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">◀</div>
+                            <div id="ArrowDown" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">▼</div>
+                            <div id="ArrowRight" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">▶</div>
+                        </div>
+
+                    </div>
+
+                    <!-- NUMPAD COLUMN (100% Full-Size) -->
+                    <div id="numpad-column" class="w-[11.5rem] flex-shrink-0 space-y-2.5">
+                        
+                        <!-- Row 0: NumLock, Divide, Multiply, Subtract -->
+                        <div class="flex items-center gap-1.5 h-11">
+                            <div id="NumLock" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-[10px] font-mono leading-3 select-none cursor-default transition-all duration-100 text-center">Num<br>Lk</div>
+                            <div id="NumpadDivide" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">/</div>
+                            <div id="NumpadMultiply" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">*</div>
+                            <div id="NumpadSubtract" class="key-normal w-11 h-11 flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">-</div>
+                        </div>
+
+                        <!-- Main Numpad lower grid -->
+                        <div class="flex gap-1.5">
+                            
+                            <!-- Left 3 Keys columns -->
+                            <div class="flex-grow space-y-2.5">
+                                <!-- Row 1: 7, 8, 9 -->
+                                <div class="flex items-center gap-1.5">
+                                    <div id="Numpad7" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>7</span><span class="text-[8px] text-slate-400 font-semibold uppercase font-sans">Home</span></div>
+                                    <div id="Numpad8" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>8</span><span class="text-[8px] text-slate-400 font-semibold uppercase font-sans">▲</span></div>
+                                    <div id="Numpad9" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>9</span><span class="text-[8px] text-slate-400 font-semibold uppercase font-sans">PgUp</span></div>
+                                </div>
+                                <!-- Row 2: 4, 5, 6 -->
+                                <div class="flex items-center gap-1.5">
+                                    <div id="Numpad4" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>4</span><span class="text-[8px] text-slate-400 font-semibold uppercase font-sans">◀</span></div>
+                                    <div id="Numpad5" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>5</span><span class="text-[8px] text-slate-400 font-semibold uppercase font-sans"></span></div>
+                                    <div id="Numpad6" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>6</span><span class="text-[8px] text-slate-400 font-semibold uppercase font-sans">▶</span></div>
+                                </div>
+                                <!-- Row 3: 1, 2, 3 -->
+                                <div class="flex items-center gap-1.5">
+                                    <div id="Numpad1" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>1</span><span class="text-[8px] text-slate-400 font-semibold uppercase font-sans">End</span></div>
+                                    <div id="Numpad2" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>2</span><span class="text-[8px] text-slate-400 font-semibold uppercase font-sans">▼</span></div>
+                                    <div id="Numpad3" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>3</span><span class="text-[8px] text-slate-400 font-semibold uppercase font-sans">PgDn</span></div>
+                                </div>
+                                <!-- Row 4: 0, . -->
+                                <div class="flex items-center gap-1.5">
+                                    <div id="Numpad0" class="key-normal w-[94px] h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>0</span><span class="text-[8px] text-slate-400 font-semibold uppercase font-sans">Ins</span></div>
+                                    <div id="NumpadDecimal" class="key-normal w-11 h-11 flex flex-col items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100"><span>.</span><span class="text-[8px] text-slate-400 font-semibold uppercase font-sans">Del</span></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Right columns (Add +, Enter) -->
+                            <div class="w-11 flex-shrink-0 space-y-2.5">
+                                <div id="NumpadAdd" class="key-normal w-11 h-[98px] flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">+</div>
+                                <div id="NumpadEnter" class="key-normal w-11 h-[98px] flex items-center justify-center rounded-xl text-xs font-mono select-none cursor-default transition-all duration-100">Ent</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            
+        </div>
+
+        <!-- Acoustic Switch Spectrogram & Chatter Scope Card -->
+        <div class="p-6 mb-10 bg-white/70 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] shadow-xl shadow-slate-200/40 dark:shadow-none backdrop-blur-lg space-y-6 transition-all duration-300">
+            <!-- Card Header -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-100 dark:border-slate-800/60 pb-5">
+                <div>
+                    <h2 class="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                        🎙️ Acoustic Switch Spectrogram & Chatter Scope
+                        <span class="text-[9px] font-mono font-bold px-2 py-0.5 rounded border border-indigo-500/10 bg-indigo-500/5 text-indigo-600 dark:text-indigo-400 uppercase tracking-widest animate-pulse">PREMIUM DIAGNOSTICS</span>
+                    </h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                        Real-time audio-based keystroke latency, switch signature classification, and contact bounce transient analysis.
+                    </p>
+                </div>
+                <div class="flex-shrink-0">
+                    <button id="btn-mic-init" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-2xl uppercase tracking-wider transition-all duration-300 flex items-center gap-2 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transform active:scale-95 cursor-pointer focus:outline-none select-none">
+                        🎤 Enable Acoustic Diagnostics
+                    </button>
+                </div>
+            </div>
+
+            <!-- Privacy Disclosure -->
+            <div class="px-4 py-3 bg-blue-50/50 dark:bg-blue-950/10 border border-blue-100/50 dark:border-blue-900/20 rounded-2xl flex items-start gap-3 text-[11px] text-slate-500 dark:text-slate-400 select-none text-left">
+                <span class="text-base select-none mt-0.5">🔒</span>
+                <p class="leading-relaxed font-semibold">
+                    <strong class="text-slate-700 dark:text-slate-350">Privacy-First Offline Architecture:</strong> All audio signal processing is performed strictly inside your browser sandbox using high-precision Web Audio API buffers. No microphone feeds, acoustic signatures, or voice sounds are ever recorded, saved, or uploaded to any server. 100% secure.
+                </p>
+            </div>
+
+            <!-- Dual Visualizer Canvases -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Waterfall Spectrogram -->
+                <div class="flex flex-col gap-2 bg-slate-50/50 dark:bg-slate-950/20 border border-slate-200/50 dark:border-slate-800/40 rounded-2.5xl p-4.5">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold flex items-center gap-1.5 select-none mb-1">
+                        🎨 Frequency Waterfall (Real-time Spectrogram)
+                    </span>
+                    <div class="relative w-full rounded-2xl border border-slate-200/80 dark:border-slate-800/70 overflow-hidden bg-slate-950">
+                        <canvas id="spectrogram-canvas" class="w-full h-44 block"></canvas>
+                        <div id="spectrogram-placeholder" class="absolute inset-0 flex items-center justify-center bg-slate-950/90 text-xs font-mono font-bold text-slate-500 tracking-wide select-none">
+                            Awaiting audio activation...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Oscilloscope Click Waveform -->
+                <div class="flex flex-col gap-2 bg-slate-50/50 dark:bg-slate-950/20 border border-slate-200/50 dark:border-slate-800/40 rounded-2.5xl p-4.5">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold flex items-center gap-1.5 select-none mb-1">
+                        ⚡ Audio Transient Scope (Keystroke Oscilloscope)
+                    </span>
+                    <div class="relative w-full rounded-2xl border border-slate-200/80 dark:border-slate-800/70 overflow-hidden bg-slate-950">
+                        <canvas id="oscilloscope-canvas" class="w-full h-44 block"></canvas>
+                        <div id="oscilloscope-placeholder" class="absolute inset-0 flex items-center justify-center bg-slate-950/90 text-xs font-mono font-bold text-slate-500 tracking-wide select-none">
+                            Awaiting audio activation...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diagnostics Metrics HUD -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="px-4 py-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                    <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Acoustic Switch Profile</span>
+                    <span id="acoustic-switch-profile" class="text-blue-600 dark:text-blue-400 font-extrabold tracking-wide text-sm truncate block mt-0.5">Awaiting click...</span>
+                </div>
+                <div class="px-4 py-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                    <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Acoustic Debounce Offset</span>
+                    <span id="acoustic-latency-offset" class="text-emerald-600 dark:text-emerald-450 font-extrabold tracking-wide text-sm block mt-0.5">0.00 ms</span>
+                </div>
+                <div class="px-4 py-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                    <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Acoustic Transient Integrity</span>
+                    <span id="acoustic-transient-integrity" class="text-slate-800 dark:text-slate-200 font-extrabold tracking-wide text-sm block mt-0.5">-</span>
+                </div>
+                <div class="px-4 py-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                    <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Audio Peak Amplitude</span>
+                    <span id="acoustic-peak-amplitude" class="text-slate-800 dark:text-slate-200 font-extrabold tracking-wide text-sm block mt-0.5">0%</span>
+                </div>
+            </div>
+
+            <!-- Sensitivity Controls & Tape Log -->
+            <div class="p-4 bg-slate-50 dark:bg-slate-950/30 border border-slate-200/60 dark:border-slate-800/60 rounded-2.5xl flex flex-col md:flex-row md:items-center gap-5 justify-between">
+                <!-- Sensitivity Slider -->
+                <div class="flex items-center gap-3.5 select-none min-w-[240px]">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold flex items-center gap-1 select-none">
+                        🎚️ Mic Threshold
+                    </span>
+                    <input type="range" id="input-mic-sensitivity" class="flex-grow accent-blue-600 bg-slate-200 dark:bg-slate-800 h-1.5 rounded-full outline-none cursor-pointer" min="0.01" max="0.50" step="0.01" value="0.12">
+                    <span id="label-mic-sensitivity" class="font-mono text-xs font-bold text-slate-700 dark:text-slate-300 w-10 text-right">0.12</span>
+                </div>
+
+                <!-- Acoustic Logging Tape -->
+                <div class="flex-grow flex items-center gap-3 overflow-hidden font-mono text-xs border-t md:border-t-0 md:border-l border-slate-200 dark:border-slate-800 pt-3.5 md:pt-0 md:pl-5 select-none text-left">
+                    <span class="text-[9px] text-slate-400 font-bold uppercase tracking-widest flex-shrink-0 flex items-center gap-1.5 font-bold">🎞️ Acoustic Tape</span>
+                    <div id="acoustic-log-stream" class="flex-grow flex items-center gap-1.5 overflow-x-auto whitespace-nowrap py-1 scroll-smooth select-none flex-row justify-start pl-1">
+                        <span class="text-[10px] text-slate-400 dark:text-slate-450 font-semibold select-none">Awaiting acoustic transient clicks...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             🔒 PREMIUM SEO DIAGNOSTIC GUIDE & FAQ SECTION
+             ============================================ -->
+        <section class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start w-full relative z-10">
+            
+            <!-- Left 7-Column: Mini-Blog / Comprehensive Diagnostic Guide -->
+            <div class="lg:col-span-7 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 shadow-sm backdrop-blur-md transition-colors duration-300">
+                <span class="text-[9px] font-mono text-blue-600 dark:text-blue-400 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-850 pb-3 mb-6">📚 Technical Diagnostic Guide</span>
+                
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-4 tracking-tight leading-tight select-none">
+                    How to Thoroughly Verify Mechanical & Laptop Keyboard Integrity Online
+                </h2>
+                
+                <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 space-y-4 leading-relaxed">
+                    <p>
+                        A keyboard is the primary bridge between human intent and computer execution. Over time, keys can experience key chatter, membrane degradation, or physical switch failures. Our interactive <strong>Online Keyboard Tester</strong> provides real-time, client-side diagnostics to evaluate every key switch’s electrical rollover capacity (NKRO) and physical response time without saving a single stroke.
+                    </p>
+                    
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        ⌨️ Understanding Keyboard Ghosting & Key Rollover (NKRO)
+                    </h3>
+                    <p>
+                        Keyboard ghosting occurs when multiple keys are pressed simultaneously, but one or more keystrokes fail to register because of budget electrical matrix routing constraints. Premium mechanical keyboards feature <strong>N-Key Rollover (NKRO)</strong>, meaning every single key switch is wired with a dedicated diode to prevent ghosting. Standard office laptops typically feature 2-Key or 6-Key Rollover (6KRO). You can easily test your hardware's rollover capacity by pressing high-density clusters (like ASDW + Space + Shift) and checking if all switches light up emerald green simultaneously on our virtual layout.
+                    </p>
+
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        🎙️ The Acoustic Switch Profiler: Diagnosing Switch Health
+                    </h3>
+                    <p>
+                        Mechanical switch health isn't just electrical; it's acoustic. Physical spring bounce, leaf corrosion, or dirt build-up can create subtle micro-clicks or chatter (double-registering keys). Our advanced <strong>Acoustic Switch Analyzer</strong> captures high-resolution audio transients via your microphone. It tracks transient waveforms, measures latency offsets, and analyzes frequencies to classify click signatures (Linear, Tactile, Clicky) while diagnosing switch integrity, ensuring your keys function precisely as they sound.
+                    </p>
+
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        🛠️ Basic Troubleshooting for Malfunctioning Laptop Keys
+                    </h3>
+                    <p>
+                        If a key switch fails to light up on our screen, try these quick steps: First, clean the switch using high-pressure compressed air to remove lodged dust particles. Second, ensure your regional keyboard settings inside Windows/macOS match the active layout profile selected on our site. Lastly, perform an electrical power reset or re-install the system keyboard drivers to resolve temporary polling conflicts.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right 5-Column: Elegant Interactive FAQ Accordion -->
+            <div class="lg:col-span-5 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 shadow-sm backdrop-blur-md transition-colors duration-300 space-y-6">
+                <span class="text-[9px] font-mono text-emerald-600 dark:text-emerald-450 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-850 pb-3">❓ Frequently Asked Questions</span>
+                
+                <div class="space-y-4">
+                    
+                    <!-- FAQ 1 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Is this online keyboard tester safe to use?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Yes, absolutely. Our keyboard tester operates completely client-side in your local browser sandbox memory. We utilize zero logins, cookies, or database logging. No typed characters or key sequences are ever transmitted, ensuring 100% privacy and credential safety.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">What is key chatter, and how do I detect it?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Key chatter occurs when a mechanical switch double-registers a single keystroke (e.g., typing "kkey" instead of "key"). This is usually caused by leaf oxidation or spring fatigue. You can detect chatter by testing your keyboard on our layout; physical clicks will be cross-referenced with your microphone transients, logging any anomaly in the Acoustic Tape.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Why are some F-keys not registering on my laptop?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            On many modern office laptops, the F-keys (F1–F12) are mapped by default to media control functions (brightness, volume, play/pause). To register the raw F-key signals on our virtual layout, hold down the physical "Fn" modifier key while pressing the respective F-key, or toggle Fn-Lock.
+                        </div>
+                    </div>
+
+                    <!-- FAQ 4 -->
+                    <div class="pb-2">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Does this tool support Mac Command & Option keys?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Yes, it does! Select the "macOS" layout toggle in the top-right header options of the keyboard container. This will dynamically swap key legends and layouts to match standard Apple keyboards, fully supporting Command (⌘), Option (⌥), Control, and Escape.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <!-- Bottom Google AdSense Banner Zone -->
+    <div class="max-w-7xl mx-auto px-4 mb-10 w-full flex justify-center">
+        <div id="bottom-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-sm dark:shadow-none rounded-2xl overflow-hidden flex items-center justify-center">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px]">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+                                <!-- Footer Area -->
+        <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 mt-auto transition-colors duration-300">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-left select-none">
+                
+                 <!-- Column 1: Brand & Logo -->
+                <div class="space-y-4">
+                    <a href="/" class="flex items-center gap-2 group w-fit transition-transform duration-200 active:scale-95">
+                        <span class="logo-emoji text-xl group-hover:rotate-12 transition-transform duration-300 inline-block">⌨️</span>
+                        <span class="brand-name font-black text-slate-900 dark:text-slate-200 text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">InputTest.online</span>
+                    </a>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed brand-slogan font-semibold">
+                        Universal Hardware & Input Device Tester
+                    </p>
+                    <p class="text-xs text-slate-400 dark:text-slate-500 leading-relaxed font-medium">
+                        Safe sandboxed hardware diagnostics. 100% private, local client-side processing.
+                    </p>
+                </div>
+                
+                 <!-- Column 2: Input Diagnostics -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Input Diagnostics</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="keyboard.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Keyboard Tester</a></li>
+                        <li><a href="mouse.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖱️ Mouse & CPS Test</a></li>
+                        <li><a href="gamepad.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎮 Gamepad & Drift</a></li>
+                        <li><a href="mic.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎙️ Microphone Check</a></li>
+                        <li><a href="webcam.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📷 Webcam Quality</a></li>
+                        <li><a href="draw.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📐 Drawing Tablet</a></li>
+                        <li><a href="usb.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔌 USB & HID Profiler</a></li>
+                        <li><a href="biometric.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔑 Biometrics Hello</a></li>
+                        <li><a href="battery.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔋 Battery Health</a></li>
+                        <li><a href="lan.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🌐 LAN Jitter Test</a></li>
+                        <li><a href="usb-c.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ USB-C Profiler</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 3: Screen & Outputs -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Screen & Outputs</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="display.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 Display & Monitor</a></li>
+                        <li><a href="latency.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ Latency & Lag</a></li>
+                        <li><a href="printer.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖨️ Printer CMYK</a></li>
+                        <li><a href="scanner.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📄 Documents Scan</a></li>
+                        <li><a href="vr.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🕶️ VR Controller</a></li>
+                        <li><a href="specs.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">💻 Hardware Specs</a></li>
+                        <li><a href="hdmi.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 HDMI Analyzer</a></li>
+                        <li><a href="vga.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎨 VGA Calibrator</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 4: Reports, Blog & Policies -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Info & Policies</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="report.html" class="text-emerald-600 dark:text-emerald-450 font-bold bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10 dark:border-emerald-500/20 hover:bg-emerald-500/10 transition-colors inline-block mb-1">🛡️ Certified PDF Report</a></li>
+                        <li><a href="blog.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📝 Blog Guides</a></li>
+                        <li><a href="privacy.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔒 Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚖️ Terms of Service</a></li>
+                        <li><a href="#" class="brand-email text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors break-all">✉️ support@inputtest.online</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="border-t border-slate-100 dark:border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-medium flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                    <span>&copy; 2026 InputTest.online. Safe sandboxed diagnostics. No data collection.</span>
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 font-extrabold border border-emerald-500/15 w-fit uppercase select-none">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-ping"></span>
+                        Version 1.2.0 (Updated: June 6, 2026)
+                    </span>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="#" class="twitter-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">Twitter</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+                    </a>
+                    <a href="#" class="github-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" clip-rule="evenodd"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic Section -->
+    <script>
+                document.addEventListener("DOMContentLoaded", () => {
+            // ============================================
+            // SUN/MOON SYSTEM THEME TOGGLE LOGIC
+            // ============================================
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
+
+            if (themeToggleBtn && sunIcon && moonIcon) {
+                // Sync sun/moon icon visibility on startup
+                if (document.documentElement.classList.contains('dark')) {
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                } else {
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                }
+
+                themeToggleBtn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    sunIcon.classList.toggle('hidden');
+                    moonIcon.classList.toggle('hidden');
+                    if (document.documentElement.classList.contains('dark')) {
+                        localStorage.setItem('color-theme', 'dark');
+                    } else {
+                        localStorage.setItem('color-theme', 'light');
+                    }
+                });
+            }
+            // Initialize Ads via config.js helper
+            setTimeout(() => {
+                SiteConfig.initAdSense('top-adsense-banner', 'topLeaderboard');
+                SiteConfig.initAdSense('bottom-adsense-banner', 'bottomLeaderboard');
+            }, 800);
+
+            // Matrix Tracker States
+            const activeKeys = new Set();
+            const testedKeys = new Set();
+            
+            // DOM Elements
+            const countRegistered = document.getElementById("keys-registered-count");
+            const countActive = document.getElementById("keys-down-count");
+            
+            const diagCode = document.getElementById("diagnostic-code");
+            const diagKey = document.getElementById("diagnostic-key");
+            const diagKeyCode = document.getElementById("diagnostic-keycode");
+            const diagLocation = document.getElementById("diagnostic-location");
+            
+            const btnReset = document.getElementById("reset-keyboard-btn");
+
+            // Dynamic OS and Form Factor Controls
+            const btnOSWindows = document.getElementById("btn-os-windows");
+            const btnOSMac = document.getElementById("btn-os-mac");
+            const btnFFTkl = document.getElementById("btn-ff-tkl");
+            const btnFFFull = document.getElementById("btn-ff-full");
+            
+            const numpadColumn = document.getElementById("numpad-column");
+            const keyboardWrapperGrid = document.getElementById("keyboard-wrapper-grid");
+            const keysTotalCountLabel = document.getElementById("keys-total-count-label");
+            const keyboardLayoutHeaderBadge = document.getElementById("keyboard-layout-header-badge");
+
+            const macLegends = {
+                "Escape": "esc",
+                "Backspace": "delete ⌫",
+                "Tab": "tab ⇥",
+                "CapsLock": "caps lock ⇪",
+                "Enter": "return ↩",
+                "ShiftLeft": "shift ⇧",
+                "ShiftRight": "shift ⇧",
+                "ControlLeft": "control ⌃",
+                "ControlRight": "control ⌃",
+                "MetaLeft": "command ⌘",
+                "MetaRight": "command ⌘",
+                "AltLeft": "option ⌥",
+                "AltRight": "option ⌥",
+                "ContextMenu": "fn"
+            };
+
+            const winLegends = {
+                "Escape": "Esc",
+                "Backspace": "Backspace",
+                "Tab": "Tab",
+                "CapsLock": "Caps",
+                "Enter": "Enter",
+                "ShiftLeft": "Shift",
+                "ShiftRight": "Shift",
+                "ControlLeft": "Ctrl",
+                "ControlRight": "Ctrl",
+                "MetaLeft": "Win",
+                "MetaRight": "Win",
+                "AltLeft": "Alt",
+                "AltRight": "Alt",
+                "ContextMenu": "Menu"
+            };
+
+            let activeOS = "windows";
+            let activeFF = "full"; // Set Full-Size 100% as standard default layout
+
+            // ============================================
+            // DYNAMIC MECHANICAL SWITCH SOUND SYNTHESIZER
+            // ============================================
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            let activeSound = "mute"; // Start with switch sounds muted by default for safety
+
+            const btnSoundMute = document.getElementById("btn-sound-mute");
+            const btnSoundBlue = document.getElementById("btn-sound-blue");
+            const btnSoundBrown = document.getElementById("btn-sound-brown");
+            const btnSoundRed = document.getElementById("btn-sound-red");
+
+            const soundButtons = {
+                "mute": btnSoundMute,
+                "blue": btnSoundBlue,
+                "brown": btnSoundBrown,
+                "red": btnSoundRed
+            };
+
+            function setSoundMode(mode) {
+                activeSound = mode;
+                // Swap active styling classes dynamically on the button row
+                Object.keys(soundButtons).forEach(m => {
+                    const btn = soundButtons[m];
+                    if (!btn) return;
+                    if (m === mode) {
+                        btn.className = "flex-1 px-2.5 py-2 rounded-xl bg-white text-blue-600 shadow-sm dark:shadow-none border border-slate-200/50 dark:border-slate-800/50 transition-all font-extrabold focus:outline-none";
+                    } else {
+                        btn.className = "flex-1 px-2.5 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-slate-250 transition-all font-bold focus:outline-none";
+                    }
+                });
+            }
+
+            function playSwitchSound(code) {
+                if (activeSound === "mute") return;
+                try {
+                    if (audioCtx.state === 'suspended') {
+                        audioCtx.resume();
+                    }
+                    
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    const now = audioCtx.currentTime;
+
+                    if (activeSound === "blue") {
+                        // Sharp Clicky Blue Switch: high pitch snapping frequency + instant pop release
+                        osc.type = "triangle";
+                        osc.frequency.setValueAtTime(100, now);
+                        osc.frequency.exponentialRampToValueAtTime(1800, now + 0.005);
+                        osc.frequency.exponentialRampToValueAtTime(320, now + 0.03);
+
+                        gain.gain.setValueAtTime(0.04, now);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+
+                        osc.start(now);
+                        osc.stop(now + 0.05);
+                    } else if (activeSound === "brown") {
+                        // Tactile Brown Switch: subtle popping mid tone
+                        osc.type = "sine";
+                        osc.frequency.setValueAtTime(150, now);
+                        osc.frequency.exponentialRampToValueAtTime(450, now + 0.01);
+                        osc.frequency.exponentialRampToValueAtTime(120, now + 0.07);
+
+                        gain.gain.setValueAtTime(0.06, now);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.07);
+
+                        osc.start(now);
+                        osc.stop(now + 0.07);
+                    } else if (activeSound === "red") {
+                        // Linear Red Switch: deep soft thud POP sound
+                        osc.type = "sine";
+                        osc.frequency.setValueAtTime(80, now);
+                        osc.frequency.exponentialRampToValueAtTime(220, now + 0.015);
+                        osc.frequency.exponentialRampToValueAtTime(60, now + 0.1);
+
+                        gain.gain.setValueAtTime(0.08, now);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.1);
+
+                        osc.start(now);
+                        osc.stop(now + 0.1);
+                    }
+                } catch (e) {
+                    console.log("AudioSynth skipped: " + e.message);
+                }
+            }
+
+            btnSoundMute.addEventListener("click", () => setSoundMode("mute"));
+            btnSoundBlue.addEventListener("click", () => setSoundMode("blue"));
+            btnSoundBrown.addEventListener("click", () => setSoundMode("brown"));
+            btnSoundRed.addEventListener("click", () => setSoundMode("red"));
+
+            // ============================================
+            // DYNAMIC ROLLING KEY LOG TAPE (LOGGER)
+            // ============================================
+            const keyStream = document.getElementById("key-log-stream");
+            const btnClearTape = document.getElementById("clear-tape-btn");
+            let keyCountOnTape = 0;
+
+            function pushToTape(keyName) {
+                if (keyCountOnTape === 0) {
+                    keyStream.innerHTML = "";
+                }
+                keyCountOnTape++;
+                const keyTag = document.createElement("span");
+                keyTag.className = "px-2 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none rounded-lg text-[10px] font-bold text-slate-700 dark:text-slate-350 select-none shrink-0 transform scale-95 animate-scaleUp";
+                keyTag.textContent = keyName;
+                keyStream.appendChild(keyTag);
+                
+                // Keep the rolling feed capped at 24 elements to prevent layout shift and overflow bloating
+                if (keyStream.children.length > 24) {
+                    keyStream.removeChild(keyStream.firstChild);
+                }
+                
+                // Auto scroll tape to the far right to show newest pressed key
+                keyStream.scrollLeft = keyStream.scrollWidth;
+            }
+
+            btnClearTape.addEventListener("click", () => {
+                keyCountOnTape = 0;
+                keyStream.innerHTML = `<span class="text-[10px] text-slate-400 font-semibold select-none">Awaiting mechanical switch keystrokes...</span>`;
+            });
+
+            // ============================================
+            // DYNAMIC AMBIENT SKINS, LEDS & MODES (NEW)
+            // ============================================
+            let activeTheme = "apple";
+            const btnThemeApple = document.getElementById("btn-theme-apple");
+            const btnThemeCyber = document.getElementById("btn-theme-cyber");
+            const btnThemeRetro = document.getElementById("btn-theme-retro");
+            
+            const themeButtons = {
+                "apple": btnThemeApple,
+                "cyber": btnThemeCyber,
+                "retro": btnThemeRetro
+            };
+            
+            function setTheme(theme) {
+                activeTheme = theme;
+                keyboardWrapperGrid.classList.remove("theme-cyber", "theme-retro");
+                if (theme === "cyber") {
+                    keyboardWrapperGrid.classList.add("theme-cyber");
+                } else if (theme === "retro") {
+                    keyboardWrapperGrid.classList.add("theme-retro");
+                }
+                
+                Object.keys(themeButtons).forEach(t => {
+                    const btn = themeButtons[t];
+                    if (!btn) return;
+                    if (t === theme) {
+                        btn.className = "flex-1 py-2 rounded-xl bg-white text-blue-600 shadow-sm dark:shadow-none border border-slate-200/50 dark:border-slate-800/50 transition-all font-extrabold focus:outline-none";
+                    } else {
+                        btn.className = "flex-1 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-slate-250 transition-all font-bold focus:outline-none";
+                    }
+                });
+            }
+
+            let activeLED = "none";
+            const btnLEDNone = document.getElementById("btn-led-none");
+            const btnLEDRainbow = document.getElementById("btn-led-rainbow");
+            const btnLEDReactive = document.getElementById("btn-led-reactive");
+            
+            const ledButtons = {
+                "none": btnLEDNone,
+                "rainbow": btnLEDRainbow,
+                "reactive": btnLEDReactive
+            };
+            
+            function setLEDMode(mode) {
+                activeLED = mode;
+                keyboardWrapperGrid.classList.remove("keyboard-underglow-cyan", "keyboard-underglow-rgb");
+                
+                if (mode === "rainbow") {
+                    keyboardWrapperGrid.style.boxShadow = "0 20px 50px rgba(99, 102, 241, 0.15)";
+                } else if (mode === "reactive") {
+                    keyboardWrapperGrid.style.boxShadow = "0 20px 50px rgba(6, 182, 212, 0.12)";
+                } else {
+                    keyboardWrapperGrid.style.boxShadow = "";
+                }
+                
+                refreshAllKeyStyles();
+                
+                Object.keys(ledButtons).forEach(m => {
+                    const btn = ledButtons[m];
+                    if (!btn) return;
+                    if (m === mode) {
+                        btn.className = "flex-1 py-2 rounded-xl bg-white text-blue-600 shadow-sm dark:shadow-none border border-slate-200/50 dark:border-slate-800/50 transition-all font-extrabold focus:outline-none";
+                    } else {
+                        btn.className = "flex-1 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-slate-250 transition-all font-bold focus:outline-none";
+                    }
+                });
+            }
+
+            let activeMode = "standard";
+            const btnModeStandard = document.getElementById("btn-mode-standard");
+            const btnModeHeatmap = document.getElementById("btn-mode-heatmap");
+            const keyPressCounts = {};
+            
+            const modeButtons = {
+                "standard": btnModeStandard,
+                "heatmap": btnModeHeatmap
+            };
+            
+            function setDiagMode(mode) {
+                activeMode = mode;
+                refreshAllKeyStyles();
+                
+                Object.keys(modeButtons).forEach(m => {
+                    const btn = modeButtons[m];
+                    if (!btn) return;
+                    if (m === mode) {
+                        btn.className = "flex-1 py-2 rounded-xl bg-white text-blue-600 shadow-sm dark:shadow-none border border-slate-200/50 dark:border-slate-800/50 transition-all font-extrabold focus:outline-none";
+                    } else {
+                        btn.className = "flex-1 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-slate-250 transition-all font-bold focus:outline-none";
+                    }
+                });
+            }
+
+            // Centralized key styling manager resolving conflicts
+            function refreshKeyStyles(code) {
+                const el = document.getElementById(code);
+                if (!el) return;
+                
+                el.classList.remove(
+                    "key-normal", "key-active", "key-tested", 
+                    "rgb-wave-key", "reactive-glow-key-active", "reactive-glow-key-tested",
+                    "heat-1", "heat-2", "heat-3"
+                );
+                
+                if (activeKeys.has(code)) {
+                    el.classList.add("key-active");
+                    if (activeLED === "reactive") {
+                        el.classList.add("reactive-glow-key-active");
+                    }
+                } else if (testedKeys.has(code)) {
+                    el.classList.add("key-tested");
+                    if (activeLED === "reactive") {
+                        el.classList.add("reactive-glow-key-tested");
+                    }
+                } else {
+                    el.classList.add("key-normal");
+                }
+                
+                if (activeLED === "rainbow" && !activeKeys.has(code)) {
+                    el.classList.add("rgb-wave-key");
+                }
+                
+                if (activeMode === "heatmap" && !activeKeys.has(code)) {
+                    const count = keyPressCounts[code] || 0;
+                    if (count >= 8) {
+                        el.classList.add("heat-3");
+                    } else if (count >= 4) {
+                        el.classList.add("heat-2");
+                    } else if (count >= 1) {
+                        el.classList.add("heat-1");
+                    }
+                }
+            }
+
+            function refreshAllKeyStyles() {
+                document.querySelectorAll(".key-normal, .key-active, .key-tested").forEach(el => {
+                    if (el.id) refreshKeyStyles(el.id);
+                });
+            }
+
+            btnThemeApple.addEventListener("click", () => setTheme("apple"));
+            btnThemeCyber.addEventListener("click", () => setTheme("cyber"));
+            btnThemeRetro.addEventListener("click", () => setTheme("retro"));
+
+            btnLEDNone.addEventListener("click", () => setLEDMode("none"));
+            btnLEDRainbow.addEventListener("click", () => setLEDMode("rainbow"));
+            btnLEDReactive.addEventListener("click", () => setLEDMode("reactive"));
+
+            btnModeStandard.addEventListener("click", () => setDiagMode("standard"));
+            btnModeHeatmap.addEventListener("click", () => setDiagMode("heatmap"));
+
+            // ============================================
+            // KPS SPEEDOMETER POLLED MOVING WINDOW (NEW)
+            // ============================================
+            const keydownTimestamps = [];
+            const diagKps = document.getElementById("diagnostic-kps");
+            
+            setInterval(() => {
+                const now = Date.now();
+                while (keydownTimestamps.length > 0 && keydownTimestamps[0] < now - 1000) {
+                    keydownTimestamps.shift();
+                }
+                diagKps.textContent = keydownTimestamps.length.toFixed(1);
+            }, 100);
+
+            // ============================================
+            // SWITCH CHATTER & LATENCY TELEMETRY (NEW)
+            // ============================================
+            const keydownTimestampsMap = {};
+            const keyupTimestampsMap = {};
+            const keyChatterViolations = {};
+            let maxRollover = 0;
+            const diagNkro = document.getElementById("diagnostic-nkro");
+
+            function attachChatterBadge(code) {
+                const el = document.getElementById(code);
+                if (!el) return;
+                if (el.querySelector(".chatter-warning-badge")) return;
+                
+                const badge = document.createElement("span");
+                badge.className = "chatter-warning-badge absolute top-[-3px] right-[-3px] flex h-2.5 w-2.5 z-10 select-none pointer-events-none";
+                badge.innerHTML = `
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500 border border-white" title="High speed switch chatter bounce detected!"></span>
+                `;
+                el.appendChild(badge);
+            }
+
+            // ============================================
+            // PRESET LAYOUT STATE TRIGGERS
+            // ============================================
+            function setOS(os) {
+                activeOS = os;
+                if (os === "mac") {
+                    btnOSMac.className = "flex-1 px-4 py-2 rounded-xl bg-white text-blue-600 shadow-sm dark:shadow-none border border-slate-200/50 dark:border-slate-800/50 transition-all font-extrabold focus:outline-none";
+                    btnOSWindows.className = "flex-1 px-4 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-slate-250 transition-all font-bold focus:outline-none";
+                    
+                    Object.keys(macLegends).forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.textContent = macLegends[id];
+                    });
+                } else {
+                    btnOSWindows.className = "flex-1 px-4 py-2 rounded-xl bg-white text-blue-600 shadow-sm dark:shadow-none border border-slate-200/50 dark:border-slate-800/50 transition-all font-extrabold focus:outline-none";
+                    btnOSMac.className = "flex-1 px-4 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-slate-250 transition-all font-bold focus:outline-none";
+                    
+                    Object.keys(winLegends).forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.textContent = winLegends[id];
+                    });
+                }
+                updateHeaderBadge();
+            }
+
+            function setFormFactor(ff) {
+                activeFF = ff;
+                if (ff === "full") {
+                    btnFFFull.className = "flex-1 px-4 py-2 rounded-xl bg-white text-blue-600 shadow-sm dark:shadow-none border border-slate-200/50 dark:border-slate-800/50 transition-all font-extrabold focus:outline-none";
+                    btnFFTkl.className = "flex-1 px-4 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-slate-250 transition-all font-bold focus:outline-none";
+                    
+                    numpadColumn.classList.remove("hidden");
+                    keyboardWrapperGrid.className = "min-w-[1120px] space-y-3.5 transition-all duration-300";
+                    keysTotalCountLabel.textContent = "/ 104";
+                } else {
+                    btnFFTkl.className = "flex-1 px-4 py-2 rounded-xl bg-white text-blue-600 shadow-sm dark:shadow-none border border-slate-200/50 dark:border-slate-800/50 transition-all font-extrabold focus:outline-none";
+                    btnFFFull.className = "flex-1 px-4 py-2 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:text-slate-250 transition-all font-bold focus:outline-none";
+                    
+                    numpadColumn.classList.add("hidden");
+                    keyboardWrapperGrid.className = "min-w-[920px] space-y-3.5 transition-all duration-300";
+                    keysTotalCountLabel.textContent = "/ 87";
+                }
+                updateHeaderBadge();
+                updateTallies();
+                refreshAllKeyStyles();
+            }
+
+            function updateHeaderBadge() {
+                const osName = activeOS === "mac" ? "Apple macOS" : "Windows / PC";
+                const ffName = activeFF === "full" ? "100% Full-Size" : "80% TKL";
+                keyboardLayoutHeaderBadge.textContent = `${osName} - ${ffName} Layout`;
+            }
+
+            btnOSWindows.addEventListener("click", () => setOS("windows"));
+            btnOSMac.addEventListener("click", () => setOS("mac"));
+            btnFFTkl.addEventListener("click", () => setFormFactor("tkl"));
+            btnFFFull.addEventListener("click", () => setFormFactor("full"));
+
+            // Initialize default states on boot explicitly
+            setOS("windows");
+            setFormFactor("full"); // Dynamic default Full-size!
+            setSoundMode("mute"); // default mute for instant silent entry
+            setTheme("apple"); // default Apple theme skin
+            setLEDMode("none"); // default LEDs off
+            setDiagMode("standard"); // default standard mode
+
+            // Key interceptor function to disable default browser shortcuts
+            function interceptKeys(e) {
+                if (e.code === "F11" || e.code === "F12" || (e.ctrlKey && e.code === "KeyI")) {
+                    return;
+                }
+                
+                const blockList = [
+                    "Space", "Backspace", "Tab", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight",
+                    "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", 
+                    "KeyS", "KeyF", "KeyP", "NumpadEnter"
+                ];
+
+                if (blockList.includes(e.code) || e.ctrlKey || e.altKey) {
+                    e.preventDefault();
+                }
+            }
+
+            // Keyboard down trigger
+            window.addEventListener("keydown", (e) => {
+                if (e.target.id === "nav-search-bar") return;
+                interceptKeys(e);
+                
+                const code = e.code;
+                const now = Date.now();
+
+                // Play custom mechanical switch audio clicks
+                playSwitchSound(code);
+
+                // Speedometer stamp push
+                keydownTimestamps.push(now);
+
+                // Chatter bounce measurement
+                if (keyupTimestampsMap[code] && !e.repeat) {
+                    const elapsed = now - keyupTimestampsMap[code];
+                    if (elapsed < 35) {
+                        keyChatterViolations[code] = (keyChatterViolations[code] || 0) + 1;
+                        attachChatterBadge(code);
+                    }
+                }
+                keydownTimestampsMap[code] = now;
+
+                // Heatmap counts incrementing
+                if (!e.repeat) {
+                    keyPressCounts[code] = (keyPressCounts[code] || 0) + 1;
+                }
+                
+                activeKeys.add(code);
+                testedKeys.add(code);
+                
+                // Refresh styling on this key
+                refreshKeyStyles(code);
+                
+                // Update diagnostic displays
+                diagCode.textContent = e.code;
+                diagKey.textContent = e.key === " " ? "Space" : e.key;
+                diagKeyCode.textContent = e.keyCode || e.which;
+                
+                let locName = "Standard (0)";
+                if (e.location === 1) locName = "Left Modifier (1)";
+                else if (e.location === 2) locName = "Right Modifier (2)";
+                else if (e.location === 3) locName = "Numpad (3)";
+                diagLocation.textContent = locName;
+
+                // Sync counter tallies
+                updateTallies();
+            });
+
+            // Keyboard up trigger
+            window.addEventListener("keyup", (e) => {
+                if (e.target.id === "nav-search-bar") return;
+                interceptKeys(e);
+                
+                const code = e.code;
+                const now = Date.now();
+                keyupTimestampsMap[code] = now;
+
+                activeKeys.delete(code);
+                
+                // Refresh styling on this key
+                refreshKeyStyles(code);
+                
+                // Calculate hold latency and log to tape
+                if (keydownTimestampsMap[code]) {
+                    const duration = now - keydownTimestampsMap[code];
+                    const keyFriendlyName = e.key === " " ? "Space" : (e.key.length === 1 ? e.key.toUpperCase() : e.key);
+                    pushToTape(`${keyFriendlyName} (${duration}ms)`);
+                }
+
+                updateTallies();
+            });
+
+            // Keep tracking focus and prevent sticky modifier keys when page loses focus
+            window.addEventListener("blur", () => {
+                activeKeys.forEach(code => {
+                    activeKeys.delete(code);
+                    refreshKeyStyles(code);
+                });
+                activeKeys.clear();
+                updateTallies();
+            });
+
+            // Update registered counters
+            function updateTallies() {
+                countActive.textContent = activeKeys.size;
+                maxRollover = Math.max(maxRollover, activeKeys.size);
+                diagNkro.textContent = maxRollover;
+
+                const validTestedCount = Array.from(testedKeys).filter(code => {
+                    const el = document.getElementById(code);
+                    if (!el) return false;
+                    if (code.startsWith("Numpad") || code === "NumLock") {
+                        return numpadColumn.classList.contains("hidden") ? false : true;
+                    }
+                    return true;
+                }).length;
+                countRegistered.textContent = validTestedCount;
+
+                // Save keyboard test metrics to localStorage for PWA sitemap reports
+                const keyboardReport = {
+                    keysTestedCount: validTestedCount,
+                    totalKeysOnBoard: document.querySelectorAll('.kb-key').length || 101,
+                    chatterViolations: Object.keys(keyChatterViolations).length,
+                    maxRollover: maxRollover,
+                    status: validTestedCount > 0 ? `${validTestedCount} key(s) verified` : 'Not Started',
+                    timestamp: new Date().toLocaleString()
+                };
+                localStorage.setItem('inputtest_keyboard_report', JSON.stringify(keyboardReport));
+            }
+
+            // Reset Matrix
+            btnReset.addEventListener("click", () => {
+                activeKeys.clear();
+                testedKeys.clear();
+                maxRollover = 0;
+                diagNkro.textContent = "0";
+                diagKps.textContent = "0.0";
+                keydownTimestamps.length = 0;
+
+                Object.keys(keyChatterViolations).forEach(k => delete keyChatterViolations[k]);
+                Object.keys(keydownTimestampsMap).forEach(k => delete keydownTimestampsMap[k]);
+                Object.keys(keyupTimestampsMap).forEach(k => delete keyupTimestampsMap[k]);
+                Object.keys(keyPressCounts).forEach(k => delete keyPressCounts[k]);
+
+                document.querySelectorAll(".chatter-warning-badge").forEach(el => el.remove());
+
+                // Reset all board classes
+                refreshAllKeyStyles();
+
+                // Clear HUD logs
+                diagCode.textContent = "-";
+                diagKey.textContent = "-";
+                diagKeyCode.textContent = "-";
+                diagLocation.textContent = "-";
+                
+                // Clear keyboard test metrics in localStorage
+                localStorage.removeItem('inputtest_keyboard_report');
+                
+                updateTallies();
+                
+                showToast("Testing board matrix reset successfully!");
+            });
+
+            // ============================================
+            // ELEGANT FLOATING TOAST BANNER NOTIFICATIONS
+            // ============================================
+            function showToast(message) {
+                const oldToast = document.getElementById("diagnostic-toast");
+                if (oldToast) oldToast.remove();
+                
+                const toast = document.createElement("div");
+                toast.id = "diagnostic-toast";
+                toast.className = "fixed bottom-6 right-6 z-[100] flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 shadow-2xl shadow-slate-300/40 animate-scaleUp text-xs font-bold text-slate-800 dark:text-slate-250 transition-all select-none";
+                toast.innerHTML = `
+                    <div class="flex items-center justify-center h-6 w-6 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-600">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-850 tracking-wide">${message}</p>
+                    </div>
+                `;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.add("opacity-0", "translate-y-2");
+                    setTimeout(() => toast.remove(), 300);
+                }, 2800);
+            }
+
+            // ============================================
+            // DIAGNOSTICS REPORT EXPORTER
+            // ============================================
+            const btnExportReport = document.getElementById("export-report-btn");
+            
+            btnExportReport.addEventListener("click", () => {
+                const totalKeys = activeFF === "full" ? 104 : 87;
+                const testedCount = countRegistered.textContent;
+                const untestedCount = totalKeys - testedCount;
+                
+                const testedList = Array.from(testedKeys).map(code => {
+                    const el = document.getElementById(code);
+                    return el ? el.innerText.split("\n").join(" ").trim() : code;
+                }).join(", ");
+                
+                const chatterList = Object.keys(keyChatterViolations).map(code => {
+                    return `${code} (${keyChatterViolations[code]} bounce(s))`;
+                }).join(", ");
+                
+                const chatterSection = chatterList.length > 0 
+                    ? `⚠️ CHATTERING KEYS DETECTED:\n  ${chatterList}` 
+                    : `✅ CHATTER DETECTION STATUS:\n  Excellent! Zero mechanical switch chattering detected.`;
+                
+                const timestampStr = new Date().toLocaleString();
+                
+                const reportText = `---------------------------------------------
+INPUTTEST.ONLINE - KEYBOARD MATRIX DIAGNOSTIC REPORT
+Generated at: ${timestampStr}
+---------------------------------------------
+⚙️ CONFIGURATION DETAILS:
+  - Preset OS Layout: ${activeOS.toUpperCase()}
+  - Form Factor: ${activeFF === "full" ? "100% Full-Size (104-key)" : "80% Tenkeyless (87-key)"}
+  - Selected Theme Skin: ${activeTheme.toUpperCase()}
+
+📊 MATRIX TELEMETRY STATISTICS:
+  - Total Tested Keys: ${testedCount} / ${totalKeys}
+  - Untested Keys Count: ${untestedCount}
+  - Maximum NKRO Rollover: ${maxRollover} keys down simultaneously
+  - High Speed Peak: ${diagKps.textContent} Keystrokes/Sec (KPS)
+
+${chatterSection}
+
+📝 TESTED KEY LISTING:
+  ${testedList || "No switches registered yet."}
+
+---------------------------------------------
+PRECISION CLIENT-SIDE DIAGNOSTIC Suite © InputTest.online
+Secure, Sandboxed, Zero server telemetry logs.
+---------------------------------------------`;
+
+                navigator.clipboard.writeText(reportText).then(() => {
+                    showToast("Diagnostics health report copied to clipboard!");
+                }).catch(err => {
+                    console.error("Clipboard export failed: ", err);
+                    alert("Failed to copy report to clipboard. Please check console.");
+                });
+            });
+
+            // Instant Search & Command Palette Logic
+            const searchBar = document.getElementById("nav-search-bar");
+            const searchPanel = document.getElementById("search-dropdown-panel");
+            
+            if (searchBar && searchPanel) {
+                const searchDatabase = [
+                    { title: "Keyboard Tester Online", desc: "Test laptop & mechanical switches", url: "keyboard.html" },
+                    { title: "Mouse & CPS Checker", desc: "Test click, scroll, and speed CPS", url: "mouse.html" },
+                    { title: "Clicks Per Second Test", desc: "10-second high-score speed game", url: "mouse.html#cps" },
+                    { title: "Speaker & Sound Tester", desc: "Stereo balance frequency check", url: "sound.html" },
+                    { title: "Gamepad & Joystick Tester", desc: "Controller buttons stick drift test", url: "gamepad.html" },
+                    { title: "Microphone Voice Tester", desc: "Test decibel telemetry voice echo loop", url: "mic.html" },
+                    { title: "Webcam Calibration Check", desc: "Video test, resolution and FPS check", url: "webcam.html" },
+                    { title: "Display & Screen Tester", desc: "Check dead pixels, monitor Hz, and ghosting", url: "display.html" },
+                    { title: "Drawing Tablet & Touchscreen Tester", desc: "Check pen pressure, touchscreen multi-touch, and drawing accuracy", url: "draw.html" },
+                    { title: "Bluetooth & Audio Latency Tester", desc: "Measure delay and lag of wireless headphones or Bluetooth speakers", url: "latency.html" },
+                    { title: "USB & HID Device Info Profiler", desc: "Scan connected USB/HID peripherals and inspect system hardware capabilities", url: "usb.html" },
+                    { title: "Biometric & Fingerprint Tester", desc: "Test Windows Hello, Touch ID, or security keys via standard client-side WebAuthn diagnostics", url: "biometric.html" },
+                    { title: "Battery Health & Efficiency Analyzer", desc: "Evaluate laptop chaging slopes, power draw rates, estimated cycle health, and power source metrics", url: "battery.html" },
+                    { title: "Printer Calibrated Test Page", desc: "Print CMYK color blocks, alignment grids, and evaluate font readability", url: "printer.html" },
+                    { title: "Scanner & Document Capture Checker", desc: "Test document scanners, apply black-and-white Xerox shaders, and scan QR codes", url: "scanner.html" },
+                    { title: "VR & XR Motion Controller Tester", desc: "Test 6-DOF spatial coordinates, analog triggers, and fire rumble haptics", url: "vr.html" },
+                    { title: "PC Hardware Specs Scanner", desc: "Profile processor cores, graphics card GPU model, RAM, and storage disks sizes", url: "specs.html" },
+                    { title: "Certified Diagnostic Report", desc: "Generate secure verified hardware configuration & device checklist PDF", url: "report.html" },
+                    { title: "LAN / Ethernet Port Jitter & Type Tester", desc: "Test network jitter, ping variance, and verify physical cable reliability", url: "lan.html" },
+                    { title: "HDMI & DisplayPort Multi-Screen Analyzer", desc: "Verify monitor refresh rate Hz, display placements, and multi-channel audio", url: "hdmi.html" },
+                    { title: "VGA Analog Calibrator Test Patterns", desc: "Calibrate analog monitor focus, phase adjustment zebra lines, and color bars", url: "vga.html" },
+                    { title: "USB Type-C & Thunderbolt Speed Profiler", desc: "Test alternate mode capabilities, power delivery profiles, and verify speeds", url: "usb-c.html" },
+                    { title: "Privacy Policy Compliance", desc: "AdSense, cookies & safety disclosure", url: "privacy.html" },
+                    { title: "Terms of Service Agreement", desc: "Device diagnostic terms and client-side usage rules", url: "terms.html" },
+                    { title: "Admin Settings Panel", desc: "Export config.js & preview analytics", url: "admin.php" }
+                ];
+
+                window.addEventListener("keydown", (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+                        e.preventDefault();
+                        searchBar.focus();
+                    }
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!searchBar.contains(e.target) && !searchPanel.contains(e.target)) {
+                        searchPanel.classList.add("hidden");
+                    }
+                });
+
+                searchBar.addEventListener("focus", showResults);
+                searchBar.addEventListener("input", showResults);
+
+                function showResults() {
+                    const query = searchBar.value.toLowerCase().trim();
+                    searchPanel.innerHTML = '<div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>';
+                    
+                    const filtered = searchDatabase.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.desc.toLowerCase().includes(query)
+                    );
+
+                    if (filtered.length === 0) {
+                        searchPanel.innerHTML += `
+                            <div class="px-2 py-3 text-center text-xs text-slate-400 font-semibold">
+                                No results found for "${searchBar.value}"
+                            </div>
+                        `;
+                    } else {
+                        filtered.forEach(item => {
+                            const itemEl = document.createElement("a");
+                            itemEl.href = item.url;
+                            itemEl.className = "flex flex-col px-3 py-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all duration-150 select-none group";
+                            itemEl.innerHTML = `
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-250 group-hover:text-blue-600 transition-colors">${item.title}</span>
+                                <span class="text-[10px] text-slate-400 font-semibold">${item.desc}</span>
+                            `;
+                            searchPanel.appendChild(itemEl);
+                        });
+                    }
+                    searchPanel.classList.remove("hidden");
+                }
+            }
+
+            // =========================================================================
+            // PREMIUM ACOUSTIC SWITCH SPECTROGRAM & MECHANICAL CHATTER ANALYZER (NEW)
+            // =========================================================================
+            let acousticAudioCtx = null;
+            let micStream = null;
+            let analyser = null;
+            let micActive = false;
+            let sensitivityThreshold = 0.12;
+
+            let lastKeydownCode = null;
+            let lastKeydownTime = 0;
+
+            // Alignments maps and triggers
+            window.addEventListener("keydown", (e) => {
+                if (e.target.id === "nav-search-bar") return;
+                lastKeydownCode = e.code;
+                lastKeydownTime = performance.now();
+            });
+
+            // DOM Elements
+            const specCanvas = document.getElementById("spectrogram-canvas");
+            const specCtx = specCanvas ? specCanvas.getContext("2d") : null;
+            const oscCanvas = document.getElementById("oscilloscope-canvas");
+            const oscCtx = oscCanvas ? oscCanvas.getContext("2d") : null;
+
+            const btnMicInit = document.getElementById("btn-mic-init");
+            const specPlaceholder = document.getElementById("spectrogram-placeholder");
+            const oscPlaceholder = document.getElementById("oscilloscope-placeholder");
+            
+            const sliderSensitivity = document.getElementById("input-mic-sensitivity");
+            const labelSensitivity = document.getElementById("label-mic-sensitivity");
+            const acousticTape = document.getElementById("acoustic-log-stream");
+            
+            const acousticSwitchProfile = document.getElementById("acoustic-switch-profile");
+            const acousticLatencyOffset = document.getElementById("acoustic-latency-offset");
+            const acousticTransientIntegrity = document.getElementById("acoustic-transient-integrity");
+            const acousticPeakAmplitude = document.getElementById("acoustic-peak-amplitude");
+
+            // Safe Sensitivities Slider Hook
+            if (sliderSensitivity && labelSensitivity) {
+                sliderSensitivity.addEventListener("input", (e) => {
+                    sensitivityThreshold = parseFloat(e.target.value);
+                    labelSensitivity.textContent = sensitivityThreshold.toFixed(2);
+                });
+            }
+
+            // High Definition Canvas Resizer
+            function resizeCanvases() {
+                if (specCanvas) {
+                    specCanvas.width = specCanvas.offsetWidth;
+                    specCanvas.height = specCanvas.offsetHeight;
+                    if (specCtx) {
+                        specCtx.fillStyle = "#020617";
+                        specCtx.fillRect(0, 0, specCanvas.width, specCanvas.height);
+                    }
+                }
+                if (oscCanvas) {
+                    oscCanvas.width = oscCanvas.offsetWidth;
+                    oscCanvas.height = oscCanvas.offsetHeight;
+                    if (oscCtx) {
+                        oscCtx.fillStyle = "#020617";
+                        oscCtx.fillRect(0, 0, oscCanvas.width, oscCanvas.height);
+                    }
+                }
+            }
+
+            // Active Audio State Control
+            if (btnMicInit) {
+                btnMicInit.addEventListener("click", initAcousticDiagnostics);
+            }
+
+            async function initAcousticDiagnostics() {
+                if (micActive) {
+                    stopAcousticDiagnostics();
+                    return;
+                }
+
+                try {
+                    acousticAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    
+                    const constraints = {
+                        audio: {
+                            echoCancellation: false,
+                            noiseSuppression: false,
+                            autoGainControl: false
+                        }
+                    };
+
+                    micStream = await navigator.mediaDevices.getUserMedia(constraints);
+                    const source = acousticAudioCtx.createMediaStreamSource(micStream);
+                    
+                    analyser = acousticAudioCtx.createAnalyser();
+                    analyser.fftSize = 1024;
+
+                    source.connect(analyser);
+                    micActive = true;
+
+                    // Update UI Buttons and States
+                    btnMicInit.textContent = "🟢 Spectrogram Active (Listening)";
+                    btnMicInit.classList.remove("bg-blue-600", "hover:bg-blue-700");
+                    btnMicInit.classList.add("bg-emerald-600", "hover:bg-emerald-700", "shadow-emerald-500/25", "hover:shadow-emerald-500/40");
+
+                    if (specPlaceholder) specPlaceholder.classList.add("hidden");
+                    if (oscPlaceholder) oscPlaceholder.classList.add("hidden");
+
+                    resizeCanvases();
+
+                    // Launch Loop
+                    requestAnimationFrame(drawLoop);
+                    showToast("Acoustic Diagnostics Listening Active!");
+                } catch (err) {
+                    console.error("Microphone Access Blocked:", err);
+                    alert("Acoustic Diagnostics require microphone access. Please approve the mic prompt in your browser address bar.");
+                }
+            }
+
+            function stopAcousticDiagnostics() {
+                micActive = false;
+                if (micStream) {
+                    micStream.getTracks().forEach(t => t.stop());
+                    micStream = null;
+                }
+                if (acousticAudioCtx) {
+                    acousticAudioCtx.close();
+                    acousticAudioCtx = null;
+                }
+
+                // Reset Button UI
+                btnMicInit.textContent = "🎤 Enable Acoustic Diagnostics";
+                btnMicInit.classList.remove("bg-emerald-600", "hover:bg-emerald-700", "shadow-emerald-500/25", "hover:shadow-emerald-500/40");
+                btnMicInit.classList.add("bg-blue-600", "hover:bg-blue-700");
+
+                if (specPlaceholder) specPlaceholder.classList.remove("hidden");
+                if (oscPlaceholder) oscPlaceholder.classList.remove("hidden");
+
+                showToast("Acoustic diagnostics disabled.");
+            }
+
+            // Waterfall Spectrogram Color Mapper
+            function getColorForTheme(value) {
+                const ratio = value / 255;
+                if (activeTheme === "cyber") {
+                    // Cyan to Hot Pink gradient
+                    const r = Math.round(ratio * 255);
+                    const g = Math.round((1 - ratio) * 230);
+                    const b = Math.round(255);
+                    return `rgb(${r}, ${g}, ${b})`;
+                } else if (activeTheme === "retro") {
+                    // Classic Retro Amber (Black -> Red -> Amber -> Yellow-White)
+                    if (ratio < 0.1) return "rgb(2, 6, 23)";
+                    if (ratio < 0.5) return `rgb(${Math.round(ratio * 2 * 180)}, ${Math.round(ratio * 2 * 40)}, 0)`;
+                    return `rgb(255, ${Math.round(40 + (ratio - 0.5) * 2 * 215)}, 0)`;
+                } else {
+                    // Standard Apple: Dark Indigo to Bright Ice-Blue
+                    if (ratio < 0.08) return "rgb(2, 6, 23)";
+                    if (ratio < 0.6) return `rgb(5, ${Math.round(ratio * 240)}, 255)`;
+                    return `rgb(${Math.round((ratio - 0.6) * 2.5 * 255)}, 240, 255)`;
+                }
+            }
+
+            // Switch acoustics profile classifier
+            function classifyFrequencies(freqData) {
+                let sumLow = 0;
+                let sumMid = 0;
+                let sumHigh = 0;
+                
+                // Low: Bins 0-18 (~0 to 850 Hz)
+                // Mid: Bins 19-53 (~850 to 2500 Hz)
+                // High: Bins 54-150 (~2500 to 7000 Hz)
+                for (let i = 0; i < 18; i++) sumLow += freqData[i];
+                for (let i = 18; i < 54; i++) sumMid += freqData[i];
+                for (let i = 54; i < 150; i++) sumHigh += freqData[i];
+                
+                const total = sumLow + sumMid + sumHigh;
+                if (total < 120) return "Membrane / Quiet";
+                
+                const rLow = sumLow / total;
+                const rMid = sumMid / total;
+                const rHigh = sumHigh / total;
+                
+                if (rHigh > 0.28) {
+                    return "Clicky (Cherry Blue)";
+                } else if (rMid > 0.42 && rHigh > 0.08) {
+                    return "Tactile (Cherry Brown)";
+                } else if (rLow > 0.72) {
+                    return "Membrane / Silent";
+                } else {
+                    return "Linear (Cherry Red)";
+                }
+            }
+
+            // Mechanical contact transient bounce analyzer
+            function checkAcousticChatter(timeData) {
+                let peaksCount = 0;
+                let state = 0; // 0=idle, 1=pos peak, -1=neg peak
+                const thresh = 0.10;
+                
+                for (let i = 0; i < timeData.length; i++) {
+                    const sample = (timeData[i] - 128) / 128.0;
+                    if (state === 0) {
+                        if (sample > thresh) {
+                            peaksCount++;
+                            state = 1;
+                        } else if (sample < -thresh) {
+                            peaksCount++;
+                            state = -1;
+                        }
+                    } else if (state === 1) {
+                        if (sample < 0.02) state = 0;
+                    } else if (state === -1) {
+                        if (sample > -0.02) state = 0;
+                    }
+                }
+                
+                if (peaksCount <= 12) {
+                    return "Excellent (Single Peak)";
+                } else if (peaksCount <= 22) {
+                    return "Good (Minor Ripple)";
+                } else {
+                    return "Bouncy (Suspicious Chatter)";
+                }
+            }
+
+            // Acoustic logging tape tape manager
+            let acousticLogCount = 0;
+            function pushToAcousticTape(code, profile, latency, chatter) {
+                if (!acousticTape) return;
+                if (acousticLogCount === 0) {
+                    acousticTape.innerHTML = "";
+                }
+                acousticLogCount++;
+                
+                const badge = document.createElement("span");
+                badge.className = "px-2 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none rounded-lg text-[10px] font-bold text-slate-700 dark:text-slate-350 shrink-0 transform scale-95 animate-scaleUp flex items-center gap-1.5 select-none";
+                
+                let dotColor = "bg-blue-500";
+                if (profile.includes("Blue")) dotColor = "bg-blue-500";
+                else if (profile.includes("Brown")) dotColor = "bg-yellow-600";
+                else if (profile.includes("Red")) dotColor = "bg-red-500";
+                else dotColor = "bg-slate-400";
+                
+                const keyFriendlyName = code === " " ? "Space" : (code.length === 1 ? code.toUpperCase() : code);
+                
+                badge.innerHTML = `
+                    <span class="font-extrabold text-slate-900 dark:text-white">${keyFriendlyName}</span>
+                    <span class="opacity-30">|</span>
+                    <span class="flex items-center gap-1 text-[9px] font-semibold text-slate-500 dark:text-slate-400">
+                        <span class="h-1.5 w-1.5 rounded-full ${dotColor}"></span>
+                        ${profile.split(" ")[0]}
+                    </span>
+                    <span class="opacity-30">|</span>
+                    <span class="text-emerald-600 font-extrabold text-[9px]">${latency}</span>
+                `;
+                
+                acousticTape.appendChild(badge);
+                
+                if (acousticTape.children.length > 15) {
+                    acousticTape.removeChild(acousticTape.firstChild);
+                }
+                acousticTape.scrollLeft = acousticTape.scrollWidth;
+            }
+
+            // Visual Rendering Loop & Peak Capture Math
+            let lastClickTime = 0;
+            let frozenClickWaveform = new Uint8Array(512);
+            let maxAmplitude = 0;
+            let clickLockoutActive = false;
+
+            function drawLoop() {
+                if (!micActive || !analyser) return;
+
+                requestAnimationFrame(drawLoop);
+
+                const bufferLength = analyser.frequencyBinCount;
+                const freqData = new Uint8Array(bufferLength);
+                const timeData = new Uint8Array(bufferLength);
+
+                analyser.getByteFrequencyData(freqData);
+                analyser.getByteTimeDomainData(timeData);
+
+                // --- 1. RENDER SPECTROGRAM WATERFALL ---
+                if (specCanvas && specCtx) {
+                    const w = specCanvas.width;
+                    const h = specCanvas.height;
+                    
+                    // Shift Spectrogram canvas left by 2px
+                    specCtx.drawImage(specCanvas, 2, 0, w - 2, h, 0, 0, w - 2, h);
+                    
+                    // Draw new frequency line on the right edge
+                    const drawBins = Math.min(bufferLength, 180);
+                    const binHeight = h / drawBins;
+                    for (let i = 0; i < drawBins; i++) {
+                        const val = freqData[i];
+                        specCtx.fillStyle = getColorForTheme(val);
+                        // Higher frequencies at the top
+                        const y = h - (i * binHeight);
+                        specCtx.fillRect(w - 2, y, 2, binHeight + 1);
+                    }
+                }
+
+                // --- 2. RENDER CLICK WAVEFORM OSCILLOSCOPE ---
+                if (oscCanvas && oscCtx) {
+                    const w = oscCanvas.width;
+                    const h = oscCanvas.height;
+                    
+                    oscCtx.fillStyle = "rgba(2, 6, 23, 0.28)"; // soft trailing decay
+                    oscCtx.fillRect(0, 0, w, h);
+                    
+                    // Static grid line
+                    oscCtx.strokeStyle = "rgba(51, 65, 85, 0.12)";
+                    oscCtx.lineWidth = 1;
+                    oscCtx.beginPath();
+                    oscCtx.moveTo(0, h / 2);
+                    oscCtx.lineTo(w, h / 2);
+                    oscCtx.stroke();
+
+                    const timeSinceClick = performance.now() - lastClickTime;
+                    let drawArray = timeData;
+                    let isFrozen = false;
+
+                    if (timeSinceClick < 1200) {
+                        drawArray = frozenClickWaveform;
+                        isFrozen = true;
+                    }
+
+                    oscCtx.beginPath();
+                    oscCtx.lineWidth = isFrozen ? 2.5 : 1.5;
+
+                    if (isFrozen) {
+                        if (activeTheme === "cyber") oscCtx.strokeStyle = "rgb(236, 72, 153)"; // neon pink
+                        else if (activeTheme === "retro") oscCtx.strokeStyle = "rgb(245, 158, 11)"; // IBM amber
+                        else oscCtx.strokeStyle = "rgb(16, 185, 129)"; // iOS Emerald
+                    } else {
+                        if (activeTheme === "cyber") oscCtx.strokeStyle = "rgba(6, 182, 212, 0.35)"; // cyan soft glow
+                        else if (activeTheme === "retro") oscCtx.strokeStyle = "rgba(180, 83, 9, 0.3)"; // warm amber line
+                        else oscCtx.strokeStyle = "rgba(59, 130, 246, 0.35)"; // blue line
+                    }
+
+                    const sliceW = w / drawArray.length;
+                    let currX = 0;
+
+                    for (let i = 0; i < drawArray.length; i++) {
+                        const val = drawArray[i] / 128.0 - 1.0;
+                        const currY = (val * h / 2) + h / 2;
+
+                        if (i === 0) oscCtx.moveTo(currX, currY);
+                        else oscCtx.lineTo(currX, currY);
+
+                        currX += sliceW;
+                    }
+                    oscCtx.stroke();
+
+                    // Text status overlay on oscilloscope
+                    if (isFrozen) {
+                        oscCtx.fillStyle = "rgba(255, 255, 255, 0.9)";
+                        oscCtx.font = "bold 9px monospace";
+                        
+                        let brandCol = "rgb(16, 185, 129)";
+                        if (activeTheme === "cyber") brandCol = "rgb(236, 72, 153)";
+                        else if (activeTheme === "retro") brandCol = "rgb(245, 158, 11)";
+                        
+                        oscCtx.fillStyle = brandCol;
+                        oscCtx.fillText("TRANSIENT ACQUIRED", 15, 20);
+                        
+                        oscCtx.fillStyle = "rgba(148, 163, 184, 0.9)";
+                        oscCtx.fillText(`PEAK AMPLITUDE: ${(maxAmplitude * 100).toFixed(0)}%`, 15, 32);
+                        
+                        // draw vertical trigger sweep line
+                        oscCtx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+                        oscCtx.setLineDash([3, 3]);
+                        oscCtx.beginPath();
+                        oscCtx.moveTo(w / 2, 0);
+                        oscCtx.lineTo(w / 2, h);
+                        oscCtx.stroke();
+                        oscCtx.setLineDash([]);
+                    }
+                }
+
+                // --- 3. PEAK AMPLITUDE TRANSIENT DETECTOR ---
+                let peak = 0;
+                for (let i = 0; i < timeData.length; i++) {
+                    const val = Math.abs(timeData[i] - 128) / 128.0;
+                    if (val > peak) peak = val;
+                }
+
+                // Smooth live amplitude feedback in HUD
+                if (acousticPeakAmplitude) {
+                    acousticPeakAmplitude.textContent = `${Math.round(peak * 100)}%`;
+                }
+
+                if (peak > sensitivityThreshold && !clickLockoutActive) {
+                    // Acoustic click registered!
+                    lastClickTime = performance.now();
+                    maxAmplitude = peak;
+                    clickLockoutActive = true;
+                    frozenClickWaveform = new Uint8Array(timeData);
+
+                    // De-bounce lock-out release timer
+                    setTimeout(() => {
+                        clickLockoutActive = false;
+                    }, 180);
+
+                    // Electrical alignment latency matching
+                    const nowTime = performance.now();
+                    const latencyMs = nowTime - lastKeydownTime;
+                    
+                    let keyLabel = "Click";
+                    let latencyString = "0.00 ms";
+
+                    if (lastKeydownCode && latencyMs < 150) {
+                        keyLabel = lastKeydownCode;
+                        latencyString = `${latencyMs.toFixed(1)} ms`;
+                        testedKeys.add(lastKeydownCode);
+                        updateTallies();
+                    } else {
+                        keyLabel = "Ambient Spike";
+                        latencyString = "-- ms";
+                    }
+
+                    // Classify mechanical signature and chatter
+                    const classification = classifyFrequencies(freqData);
+                    const chatterMetric = checkAcousticChatter(timeData);
+
+                    // Update HUD Displays
+                    if (keyLabel !== "Ambient Spike") {
+                        if (acousticSwitchProfile) acousticSwitchProfile.textContent = classification;
+                        if (acousticLatencyOffset) acousticLatencyOffset.textContent = latencyString;
+                        if (acousticTransientIntegrity) acousticTransientIntegrity.textContent = chatterMetric;
+
+                        // Push to visual Diagnostic tape
+                        pushToAcousticTape(keyLabel, classification, latencyString, chatterMetric);
+                    }
+                }
+            }
+        });
+    
+            // Register Service Worker for PWA
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('sw.js')
+                        .then(reg => console.log('[PWA] Service Worker registered scope:', reg.scope))
+                        .catch(err => console.error('[PWA] Service Worker registration failed:', err));
+                });
+            }
+    </script>
+<script>
+    // Interactive Mobile Menu Toggle & FAQ Accordions
+    document.addEventListener("DOMContentLoaded", () => {
+        const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+        const mobileNavPanel = document.getElementById("mobile-nav-panel");
+        const hamburgerIcon = document.getElementById("hamburger-icon");
+        const hamburgerClose = document.getElementById("hamburger-close");
+
+        if (mobileMenuToggle && mobileNavPanel && hamburgerIcon && hamburgerClose) {
+            mobileMenuToggle.addEventListener("click", () => {
+                mobileNavPanel.classList.toggle("hidden");
+                hamburgerIcon.classList.toggle("hidden");
+                hamburgerClose.classList.toggle("hidden");
+            });
+        }
+
+        // FAQ Accordion toggles
+        const faqButtons = document.querySelectorAll('.faq-btn');
+        faqButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const answer = btn.nextElementSibling;
+                const icon = btn.querySelector('.faq-icon');
+                
+                if (answer.classList.contains('hidden')) {
+                    answer.classList.remove('hidden');
+                    icon.textContent = "➖";
+                    icon.style.transform = "rotate(180deg)";
+                } else {
+                    answer.classList.add('hidden');
+                    icon.textContent = "➕";
+                    icon.style.transform = "rotate(0deg)";
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

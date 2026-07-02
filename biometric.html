@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/biometric.html">
+    <script>
+        // Inline theme helper to avoid UI flash of light theme
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- SEO Meta Tags -->
+    <title>Biometric & Fingerprint Scanner Tester - Touch ID & Windows Hello Check | InputTest.online</title>
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/biometric.html">
+    <meta property="og:title" content="Biometric & Fingerprint Scanner Tester - Touch ID & Windows Hello Check | InputTest.online">
+    <meta property="og:description" content="Free online biometric and fingerprint scanner tester. Test macOS Touch ID, Windows Hello, face verification, and hardware security keys using client-side WebAuthn.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/biometric.html">
+    <meta name="twitter:title" content="Biometric & Fingerprint Scanner Tester - Touch ID & Windows Hello Check | InputTest.online">
+    <meta name="twitter:description" content="Free online biometric and fingerprint scanner tester. Test macOS Touch ID, Windows Hello, face verification, and hardware security keys using client-side WebAuthn.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+    <meta name="description" content="Free online biometric and fingerprint scanner tester. Test macOS Touch ID, Windows Hello, face verification, and hardware security keys using client-side WebAuthn.">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How do I test my fingerprint sensor or face scanner online?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Click 'Start Biometric Authentication'. Your browser will trigger a secure system prompt requesting fingerprint or security key verification. Successfully completing this confirms your biometric sensor is active."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Is my fingerprint or biometric data sent to the website?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely not. The WebAuthn API only transmits a cryptographic signature to the browser. Your raw fingerprint or facial scan remains locked inside your device's secure enclave (TPM) and is never shared."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is the difference between a passkey and Windows Hello?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Windows Hello is your local device authenticator using biometrics or PINs. A passkey is a standard cryptographic credential created via WebAuthn, representing a secure password replacement."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Why is my biometric sensor not registering?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ensure your browser supports WebAuthn, hardware drivers are updated, and that you have registered at least one fingerprint or face profile in your OS security settings."
+        }
+      }]
+    }
+    </script>
+    
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 10% 40%, rgba(139, 92, 246, 0.03) 0%, transparent 40%);
+        }
+
+        @keyframes scaleUp {
+            0% { opacity: 0; transform: scale(0.95) translateY(4px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-scaleUp {
+            animation: scaleUp 0.18s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .console-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .console-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .console-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+            /* Dark Mode style overrides */
+        .dark .glow-bg {
+            background-color: #0b0f19 !important;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%) !important;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #0f172a !important;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155 !important;
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #475569 !important;
+        }
+    </style>
+    
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+
+    <!-- JSON-LD Structured Data for WebApplication Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Biometric & Fingerprint Scanner Tester",
+        "description": "Free online biometric and fingerprint scanner tester. Test macOS Touch ID, Windows Hello, face verification, and hardware security keys using client-side WebAuthn.",
+        "url": "https://inputtest.online/biometric.html",
+        "image": "https://inputtest.online/icon-512.png",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires HTML5 compatible browser",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:text-slate-250 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg relative overflow-x-hidden transition-colors duration-300">
+
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm dark:shadow-none transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-300">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-slate-250 group-hover:text-blue-600 transition-colors duration-250">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+                
+                <!-- Interactive Center Search Bar -->
+                <div class="hidden lg:flex items-center flex-grow max-w-sm mx-6 relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <input id="nav-search-bar" type="text" placeholder="Search tool, inputs, keys..." class="w-full bg-slate-100/60 hover:bg-slate-200/50 focus:bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-blue-500 rounded-full py-1.5 pl-10 pr-12 text-xs text-slate-700 dark:text-slate-350 font-medium tracking-wide focus:outline-none transition-all shadow-inner focus:shadow-sm dark:shadow-none" autocomplete="off">
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <kbd class="text-[9px] font-mono font-bold text-slate-400 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-1.5 py-0.5 rounded shadow-sm dark:shadow-none">Ctrl K</kbd>
+                    </div>
+                    
+                    <!-- Search Dropdown Panel -->
+                    <div id="search-dropdown-panel" class="hidden absolute top-12 left-0 right-0 bg-white/95 border border-slate-200 rounded-2xl shadow-xl shadow-slate-200/40 p-2 z-50 max-h-64 overflow-y-auto space-y-1 backdrop-blur-md">
+                        <div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>
+                    </div>
+                </div>
+                
+                                <!-- Main Nav Links -->
+                <div class="hidden md:flex items-center gap-6 flex-shrink-0">
+                    <a href="/" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Home</a>
+                    <a href="keyboard.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Keyboard Test</a>
+                    <a href="mouse.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Mouse & CPS</a>
+                    <a href="blog.html" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Blog</a>
+                    
+                    <!-- Premium More Tools Dropdown -->
+                    <div class="relative group">
+                        <button id="nav-dropdown-btn" class="flex items-center gap-1 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 py-1.5 px-1 focus:outline-none transition-all duration-200">
+                            More Tools
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 group-hover:rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu panel -->
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full mt-2 w-80 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-3 grid grid-cols-2 gap-1.5 backdrop-blur-md z-50 animate-scaleUp">
+                            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 col-span-2 mb-1.5">Top Calibration Utilities</div>
+                            
+                            <a href="display.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">📺 Display Test</a>
+                            <a href="specs.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">💻 System Specs</a>
+                            <a href="gamepad.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">🎮 Gamepad drift</a>
+                            
+                            <a href="report.html" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-xs font-bold text-emerald-600 dark:text-emerald-450 transition-colors col-span-2 shadow-sm">🛡️ Certified PDF Report</a>
+                            
+                            <div class="h-px bg-slate-100 dark:bg-slate-800/60 col-span-2 my-1"></div>
+                            
+                            <a href="sound.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔊 Speaker test</a>
+                            <a href="mic.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎙️ Microphone</a>
+                            <a href="webcam.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📷 Webcam Check</a>
+                            <a href="draw.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📐 Drawing Tablet</a>
+                            <a href="latency.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ Latency Check</a>
+                            <a href="usb.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔌 USB Profiler</a>
+                            <a href="biometric.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔑 Biometrics Hello</a>
+                            <a href="printer.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🖨️ Printer CMYK</a>
+                            <a href="scanner.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📄 Documents scan</a>
+                            <a href="vr.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🕶️ VR controllers</a>
+                            <a href="battery.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔋 Battery Health</a>
+                            <a href="lan.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🌐 LAN Tester</a>
+                            <a href="hdmi.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📺 HDMI & DP</a>
+                            <a href="vga.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎨 VGA Calibrator</a>
+                            <a href="usb-c.html" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ USB-C Profiler</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Back Home -->
+                <div class="flex items-center gap-3 flex-shrink-0">                    <!-- Mobile Hamburger Button -->
+                    <button id="mobile-menu-toggle" class="p-2 md:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm transition-all focus:outline-none" aria-label="Toggle Navigation Menu">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                                        <!-- Elegant Sun/Moon Theme Toggle -->
+                    <button id="theme-toggle" class="relative p-2 mr-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/80 shadow-sm dark:shadow-none transition-all focus:outline-none" aria-label="Toggle dark mode">
+                        <!-- Sun Icon (hidden by default, shown in dark mode) -->
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <!-- Moon Icon (shown by default, hidden in dark mode) -->
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <a href="/" class="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1 font-bold font-mono bg-blue-500/5 px-3 py-1.5 rounded-full border border-blue-500/15">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+            <!-- Mobile Dropdown Navigation Panel -->
+    <div id="mobile-nav-panel" class="hidden md:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md px-4 py-4 space-y-3 transition-all duration-300 animate-scaleUp">
+        <div class="grid grid-cols-2 gap-3 text-xs font-bold">
+            <a href="/" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🏠 Home</a>
+            <a href="keyboard.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">⌨️ Keyboard Test</a>
+            <a href="mouse.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">🖱️ Mouse & CPS</a>
+            <a href="display.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">📺 Display Test</a>
+            <a href="specs.html" class="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent hover:border-slate-100 dark:hover:border-slate-800 text-slate-700 dark:text-slate-200">💻 Hardware Specs</a>
+            <a href="report.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-450">🛡️ PDF Certificate</a>
+            <a href="blog.html" class="flex items-center gap-2 p-2.5 rounded-xl bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/10 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 col-span-2 justify-center font-bold">📝 Diagnostic Blog & Guides</a>
+        </div>
+        
+        <div class="border-t border-slate-100 dark:border-slate-900 pt-3">
+            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-1">All Diagnostic Utilities</div>
+            <div class="grid grid-cols-2 gap-2 text-[10px] font-bold text-slate-500 dark:text-slate-400">
+                <a href="gamepad.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎮 Gamepad drift</a>
+                <a href="sound.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔊 Speaker test</a>
+                <a href="mic.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎙️ Microphone</a>
+                <a href="webcam.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📷 Webcam Check</a>
+                <a href="draw.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📐 Drawing Tablet</a>
+                <a href="latency.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ Latency Check</a>
+                <a href="usb.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔌 USB Profiler</a>
+                <a href="biometric.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔑 Biometrics Hello</a>
+                <a href="printer.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🖨️ Printer CMYK</a>
+                <a href="scanner.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📄 Documents scan</a>
+                <a href="vr.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🕶️ VR headset</a>
+                <a href="lan.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🌐 LAN Jitter Test</a>
+                <a href="hdmi.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">📺 HDMI & DP</a>
+                <a href="vga.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🎨 VGA Calibrator</a>
+                <a href="usb-c.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">⚡ USB-C Profiler</a>
+                <a href="battery.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-900">🔋 Battery Health</a>
+            </div>
+        </div>
+    </div>
+
+    </nav>
+
+    <!-- AdSense Banner -->
+    <div class="max-w-7xl mx-auto px-4 mt-6 w-full flex justify-center">
+        <div id="top-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-sm dark:shadow-none rounded-2xl overflow-hidden flex items-center justify-center animate-pulse-slow">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px]">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+        
+        <!-- Header HUD -->
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+                    Biometric & Security Key Tester
+                    <span class="text-xs font-mono font-bold px-2 py-0.5 rounded border border-indigo-500/10 bg-indigo-50 text-indigo-600 uppercase tracking-widest">WebAuthn Cryptographic Scanner</span>
+                </h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                    Test fingerprint scanners, macOS Touch ID, Windows Hello, and external security keys locally via secure browser authentication APIs.
+                </p>
+            </div>
+
+            <!-- API HUD status -->
+            <div id="biometric-banner" class="px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/85 rounded-2xl shadow-sm dark:shadow-none flex items-center gap-3 text-xs font-bold select-none text-slate-500 dark:text-slate-400 shrink-0">
+                <span class="h-2.5 w-2.5 rounded-full bg-slate-300 block animate-pulse" id="biometric-status-dot"></span>
+                <span id="biometric-status-text">WEBAUTHN INITIALIZING</span>
+            </div>
+        </div>
+
+        <!-- Warn block for unsecure contexts (requires HTTPS outside localhost) -->
+        <div id="secure-context-warning" class="hidden p-4 mb-6 bg-rose-50 border border-rose-200 rounded-2xl flex gap-3 text-xs text-rose-800 leading-relaxed font-medium animate-scaleUp">
+            <span class="text-lg">⚠️</span>
+            <div>
+                <span class="font-extrabold block">Secure Context (HTTPS) Required</span>
+                Biometric APIs are disabled on non-secure connections. Ensure this site is running on `https://` or `localhost` loopbacks to test dynamic sensor registrations.
+            </div>
+        </div>
+
+        <!-- Main Dashboard Matrix -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-10">
+            
+            <!-- LEFT COLUMN: Biometric Enrollment & Verification Tests (7 Columns) -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- Calibration Actions Card -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none select-none space-y-6">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block border-b border-slate-100 pb-3">1. Biometric Hardware Calibration Tests</span>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Enrollment check button -->
+                        <button id="btn-enroll-biometric" class="h-16 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white font-extrabold text-xs rounded-2xl uppercase tracking-wider transition-all shadow-md dark:shadow-none shadow-indigo-500/10 flex flex-col items-center justify-center gap-1 focus:outline-none">
+                            <span class="text-lg">☝</span>
+                            <span>Test Biometric Enrollment</span>
+                        </button>
+                        
+                        <!-- Verification check button -->
+                        <button id="btn-verify-biometric" class="h-16 bg-slate-200 text-slate-400 font-extrabold text-xs rounded-2xl uppercase tracking-wider transition-all flex flex-col items-center justify-center gap-1 cursor-not-allowed focus:outline-none" disabled>
+                            <span class="text-lg">🔑</span>
+                            <span>Test Biometric Verification</span>
+                        </button>
+                    </div>
+
+                    <!-- Inspected Hardware Details summary -->
+                    <div class="pt-2 border-t border-slate-100 space-y-3 font-mono text-[9px] text-slate-400 font-bold">
+                        <span class="block tracking-wider uppercase">Active Cryptographic Inspected Status</span>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800/80 rounded-xl space-y-1">
+                                <span class="text-slate-400">CREATION ENROLLMENT</span>
+                                <div class="text-xs font-black text-slate-800 dark:text-slate-250" id="info-enroll-status">UNRESOLVED</div>
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800/80 rounded-xl space-y-1">
+                                <span class="text-slate-400">SIGNATURE VERIFICATION</span>
+                                <div class="text-xs font-black text-slate-800 dark:text-slate-250" id="info-verify-status">UNRESOLVED</div>
+                            </div>
+                            <div class="p-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800/80 rounded-xl space-y-1 sm:col-span-2">
+                                <span class="text-slate-400 block mb-1">GENERATED CREDENTIAL ID</span>
+                                <div class="text-[9px] text-slate-600 dark:text-slate-400 font-mono font-medium truncate max-w-full" id="info-credential-id">No registered credential cached.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Console Logger -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none space-y-4 relative overflow-hidden">
+                    <div class="absolute -right-20 -top-20 w-48 h-48 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none"></div>
+                    
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-3 select-none">
+                        <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block">2. WebAuthn Event Trace & Cryptographic Log</span>
+                        <button id="btn-clear-logs" class="px-2.5 h-6 bg-slate-150 hover:bg-slate-200 border border-slate-200 font-bold text-[9px] rounded-lg uppercase tracking-wider transition-all focus:outline-none">
+                            Clear Console
+                        </button>
+                    </div>
+
+                    <!-- Console Box -->
+                    <div class="h-36 bg-slate-950 border border-slate-900 rounded-2xl p-4 overflow-y-auto space-y-1 console-scrollbar text-slate-300 shadow-inner font-mono text-[9px]" id="console-logs-panel">
+                        <div class="text-slate-500 dark:text-slate-400 select-none">[System] Authentication tracing started. Awaiting sensor enrollment...</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: Capabilities Inspector & Dynamic Security Badges (5 Columns) -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <!-- Authenticator Capabilities Inspector -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] p-6 shadow-sm dark:shadow-none select-none flex flex-col gap-4">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold block border-b border-slate-100 pb-3">3. Sensor Compatibility Inspector</span>
+                    
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-1 gap-3.5">
+                        
+                        <!-- Core API Support -->
+                        <div class="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-between shadow-sm dark:shadow-none">
+                            <div class="flex flex-col">
+                                <span class="text-[8px] text-slate-400 font-bold uppercase tracking-wider font-mono">WebAuthn Framework</span>
+                                <span class="text-sm font-extrabold text-slate-800 dark:text-slate-250" id="cap-webauthn-status">Checking Support</span>
+                            </div>
+                            <span class="text-xl" id="cap-webauthn-icon">⏳</span>
+                        </div>
+
+                        <!-- Platform Authenticator (Windows Hello/Touch ID) -->
+                        <div class="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-between shadow-sm dark:shadow-none">
+                            <div class="flex flex-col">
+                                <span class="text-[8px] text-slate-400 font-bold uppercase tracking-wider font-mono">Platform Authenticator (Hello/Touch ID)</span>
+                                <span class="text-sm font-extrabold text-slate-800 dark:text-slate-250" id="cap-platform-status">Detecting Hardware Sensor...</span>
+                            </div>
+                            <span class="text-xl" id="cap-platform-icon">⏳</span>
+                        </div>
+
+                        <!-- Autofill/Conditional Mediation Support -->
+                        <div class="p-3.5 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-between shadow-sm dark:shadow-none">
+                            <div class="flex flex-col">
+                                <span class="text-[8px] text-slate-400 font-bold uppercase tracking-wider font-mono">Autofill Credentials UI UI Support</span>
+                                <span class="text-sm font-extrabold text-slate-800 dark:text-slate-250" id="cap-conditional-status">Checking API...</span>
+                            </div>
+                            <span class="text-xl" id="cap-conditional-icon">⏳</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Privacy & Sandbox Protection Badge -->
+                <div class="bg-gradient-to-br from-indigo-900 to-slate-900 border border-indigo-950 rounded-[2rem] p-6 shadow-xl text-slate-100 flex flex-col gap-4 relative overflow-hidden select-none">
+                    <div class="absolute -right-16 -bottom-16 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <span class="text-[9px] font-mono text-indigo-400 uppercase tracking-widest font-bold block border-b border-indigo-950 pb-3">4. Absolute Biometric Privacy Lock</span>
+                    
+                    <div class="flex items-start gap-4">
+                        <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-2xl shrink-0 font-bold">
+                            🔒
+                        </div>
+                        <div class="space-y-1.5 text-left">
+                            <span class="text-xs font-bold text-slate-200">Hardware Level Isolation</span>
+                            <p class="text-[10px] text-slate-400 leading-relaxed font-medium">
+                                WebAuthn verifies fingerprint scanning and facial authentication entirely inside your device's physical secure hardware modules (**TPM / Apple Secure Enclave**). Raw biometric matrices never leave the chip and are never accessible by browser pages or servers.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Webcam PPG Heart Rate & Stress Diagnostics Card -->
+        <div class="p-6 mb-10 bg-white/70 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800/80 rounded-[2rem] shadow-xl shadow-slate-200/40 dark:shadow-none backdrop-blur-lg space-y-6 transition-all duration-300">
+            <!-- Card Header -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-100 dark:border-slate-800/60 pb-5">
+                <div>
+                    <h2 class="text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                        📸 Webcam PPG Cardiac Pulse & Stress Diagnostics
+                        <span class="text-[9px] font-mono font-bold px-2 py-0.5 rounded border border-rose-500/10 bg-rose-500/5 text-rose-600 dark:text-rose-400 uppercase tracking-widest animate-pulse">PREMIUM DIAGNOSTICS</span>
+                    </h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                        Real-time client-side optical blood volume pulse telemetry. Analyzes capillary light absorption to scan heart beats, RMSSD heart rate variability, and physical stress indices.
+                    </p>
+                </div>
+                <div class="flex-shrink-0">
+                    <button id="btn-ppg-init" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-xs rounded-2xl uppercase tracking-wider transition-all duration-300 flex items-center gap-2 shadow-lg shadow-rose-500/25 hover:shadow-rose-500/40 transform active:scale-95 cursor-pointer focus:outline-none select-none">
+                        📸 Start Cardiac Pulse Scan
+                    </button>
+                </div>
+            </div>
+
+            <!-- Privacy & Sandbox Notice -->
+            <div class="px-4 py-3 bg-rose-50/50 dark:bg-rose-950/10 border border-rose-100/50 dark:border-rose-900/20 rounded-2xl flex items-start gap-3 text-[11px] text-slate-500 dark:text-slate-400 select-none text-left">
+                <span class="text-base select-none mt-0.5">🔒</span>
+                <p class="leading-relaxed font-semibold">
+                    <strong class="text-slate-700 dark:text-slate-350">Privacy-First Camera Sandbox:</strong> All frame-by-frame image calculations are processed strictly inside local volatile RAM buffers. No video feeds, biometric pixel streams, or medical metrics are ever recorded, written to files, or sent to any server. 100% secure.
+                </p>
+            </div>
+
+            <!-- Video & Canvas Visualizers -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Video Element & Mirrored Finger Preview Guide (4 columns) -->
+                <div class="lg:col-span-4 flex flex-col gap-2 bg-slate-50/50 dark:bg-slate-950/20 border border-slate-200/50 dark:border-slate-800/40 rounded-2.5xl p-4.5 justify-center items-center">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold flex items-center gap-1.5 select-none mb-1 w-full text-left">
+                        📹 Mirrored Finger Guide
+                    </span>
+                    <div class="relative w-full max-w-[280px] h-[210px] rounded-2xl border border-slate-200/80 dark:border-slate-800/70 overflow-hidden bg-slate-950 flex items-center justify-center">
+                        <video id="ppg-video" class="hidden" playsinline muted></video>
+                        <canvas id="ppg-camera-canvas" class="w-full h-full block transform scale-x-[-1]"></canvas>
+                        <div id="ppg-camera-placeholder" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/90 text-center p-4 select-none">
+                            <span class="text-2xl mb-1.5">📷</span>
+                            <span class="text-[10px] font-mono font-bold text-slate-500 tracking-wide">Awaiting camera activation...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Neon Rolling Pulse Wave Canvas (8 columns) -->
+                <div class="lg:col-span-8 flex flex-col gap-2 bg-slate-50/50 dark:bg-slate-950/20 border border-slate-200/50 dark:border-slate-800/40 rounded-2.5xl p-4.5 justify-center">
+                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold flex items-center gap-1.5 select-none mb-1 w-full text-left">
+                        📈 Real-time Capillary PPG Pulse Waveform
+                    </span>
+                    <div class="relative w-full h-[210px] rounded-2xl border border-slate-200/80 dark:border-slate-800/70 overflow-hidden bg-slate-950">
+                        <canvas id="ppg-pulse-canvas" class="w-full h-full block"></canvas>
+                        <div id="ppg-pulse-placeholder" class="absolute inset-0 flex items-center justify-center bg-slate-950/90 text-xs font-mono font-bold text-slate-500 tracking-wide select-none">
+                            Awaiting sensor signal capture...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diagnostics Metrics HUD -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="px-4 py-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                    <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Heart Rate (BPM)</span>
+                    <div class="flex items-center gap-2 mt-0.5">
+                        <span id="ppg-heart-rate" class="text-rose-600 dark:text-rose-450 font-extrabold tracking-wide text-sm">-- BPM</span>
+                        <span id="ppg-heart-icon" class="text-rose-500 text-sm hidden">❤️</span>
+                    </div>
+                </div>
+                <div class="px-4 py-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                    <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Heart Rate Variability</span>
+                    <span id="ppg-hrv" class="text-blue-600 dark:text-blue-400 font-extrabold tracking-wide text-sm block mt-0.5">-- ms</span>
+                </div>
+                <div class="px-4 py-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                    <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Stress Level Index</span>
+                    <span id="ppg-stress-index" class="text-slate-800 dark:text-slate-200 font-extrabold tracking-wide text-sm block mt-0.5">--</span>
+                </div>
+                <div class="px-4 py-3 bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs select-none">
+                    <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Signal Quality Status</span>
+                    <span id="ppg-signal-quality" class="text-slate-800 dark:text-slate-200 font-extrabold tracking-wide text-sm block mt-0.5">Awaiting Start</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             ðŸ”’ PREMIUM SEO DIAGNOSTIC GUIDE & FAQ SECTION
+             ============================================ -->
+        <section class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start w-full relative z-10 text-left">
+            
+            <!-- Left 7-Column: Mini-Blog / Comprehensive Diagnostic Guide -->
+            <div class="lg:col-span-7 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 shadow-sm backdrop-blur-md transition-colors duration-300">
+                <span class="text-[9px] font-mono text-blue-600 dark:text-blue-400 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-850 pb-3 mb-6">📚 Technical Diagnostic Guide</span>
+                
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-4 tracking-tight leading-tight select-none">
+                    How to Test Biometric Authentication, Fingerprints, and Windows Hello Online
+                </h2>
+                
+                <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 space-y-4 leading-relaxed">
+                    <p>
+                        Biometric sensors have revolutionized modern computing, replacing vulnerable passwords with secure fingerprint readers, face scanners, and hardware keys. Ensuring these sensors communicate correctly with web applications is vital for secure authentications. Our <strong>Online Biometric Tester</strong> leverages the secure W3C WebAuthn API to test physical sensors directly inside your browser.
+                    </p>
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        ðŸ”‘ Direct WebAuthn Cryptographic Pipeline Testing
+                    </h3>
+                    <p>
+                        The Web Authentication (WebAuthn) standard allows modern websites to communicate with local hardware authenticators. When you trigger our diagnostic utility, the browser requests a cryptographic credential signature. Successfully completing this verification proves that the end-to-end sensor pipeline, browser drivers, and cryptographic enclaves are operating correctly.
+                    </p>
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        ðŸ›¡ï¸ Maximum Data Privacy and Secure Enclaves
+                    </h3>
+                    <p>
+                        Users are often concerned about biometric data security online. Under standard WebAuthn protocols, **no raw biometric data is ever sent to our servers**. The physical fingerprint or face scan is processed strictly inside your device's hardware Secure Enclave (like a TPM chip). The enclave verifies your scan and releases only a secure cryptographic signature to the browser.
+                    </p>
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        ðŸ–¥ï¸ Troubleshooting Biometric Sensor Offline Failures
+                    </h3>
+                    <p>
+                        If your biometric authenticator refuses to trigger, verify that you have enabled Windows Hello, Apple Touch ID/Face ID, or registered a security key in your operating system settings. Additionally, ensure your browser is fully updated and you are accessing the page over a secure HTTPS or localhost environment.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Right 5-Column: Elegant Interactive FAQ Accordion -->
+            <div class="lg:col-span-5 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 shadow-sm backdrop-blur-md transition-colors duration-300 space-y-6">
+                <span class="text-[9px] font-mono text-emerald-600 dark:text-emerald-455 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-850 pb-3">❓ Frequently Asked Questions</span>
+                
+                <div class="space-y-4">                    
+                    <!-- FAQ 1 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">How do I test my fingerprint sensor or face scanner online?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Click 'Start Biometric Authentication'. Your browser will trigger a secure system prompt requesting fingerprint or security key verification. Successfully completing this confirms your biometric sensor is active.
+                        </div>
+                    </div>                    
+                    <!-- FAQ 2 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Is my fingerprint or biometric data sent to the website?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Absolutely not. The WebAuthn API only transmits a cryptographic signature to the browser. Your raw fingerprint or facial scan remains locked inside your device's secure enclave (TPM) and is never shared.
+                        </div>
+                    </div>                    
+                    <!-- FAQ 3 -->
+                    <div class="border-b border-slate-100 dark:border-slate-850 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">What is the difference between a passkey and Windows Hello?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Windows Hello is your local device authenticator using biometrics or PINs. A passkey is a standard cryptographic credential created via WebAuthn, representing a secure password replacement.
+                        </div>
+                    </div>                    
+                    <!-- FAQ 4 -->
+                    <div class="pb-2">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-850 dark:text-slate-250 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Why is my biometric sensor not registering?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Ensure your browser supports WebAuthn, hardware drivers are updated, and that you have registered at least one fingerprint or face profile in your OS security settings.
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- AdSense Banner Bottom -->
+    <div class="max-w-7xl mx-auto px-4 mb-10 w-full flex justify-center">
+        <div id="bottom-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-sm dark:shadow-none rounded-2xl overflow-hidden flex items-center justify-center">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px]">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-50 mt-0.5">Leaderboard Smart Banner</span>
+            </div>
+        </div>
+    </div>
+
+                                <!-- Footer Area -->
+        <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 mt-auto transition-colors duration-300">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-left select-none">
+                
+                 <!-- Column 1: Brand & Logo -->
+                <div class="space-y-4">
+                    <a href="/" class="flex items-center gap-2 group w-fit transition-transform duration-200 active:scale-95">
+                        <span class="logo-emoji text-xl group-hover:rotate-12 transition-transform duration-300 inline-block">⌨️</span>
+                        <span class="brand-name font-black text-slate-900 dark:text-slate-200 text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">InputTest.online</span>
+                    </a>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed brand-slogan font-semibold">
+                        Universal Hardware & Input Device Tester
+                    </p>
+                    <p class="text-xs text-slate-400 dark:text-slate-500 leading-relaxed font-medium">
+                        Safe sandboxed hardware diagnostics. 100% private, local client-side processing.
+                    </p>
+                </div>
+                
+                 <!-- Column 2: Input Diagnostics -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Input Diagnostics</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="keyboard.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Keyboard Tester</a></li>
+                        <li><a href="mouse.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖱️ Mouse & CPS Test</a></li>
+                        <li><a href="gamepad.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎮 Gamepad & Drift</a></li>
+                        <li><a href="mic.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎙️ Microphone Check</a></li>
+                        <li><a href="webcam.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📷 Webcam Quality</a></li>
+                        <li><a href="draw.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📐 Drawing Tablet</a></li>
+                        <li><a href="usb.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔌 USB & HID Profiler</a></li>
+                        <li><a href="biometric.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔑 Biometrics Hello</a></li>
+                        <li><a href="battery.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔋 Battery Health</a></li>
+                        <li><a href="lan.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🌐 LAN Jitter Test</a></li>
+                        <li><a href="usb-c.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ USB-C Profiler</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 3: Screen & Outputs -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Screen & Outputs</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="display.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 Display & Monitor</a></li>
+                        <li><a href="latency.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ Latency & Lag</a></li>
+                        <li><a href="printer.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖨️ Printer CMYK</a></li>
+                        <li><a href="scanner.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📄 Documents Scan</a></li>
+                        <li><a href="vr.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🕶️ VR Controller</a></li>
+                        <li><a href="specs.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">💻 Hardware Specs</a></li>
+                        <li><a href="hdmi.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 HDMI Analyzer</a></li>
+                        <li><a href="vga.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎨 VGA Calibrator</a></li>
+                    </ul>
+                </div>
+                
+                 <!-- Column 4: Reports, Blog & Policies -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Info & Policies</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="report.html" class="text-emerald-600 dark:text-emerald-450 font-bold bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10 dark:border-emerald-500/20 hover:bg-emerald-500/10 transition-colors inline-block mb-1">🛡️ Certified PDF Report</a></li>
+                        <li><a href="blog.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📝 Blog Guides</a></li>
+                        <li><a href="privacy.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔒 Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚖️ Terms of Service</a></li>
+                        <li><a href="#" class="brand-email text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors break-all">✉️ support@inputtest.online</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="border-t border-slate-100 dark:border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-medium flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                    <span>&copy; 2026 InputTest.online. Safe sandboxed diagnostics. No data collection.</span>
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 font-extrabold border border-emerald-500/15 w-fit uppercase select-none">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-ping"></span>
+                        Version 1.2.0 (Updated: June 6, 2026)
+                    </span>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="#" class="twitter-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">Twitter</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+                    </a>
+                    <a href="#" class="github-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" clip-rule="evenodd"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic Section -->
+    <script>
+                document.addEventListener("DOMContentLoaded", () => {
+            // ============================================
+            // SUN/MOON SYSTEM THEME TOGGLE LOGIC
+            // ============================================
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
+
+            if (themeToggleBtn && sunIcon && moonIcon) {
+                // Sync sun/moon icon visibility on startup
+                if (document.documentElement.classList.contains('dark')) {
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                } else {
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                }
+
+                themeToggleBtn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    sunIcon.classList.toggle('hidden');
+                    moonIcon.classList.toggle('hidden');
+                    if (document.documentElement.classList.contains('dark')) {
+                        localStorage.setItem('color-theme', 'dark');
+                    } else {
+                        localStorage.setItem('color-theme', 'light');
+                    }
+                });
+            }
+            // Initialize Ads via config.js helper
+            setTimeout(() => {
+                SiteConfig.initAdSense('top-adsense-banner', 'topLeaderboard');
+                SiteConfig.initAdSense('bottom-adsense-banner', 'bottomLeaderboard');
+            }, 800);
+
+            // ============================================
+            // DYNAMIC SELECTORS & STATE
+            // ============================================
+            const biometricBanner = document.getElementById("biometric-banner");
+            const biometricStatusDot = document.getElementById("biometric-status-dot");
+            const biometricStatusText = document.getElementById("biometric-status-text");
+            const secureContextWarning = document.getElementById("secure-context-warning");
+
+            const btnEnrollBiometric = document.getElementById("btn-enroll-biometric");
+            const btnVerifyBiometric = document.getElementById("btn-verify-biometric");
+            const btnClearLogs = document.getElementById("btn-clear-logs");
+
+            const infoEnrollStatus = document.getElementById("info-enroll-status");
+            const infoVerifyStatus = document.getElementById("info-verify-status");
+            const infoCredentialId = document.getElementById("info-credential-id");
+            const consoleLogsPanel = document.getElementById("console-logs-panel");
+
+            // Capability Inspector Selectors
+            const capWebauthnStatus = document.getElementById("cap-webauthn-status");
+            const capWebauthnIcon = document.getElementById("cap-webauthn-icon");
+            const capPlatformStatus = document.getElementById("cap-platform-status");
+            const capPlatformIcon = document.getElementById("cap-platform-icon");
+            const capConditionalStatus = document.getElementById("cap-conditional-status");
+            const capConditionalIcon = document.getElementById("cap-conditional-icon");
+
+            // State Cache
+            let cachedCredential = null; 
+
+            // Initialize API Checks
+            const isSecure = window.isSecureContext;
+            const hasWebAuthn = !!window.PublicKeyCredential;
+
+            initBiometricHUD();
+            verifyCapabilities();
+
+            // ============================================
+            // INITIALIZE HUD ALERTS
+            // ============================================
+            function initBiometricHUD() {
+                if (!isSecure && window.location.hostname !== "localhost") {
+                    secureContextWarning.classList.remove("hidden");
+                    btnEnrollBiometric.disabled = true;
+                    btnEnrollBiometric.className = "h-16 bg-slate-200 text-slate-400 font-extrabold text-xs rounded-2xl uppercase tracking-wider flex flex-col items-center justify-center gap-1 cursor-not-allowed w-full";
+                    
+                    biometricStatusDot.className = "h-2.5 w-2.5 rounded-full bg-rose-500 block";
+                    biometricStatusText.textContent = "INSECURE CONTEXT RESTRICTED";
+                    biometricBanner.className = "px-4 py-2.5 bg-white border border-rose-250 rounded-2xl shadow-sm dark:shadow-none flex items-center gap-3 text-xs font-bold text-rose-600 shrink-0";
+                    writeConsoleLog("❌ [Security] WebAuthn biometrics disabled. Safe connections (HTTPS or localhost) required.");
+                    return;
+                }
+
+                if (hasWebAuthn) {
+                    biometricStatusDot.className = "h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse block";
+                    biometricStatusText.textContent = "BIOMETRIC APIS READY";
+                    biometricBanner.className = "px-4 py-2.5 bg-white border border-emerald-200/80 rounded-2xl shadow-sm dark:shadow-none flex items-center gap-3 text-xs font-bold text-emerald-600 shrink-0";
+                    writeConsoleLog("[System] WebAuthn W3C framework detected and ready to scan.");
+                } else {
+                    biometricStatusDot.className = "h-2.5 w-2.5 rounded-full bg-rose-500 block";
+                    biometricStatusText.textContent = "API NOT SUPPORTED";
+                    biometricBanner.className = "px-4 py-2.5 bg-white border border-rose-250 rounded-2xl shadow-sm dark:shadow-none flex items-center gap-3 text-xs font-bold text-rose-600 shrink-0";
+                    btnEnrollBiometric.disabled = true;
+                    btnEnrollBiometric.className = "h-16 bg-slate-200 text-slate-400 font-extrabold text-xs rounded-2xl uppercase tracking-wider flex flex-col items-center justify-center gap-1 cursor-not-allowed w-full";
+                    writeConsoleLog("❌ [Framework] WebAuthn API is not supported on this browser version.");
+                }
+            }
+
+            // ============================================
+            // RUN SENSOR AVAILABILITY CHECKS
+            // ============================================
+            async function verifyCapabilities() {
+                if (!hasWebAuthn) {
+                    capWebauthnStatus.textContent = "Framework Unsupported";
+                    capWebauthnIcon.textContent = "❌";
+                    capPlatformStatus.textContent = "Sensor Inspection Blocked";
+                    capPlatformIcon.textContent = "❌";
+                    capConditionalStatus.textContent = "Conditional UI Unavailable";
+                    capConditionalIcon.textContent = "❌";
+                    return;
+                }
+
+                // Core API Support
+                capWebauthnStatus.textContent = "Framework Active (WebAuthn L2/L3)";
+                capWebauthnIcon.textContent = "✔";
+
+                // Platform authenticator availability (Windows Hello / Touch ID)
+                try {
+                    const isPlatformAvailable = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+                    if (isPlatformAvailable) {
+                        capPlatformStatus.textContent = "Windows Hello / Touch ID Connected";
+                        capPlatformIcon.textContent = "✔";
+                        writeConsoleLog("[System] Active Platform Authenticator (biometric scanner) detected.");
+                    } else {
+                        capPlatformStatus.textContent = "No Built-in Biometrics Found";
+                        capPlatformIcon.textContent = "🔌";
+                        writeConsoleLog("[System] No built-in platform sensor discovered. External hardware keys (USB keys) still supported.");
+                    }
+                } catch(e) {
+                    capPlatformStatus.textContent = "Detection Error";
+                    capPlatformIcon.textContent = "⚠️";
+                    console.log("Platform Authenticator check error: " + e.message);
+                }
+
+                // Autofill / Conditional UI check
+                if ('isConditionalMediationAvailable' in PublicKeyCredential) {
+                    try {
+                        const hasConditional = await PublicKeyCredential.isConditionalMediationAvailable();
+                        if (hasConditional) {
+                            capConditionalStatus.textContent = "WebAuthn Autofill Enabled";
+                            capConditionalIcon.textContent = "✔";
+                        } else {
+                            capConditionalStatus.textContent = "Autofill UI Unavailable";
+                            capConditionalIcon.textContent = "❌";
+                        }
+                    } catch(e) {
+                        capConditionalStatus.textContent = "Autofill Check Failed";
+                        capConditionalIcon.textContent = "⚠️";
+                    }
+                } else {
+                    capConditionalStatus.textContent = "API Unsupported on Browser";
+                    capConditionalIcon.textContent = "❌";
+                }
+            }
+
+            // ============================================
+            // TEST BIOMETRIC ENROLLMENT (CREATE)
+            // ============================================
+            btnEnrollBiometric.addEventListener("click", async () => {
+                if (!hasWebAuthn) return;
+                
+                writeConsoleLog("⏱️ [Enrollment] Generating cryptographic challenge parameters...");
+                
+                // Set challenge buffers
+                const randomChallenge = new Uint8Array(16);
+                window.crypto.getRandomValues(randomChallenge);
+
+                // Setup local WebAuthn creation structure (Discards actual credential keys)
+                const publicKeyOptions = {
+                    challenge: randomChallenge,
+                    rp: {
+                        name: "InputTest.online Diagnostics",
+                        id: window.location.hostname || "localhost"
+                    },
+                    user: {
+                        id: Uint8Array.from("1234567890", c => c.charCodeAt(0)),
+                        name: "local-biometric-tester@inputtest.online",
+                        displayName: "Universal Local Tester"
+                    },
+                    pubKeyCredParams: [
+                        { type: "public-key", alg: -7 },   // ES256 (ECDSA w/ SHA-256)
+                        { type: "public-key", alg: -257 }  // RS256 (RSA Signature w/ SHA-256)
+                    ],
+                    authenticatorSelection: {
+                        userVerification: "preferred"
+                    },
+                    timeout: 60000,
+                    attestation: "none"
+                };
+
+                writeConsoleLog("💡 [Enrollment] Invoking native hardware biometric scan prompt...");
+                
+                try {
+                    const credential = await navigator.credentials.create({ publicKey: publicKeyOptions });
+                    
+                    cachedCredential = credential;
+                    
+                    // Format credential buffers for monospace display
+                    const credIdHex = arrayBufferToHex(credential.rawId);
+                    
+                    infoEnrollStatus.textContent = "✔ PASS (SUCCESS)";
+                    infoEnrollStatus.className = "text-xs font-black text-emerald-600";
+                    infoCredentialId.textContent = `0x${credIdHex.substring(0, 36)}...`;
+                    infoCredentialId.title = `0x${credIdHex}`;
+
+                    // Unlock authentication check button
+                    btnVerifyBiometric.disabled = false;
+                    btnVerifyBiometric.className = "h-16 bg-purple-600 hover:bg-purple-700 active:scale-[0.98] text-white font-extrabold text-xs rounded-2xl uppercase tracking-wider transition-all shadow-md dark:shadow-none shadow-purple-500/10 flex flex-col items-center justify-center gap-1 focus:outline-none animate-scaleUp";
+
+                    writeConsoleLog(`<span class="text-emerald-600 font-bold">✔ [Enrollment] Scan verified!</span> Credential compiled successfully.`);
+                    writeConsoleLog(`   - Attestation Credential Type: ${credential.type}`);
+                    writeConsoleLog(`   - Raw Credential Hex ID: 0x${credIdHex.substring(0, 60)}...`);
+                    
+                    if (credential.response.transports) {
+                        const transports = credential.response.transports();
+                        writeConsoleLog(`   - Verified Transport Layers: [${transports.join(', ')}]`);
+                    }
+
+                    showToast("✔ Biometric Enrollment check passed!");
+
+                } catch (err) {
+                    infoEnrollStatus.textContent = "❌ FAIL (ERROR)";
+                    infoEnrollStatus.className = "text-xs font-black text-rose-600";
+                    
+                    writeConsoleLog(`<span class="text-rose-500 font-bold">❌ [Enrollment] Verification failed:</span> ${err.name} - ${err.message}`);
+                    showToast("❌ Enrollment verification failed.");
+                }
+            });
+
+            // ============================================
+            // TEST BIOMETRIC VERIFICATION (GET)
+            // ============================================
+            btnVerifyBiometric.addEventListener("click", async () => {
+                if (!hasWebAuthn || !cachedCredential) return;
+
+                writeConsoleLog("⏱️ [Verification] Preparing local challenge retrieval credentials...");
+
+                const verifyChallenge = new Uint8Array(16);
+                window.crypto.getRandomValues(verifyChallenge);
+
+                // Setup local WebAuthn request options
+                const requestOptions = {
+                    challenge: verifyChallenge,
+                    allowCredentials: [{
+                        id: cachedCredential.rawId,
+                        type: 'public-key'
+                    }],
+                    userVerification: "preferred",
+                    timeout: 60000
+                };
+
+                writeConsoleLog("💡 [Verification] Invoking native matching verification prompt...");
+
+                try {
+                    const assertion = await navigator.credentials.get({ publicKey: requestOptions });
+                    
+                    infoVerifyStatus.textContent = "✔ PASS (SUCCESS)";
+                    infoVerifyStatus.className = "text-xs font-black text-emerald-600";
+
+                    const clientDataHex = arrayBufferToHex(assertion.response.clientDataJSON);
+                    const authDataHex = arrayBufferToHex(assertion.response.authenticatorData);
+                    const signatureHex = arrayBufferToHex(assertion.response.signature);
+
+                    writeConsoleLog(`<span class="text-emerald-600 font-bold">✔ [Verification] Sensor matching matched perfectly!</span> Challenge signature computed.`);
+                    writeConsoleLog(`   - Computed Signature Hex: 0x${signatureHex.substring(0, 50)}...`);
+                    writeConsoleLog(`   - Authenticator Flag Flags: 0x${authDataHex.substring(0, 30)}...`);
+                    
+                    showToast("✔ Biometric Verification check passed!");
+
+                } catch (err) {
+                    infoVerifyStatus.textContent = "❌ FAIL (ERROR)";
+                    infoVerifyStatus.className = "text-xs font-black text-rose-600";
+                    
+                    writeConsoleLog(`<span class="text-rose-500 font-bold">❌ [Verification] Matching failed:</span> ${err.name} - ${err.message}`);
+                    showToast("❌ Matching verification failed.");
+                }
+            });
+
+            // ============================================
+            // CONSOLE & TOAST UTILITIES
+            // ============================================
+            function arrayBufferToHex(buffer) {
+                return Array.from(new Uint8Array(buffer))
+                    .map(b => b.toString(16).padStart(2, '0'))
+                    .join('');
+            }
+
+            function writeConsoleLog(msg) {
+                const now = new Date();
+                const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}.${now.getMilliseconds().toString().padStart(3, '0')}`;
+                
+                const div = document.createElement("div");
+                div.className = "leading-relaxed border-b border-slate-900 pb-1 select-text";
+                div.innerHTML = `<span class="text-slate-500 dark:text-slate-400">[${timeStr}]</span> ${msg}`;
+                
+                consoleLogsPanel.appendChild(div);
+                consoleLogsPanel.scrollTop = consoleLogsPanel.scrollHeight;
+            }
+
+            btnClearLogs.addEventListener("click", () => {
+                consoleLogsPanel.innerHTML = '<div class="text-slate-500 dark:text-slate-400 select-none">[System] Logs flushed. Awaiting authentication trace...</div>';
+                showToast("🧹 Cryptographic logs console flushed");
+            });
+
+            function showToast(message) {
+                const oldToast = document.getElementById("diagnostic-toast");
+                if (oldToast) oldToast.remove();
+                
+                const toast = document.createElement("div");
+                toast.id = "diagnostic-toast";
+                toast.className = "fixed bottom-6 right-6 z-[100] flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 shadow-2xl shadow-slate-300/40 animate-scaleUp text-xs font-bold text-slate-800 dark:text-slate-250 transition-all select-none font-sans";
+                toast.innerHTML = `
+                    <div class="flex items-center justify-center h-6 w-6 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-600">
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-850 tracking-wide">${message}</p>
+                    </div>
+                `;
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.classList.add("opacity-0", "translate-y-2");
+                    setTimeout(() => toast.remove(), 300);
+                }, 2800);
+            }
+
+            // ============================================
+            // SEARCH & COMMAND PALETTE OVERLAY
+            // ============================================
+            const searchBar = document.getElementById("nav-search-bar");
+            const searchPanel = document.getElementById("search-dropdown-panel");
+            
+            if (searchBar && searchPanel) {
+                const searchDatabase = [
+                    { title: "Keyboard Tester Online", desc: "Test laptop & mechanical switches", url: "keyboard.html" },
+                    { title: "Mouse & CPS Checker", desc: "Test click, scroll, and speed CPS", url: "mouse.html" },
+                    { title: "Clicks Per Second Test", desc: "10-second high-score speed game", url: "mouse.html#cps" },
+                    { title: "Speaker & Sound Tester", desc: "Stereo balance frequency check", url: "sound.html" },
+                    { title: "Gamepad & Joystick Tester", desc: "Controller buttons stick drift test", url: "gamepad.html" },
+                    { title: "Microphone Voice Tester", desc: "Test decibel telemetry voice echo loop", url: "mic.html" },
+                    { title: "Webcam Calibration Check", desc: "Video test, resolution and FPS check", url: "webcam.html" },
+                    { title: "Display & Screen Tester", desc: "Check dead pixels, monitor Hz, and ghosting", url: "display.html" },
+                    { title: "Drawing Tablet & Touchscreen Tester", desc: "Check pen pressure, touchscreen multi-touch, and drawing accuracy", url: "draw.html" },
+                    { title: "Bluetooth & Audio Latency Tester", desc: "Measure delay and lag of wireless headphones or Bluetooth speakers", url: "latency.html" },
+                    { title: "USB & HID Device Info Profiler", desc: "Scan connected USB/HID peripherals and inspect system hardware capabilities", url: "usb.html" },
+                    { title: "Biometric & Fingerprint Tester", desc: "Test Windows Hello, Touch ID, or security keys via standard client-side WebAuthn diagnostics", url: "biometric.html" },
+                    { title: "Battery Health & Efficiency Analyzer", desc: "Evaluate laptop chaging slopes, power draw rates, estimated cycle health, and power source metrics", url: "battery.html" },
+                    { title: "Printer Calibrated Test Page", desc: "Print CMYK color blocks, alignment grids, and evaluate font readability", url: "printer.html" },
+                    { title: "Scanner & Document Capture Checker", desc: "Test document scanners, apply black-and-white Xerox shaders, and scan QR codes", url: "scanner.html" },
+                    { title: "VR & XR Motion Controller Tester", desc: "Test 6-DOF spatial coordinates, analog triggers, and fire rumble haptics", url: "vr.html" },
+                    { title: "PC Hardware Specs Scanner", desc: "Profile processor cores, graphics card GPU model, RAM, and storage disks sizes", url: "specs.html" },
+                    { title: "Certified Diagnostic Report", desc: "Generate secure verified hardware configuration & device checklist PDF", url: "report.html" },
+                    { title: "LAN / Ethernet Port Jitter & Type Tester", desc: "Test network jitter, ping variance, and verify physical cable reliability", url: "lan.html" },
+                    { title: "HDMI & DisplayPort Multi-Screen Analyzer", desc: "Verify monitor refresh rate Hz, display placements, and multi-channel audio", url: "hdmi.html" },
+                    { title: "VGA Analog Calibrator Test Patterns", desc: "Calibrate analog monitor focus, phase adjustment zebra lines, and color bars", url: "vga.html" },
+                    { title: "USB Type-C & Thunderbolt Speed Profiler", desc: "Test alternate mode capabilities, power delivery profiles, and verify speeds", url: "usb-c.html" },
+                    { title: "Privacy Policy Compliance", desc: "AdSense, cookies & safety disclosure", url: "privacy.html" },
+                    { title: "Terms of Service Agreement", desc: "Device diagnostic terms and client-side usage rules", url: "terms.html" },
+                    { title: "Admin Settings Panel", desc: "Export config.js & preview analytics", url: "admin.php" }
+                ];
+
+                window.addEventListener("keydown", (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+                        e.preventDefault();
+                        searchBar.focus();
+                    }
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!searchBar.contains(e.target) && !searchPanel.contains(e.target)) {
+                        searchPanel.classList.add("hidden");
+                    }
+                });
+
+                searchBar.addEventListener("focus", showResults);
+                searchBar.addEventListener("input", showResults);
+
+                function showResults() {
+                    const query = searchBar.value.toLowerCase().trim();
+                    searchPanel.innerHTML = '<div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>';
+                    
+                    const filtered = searchDatabase.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.desc.toLowerCase().includes(query)
+                    );
+
+                    if (filtered.length === 0) {
+                        searchPanel.innerHTML += `
+                            <div class="px-2 py-3 text-center text-xs text-slate-400 font-semibold">
+                                No results found for "${searchBar.value}"
+                            </div>
+                        `;
+                    } else {
+                        filtered.forEach(item => {
+                            const itemEl = document.createElement("a");
+                            itemEl.href = item.url;
+                            itemEl.className = "flex flex-col px-3 py-2 rounded-xl hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-all duration-150 select-none group";
+                            itemEl.innerHTML = `
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-250 group-hover:text-indigo-600 transition-colors">${item.title}</span>
+                                <span class="text-[10px] text-slate-400 font-semibold">${item.desc}</span>
+                            `;
+                            searchPanel.appendChild(itemEl);
+                        });
+                    }
+                    searchPanel.classList.remove("hidden");
+                }
+            }
+
+            // =========================================================================
+            // PREMIUM WEBCAM PPG CARDIAC PULSE & STRESS DIAGNOSTICS (NEW)
+            // =========================================================================
+            let ppgStream = null;
+            let ppgVideo = document.getElementById("ppg-video");
+            let ppgCameraCanvas = document.getElementById("ppg-camera-canvas");
+            let ppgCameraCtx = ppgCameraCanvas ? ppgCameraCanvas.getContext("2d") : null;
+            let ppgPulseCanvas = document.getElementById("ppg-pulse-canvas");
+            let ppgPulseCtx = ppgPulseCanvas ? ppgPulseCanvas.getContext("2d") : null;
+            
+            const btnPpgInit = document.getElementById("btn-ppg-init");
+            const ppgCameraPlaceholder = document.getElementById("ppg-camera-placeholder");
+            const ppgPulsePlaceholder = document.getElementById("ppg-pulse-placeholder");
+            
+            const ppgHeartRate = document.getElementById("ppg-heart-rate");
+            const ppgHeartIcon = document.getElementById("ppg-heart-icon");
+            const ppgHrv = document.getElementById("ppg-hrv");
+            const ppgStressIndex = document.getElementById("ppg-stress-index");
+            const ppgSignalQuality = document.getElementById("ppg-signal-quality");
+
+            let ppgActive = false;
+            let ppgAnimFrame = null;
+            
+            // Buffers for signal filtering and peak detection
+            const signalHistory = [];
+            const smoothedHistory = [];
+            const timeHistory = [];
+            const ibiHistory = []; // Inter-Beat Intervals for HRV calculations
+            
+            let lastPeakTime = 0;
+            let calibrationStartTime = 0;
+            let fingerPlaced = false;
+
+            // Offscreen canvas for fast pixel frame rendering
+            const offscreenCanvas = document.createElement("canvas");
+            offscreenCanvas.width = 80;
+            offscreenCanvas.height = 60;
+            const offscreenCtx = offscreenCanvas.getContext("2d");
+
+            // Size canvasses
+            function resizePpgCanvases() {
+                if (ppgCameraCanvas) {
+                    ppgCameraCanvas.width = ppgCameraCanvas.offsetWidth;
+                    ppgCameraCanvas.height = ppgCameraCanvas.offsetHeight;
+                }
+                if (ppgPulseCanvas) {
+                    ppgPulseCanvas.width = ppgPulseCanvas.offsetWidth;
+                    ppgPulseCanvas.height = ppgPulseCanvas.offsetHeight;
+                }
+            }
+
+            window.addEventListener("resize", resizePpgCanvases);
+
+            if (btnPpgInit) {
+                btnPpgInit.addEventListener("click", togglePpgDiagnostics);
+            }
+
+            async function togglePpgDiagnostics() {
+                if (ppgActive) {
+                    stopPpgDiagnostics();
+                    return;
+                }
+
+                try {
+                    const constraints = {
+                        video: {
+                            width: { ideal: 320 },
+                            height: { ideal: 240 },
+                            facingMode: "user"
+                        },
+                        audio: false
+                    };
+
+                    ppgStream = await navigator.mediaDevices.getUserMedia(constraints);
+                    
+                    if (ppgVideo) {
+                        ppgVideo.srcObject = ppgStream;
+                        ppgVideo.setAttribute("playsinline", true);
+                        ppgVideo.play();
+                    }
+
+                    ppgActive = true;
+                    btnPpgInit.textContent = "🟥 Stop Cardiac Scan";
+                    btnPpgInit.classList.remove("bg-rose-600", "hover:bg-rose-700");
+                    btnPpgInit.classList.add("bg-slate-800", "hover:bg-slate-700");
+
+                    if (ppgCameraPlaceholder) ppgCameraPlaceholder.classList.add("hidden");
+                    if (ppgPulsePlaceholder) ppgPulsePlaceholder.classList.add("hidden");
+
+                    resizePpgCanvases();
+                    
+                    // Reset States
+                    signalHistory.length = 0;
+                    smoothedHistory.length = 0;
+                    timeHistory.length = 0;
+                    ibiHistory.length = 0;
+                    lastPeakTime = 0;
+                    calibrationStartTime = 0;
+                    fingerPlaced = false;
+
+                    if (ppgHeartRate) ppgHeartRate.textContent = "-- BPM";
+                    if (ppgHeartIcon) ppgHeartIcon.classList.add("hidden");
+                    if (ppgHrv) ppgHrv.textContent = "-- ms";
+                    if (ppgStressIndex) {
+                        ppgStressIndex.textContent = "--";
+                        ppgStressIndex.className = "text-slate-800 dark:text-slate-200 font-extrabold tracking-wide text-sm block mt-0.5";
+                    }
+                    if (ppgSignalQuality) ppgSignalQuality.textContent = "Aligning finger...";
+
+                    showToast("📸 Camera stream active. Cover lens with finger!");
+                    
+                    // Trigger the visual frame draw loop
+                    requestAnimationFrame(ppgFrameProcessorLoop);
+                } catch (err) {
+                    console.error("Camera access blocked:", err);
+                    alert("PPG Diagnostics require camera access. Please approve the prompt.");
+                }
+            }
+
+            function stopPpgDiagnostics() {
+                ppgActive = false;
+                if (ppgAnimFrame) {
+                    cancelAnimationFrame(ppgAnimFrame);
+                    ppgAnimFrame = null;
+                }
+                if (ppgStream) {
+                    ppgStream.getTracks().forEach(t => t.stop());
+                    ppgStream = null;
+                }
+                if (ppgVideo) {
+                    ppgVideo.srcObject = null;
+                }
+
+                btnPpgInit.textContent = "📸 Start Cardiac Pulse Scan";
+                btnPpgInit.classList.remove("bg-slate-800", "hover:bg-slate-700");
+                btnPpgInit.classList.add("bg-rose-600", "hover:bg-rose-700");
+
+                if (ppgCameraPlaceholder) ppgCameraPlaceholder.classList.remove("hidden");
+                if (ppgPulsePlaceholder) ppgPulsePlaceholder.classList.remove("hidden");
+
+                if (ppgSignalQuality) ppgSignalQuality.textContent = "Awaiting Start";
+                if (ppgHeartIcon) ppgHeartIcon.classList.add("hidden");
+
+                showToast("Cardiac PPG diagnostic scan ended.");
+            }
+
+            function ppgFrameProcessorLoop() {
+                if (!ppgActive || !ppgVideo || !ppgCameraCanvas || !ppgPulseCanvas) return;
+
+                ppgAnimFrame = requestAnimationFrame(ppgFrameProcessorLoop);
+
+                const w = ppgCameraCanvas.width;
+                const h = ppgCameraCanvas.height;
+
+                // 1. Draw raw camera video to camera guide canvas
+                if (ppgCameraCtx && ppgVideo.readyState === ppgVideo.HAVE_ENOUGH_DATA) {
+                    ppgCameraCtx.drawImage(ppgVideo, 0, 0, w, h);
+                    
+                    // Draw alignment target overlay
+                    ppgCameraCtx.strokeStyle = "rgba(239, 68, 68, 0.4)";
+                    ppgCameraCtx.lineWidth = 3.5;
+                    ppgCameraCtx.setLineDash([4, 6]);
+                    
+                    // Draw central guide circle
+                    ppgCameraCtx.beginPath();
+                    ppgCameraCtx.arc(w / 2, h / 2, Math.min(w, h) * 0.25, 0, 2 * Math.PI);
+                    ppgCameraCtx.stroke();
+                    ppgCameraCtx.setLineDash([]);
+                    
+                    // Text guide
+                    ppgCameraCtx.fillStyle = "rgba(255, 255, 255, 0.85)";
+                    ppgCameraCtx.font = "bold 9px sans-serif";
+                    ppgCameraCtx.textAlign = "center";
+                    ppgCameraCtx.fillText(fingerPlaced ? "FINGER DETECTED" : "PLACE FINGER OVER CAMERA", w / 2, h - 20);
+                }
+
+                // 2. Perform volatile pixel analysis on offscreen scaled image
+                if (ppgVideo.readyState === ppgVideo.HAVE_ENOUGH_DATA && offscreenCtx) {
+                    offscreenCtx.drawImage(ppgVideo, 0, 0, 80, 60);
+                    const imgData = offscreenCtx.getImageData(0, 0, 80, 60);
+                    const data = imgData.data;
+
+                    let sumRed = 0;
+                    let sumGreen = 0;
+                    let sumBlue = 0;
+                    const pixelCount = 80 * 60;
+
+                    for (let i = 0; i < data.length; i += 4) {
+                        sumRed += data[i];
+                        sumGreen += data[i + 1];
+                        sumBlue += data[i + 2];
+                    }
+
+                    const avgRed = sumRed / pixelCount;
+                    const avgGreen = sumGreen / pixelCount;
+                    const avgBlue = sumBlue / pixelCount;
+
+                    // Analyze if camera is covered by human skin (Very red, low green and blue)
+                    // human capillary hemoglobin transmission ratio
+                    const isCovered = (avgRed > 115 && avgGreen < 110 && avgBlue < 90 && (avgRed / (avgGreen + 0.1) > 1.3));
+
+                    if (isCovered) {
+                        if (!fingerPlaced) {
+                            fingerPlaced = true;
+                            calibrationStartTime = performance.now();
+                            if (ppgSignalQuality) ppgSignalQuality.textContent = "Calibrating signal...";
+                        }
+
+                        // High green-absorption hemoglobin index
+                        const rawSignal = avgGreen; 
+
+                        // 3. Sliding Detrending & Smoothing filters
+                        signalHistory.push(rawSignal);
+                        if (signalHistory.length > 150) signalHistory.shift();
+
+                        // detrend (subtract running average)
+                        let signalSum = 0;
+                        for (let val of signalHistory) signalSum += val;
+                        const signalMean = signalSum / signalHistory.length;
+                        const centeredSignal = rawSignal - signalMean;
+
+                        // simple moving average low-pass
+                        smoothedHistory.push(centeredSignal);
+                        if (smoothedHistory.length > 200) smoothedHistory.shift();
+
+                        let smoothedVal = centeredSignal;
+                        if (smoothedHistory.length > 3) {
+                            const len = smoothedHistory.length;
+                            smoothedVal = (smoothedHistory[len - 1] + smoothedHistory[len - 2] + smoothedHistory[len - 3]) / 3;
+                        }
+
+                        timeHistory.push(performance.now());
+                        if (timeHistory.length > 200) timeHistory.shift();
+
+                        // 4. Cardiac peak finding algorithm
+                        const timeSinceCalib = performance.now() - calibrationStartTime;
+                        if (timeSinceCalib > 2800) {
+                            if (ppgSignalQuality) ppgSignalQuality.textContent = "Signal: Excellent";
+                            
+                            // Scan for pulse peaks (local maxima crossing standard deviation thresholds)
+                            const shLen = smoothedHistory.length;
+                            if (shLen > 5) {
+                                const currentVal = smoothedHistory[shLen - 2];
+                                const prevVal = smoothedHistory[shLen - 3];
+                                const nextVal = smoothedHistory[shLen - 1];
+                                
+                                // Peak local extreme check
+                                const isLocalMax = (currentVal > prevVal && currentVal > nextVal);
+                                const now = performance.now();
+                                
+                                // Enforce a 380ms lockout refractory interval (~155 maximum BPM check)
+                                if (isLocalMax && (now - lastPeakTime > 380) && currentVal > 0.05) {
+                                    const ibi = now - lastPeakTime;
+                                    lastPeakTime = now;
+                                    
+                                    // IBI validity range: 380ms to 1500ms (40 to 155 BPM)
+                                    if (ibi > 380 && ibi < 1500) {
+                                        ibiHistory.push(ibi);
+                                        if (ibiHistory.length > 10) ibiHistory.shift();
+                                        
+                                        // Beat heart animation
+                                        triggerHeartBeatAnimation();
+                                        
+                                        // Compute Heart rate
+                                        let ibiSum = 0;
+                                        for (let interval of ibiHistory) ibiSum += interval;
+                                        const avgIbi = ibiSum / ibiHistory.length;
+                                        const bpm = Math.round(60000 / avgIbi);
+                                        
+                                        if (ppgHeartRate) ppgHeartRate.textContent = `${bpm} BPM`;
+
+                                        // Compute Heart Rate Variability (HRV - RMSSD successive difference math)
+                                        if (ibiHistory.length >= 4) {
+                                            let sumSqDiff = 0;
+                                            for (let j = 1; j < ibiHistory.length; j++) {
+                                                const diff = ibiHistory[j] - ibiHistory[j - 1];
+                                                sumSqDiff += diff * diff;
+                                            }
+                                            const rmssd = Math.round(Math.sqrt(sumSqDiff / (ibiHistory.length - 1)));
+                                            
+                                            if (ppgHrv) ppgHrv.textContent = `${rmssd} ms`;
+
+                                            // Classify Stress Index based on RMSSD variability
+                                            if (ppgStressIndex) {
+                                                if (rmssd >= 55) {
+                                                    ppgStressIndex.textContent = "Relaxed / Excellent 🟢";
+                                                    ppgStressIndex.className = "text-emerald-600 font-extrabold tracking-wide text-sm block mt-0.5 animate-pulse";
+                                                } else if (rmssd >= 30) {
+                                                    ppgStressIndex.textContent = "Balanced / Normal 🟡";
+                                                    ppgStressIndex.className = "text-yellow-600 dark:text-yellow-500 font-extrabold tracking-wide text-sm block mt-0.5";
+                                                } else {
+                                                    ppgStressIndex.textContent = "Elevated Stress 🔴";
+                                                    ppgStressIndex.className = "text-rose-600 font-extrabold tracking-wide text-sm block mt-0.5 animate-pulse";
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            if (ppgSignalQuality) ppgSignalQuality.textContent = `Calibrating: ${Math.round((timeSinceCalib/2800)*100)}%`;
+                        }
+
+                        // 5. Render Neon scrolling PPG waveform canvas
+                        drawPulseWaveform();
+
+                    } else {
+                        // Lens not covered
+                        fingerPlaced = false;
+                        ibiHistory.length = 0;
+                        signalHistory.length = 0;
+                        smoothedHistory.length = 0;
+                        timeHistory.length = 0;
+
+                        if (ppgSignalQuality) ppgSignalQuality.textContent = "Awaiting index finger...";
+                        if (ppgHeartRate) ppgHeartRate.textContent = "-- BPM";
+                        if (ppgHrv) ppgHrv.textContent = "-- ms";
+                        if (ppgStressIndex) {
+                            ppgStressIndex.textContent = "--";
+                            ppgStressIndex.className = "text-slate-800 dark:text-slate-200 font-extrabold tracking-wide text-sm block mt-0.5";
+                        }
+                        if (ppgHeartIcon) ppgHeartIcon.classList.add("hidden");
+
+                        // Render static alignment placeholder text on scrolling canvas
+                        if (ppgPulseCtx) {
+                            const pw = ppgPulseCanvas.width;
+                            const ph = ppgPulseCanvas.height;
+                            ppgPulseCtx.fillStyle = "#020617";
+                            ppgPulseCtx.fillRect(0, 0, pw, ph);
+                            
+                            ppgPulseCtx.fillStyle = "rgba(148, 163, 184, 0.4)";
+                            ppgPulseCtx.font = "10px monospace";
+                            ppgPulseCtx.textAlign = "center";
+                            ppgPulseCtx.fillText("AWAITING INDEX FINGER POSITION OVER WEBCAM LENS...", pw / 2, ph / 2);
+                        }
+                    }
+                }
+            }
+
+            function drawPulseWaveform() {
+                if (!ppgPulseCanvas || !ppgPulseCtx || smoothedHistory.length < 2) return;
+
+                const pw = ppgPulseCanvas.width;
+                const ph = ppgPulseCanvas.height;
+
+                ppgPulseCtx.fillStyle = "rgba(2, 6, 23, 0.35)"; // trailing decay glow
+                ppgPulseCtx.fillRect(0, 0, pw, ph);
+
+                // Draw central reference axis
+                ppgPulseCtx.strokeStyle = "rgba(51, 65, 85, 0.1)";
+                ppgPulseCtx.lineWidth = 1;
+                ppgPulseCtx.beginPath();
+                ppgPulseCtx.moveTo(0, ph / 2);
+                ppgPulseCtx.lineTo(pw, ph / 2);
+                ppgPulseCtx.stroke();
+
+                // Find peak amplitude for dynamic scale fitting
+                let maxSig = 0.01;
+                for (let val of smoothedHistory) {
+                    if (Math.abs(val) > maxSig) maxSig = Math.abs(val);
+                }
+
+                // Waveform rendering colors
+                ppgPulseCtx.beginPath();
+                ppgPulseCtx.lineWidth = 2.5;
+
+                if (activeTheme === "cyber") ppgPulseCtx.strokeStyle = "rgb(236, 72, 153)"; // neon hot pink
+                else if (activeTheme === "retro") ppgPulseCtx.strokeStyle = "rgb(245, 158, 11)"; // IBM amber
+                else ppgPulseCtx.strokeStyle = "rgb(244, 63, 94)"; // Rose red pulse line!
+
+                const sliceW = pw / 150;
+                let currentX = pw;
+
+                // Draw lines backwards from right edge (latest samples) to left
+                for (let i = smoothedHistory.length - 1; i >= 0; i--) {
+                    const centeredVal = smoothedHistory[i];
+                    // Invert green absorption: peak blood volume corresponds to maximum hemoglobin absorption
+                    // We flip the sign so it looks like a standard medical PPG curve!
+                    const normalizedVal = -centeredVal / maxSig; 
+                    
+                    const drawY = (normalizedVal * ph * 0.33) + ph / 2;
+
+                    if (i === smoothedHistory.length - 1) {
+                        ppgPulseCtx.moveTo(currentX, drawY);
+                    } else {
+                        ppgPulseCtx.lineTo(currentX, drawY);
+                    }
+
+                    currentX -= sliceW;
+                    if (currentX < 0) break;
+                }
+                ppgPulseCtx.stroke();
+            }
+
+            function triggerHeartBeatAnimation() {
+                if (!ppgHeartIcon) return;
+                
+                ppgHeartIcon.classList.remove("hidden");
+                ppgHeartIcon.classList.remove("scale-110", "animate-pulse");
+                
+                // Force layout reflow
+                void ppgHeartIcon.offsetWidth; 
+                
+                ppgHeartIcon.classList.add("scale-110", "animate-pulse");
+                setTimeout(() => {
+                    ppgHeartIcon.classList.remove("scale-110", "animate-pulse");
+                }, 220);
+            }
+        });
+    
+            // Register Service Worker for PWA
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('sw.js')
+                        .then(reg => console.log('[PWA] Service Worker registered scope:', reg.scope))
+                        .catch(err => console.error('[PWA] Service Worker registration failed:', err));
+                });
+            }
+    </script>
+<script>
+    // Interactive Mobile Menu Toggle & FAQ Accordions
+    document.addEventListener("DOMContentLoaded", () => {
+        const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+        const mobileNavPanel = document.getElementById("mobile-nav-panel");
+        const hamburgerIcon = document.getElementById("hamburger-icon");
+        const hamburgerClose = document.getElementById("hamburger-close");
+
+        if (mobileMenuToggle && mobileNavPanel && hamburgerIcon && hamburgerClose) {
+            mobileMenuToggle.addEventListener("click", () => {
+                mobileNavPanel.classList.toggle("hidden");
+                hamburgerIcon.classList.toggle("hidden");
+                hamburgerClose.classList.toggle("hidden");
+            });
+        }
+
+        // FAQ Accordion toggles
+        const faqButtons = document.querySelectorAll('.faq-btn');
+        faqButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const answer = btn.nextElementSibling;
+                const icon = btn.querySelector('.faq-icon');
+                
+                if (answer.classList.contains('hidden')) {
+                    answer.classList.remove('hidden');
+                    icon.textContent = "âž–";
+                    icon.style.transform = "rotate(180deg)";
+                } else {
+                    answer.classList.add('hidden');
+                    icon.textContent = "➕";
+                    icon.style.transform = "rotate(0deg)";
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
