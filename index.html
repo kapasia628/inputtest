@@ -1746,5 +1746,63 @@
         }
     });
 </script>
+
+<!-- Desktop Update Modal -->
+<div id="desktop-update-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden p-4 bg-black/60 backdrop-blur-sm">
+    <div class="relative w-full max-w-md p-6 overflow-hidden transition-all transform border bg-white/95 dark:bg-slate-900/95 border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl animate-scaleUp">
+        <div class="flex items-start gap-4">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full shrink-0 bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">New Update Available! (નવું અપડેટ ઉપલબ્ધ છે!)</h3>
+                <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">A new version of InputTest Desktop app is ready. Please update now to get the latest features and bug fixes. (નવું વર્ઝન <span id="desktop-new-version" class="font-semibold text-blue-600 dark:text-blue-400">1.0.0</span> ડાઉનલોડ માટે ઉપલબ્ધ છે.)</p>
+            </div>
+        </div>
+        <div class="flex gap-3 mt-6 justify-end">
+            <button id="desktop-update-close" class="px-4 py-2 text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-all">Later (પછીથી)</button>
+            <button id="desktop-update-btn" class="px-4 py-2 text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition-all">Update Now (અપડેટ કરો)</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Desktop App Auto-Updater check logic
+    document.addEventListener("DOMContentLoaded", () => {
+        if (window.__TAURI__) {
+            const CURRENT_VERSION = "1.0.0";
+            
+            // Wait 2 seconds before checking for updates to let the app load smoothly
+            setTimeout(() => {
+                fetch("https://inputtest.online/desktop-version.json")
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.version && data.version !== CURRENT_VERSION) {
+                            const modal = document.getElementById("desktop-update-modal");
+                            const newVerSpan = document.getElementById("desktop-new-version");
+                            const updateBtn = document.getElementById("desktop-update-btn");
+                            const closeBtn = document.getElementById("desktop-update-close");
+                            
+                            if (modal && newVerSpan && updateBtn && closeBtn) {
+                                newVerSpan.textContent = data.version;
+                                modal.classList.remove("hidden");
+                                
+                                updateBtn.addEventListener("click", () => {
+                                    window.__TAURI__.shell.open(data.url || "https://github.com/kapasia628/inputtest/actions");
+                                });
+                                
+                                closeBtn.addEventListener("click", () => {
+                                    modal.classList.add("hidden");
+                                });
+                            }
+                        }
+                    })
+                    .catch(err => console.log("Update check failed/offline:", err));
+            }, 2000);
+        }
+    });
+</script>
 </body>
 </html>
