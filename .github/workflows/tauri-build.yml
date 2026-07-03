@@ -24,6 +24,12 @@ jobs:
       - name: Install Tauri CLI
         run: npm install -g @tauri-apps/cli@1.5
 
+      - name: Prepare dist directory
+        shell: powershell
+        run: |
+          New-Item -ItemType Directory -Force -Path dist
+          Get-ChildItem -Path . -Exclude "src-tauri", ".github", ".git", "dist" | Copy-Item -Destination dist -Recurse -Force
+
       - name: Build Tauri App
         run: tauri build
 
