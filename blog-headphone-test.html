@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="canonical" href="https://inputtest.online/blog.html">
+    <link rel="canonical" href="https://inputtest.online/blog-headphone-test.html">
     <script>
         // Inline theme helper to avoid UI flash of light theme
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -19,40 +19,47 @@
     <link rel="icon" type="image/png" href="icon-192.png">
     
     <!-- SEO Meta Tags -->
-    <title>Expert Hardware & Input Device Diagnostics Blog | InputTest.online</title>
-    <meta name="description" content="Read expert troubleshooting guides, hardware calibration tutorials, and deep-dives into keyboard latency, mouse double-clicking, network jitter, and screen refresh rates.">
-    <meta name="keywords" content="hardware blog, keyboard repair guide, fix mouse double click, network jitter explanation, test monitor hz, controller drift fix, usb-c charging profile">
+    <title>How to Test Headphone Left & Right Stereo Sound Online | InputTest.online</title>
+    <meta name="description" content="Is your audio balanced? Learn how to test headphone left right sound online, verify spatial 3D audio channels, and fix sound output discrepancies.">
+    <meta name="keywords" content="test headphone left right online, check stereo audio channels, headphone balance test, test spatial audio">
 
     <!-- Open Graph / Facebook Meta Tags -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://inputtest.online/blog.html">
-    <meta property="og:title" content="Expert Hardware & Input Device Diagnostics Blog | InputTest.online">
-    <meta property="og:description" content="Read expert troubleshooting guides, hardware calibration tutorials, and deep-dives into keyboard latency, mouse double-clicking, network jitter, and screen refresh rates.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://inputtest.online/blog-headphone-test.html">
+    <meta property="og:title" content="How to Test Headphone Left & Right Stereo Sound Online | InputTest.online">
+    <meta property="og:description" content="Is your audio balanced? Learn how to test headphone left right sound online, verify spatial 3D audio channels, and fix sound output discrepancies.">
     <meta property="og:image" content="https://inputtest.online/icon-512.png">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://inputtest.online/blog.html">
-    <meta name="twitter:title" content="Expert Hardware & Input Device Diagnostics Blog | InputTest.online">
-    <meta name="twitter:description" content="Read expert troubleshooting guides, hardware calibration tutorials, and deep-dives into keyboard latency, mouse double-clicking, network jitter, and screen refresh rates.">
+    <meta name="twitter:url" content="https://inputtest.online/blog-headphone-test.html">
+    <meta name="twitter:title" content="How to Test Headphone Left & Right Stereo Sound Online | InputTest.online">
+    <meta name="twitter:description" content="Is your audio balanced? Learn how to test headphone left right sound online, verify spatial 3D audio channels, and fix sound output discrepancies.">
     <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
 
-    <!-- JSON-LD FAQ/Blog Structured Data -->
+    <!-- JSON-LD FAQ/Article Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Blog",
-      "name": "InputTest.online Diagnostics Blog",
-      "url": "https://inputtest.online/blog.html",
-      "description": "Expert guides and tutorials on hardware calibration and input device testing.",
-      "publisher": {
-        "@type": "Organization",
-        "name": "InputTest.online",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://inputtest.online/icon-192.png"
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why is sound only coming out of one headphone ear?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This is usually caused by a loose audio jack, a bent cable core, or incorrect system balance settings. Testing left and right channels separately helps isolate whether the issue is hardware or software."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a headphone stereo test?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A stereo test plays isolated frequencies on the left and right speakers independently. This verifies that audio channels are mapped correctly and that spatial audio cues function as intended."
+          }
         }
-      }
+      ]
     }
     </script>
     
@@ -263,230 +270,97 @@
     </nav>
 
     <!-- Main Content Container -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
         
-        <!-- Header -->
-        <div class="text-left mb-12">
-            <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
-                📚 Diagnostic Library & Technical Guides
-            </h1>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mt-2 font-medium max-w-3xl">
-                Deep-dives into hardware latency, stick drift, double-clicking sensors, spatial sound routing, and detailed diagnostic repair instructions written by tech experts.
-            </p>
+        <!-- Breadcrumb -->
+        <nav class="flex text-xs font-semibold text-slate-400 dark:text-slate-500 mb-6 uppercase tracking-wider select-none">
+            <a href="/" class="hover:text-blue-600">Home</a>
+            <span class="mx-2">&gt;</span>
+            <a href="blog.html" class="hover:text-blue-600">Blog</a>
+            <span class="mx-2">&gt;</span>
+            <span class="text-slate-600 dark:text-slate-400">Audio</span>
+        </nav>
+
+        <!-- Article Header -->
+        <header class="text-left mb-8 space-y-4">
+            <div class="flex items-center gap-3">
+                <span class="bg-amber-600/10 text-amber-600 dark:text-amber-400 text-[10px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">Audio</span>
+                <span class="text-xs text-slate-450 dark:text-slate-500 font-mono">3 min read</span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">How to Test Headphone Left & Right Stereo Sound Channels</h1>
+            <p class="text-sm text-slate-500 dark:text-slate-455 font-medium leading-relaxed">Perform an instant channel audio routing check to verify stereo separation, diagnose channel volume imbalances, and test spatial 3D audio.</p>
+        </header>
+
+        <!-- Featured Image -->
+        <div class="w-full h-64 sm:h-96 rounded-3xl overflow-hidden mb-10 shadow-md">
+            <img src="blog_network.png" alt="How to Test Headphone Left & Right Stereo Sound Cover" class="w-full h-full object-cover">
         </div>
 
-        <!-- Blog Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Article content grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start text-left">
+            
+            <!-- Left 8-columns: Article Content -->
+            <article class="lg:col-span-8 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 shadow-sm backdrop-blur-md space-y-6">
+<p class="text-sm font-medium text-slate-650 dark:text-slate-350 leading-relaxed">
+                    Whether you're gaming, editing videos, or listening to music, accurate stereo sound is crucial. In gaming, correct left-right separation helps you localize footsteps and sound effects. If your channels are reversed or unbalanced, it can completely ruin the experience.
+                </p>
 
-            <!-- Card 1 -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
-                <div class="h-48 overflow-hidden bg-slate-100 dark:bg-slate-950 relative">
-                    <img src="blog_keyboard.png" alt="Keyboard Troubleshooting Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute top-4 left-4 bg-blue-600 text-white text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase">Keyboard</span>
+                <div class="space-y-2.5 text-left">
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">1. Test Stereo Channel Separation</h2>
+                    <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed">Stereo sound requires separate tracks for left and right speakers. Use our sound tester to play tones individually. If you hear the left tone in both ears, your system sound output is set to 'Mono' instead of 'Stereo' in your OS Settings.</p>
                 </div>
-                <div class="p-6 flex flex-col flex-grow text-left">
-                    <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">5 min read</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-2 leading-tight group-hover:text-blue-600 transition-colors">How to Fix Keyboard Keys Not Registering or Double Typing</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">Fix sticky switches, resolve membrane or mechanical latency issues, and clean contact pins easily to fix stuck key registers.</p>
-                    <a href="blog-keyboard-keys.html" class="text-xs font-bold text-blue-600 dark:text-blue-400 mt-auto pt-4 flex items-center gap-1 hover:underline">Read Guide &rarr;</a>
+                <div class="space-y-2.5 text-left">
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">2. Fix Reversed Audio Channels</h2>
+                    <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed">If left sounds are coming out of your right ear, make sure your headphones are worn correctly (check the 'L' and 'R' indicators). If they are correct, the reversed audio is caused by incorrect wiring in the 3.5mm jack or a faulty USB soundcard adapter.</p>
                 </div>
-            </div>
+                <div class="space-y-2.5 text-left">
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">3. Check and Adjust Volume Balance</h2>
+                    <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed">If one earbud is quieter, it could be due to dirt buildup inside the ear tip or a software balance offset. Go to your Sound Control Panel, select your playback device properties, go to levels, click 'Balance', and ensure both left and right sliders are set to equal values.</p>
+                </div>
+                <!-- Interactive Call to Action Card -->
+                <div class="p-6 bg-gradient-to-br from-blue-600/5 to-indigo-600/5 dark:from-blue-600/15 dark:to-indigo-650/10 border border-blue-500/10 dark:border-blue-500/20 rounded-3xl mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="space-y-1 text-center sm:text-left">
+                        <h4 class="text-sm font-bold text-slate-850 dark:text-white">Check Your Audio Separation Now</h4>
+                        <p class="text-[11px] text-slate-400 font-medium">Verify left/right speaker channels, test stereo balance, and run frequency sweeps.</p>
+                    </div>
+                    <a href="sound.html" class="h-10 px-5 bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-extrabold text-[11px] rounded-xl uppercase tracking-wider transition-all flex items-center justify-center shrink-0 shadow-sm focus:outline-none">Launch Sound Tester</a>
+                </div>
 
-            <!-- Card 2 -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
-                <div class="h-48 overflow-hidden bg-slate-100 dark:bg-slate-950 relative">
-                    <img src="blog_mouse.png" alt="Mouse Double Clicking Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute top-4 left-4 bg-emerald-600 text-white text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase">Mouse</span>
-                </div>
-                <div class="p-6 flex flex-col flex-grow text-left">
-                    <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">6 min read</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-2 leading-tight group-hover:text-emerald-600 transition-colors">How to Detect and Fix Mouse Double-Clicking Issues</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">Diagnose switch debounce times, adjust mouse configuration scripts, and clean copper leaf springs in gaming mice switches.</p>
-                    <a href="blog-mouse-double-click.html" class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-auto pt-4 flex items-center gap-1 hover:underline">Read Guide &rarr;</a>
-                </div>
-            </div>
+            </article>
 
-            <!-- Card 3 -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
-                <div class="h-48 overflow-hidden bg-slate-100 dark:bg-slate-950 relative">
-                    <img src="blog_network.png" alt="Network Jitter Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute top-4 left-4 bg-indigo-600 text-white text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase">Network</span>
+            <!-- Right 4-columns: FAQ & Sidebar -->
+            <aside class="lg:col-span-4 space-y-6">
+                
+                <!-- Quick FAQs -->
+                <div class="bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-6 shadow-sm backdrop-blur-md space-y-4">
+                    <span class="text-[9px] font-mono text-emerald-600 dark:text-emerald-450 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-850 pb-2">❓ Quick FAQs</span>
+                    
+                    <div class="space-y-4">
+                        <div class="space-y-1.5">
+                            <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">Why is sound only coming out of one headphone ear?</h5>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">This is usually caused by a loose audio jack, a bent cable core, or incorrect system balance settings. Testing left and right channels separately helps isolate whether the issue is hardware or software.</p>
+                        </div>
+                        <div class="space-y-1.5 border-t border-slate-100 dark:border-slate-850 pt-3">
+                            <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">What is a headphone stereo test?</h5>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold leading-relaxed">A stereo test plays isolated frequencies on the left and right speakers independently. This verifies that audio channels are mapped correctly and that spatial audio cues function as intended.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="p-6 flex flex-col flex-grow text-left">
-                    <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">7 min read</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-2 leading-tight group-hover:text-indigo-600 transition-colors">What is Network Jitter and How to Optimize LAN Latency</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">Learn how ping variance and packet arrival discrepancies cause game lag, and configure Ethernet adapters for ultimate stability.</p>
-                    <a href="blog-network-jitter.html" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 mt-auto pt-4 flex items-center gap-1 hover:underline">Read Guide &rarr;</a>
-                </div>
-            </div>
 
-            <!-- Card 4 -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
-                <div class="h-48 overflow-hidden bg-slate-100 dark:bg-slate-950 relative">
-                    <img src="blog_monitor.png" alt="Monitor Hz Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute top-4 left-4 bg-purple-600 text-white text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase">Display</span>
+                <!-- Diagnostics Tools shortcut panel -->
+                <div class="bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-6 shadow-sm backdrop-blur-md">
+                    <span class="text-[9px] font-mono text-slate-450 dark:text-slate-500 uppercase tracking-widest font-bold block border-b border-slate-100 dark:border-slate-850 pb-2 mb-3">⚡ Calibration Tools</span>
+                    <div class="grid grid-cols-2 gap-2 text-[10px] font-bold text-slate-500 dark:text-slate-400">
+                        <a href="keyboard.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⌨️ Keyboard</a>
+                        <a href="mouse.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🖱️ Mouse & CPS</a>
+                        <a href="gamepad.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎮 Gamepad drift</a>
+                        <a href="lan.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🌐 LAN Jitter</a>
+                        <a href="hdmi.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📺 HDMI & DP</a>
+                        <a href="vga.html" class="hover:text-blue-600 p-1.5 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎨 VGA Calibrator</a>
+                    </div>
                 </div>
-                <div class="p-6 flex flex-col flex-grow text-left">
-                    <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">5 min read</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-2 leading-tight group-hover:text-purple-600 transition-colors">How to Verify Your Monitor's Refresh Rate Hz & Bandwidth</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">Confirm your display interface is correctly configured to 144Hz, 240Hz, or 360Hz, and choose the correct DP or HDMI cable.</p>
-                    <a href="blog-monitor-hz.html" class="text-xs font-bold text-purple-600 dark:text-purple-450 mt-auto pt-4 flex items-center gap-1 hover:underline">Read Guide &rarr;</a>
-                </div>
-            </div>
 
-            <!-- Card 5 -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
-                <div class="h-48 overflow-hidden bg-slate-100 dark:bg-slate-950 relative">
-                    <img src="blog_monitor.png" alt="VGA Calibration Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute top-4 left-4 bg-amber-600 text-white text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase">Analog</span>
-                </div>
-                <div class="p-6 flex flex-col flex-grow text-left">
-                    <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">6 min read</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-2 leading-tight group-hover:text-amber-600 transition-colors">VGA vs HDMI: How to Calibrate Analog Monitor Blur & Phase</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">Tune clocks and phases on VGA CRT/LCD monitors using zebra line test patterns to eliminate text blur and horizontal jitter.</p>
-                    <a href="blog-vga-calibration.html" class="text-xs font-bold text-amber-600 dark:text-amber-400 mt-auto pt-4 flex items-center gap-1 hover:underline">Read Guide &rarr;</a>
-                </div>
-            </div>
-
-            <!-- Card 6 -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
-                <div class="h-48 overflow-hidden bg-slate-100 dark:bg-slate-950 relative">
-                    <img src="blog_generic.png" alt="USB-C Speed Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute top-4 left-4 bg-teal-600 text-white text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase">USB-C</span>
-                </div>
-                <div class="p-6 flex flex-col flex-grow text-left">
-                    <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">5 min read</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-2 leading-tight group-hover:text-teal-600 transition-colors">USB-C vs Thunderbolt: Profiling Speed and Power Delivery</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">Examine bandwidth allocations, Power Delivery profiles up to 240W, and DisplayPort Alt Modes configuration rules.</p>
-                    <a href="blog-usb-c-speeds.html" class="text-xs font-bold text-teal-600 dark:text-teal-400 mt-auto pt-4 flex items-center gap-1 hover:underline">Read Guide &rarr;</a>
-                </div>
-            </div>
-
-            <!-- Card 7 -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
-                <div class="h-48 overflow-hidden bg-slate-100 dark:bg-slate-950 relative">
-                    <img src="blog_generic.png" alt="Microphone Setup Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute top-4 left-4 bg-rose-600 text-white text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase">Audio</span>
-                </div>
-                <div class="p-6 flex flex-col flex-grow text-left">
-                    <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">6 min read</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-2 leading-tight group-hover:text-rose-600 transition-colors">How to Test and Adjust Microphone Noise Gates & Feedback</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">Configure noise gates to eliminate keyboard clicking noise, prevent feedback loops, and profile mic frequency responses.</p>
-                    <a href="blog-microphone-setup.html" class="text-xs font-bold text-rose-600 dark:text-rose-450 mt-auto pt-4 flex items-center gap-1 hover:underline">Read Guide &rarr;</a>
-                </div>
-            </div>
-
-            <!-- Card 8 -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
-                <div class="h-48 overflow-hidden bg-slate-100 dark:bg-slate-950 relative">
-                    <img src="blog_generic.png" alt="Drawing Tablet Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute top-4 left-4 bg-sky-600 text-white text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase">Tablet</span>
-                </div>
-                <div class="p-6 flex flex-col flex-grow text-left">
-                    <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">5 min read</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-2 leading-tight group-hover:text-sky-600 transition-colors">Drawing Tablet Pen Pressure Calibration and Coordinates Fix</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">Fix pen pressure sensitivity issues, solve offset coordinates mappings, and calibrate stylus response curves.</p>
-                    <a href="blog-drawing-tablet.html" class="text-xs font-bold text-sky-600 dark:text-sky-400 mt-auto pt-4 flex items-center gap-1 hover:underline">Read Guide &rarr;</a>
-                </div>
-            </div>
-
-            <!-- Card 9 -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
-                <div class="h-48 overflow-hidden bg-slate-100 dark:bg-slate-950 relative">
-                    <img src="blog_gamepad.png" alt="Gamepad Drift Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute top-4 left-4 bg-orange-600 text-white text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase">Gamepad</span>
-                </div>
-                <div class="p-6 flex flex-col flex-grow text-left">
-                    <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">6 min read</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-2 leading-tight group-hover:text-orange-600 transition-colors">Gamepad Drift Calibration: Fixing Controller Joysticks</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">Profile joystick deadzones, calibrate potentiometer values, and remove stick drift issues on console controllers.</p>
-                    <a href="blog-gamepad-drift.html" class="text-xs font-bold text-orange-600 dark:text-orange-400 mt-auto pt-4 flex items-center gap-1 hover:underline">Read Guide &rarr;</a>
-                </div>
-            </div>
-
-            <!-- Card 10 -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
-                <div class="h-48 overflow-hidden bg-slate-100 dark:bg-slate-950 relative">
-                    <img src="blog_battery.png" alt="Battery Health Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute top-4 left-4 bg-red-650 text-white text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase">Battery</span>
-                </div>
-                <div class="p-6 flex flex-col flex-grow text-left">
-                    <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">6 min read</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-2 leading-tight group-hover:text-red-650 transition-colors">How to Check Laptop Battery Health Capacity & Cycle Count</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">Inspect battery wear levels, run power configuration reports in Windows/macOS, and calculate maximum charge capacity profiles.</p>
-                    <a href="blog-battery-health.html" class="text-xs font-bold text-red-650 dark:text-red-400 mt-auto pt-4 flex items-center gap-1 hover:underline">Read Guide &rarr;</a>
-                </div>
-            </div>
-
-            <!-- Card 11 (Gamepad Drift DS4) -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
-                <div class="h-48 overflow-hidden bg-slate-100 dark:bg-slate-950 relative">
-                    <img src="blog_gamepad.png" alt="Gamepad Drift Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute top-4 left-4 bg-blue-600 text-white text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase">Gamepad</span>
-                </div>
-                <div class="p-6 flex flex-col flex-grow text-left">
-                    <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">5 min read</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-2 leading-tight group-hover:text-blue-600 transition-colors">How to Test DualShock 4 & DualSense Stick Drift Online</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">Measure circularity error, check potentiometer deadzones, and clean analog modules on PS4/PS5 controllers.</p>
-                    <a href="blog-dualshock-drift.html" class="text-xs font-bold text-blue-600 dark:text-blue-400 mt-auto pt-4 flex items-center gap-1 hover:underline">Read Guide &rarr;</a>
-                </div>
-            </div>
-
-            <!-- Card 12 (Mouse Polling Rate) -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
-                <div class="h-48 overflow-hidden bg-slate-100 dark:bg-slate-950 relative">
-                    <img src="blog_mouse.png" alt="Mouse Polling Rate Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute top-4 left-4 bg-emerald-600 text-white text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase">Mouse</span>
-                </div>
-                <div class="p-6 flex flex-col flex-grow text-left">
-                    <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">4 min read</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-2 leading-tight group-hover:text-emerald-600 transition-colors">How to Measure Mouse Polling Rate Online - 125Hz to 1000Hz Check</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">Check mouse reporting frequency in real-time, test high-Hz sensor stability, and reduce mouse input lag.</p>
-                    <a href="blog-mouse-polling-rate.html" class="text-xs font-bold text-emerald-600 dark:text-emerald-450 mt-auto pt-4 flex items-center gap-1 hover:underline">Read Guide &rarr;</a>
-                </div>
-            </div>
-
-            <!-- Card 13 (Webcam Resolution) -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
-                <div class="h-48 overflow-hidden bg-slate-100 dark:bg-slate-950 relative">
-                    <img src="blog_generic.png" alt="Webcam Resolution Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute top-4 left-4 bg-purple-600 text-white text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase">Camera</span>
-                </div>
-                <div class="p-6 flex flex-col flex-grow text-left">
-                    <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">5 min read</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-2 leading-tight group-hover:text-purple-600 transition-colors">How to Test Webcam Resolution, Megapixels and FPS Online</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">Verify maximum hardware video resolutions, check frame rate performance, and adjust video quality.</p>
-                    <a href="blog-webcam-resolution.html" class="text-xs font-bold text-purple-600 dark:text-purple-400 mt-auto pt-4 flex items-center gap-1 hover:underline">Read Guide &rarr;</a>
-                </div>
-            </div>
-
-            <!-- Card 14 (Headphone stereo test) -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
-                <div class="h-48 overflow-hidden bg-slate-100 dark:bg-slate-950 relative">
-                    <img src="blog_network.png" alt="Headphone Test Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute top-4 left-4 bg-amber-600 text-white text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase">Audio</span>
-                </div>
-                <div class="p-6 flex flex-col flex-grow text-left">
-                    <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">3 min read</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-2 leading-tight group-hover:text-amber-600 transition-colors">How to Test Headphone Left & Right Stereo Sound Online</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">Identify channel routing issues, check left/right headphone balance, and perform spatial speaker sweeps.</p>
-                    <a href="blog-headphone-test.html" class="text-xs font-bold text-amber-600 dark:text-amber-400 mt-auto pt-4 flex items-center gap-1 hover:underline">Read Guide &rarr;</a>
-                </div>
-            </div>
-
-            <!-- Card 15 (Battery Cycles) -->
-            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group">
-                <div class="h-48 overflow-hidden bg-slate-100 dark:bg-slate-950 relative">
-                    <img src="blog_battery.png" alt="Battery Cycles Cover" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute top-4 left-4 bg-rose-600 text-white text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase">Battery</span>
-                </div>
-                <div class="p-6 flex flex-col flex-grow text-left">
-                    <span class="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">5 min read</span>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mt-2 leading-tight group-hover:text-rose-600 transition-colors">How to Check Laptop Battery Health & Charge Cycles in Windows</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">Generate battery logs in Windows, calculate battery wear ratios, and check charge cycles.</p>
-                    <a href="blog-battery-cycles.html" class="text-xs font-bold text-rose-600 dark:text-rose-450 mt-auto pt-4 flex items-center gap-1 hover:underline">Read Guide &rarr;</a>
-                </div>
-            </div>
+            </aside>
 
         </div>
 
