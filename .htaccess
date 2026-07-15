@@ -5,13 +5,11 @@ Options -Indexes
 RewriteEngine On
 RewriteBase /
 
-# 1. Enforce HTTPS (HTTP to HTTPS Redirect, Cloudflare/Proxy Friendly)
-RewriteCond %{HTTPS} off
-RewriteCond %{HTTP:X-Forwarded-Proto} !https
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-# 2. Redirect WWW to Non-WWW (Canonical Domain)
-RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+# 1. Enforce HTTPS and Non-WWW in a single hop (Cloudflare/Proxy Friendly)
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP:X-Forwarded-Proto} !https [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$ [NC]
 RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
 # Custom 404 page redirection
