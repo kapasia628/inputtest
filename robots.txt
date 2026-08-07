@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap link for Google / Bing Search Engines
+Sitemap: https://inputtest.online/sitemap.xml

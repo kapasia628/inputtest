@@ -1,0 +1,230 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/keyboard.html",
+      "destination": "/keyboard",
+      "permanent": true
+    },
+    {
+      "source": "/mouse.html",
+      "destination": "/mouse",
+      "permanent": true
+    },
+    {
+      "source": "/mic.html",
+      "destination": "/mic",
+      "permanent": true
+    },
+    {
+      "source": "/webcam.html",
+      "destination": "/webcam",
+      "permanent": true
+    },
+    {
+      "source": "/gamepad.html",
+      "destination": "/gamepad",
+      "permanent": true
+    },
+    {
+      "source": "/display.html",
+      "destination": "/display",
+      "permanent": true
+    },
+    {
+      "source": "/draw.html",
+      "destination": "/draw",
+      "permanent": true
+    },
+    {
+      "source": "/sound.html",
+      "destination": "/sound",
+      "permanent": true
+    },
+    {
+      "source": "/latency.html",
+      "destination": "/latency",
+      "permanent": true
+    },
+    {
+      "source": "/usb.html",
+      "destination": "/usb",
+      "permanent": true
+    },
+    {
+      "source": "/usb-c.html",
+      "destination": "/usb-c",
+      "permanent": true
+    },
+    {
+      "source": "/biometric.html",
+      "destination": "/biometric",
+      "permanent": true
+    },
+    {
+      "source": "/battery.html",
+      "destination": "/battery",
+      "permanent": true
+    },
+    {
+      "source": "/printer.html",
+      "destination": "/printer",
+      "permanent": true
+    },
+    {
+      "source": "/scanner.html",
+      "destination": "/scanner",
+      "permanent": true
+    },
+    {
+      "source": "/vr.html",
+      "destination": "/vr",
+      "permanent": true
+    },
+    {
+      "source": "/lan.html",
+      "destination": "/lan",
+      "permanent": true
+    },
+    {
+      "source": "/hdmi.html",
+      "destination": "/hdmi",
+      "permanent": true
+    },
+    {
+      "source": "/vga.html",
+      "destination": "/vga",
+      "permanent": true
+    },
+    {
+      "source": "/specs.html",
+      "destination": "/specs",
+      "permanent": true
+    },
+    {
+      "source": "/report.html",
+      "destination": "/report",
+      "permanent": true
+    },
+    {
+      "source": "/blog.html",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/privacy.html",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/terms.html",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/blog-battery-health.html",
+      "destination": "/blog-battery-health",
+      "permanent": true
+    },
+    {
+      "source": "/blog-battery-cycles.html",
+      "destination": "/blog-battery-cycles",
+      "permanent": true
+    },
+    {
+      "source": "/blog-keyboard-keys.html",
+      "destination": "/blog-keyboard-keys",
+      "permanent": true
+    },
+    {
+      "source": "/blog-gamepad-drift.html",
+      "destination": "/blog-gamepad-drift",
+      "permanent": true
+    },
+    {
+      "source": "/blog-dualshock-drift.html",
+      "destination": "/blog-dualshock-drift",
+      "permanent": true
+    },
+    {
+      "source": "/blog-mouse-double-click.html",
+      "destination": "/blog-mouse-double-click",
+      "permanent": true
+    },
+    {
+      "source": "/blog-mouse-polling-rate.html",
+      "destination": "/blog-mouse-polling-rate",
+      "permanent": true
+    },
+    {
+      "source": "/blog-monitor-hz.html",
+      "destination": "/blog-monitor-hz",
+      "permanent": true
+    },
+    {
+      "source": "/blog-network-jitter.html",
+      "destination": "/blog-network-jitter",
+      "permanent": true
+    },
+    {
+      "source": "/blog-drawing-tablet.html",
+      "destination": "/blog-drawing-tablet",
+      "permanent": true
+    },
+    {
+      "source": "/blog-microphone-setup.html",
+      "destination": "/blog-microphone-setup",
+      "permanent": true
+    },
+    {
+      "source": "/blog-headphone-test.html",
+      "destination": "/blog-headphone-test",
+      "permanent": true
+    },
+    {
+      "source": "/blog-usb-c-speeds.html",
+      "destination": "/blog-usb-c-speeds",
+      "permanent": true
+    },
+    {
+      "source": "/blog-vga-calibration.html",
+      "destination": "/blog-vga-calibration",
+      "permanent": true
+    },
+    {
+      "source": "/blog-webcam-resolution.html",
+      "destination": "/blog-webcam-resolution",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=self, microphone=self, geolocation=()" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(js|css|png|jpg|jpeg|gif|webp|svg|ico|woff|woff2|ttf|otf)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+      ]
+    }
+  ]
+}
