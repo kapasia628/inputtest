@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <url>
       <loc>https://inputtest.online/</loc>
@@ -240,4 +240,21 @@
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
    </url>
-</urlset>
+   <url>
+      <loc>https://inputtest.online/cps-test</loc>
+      <lastmod>2026-08-07</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
+   </url>
+   <url>
+      <loc>https://inputtest.online/typing</loc>
+      <lastmod>2026-08-07</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
+   </url>
+   <url>
+      <loc>https://inputtest.online/reaction</loc>
+      <lastmod>2026-08-07</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
+   </url></urlset>

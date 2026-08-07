@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/typing">
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else { document.documentElement.classList.remove('dark'); }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+
+    <title>Typing Speed Test Online - WPM Test Free | InputTest</title>
+    <meta name="description" content="Free online typing speed test. Measure your WPM (Words Per Minute) and accuracy with 1-minute, 2-minute and 3-minute tests. Improve your typing speed with practice!">
+    <meta name="keywords" content="typing speed test, wpm test, typing test online, words per minute test, typing accuracy test, free typing test, keyboard typing speed, type faster online">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/typing">
+    <meta property="og:title" content="Typing Speed Test - Free WPM Test Online | InputTest">
+    <meta property="og:description" content="Measure your WPM typing speed and accuracy for free. 1-minute, 2-minute and 3-minute test modes available!">
+    <meta property="og:image" content="https://inputtest.online/blog_keyboard.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/typing">
+    <meta name="twitter:title" content="Typing Speed Test - Free WPM Test Online | InputTest">
+    <meta name="twitter:description" content="Measure your WPM typing speed and accuracy. 1, 2, and 3 minute test modes!">
+    <meta name="twitter:image" content="https://inputtest.online/blog_keyboard.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Typing Speed Test WPM - InputTest.online",
+      "url": "https://inputtest.online/typing",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Free online typing speed test. Measure WPM (Words Per Minute) and accuracy with 1, 2, and 3 minute timed tests."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What is a good typing speed?", "acceptedAnswer": { "@type": "Answer", "text": "The average typist types at 40-60 WPM. Professional typists average 65-75 WPM. Touch typists can reach 80-100 WPM. Exceptional typists exceed 100 WPM. The world record is 212 WPM." } },
+        { "@type": "Question", "name": "How can I improve my typing speed?", "acceptedAnswer": { "@type": "Answer", "text": "Practice daily with typing tests, learn touch typing (all 10 fingers), focus on accuracy before speed, and use proper ergonomics. Daily 15-30 minute practice sessions can improve speed by 10-20 WPM within a month." } },
+        { "@type": "Question", "name": "What is WPM?", "acceptedAnswer": { "@type": "Answer", "text": "WPM stands for Words Per Minute. It measures typing speed where each 'word' is standardized as 5 characters (including spaces). So typing 250 characters in 1 minute equals 50 WPM. Most professional jobs require 40+ WPM." } }
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Outfit','sans-serif'], mono: ['JetBrains Mono','monospace'] } } } }</script>
+    <style>
+        .glow-bg { background-color: #f8fafc; background-image: radial-gradient(circle at 50% 0%, rgba(99,102,241,0.08) 0%, transparent 50%); }
+        .dark .glow-bg { background-color: #0b0f19 !important; background-image: radial-gradient(circle at 50% 0%, rgba(99,102,241,0.15) 0%, transparent 50%) !important; }
+        @keyframes scaleUp { 0%{opacity:0;transform:scale(0.95)} 100%{opacity:1;transform:scale(1)} }
+        .animate-scaleUp { animation: scaleUp 0.18s ease forwards; }
+        .word-correct { color: #10b981; }
+        .word-wrong { color: #ef4444; text-decoration: underline; text-decoration-color: #ef4444; }
+        .word-current { background: rgba(99,102,241,0.15); border-radius: 3px; border-bottom: 2px solid #6366f1; }
+        .word-pending { color: #94a3b8; }
+        #typing-input { caret-color: #6366f1; }
+        .dark ::-webkit-scrollbar-track { background:#0f172a!important; }
+        .dark ::-webkit-scrollbar-thumb { background:#334155!important; }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+        .cursor-blink { animation: blink 1s infinite; }
+    </style>
+    <script src="config.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg relative overflow-x-hidden transition-colors duration-300">
+
+    <!-- Nav -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/" class="flex items-center gap-2.5 group">
+                    <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-300">
+                        <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="4"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10"/></svg>
+                        <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span></span>
+                    </div>
+                    <span class="brand-name font-black text-xl tracking-tight group-hover:text-blue-600 transition-colors">Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span></span>
+                </a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="/" class="text-sm py-1.5 px-1 text-slate-500 hover:text-slate-900 font-medium transition-colors">Home</a>
+                    <a href="keyboard.html" class="text-sm py-1.5 px-1 text-slate-500 hover:text-slate-900 font-medium transition-colors">Keyboard Test</a>
+                    <a href="typing.html" class="text-sm py-1.5 px-1 text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-500 font-bold">Typing Test</a>
+                    <a href="cps-test.html" class="text-sm py-1.5 px-1 text-slate-500 hover:text-slate-900 font-medium transition-colors">CPS Test</a>
+                    <a href="blog.html" class="text-sm py-1.5 px-1 text-slate-500 hover:text-slate-900 font-medium transition-colors">Blog</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="theme-toggle" class="p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 shadow-sm transition-all focus:outline-none">
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                    </button>
+                    <a href="/" class="text-xs text-blue-600 flex items-center gap-1 font-bold font-mono bg-blue-500/5 px-3 py-1.5 rounded-full border border-blue-500/15">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                        All Tools
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Ad -->
+    <div class="max-w-7xl mx-auto px-4 mt-6 w-full flex justify-center">
+        <div id="top-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-sm rounded-2xl flex items-center justify-center">
+            <span class="text-[10px] text-slate-400 font-mono uppercase tracking-widest">ADVERTISEMENT</span>
+        </div>
+    </div>
+
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+                Typing Speed Test — WPM
+                <span class="text-xs font-mono font-bold px-2 py-0.5 rounded border border-indigo-500/15 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 uppercase tracking-widest">Free Online</span>
+            </h1>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                Measure your typing speed in Words Per Minute (WPM) and accuracy. Choose your time mode and start typing!
+            </p>
+        </div>
+
+        <!-- Mode + Stats bar -->
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+            <div class="flex gap-2">
+                <button class="mode-btn active-mode px-4 py-1.5 rounded-full text-xs font-bold border border-indigo-500/30 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600" data-time="60">1 Minute</button>
+                <button class="mode-btn px-4 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-700 text-slate-500 hover:border-indigo-400 hover:text-indigo-600 transition-colors" data-time="120">2 Minutes</button>
+                <button class="mode-btn px-4 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-700 text-slate-500 hover:border-indigo-400 hover:text-indigo-600 transition-colors" data-time="180">3 Minutes</button>
+            </div>
+            <button id="restart-btn" class="px-4 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-700 text-slate-500 hover:border-red-400 hover:text-red-500 transition-colors flex items-center gap-1.5">
+                <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                Restart (Tab)
+            </button>
+        </div>
+
+        <!-- Live Stats -->
+        <div class="grid grid-cols-4 gap-3 mb-4">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 text-center shadow-sm">
+                <div class="text-[9px] font-mono text-slate-400 uppercase tracking-widest mb-1">WPM</div>
+                <div id="live-wpm" class="text-2xl font-black text-indigo-500 font-mono">0</div>
+            </div>
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 text-center shadow-sm">
+                <div class="text-[9px] font-mono text-slate-400 uppercase tracking-widest mb-1">Accuracy</div>
+                <div id="live-acc" class="text-2xl font-black text-emerald-500 font-mono">100%</div>
+            </div>
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 text-center shadow-sm">
+                <div class="text-[9px] font-mono text-slate-400 uppercase tracking-widest mb-1">Errors</div>
+                <div id="live-errors" class="text-2xl font-black text-red-500 font-mono">0</div>
+            </div>
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 text-center shadow-sm">
+                <div class="text-[9px] font-mono text-slate-400 uppercase tracking-widest mb-1">Time</div>
+                <div id="live-timer" class="text-2xl font-black text-slate-700 dark:text-slate-200 font-mono">60s</div>
+            </div>
+        </div>
+
+        <!-- Word Display -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 mb-4 shadow-sm relative">
+            <div id="word-display" class="text-lg font-mono leading-10 tracking-wide min-h-[120px] select-none overflow-hidden max-h-[120px] relative cursor-text">
+                <!-- Words rendered by JS -->
+            </div>
+            <div id="start-overlay" class="absolute inset-0 rounded-3xl bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center cursor-pointer border border-indigo-200 dark:border-indigo-500/20">
+                <div class="text-center">
+                    <div class="text-3xl mb-2">⌨️</div>
+                    <div class="text-sm font-bold text-indigo-600">Click here or start typing</div>
+                    <div class="text-[10px] text-indigo-400 font-mono mt-1">Timer starts on first keystroke</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hidden Input -->
+        <input id="typing-input" type="text" class="opacity-0 absolute -z-10 w-1 h-1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Type here">
+
+        <!-- Result Modal (hidden by default) -->
+        <div id="result-modal" class="hidden bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-500/10 dark:to-purple-500/10 border border-indigo-200 dark:border-indigo-500/20 rounded-3xl p-8 mb-6 text-center animate-scaleUp">
+            <div class="text-4xl mb-3">🏁</div>
+            <h2 class="text-2xl font-black text-slate-800 dark:text-slate-100 mb-6">Test Complete!</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-indigo-100 dark:border-indigo-500/20">
+                    <div class="text-[10px] font-mono text-indigo-400 uppercase tracking-widest mb-1">WPM</div>
+                    <div id="result-wpm" class="text-4xl font-black text-indigo-600 font-mono">0</div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-emerald-100 dark:border-emerald-500/20">
+                    <div class="text-[10px] font-mono text-emerald-400 uppercase tracking-widest mb-1">Accuracy</div>
+                    <div id="result-acc" class="text-4xl font-black text-emerald-600 font-mono">0%</div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-red-100 dark:border-red-500/20">
+                    <div class="text-[10px] font-mono text-red-400 uppercase tracking-widest mb-1">Errors</div>
+                    <div id="result-errors" class="text-4xl font-black text-red-500 font-mono">0</div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-yellow-100 dark:border-yellow-500/20">
+                    <div class="text-[10px] font-mono text-yellow-400 uppercase tracking-widest mb-1">Best WPM</div>
+                    <div id="result-best" class="text-4xl font-black text-yellow-600 font-mono">0</div>
+                </div>
+            </div>
+            <div id="wpm-rating" class="text-base font-bold text-indigo-600 mb-6"></div>
+            <button id="retry-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3 rounded-2xl transition-colors text-sm">
+                🔄 Try Again
+            </button>
+        </div>
+
+        <!-- SEO Content -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 mb-6 shadow-sm">
+            <h2 class="text-xl font-extrabold text-slate-800 dark:text-slate-100 mb-4">How Fast Should You Type?</h2>
+            <div class="overflow-x-auto mb-4">
+                <table class="w-full text-sm">
+                    <thead><tr class="border-b border-slate-100 dark:border-slate-800"><th class="text-left py-2 px-3 text-[10px] font-mono text-slate-400 uppercase tracking-widest">Typing Level</th><th class="text-center py-2 px-3 text-[10px] font-mono text-slate-400 uppercase tracking-widest">WPM Range</th><th class="text-left py-2 px-3 text-[10px] font-mono text-slate-400 uppercase tracking-widest">Description</th></tr></thead>
+                    <tbody class="divide-y divide-slate-50 dark:divide-slate-800/50">
+                        <tr><td class="py-2.5 px-3 font-bold text-slate-400">🐢 Beginner</td><td class="py-2.5 px-3 text-center font-mono font-bold text-slate-400">&lt; 30 WPM</td><td class="py-2.5 px-3 text-slate-500">Hunt and peck typist, still learning</td></tr>
+                        <tr><td class="py-2.5 px-3 font-bold text-blue-500">📝 Average</td><td class="py-2.5 px-3 text-center font-mono font-bold text-blue-500">40–60 WPM</td><td class="py-2.5 px-3 text-slate-500">Most people type at this speed</td></tr>
+                        <tr><td class="py-2.5 px-3 font-bold text-emerald-500">✅ Good</td><td class="py-2.5 px-3 text-center font-mono font-bold text-emerald-500">60–80 WPM</td><td class="py-2.5 px-3 text-slate-500">Above average, professional level</td></tr>
+                        <tr><td class="py-2.5 px-3 font-bold text-orange-500">⚡ Fast</td><td class="py-2.5 px-3 text-center font-mono font-bold text-orange-500">80–100 WPM</td><td class="py-2.5 px-3 text-slate-500">Touch typist, programmer or writer</td></tr>
+                        <tr><td class="py-2.5 px-3 font-bold text-red-500">🚀 Expert</td><td class="py-2.5 px-3 text-center font-mono font-bold text-red-500">100+ WPM</td><td class="py-2.5 px-3 text-slate-500">Exceptional — top 1% of typists</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-600 dark:text-slate-400">
+                <p>The <strong>average typing speed</strong> for adults is 40-50 WPM. Trained touch typists can achieve 70-100+ WPM. The world typing speed record is an incredible <strong>212 WPM</strong> by Barbara Blackburn. Regular practice can improve your speed significantly.</p>
+                <div><h3 class="font-bold text-slate-700 dark:text-slate-200 mb-2">Tips to Type Faster:</h3><ul class="space-y-1"><li>✅ Learn proper finger placement (home row)</li><li>✅ Practice without looking at keyboard</li><li>✅ Focus on accuracy first, speed follows</li><li>✅ Practice 15-30 minutes daily</li><li>✅ Use all 10 fingers (touch typing)</li></ul></div>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm mb-8">
+            <h2 class="text-xl font-extrabold text-slate-800 dark:text-slate-100 mb-4">FAQ</h2>
+            <div class="space-y-3">
+                <div class="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden">
+                    <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-semibold text-slate-700 dark:text-slate-200 text-sm hover:bg-slate-50 dark:hover:bg-slate-800/50">What is a good WPM? <span class="faq-icon text-slate-400 text-xs ml-2">➕</span></button>
+                    <div class="hidden px-4 pb-4 text-sm text-slate-500">60 WPM is considered good for most jobs. 80+ WPM is excellent. Professional data entry requires 60-80 WPM. Developers and writers often type 70-90 WPM.</div>
+                </div>
+                <div class="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden">
+                    <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-semibold text-slate-700 dark:text-slate-200 text-sm hover:bg-slate-50 dark:hover:bg-slate-800/50">How is WPM calculated? <span class="faq-icon text-slate-400 text-xs ml-2">➕</span></button>
+                    <div class="hidden px-4 pb-4 text-sm text-slate-500">WPM = (Total characters typed ÷ 5) ÷ minutes. Each "word" is standardized as 5 characters. Only correctly typed words count. This test measures net WPM (errors subtracted).</div>
+                </div>
+                <div class="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden">
+                    <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-semibold text-slate-700 dark:text-slate-200 text-sm hover:bg-slate-50 dark:hover:bg-slate-800/50">How long to improve typing speed? <span class="faq-icon text-slate-400 text-xs ml-2">➕</span></button>
+                    <div class="hidden px-4 pb-4 text-sm text-slate-500">With daily 20-30 minute practice, most people improve by 10-15 WPM within 2-4 weeks. Going from 40 to 70 WPM takes about 2-3 months of consistent practice. Learning touch typing can double your speed over 3-6 months.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+            <h2 class="text-base font-extrabold text-slate-800 dark:text-slate-100 mb-4">Related Tools</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <a href="keyboard.html" class="flex items-center gap-2 p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-indigo-200 hover:bg-indigo-50 dark:hover:bg-indigo-500/5 transition-colors text-sm font-semibold text-slate-700 dark:text-slate-300">⌨️ Keyboard Test</a>
+                <a href="cps-test.html" class="flex items-center gap-2 p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-indigo-200 hover:bg-indigo-50 dark:hover:bg-indigo-500/5 transition-colors text-sm font-semibold text-slate-700 dark:text-slate-300">🖱️ CPS Test</a>
+                <a href="reaction.html" class="flex items-center gap-2 p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-indigo-200 hover:bg-indigo-50 dark:hover:bg-indigo-500/5 transition-colors text-sm font-semibold text-slate-700 dark:text-slate-300">⚡ Reaction Time</a>
+                <a href="latency.html" class="flex items-center gap-2 p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-indigo-200 hover:bg-indigo-50 dark:hover:bg-indigo-500/5 transition-colors text-sm font-semibold text-slate-700 dark:text-slate-300">🎯 Latency Test</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-950/50 mt-12">
+        <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <span class="font-black">Input<span class="text-blue-600">Test</span>.online</span>
+            <div class="flex gap-4 text-xs text-slate-400">
+                <a href="privacy.html" class="hover:text-blue-600">Privacy</a>
+                <a href="terms.html" class="hover:text-blue-600">Terms</a>
+                <a href="/" class="hover:text-blue-600">All Tools</a>
+            </div>
+        </div>
+        <p class="text-center text-xs text-slate-400 pb-6 font-mono">© 2026 InputTest.online — All tests run locally in your browser.</p>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Word list - 200 common English words
+        const wordList = ["the","be","to","of","and","a","in","that","have","it","for","not","on","with","he","as","you","do","at","this","but","his","by","from","they","we","say","her","she","or","an","will","my","one","all","would","there","their","what","so","up","out","if","about","who","get","which","go","me","when","make","can","like","time","no","just","him","know","take","people","into","year","your","good","some","could","them","see","other","than","then","now","look","only","come","its","over","think","also","back","after","use","two","how","our","work","first","well","way","even","new","want","because","any","these","give","day","most","us","great","between","need","large","often","hand","high","place","hold","turn","asked","under","read","young","talk","soon","list","song","being","leave","family","body","music","color","stand","sun","four","let","field","past","strong","various","change","talk","light","voice","power","town","fine","drive","short","open","seem","together","next","white","children","begin","got","walk","example","ease","paper","group","always","music","those","both","mark","book","letter","until","mile","river","car","feet","care","second","enough","plain","girl","usual","young","ready","above","ever","red","list","though","feel","talk","bird","soon","body","dog","family","direct","pose","leave","song","above","real","life","few","north","plan","above","those","shown","left","late","run","don","while","press","close","night","real","hard","ship","area","half","rock","order","fire","south","problem","piece","told","knew","pass","since","top","whole","space","place","point","heard","state","farm","took","cross","draw","felt","step","built","born","city","poor","hot","call","check","keep","gave","form","house","near","try","land","page","word","deep","east","save","end","during","blue","store","front","ago","face","reach","built","town","base","speak","road","win","note","common","type","mean","king","nice","idea","class","mark","week","heart","ball","include","done","small","start","call","home","read","hand","port","large"];
+
+        let selectedTime = 60;
+        let words = [];
+        let currentWordIndex = 0;
+        let correctWords = 0;
+        let errorCount = 0;
+        let totalTyped = 0;
+        let isRunning = false;
+        let timer = null;
+        let timeLeft = 60;
+        let personalBest = parseInt(localStorage.getItem('typing_best') || '0');
+        let startTime = null;
+
+        const wordDisplay = document.getElementById('word-display');
+        const typingInput = document.getElementById('typing-input');
+        const liveWpm = document.getElementById('live-wpm');
+        const liveAcc = document.getElementById('live-acc');
+        const liveErrors = document.getElementById('live-errors');
+        const liveTimer = document.getElementById('live-timer');
+        const startOverlay = document.getElementById('start-overlay');
+        const resultModal = document.getElementById('result-modal');
+
+        function generateWords(count) {
+            const shuffled = [];
+            for (let i = 0; i < count; i++) {
+                shuffled.push(wordList[Math.floor(Math.random() * wordList.length)]);
+            }
+            return shuffled;
+        }
+
+        function renderWords() {
+            wordDisplay.innerHTML = '';
+            words.forEach((word, i) => {
+                const span = document.createElement('span');
+                span.textContent = word + ' ';
+                span.dataset.index = i;
+                if (i < currentWordIndex) {
+                    span.className = 'word-correct';
+                    if (span.dataset.error) span.className = 'word-wrong';
+                } else if (i === currentWordIndex) {
+                    span.className = 'word-current';
+                } else {
+                    span.className = 'word-pending';
+                }
+                wordDisplay.appendChild(span);
+            });
+            // Scroll current word into view
+            const currentEl = wordDisplay.querySelector('.word-current');
+            if (currentEl) {
+                const topOffset = currentEl.offsetTop;
+                if (topOffset > 60) wordDisplay.scrollTop = topOffset - 30;
+            }
+        }
+
+        function initTest() {
+            words = generateWords(200);
+            currentWordIndex = 0;
+            correctWords = 0;
+            errorCount = 0;
+            totalTyped = 0;
+            isRunning = false;
+            timeLeft = selectedTime;
+            clearInterval(timer);
+            liveWpm.textContent = '0';
+            liveAcc.textContent = '100%';
+            liveErrors.textContent = '0';
+            liveTimer.textContent = selectedTime + 's';
+            typingInput.value = '';
+            startOverlay.classList.remove('hidden');
+            resultModal.classList.add('hidden');
+            renderWords();
+        }
+
+        function startTest() {
+            isRunning = true;
+            startTime = Date.now();
+            startOverlay.classList.add('hidden');
+            timer = setInterval(() => {
+                const elapsed = (Date.now() - startTime) / 1000;
+                timeLeft = Math.max(0, selectedTime - elapsed);
+                liveTimer.textContent = Math.ceil(timeLeft) + 's';
+
+                const elapsedMin = elapsed / 60;
+                const wpm = elapsedMin > 0 ? Math.round(correctWords / elapsedMin) : 0;
+                liveWpm.textContent = wpm;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    showResult();
+                }
+            }, 100);
+        }
+
+        function getRating(wpm) {
+            if (wpm < 30) return '🐢 Beginner — Keep practicing!';
+            if (wpm < 50) return '📝 Average — Getting there!';
+            if (wpm < 70) return '✅ Good — Above average!';
+            if (wpm < 90) return '⚡ Fast — Professional level!';
+            if (wpm < 110) return '🚀 Expert — Top 5% of typists!';
+            return '🏆 World Class — Incredible speed!';
+        }
+
+        function showResult() {
+            isRunning = false;
+            typingInput.blur();
+            const elapsedMin = selectedTime / 60;
+            const finalWpm = Math.round(correctWords / elapsedMin);
+            const accuracy = totalTyped > 0 ? Math.round((correctWords / (correctWords + errorCount)) * 100) : 100;
+
+            if (finalWpm > personalBest) {
+                personalBest = finalWpm;
+                localStorage.setItem('typing_best', finalWpm.toString());
+            }
+
+            document.getElementById('result-wpm').textContent = finalWpm;
+            document.getElementById('result-acc').textContent = accuracy + '%';
+            document.getElementById('result-errors').textContent = errorCount;
+            document.getElementById('result-best').textContent = personalBest;
+            document.getElementById('wpm-rating').textContent = getRating(finalWpm);
+            resultModal.classList.remove('hidden');
+        }
+
+        typingInput.addEventListener('input', (e) => {
+            if (!isRunning) startTest();
+            const value = typingInput.value;
+            if (value.endsWith(' ')) {
+                const typed = value.trim();
+                if (typed === words[currentWordIndex]) {
+                    correctWords++;
+                } else {
+                    errorCount++;
+                    const el = wordDisplay.querySelector(`[data-index="${currentWordIndex}"]`);
+                    if (el) el.dataset.error = 'true';
+                }
+                totalTyped++;
+                currentWordIndex++;
+                typingInput.value = '';
+                const acc = totalTyped > 0 ? Math.round((correctWords / totalTyped) * 100) : 100;
+                liveAcc.textContent = acc + '%';
+                liveErrors.textContent = errorCount;
+                if (currentWordIndex >= words.length - 10) words.push(...generateWords(50));
+                renderWords();
+            }
+        });
+
+        typingInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') { e.preventDefault(); initTest(); }
+        });
+
+        startOverlay.addEventListener('click', () => typingInput.focus());
+        wordDisplay.addEventListener('click', () => typingInput.focus());
+
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (isRunning) return;
+                document.querySelectorAll('.mode-btn').forEach(b => b.className = 'mode-btn px-4 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-700 text-slate-500 hover:border-indigo-400 hover:text-indigo-600 transition-colors');
+                btn.className = 'mode-btn active-mode px-4 py-1.5 rounded-full text-xs font-bold border border-indigo-500/30 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600';
+                selectedTime = parseInt(btn.dataset.time);
+                initTest();
+            });
+        });
+
+        document.getElementById('restart-btn').addEventListener('click', initTest);
+        document.getElementById('retry-btn').addEventListener('click', () => { initTest(); typingInput.focus(); });
+
+        // Theme
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('theme-toggle-sun');
+        const moonIcon = document.getElementById('theme-toggle-moon');
+        function updateTheme() { if (document.documentElement.classList.contains('dark')) { sunIcon.classList.remove('hidden'); moonIcon.classList.add('hidden'); } else { sunIcon.classList.add('hidden'); moonIcon.classList.remove('hidden'); } }
+        updateTheme();
+        themeToggle.addEventListener('click', () => { document.documentElement.classList.toggle('dark'); localStorage.setItem('color-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light'); updateTheme(); });
+
+        // FAQ
+        document.querySelectorAll('.faq-btn').forEach(btn => {
+            btn.addEventListener('click', () => { const ans = btn.nextElementSibling; const ic = btn.querySelector('.faq-icon'); if (ans.classList.contains('hidden')) { ans.classList.remove('hidden'); ic.textContent = '➖'; } else { ans.classList.add('hidden'); ic.textContent = '➕'; } });
+        });
+
+        initTest();
+    });
+    </script>
+</body>
+</html>

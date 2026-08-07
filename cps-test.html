@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/cps-test">
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else { document.documentElement.classList.remove('dark'); }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+
+    <title>CPS Test - Click Speed Test Online | Clicks Per Second Counter</title>
+    <meta name="description" content="Free CPS Test online. Measure your Clicks Per Second (CPS) with multiple timer modes: 1s, 2s, 5s, 10s, 30s, 60s. Check your click speed and beat the world record!">
+    <meta name="keywords" content="cps test, click speed test, clicks per second, cps counter, click test, mouse click speed, butterfly click test, jitter click test">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/cps-test">
+    <meta property="og:title" content="CPS Test - Free Click Speed Test Online | InputTest">
+    <meta property="og:description" content="Measure your Clicks Per Second (CPS) with multiple timer modes. Beat the world record of 14.1 CPS!">
+    <meta property="og:image" content="https://inputtest.online/blog_mouse.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/cps-test">
+    <meta name="twitter:title" content="CPS Test - Click Speed Test Online | InputTest">
+    <meta name="twitter:description" content="Measure your Clicks Per Second (CPS) with multiple timer modes. Beat the world record of 14.1 CPS!">
+    <meta name="twitter:image" content="https://inputtest.online/blog_mouse.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "CPS Test - Click Speed Test",
+      "url": "https://inputtest.online/cps-test",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Free online CPS (Clicks Per Second) test. Measure mouse click speed with 1s, 2s, 5s, 10s, 30s, 60s timer modes."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a good CPS score?",
+          "acceptedAnswer": { "@type": "Answer", "text": "An average user clicks at 4-6 CPS. Gamers typically achieve 8-12 CPS. The world record for clicking speed is around 14.1 CPS in 10 seconds. A score above 10 CPS is considered excellent for competitive gaming." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is butterfly clicking?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Butterfly clicking is a technique where you alternate two fingers (usually index and middle) rapidly on the mouse button. This can achieve 15-25 CPS but may cause hardware damage over time." }
+        },
+        {
+          "@type": "Question",
+          "name": "What CPS do I need for Minecraft PvP?",
+          "acceptedAnswer": { "@type": "Answer", "text": "For Minecraft Java PvP, 8-12 CPS is considered competitive. Some players use techniques to achieve higher CPS, though 10+ CPS gives a significant advantage in combat." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does higher CPS help in gaming?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes, in games like Minecraft PvP, higher CPS gives an advantage. However, beyond 20 CPS, the benefit diminishes as most games cap input registration. Accuracy matters more than raw speed in FPS games." }
+        }
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { fontFamily: { sans: ['Outfit', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] } } }
+        }
+    </script>
+    <style>
+        .glow-bg { background-color: #f8fafc; background-image: radial-gradient(circle at 50% 0%, rgba(239,68,68,0.07) 0%, transparent 50%), radial-gradient(circle at 85% 60%, rgba(59,130,246,0.04) 0%, transparent 40%); }
+        .dark .glow-bg { background-color: #0b0f19 !important; background-image: radial-gradient(circle at 50% 0%, rgba(239,68,68,0.15) 0%, transparent 50%), radial-gradient(circle at 85% 60%, rgba(59,130,246,0.08) 0%, transparent 40%) !important; }
+        @keyframes scaleUp { 0%{opacity:0;transform:scale(0.95) translateY(4px)} 100%{opacity:1;transform:scale(1) translateY(0)} }
+        .animate-scaleUp { animation: scaleUp 0.18s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+        @keyframes clickPulse { 0%{transform:scale(1)} 50%{transform:scale(0.96)} 100%{transform:scale(1)} }
+        .click-pulse { animation: clickPulse 0.1s ease; }
+        @keyframes ripple { 0%{transform:scale(0);opacity:0.6} 100%{transform:scale(4);opacity:0} }
+        .ripple-effect { position:absolute;border-radius:50%;background:rgba(239,68,68,0.3);animation:ripple 0.6s ease-out forwards;pointer-events:none; }
+        .dark ::-webkit-scrollbar-track { background:#0f172a!important; }
+        .dark ::-webkit-scrollbar-thumb { background:#334155!important; }
+    </style>
+    <script src="config.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg relative overflow-x-hidden transition-colors duration-300">
+
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-300">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="4"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10"/></svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span></span>
+                        </div>
+                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span></span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center gap-6 flex-shrink-0">
+                    <a href="/" class="text-sm py-1.5 px-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 font-medium transition-colors">Home</a>
+                    <a href="keyboard.html" class="text-sm py-1.5 px-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 font-medium transition-colors">Keyboard Test</a>
+                    <a href="mouse.html" class="text-sm py-1.5 px-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 font-medium transition-colors">Mouse & CPS</a>
+                    <a href="cps-test.html" class="text-sm py-1.5 px-1 text-red-600 dark:text-red-400 border-b-2 border-red-500 font-bold">CPS Test</a>
+                    <a href="blog.html" class="text-sm py-1.5 px-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 font-medium transition-colors">Blog</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="mobile-menu-toggle" class="p-2 md:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 shadow-sm transition-all focus:outline-none">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                    <button id="theme-toggle" class="p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 shadow-sm transition-all focus:outline-none">
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                    </button>
+                    <a href="/" class="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1 font-bold font-mono bg-blue-500/5 px-3 py-1.5 rounded-full border border-blue-500/15">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                        All Tools
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Ad Banner -->
+    <div class="max-w-7xl mx-auto px-4 mt-6 w-full flex justify-center">
+        <div id="top-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-slate-200 bg-white shadow-sm rounded-2xl overflow-hidden flex items-center justify-center">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono py-4">
+                <span class="tracking-widest opacity-60 uppercase text-[10px]">ADVERTISEMENT</span>
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
+                CPS Test — Click Speed Test
+                <span class="text-xs font-mono font-bold px-2 py-0.5 rounded border border-red-500/15 bg-red-50 dark:bg-red-500/10 text-red-600 uppercase tracking-widest">Live Counter</span>
+            </h1>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                Measure your Clicks Per Second (CPS). Choose a timer mode and click as fast as you can. Beat the world record of 14.1 CPS!
+            </p>
+        </div>
+
+        <!-- Timer Mode Selector -->
+        <div class="flex flex-wrap gap-2 mb-6">
+            <span class="text-xs font-mono text-slate-400 font-bold self-center uppercase tracking-widest mr-2">Timer:</span>
+            <button class="timer-btn active-timer px-4 py-1.5 rounded-full text-xs font-bold border border-red-500/30 bg-red-50 dark:bg-red-500/10 text-red-600" data-time="1">1 Second</button>
+            <button class="timer-btn px-4 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-700 text-slate-500 hover:border-red-400 hover:text-red-600 transition-colors" data-time="2">2 Seconds</button>
+            <button class="timer-btn px-4 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-700 text-slate-500 hover:border-red-400 hover:text-red-600 transition-colors" data-time="5">5 Seconds</button>
+            <button class="timer-btn px-4 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-700 text-slate-500 hover:border-red-400 hover:text-red-600 transition-colors" data-time="10">10 Seconds</button>
+            <button class="timer-btn px-4 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-700 text-slate-500 hover:border-red-400 hover:text-red-600 transition-colors" data-time="30">30 Seconds</button>
+            <button class="timer-btn px-4 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-700 text-slate-500 hover:border-red-400 hover:text-red-600 transition-colors" data-time="60">60 Seconds</button>
+        </div>
+
+        <!-- Main CPS Area -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Stats -->
+            <div class="grid grid-cols-3 lg:grid-cols-1 gap-4 lg:col-span-1">
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm">
+                    <div class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1">CPS Score</div>
+                    <div id="cps-score" class="text-4xl font-black text-red-500 font-mono">0.0</div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm">
+                    <div class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1">Total Clicks</div>
+                    <div id="total-clicks" class="text-4xl font-black text-slate-800 dark:text-slate-100 font-mono">0</div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm">
+                    <div class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1">Time Left</div>
+                    <div id="time-display" class="text-4xl font-black text-indigo-500 font-mono">5.0s</div>
+                </div>
+            </div>
+
+            <!-- Click Area -->
+            <div class="lg:col-span-2">
+                <button id="cps-click-area" class="w-full h-72 bg-white dark:bg-slate-900 border-2 border-dashed border-slate-200 dark:border-slate-700 hover:border-red-400 rounded-3xl flex flex-col items-center justify-center cursor-pointer select-none group transition-all duration-150 focus:outline-none relative overflow-hidden shadow-sm active:scale-[0.99]">
+                    <!-- Ripple container -->
+                    <div id="ripple-container" class="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none"></div>
+                    <div class="absolute inset-0 bg-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl pointer-events-none"></div>
+                    
+                    <div id="click-icon" class="text-6xl mb-4 transition-transform duration-100 pointer-events-none select-none">🖱️</div>
+                    <div id="click-label" class="text-xl font-black text-slate-800 dark:text-slate-100 tracking-wider pointer-events-none select-none">CLICK HERE TO START</div>
+                    <div id="click-sub" class="text-xs text-slate-400 font-mono mt-2 tracking-widest uppercase pointer-events-none select-none font-bold">Timer starts on first click</div>
+                    
+                    <!-- Progress bar -->
+                    <div class="absolute bottom-0 left-0 right-0 h-1 bg-slate-100 dark:bg-slate-800 rounded-b-3xl overflow-hidden">
+                        <div id="progress-bar" class="h-full bg-gradient-to-r from-red-500 to-orange-400 transition-all duration-100" style="width:100%"></div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- High Score & Personal Best -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-500/5 dark:to-orange-500/5 border border-yellow-200/60 dark:border-yellow-500/20 rounded-2xl p-4 text-center">
+                <div class="text-[10px] font-mono font-bold text-yellow-600 dark:text-yellow-400 uppercase tracking-widest mb-1">🏆 Your Best CPS</div>
+                <div id="personal-best" class="text-3xl font-black text-yellow-600 dark:text-yellow-400 font-mono">0.0</div>
+                <div class="text-[9px] text-yellow-500 font-mono mt-1">Saved in browser</div>
+            </div>
+            <div class="bg-gradient-to-br from-red-50 to-pink-50 dark:from-red-500/5 dark:to-pink-500/5 border border-red-200/60 dark:border-red-500/20 rounded-2xl p-4 text-center">
+                <div class="text-[10px] font-mono font-bold text-red-600 dark:text-red-400 uppercase tracking-widest mb-1">🌍 World Record</div>
+                <div class="text-3xl font-black text-red-500 font-mono">14.1</div>
+                <div class="text-[9px] text-red-400 font-mono mt-1">CPS in 10 seconds</div>
+            </div>
+            <div id="result-card" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center hidden">
+                <div class="text-[10px] font-mono font-bold text-emerald-600 uppercase tracking-widest mb-1">✅ Last Result</div>
+                <div id="result-cps" class="text-3xl font-black text-emerald-600 font-mono">0.0</div>
+                <div id="result-label" class="text-[9px] text-slate-400 font-mono mt-1">CPS</div>
+            </div>
+            <div id="rating-card" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center hidden md:block">
+                <div class="text-[10px] font-mono font-bold text-indigo-600 uppercase tracking-widest mb-1">📊 Rating</div>
+                <div id="rating-text" class="text-xl font-black text-indigo-500 font-mono">—</div>
+                <div id="rating-desc" class="text-[9px] text-slate-400 font-mono mt-1">Complete a test</div>
+            </div>
+        </div>
+
+        <!-- CPS Rating Scale -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 mb-8 shadow-sm">
+            <h2 class="text-base font-extrabold text-slate-800 dark:text-slate-100 mb-4 flex items-center gap-2">📊 CPS Rating Scale</h2>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                <div class="bg-slate-50 dark:bg-slate-950/50 rounded-xl p-3 text-center border border-slate-100 dark:border-slate-800">
+                    <div class="text-lg font-black text-slate-500">0-4</div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5">Beginner</div>
+                    <div class="text-[9px] text-slate-400 mt-0.5 font-mono">Normal user</div>
+                </div>
+                <div class="bg-blue-50 dark:bg-blue-500/5 rounded-xl p-3 text-center border border-blue-100 dark:border-blue-500/20">
+                    <div class="text-lg font-black text-blue-600">4-7</div>
+                    <div class="text-[10px] font-bold text-blue-600 uppercase tracking-wide mt-0.5">Average</div>
+                    <div class="text-[9px] text-blue-400 mt-0.5 font-mono">Casual gamer</div>
+                </div>
+                <div class="bg-emerald-50 dark:bg-emerald-500/5 rounded-xl p-3 text-center border border-emerald-100 dark:border-emerald-500/20">
+                    <div class="text-lg font-black text-emerald-600">7-10</div>
+                    <div class="text-[10px] font-bold text-emerald-600 uppercase tracking-wide mt-0.5">Good</div>
+                    <div class="text-[9px] text-emerald-400 mt-0.5 font-mono">Skilled gamer</div>
+                </div>
+                <div class="bg-orange-50 dark:bg-orange-500/5 rounded-xl p-3 text-center border border-orange-100 dark:border-orange-500/20">
+                    <div class="text-lg font-black text-orange-600">10-14</div>
+                    <div class="text-[10px] font-bold text-orange-600 uppercase tracking-wide mt-0.5">Pro</div>
+                    <div class="text-[9px] text-orange-400 mt-0.5 font-mono">Competitive PvP</div>
+                </div>
+                <div class="bg-red-50 dark:bg-red-500/5 rounded-xl p-3 text-center border border-red-100 dark:border-red-500/20">
+                    <div class="text-lg font-black text-red-600">14+</div>
+                    <div class="text-[10px] font-bold text-red-600 uppercase tracking-wide mt-0.5">World Class</div>
+                    <div class="text-[9px] text-red-400 mt-0.5 font-mono">World record level</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO Content -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 mb-8 shadow-sm">
+            <h2 class="text-xl font-extrabold text-slate-800 dark:text-slate-100 mb-4">What is a CPS Test?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                <div>
+                    <p class="mb-3">A <strong>CPS Test (Clicks Per Second Test)</strong> measures how many times you can click your mouse button in a given time period. It's a popular benchmark among gamers, especially in games like <strong>Minecraft PvP</strong>, where higher CPS gives a competitive advantage in combat.</p>
+                    <p>Our free online CPS test offers multiple timer modes from 1 second to 60 seconds, letting you test your sustained clicking speed and endurance. Your personal best is automatically saved in your browser.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-2">Clicking Techniques:</h3>
+                    <ul class="space-y-1.5">
+                        <li class="flex items-start gap-2"><span class="text-red-500 font-bold mt-0.5">•</span><div><strong>Regular Clicking:</strong> Normal single-finger clicking. Averages 4-7 CPS.</div></li>
+                        <li class="flex items-start gap-2"><span class="text-red-500 font-bold mt-0.5">•</span><div><strong>Jitter Clicking:</strong> Tensing your arm to vibrate the finger. Achieves 9-14 CPS.</div></li>
+                        <li class="flex items-start gap-2"><span class="text-red-500 font-bold mt-0.5">•</span><div><strong>Butterfly Clicking:</strong> Alternating two fingers rapidly. Can exceed 15 CPS.</div></li>
+                        <li class="flex items-start gap-2"><span class="text-red-500 font-bold mt-0.5">•</span><div><strong>Drag Clicking:</strong> Dragging finger across button. Not recommended for hardware health.</div></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm mb-8">
+            <h2 class="text-xl font-extrabold text-slate-800 dark:text-slate-100 mb-4">Frequently Asked Questions</h2>
+            <div class="space-y-3">
+                <div class="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden">
+                    <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-semibold text-slate-700 dark:text-slate-200 text-sm hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                        What is a good CPS score?
+                        <span class="faq-icon text-slate-400 text-xs ml-2 flex-shrink-0">➕</span>
+                    </button>
+                    <div class="hidden px-4 pb-4 text-sm text-slate-500 dark:text-slate-400">An average user clicks at 4-6 CPS. Gamers typically achieve 8-12 CPS. Above 10 CPS is considered excellent for competitive gaming. The world record is 14.1 CPS in 10 seconds.</div>
+                </div>
+                <div class="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden">
+                    <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-semibold text-slate-700 dark:text-slate-200 text-sm hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                        What CPS do I need for Minecraft PvP?
+                        <span class="faq-icon text-slate-400 text-xs ml-2 flex-shrink-0">➕</span>
+                    </button>
+                    <div class="hidden px-4 pb-4 text-sm text-slate-500 dark:text-slate-400">For Minecraft Java PvP, 8-12 CPS is considered competitive. In Crystal PvP or other modes, 12+ CPS can give a significant advantage. However, accuracy and timing matter just as much as raw speed.</div>
+                </div>
+                <div class="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden">
+                    <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-semibold text-slate-700 dark:text-slate-200 text-sm hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                        Does this CPS test work on mobile?
+                        <span class="faq-icon text-slate-400 text-xs ml-2 flex-shrink-0">➕</span>
+                    </button>
+                    <div class="hidden px-4 pb-4 text-sm text-slate-500 dark:text-slate-400">Yes! Our CPS test is fully optimized for touchscreen devices. Tap the click area rapidly with your finger or multiple fingers. Mobile tap speed is often faster than mouse clicking, with some users achieving 15+ taps per second.</div>
+                </div>
+                <div class="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden">
+                    <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-semibold text-slate-700 dark:text-slate-200 text-sm hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                        What is butterfly clicking?
+                        <span class="faq-icon text-slate-400 text-xs ml-2 flex-shrink-0">➕</span>
+                    </button>
+                    <div class="hidden px-4 pb-4 text-sm text-slate-500 dark:text-slate-400">Butterfly clicking uses two fingers (usually index and middle) alternately on the same mouse button. This can achieve 15-25 CPS but is banned in many game servers and may cause hardware damage. Practice regular clicking for sustainable performance.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Tools -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+            <h2 class="text-base font-extrabold text-slate-800 dark:text-slate-100 mb-4">Related Input Testing Tools</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <a href="mouse.html" class="flex items-center gap-2 p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-500/5 transition-colors text-sm font-semibold text-slate-700 dark:text-slate-300">🖱️ Mouse Tester</a>
+                <a href="keyboard.html" class="flex items-center gap-2 p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-500/5 transition-colors text-sm font-semibold text-slate-700 dark:text-slate-300">⌨️ Keyboard Test</a>
+                <a href="reaction.html" class="flex items-center gap-2 p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-500/5 transition-colors text-sm font-semibold text-slate-700 dark:text-slate-300">⚡ Reaction Time</a>
+                <a href="latency.html" class="flex items-center gap-2 p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-blue-200 hover:bg-blue-50 dark:hover:bg-blue-500/5 transition-colors text-sm font-semibold text-slate-700 dark:text-slate-300">🎯 Latency Test</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-950/50 backdrop-blur-sm mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="font-black text-slate-800 dark:text-slate-200">Input<span class="text-blue-600">Test</span>.online</span>
+                    <span class="text-slate-300 dark:text-slate-700">|</span>
+                    <span class="text-xs text-slate-400 font-mono">Free Hardware Testing Tools</span>
+                </div>
+                <div class="flex items-center gap-4 text-xs text-slate-400">
+                    <a href="privacy.html" class="hover:text-blue-600 transition-colors">Privacy</a>
+                    <a href="terms.html" class="hover:text-blue-600 transition-colors">Terms</a>
+                    <a href="blog.html" class="hover:text-blue-600 transition-colors">Blog</a>
+                    <a href="/" class="hover:text-blue-600 transition-colors">All Tools</a>
+                </div>
+            </div>
+            <p class="text-center text-xs text-slate-400 mt-4 font-mono">© 2026 InputTest.online — All tests run locally in your browser. No data transmitted.</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let selectedTime = 5;
+        let timeLeft = 5;
+        let clicks = 0;
+        let isRunning = false;
+        let interval = null;
+        let startTime = null;
+        let personalBest = parseFloat(localStorage.getItem('cps_best') || '0');
+
+        const clickArea = document.getElementById('cps-click-area');
+        const cpsScore = document.getElementById('cps-score');
+        const totalClicks = document.getElementById('total-clicks');
+        const timeDisplay = document.getElementById('time-display');
+        const progressBar = document.getElementById('progress-bar');
+        const clickLabel = document.getElementById('click-label');
+        const clickSub = document.getElementById('click-sub');
+        const clickIcon = document.getElementById('click-icon');
+        const personalBestEl = document.getElementById('personal-best');
+        const resultCard = document.getElementById('result-card');
+        const resultCps = document.getElementById('result-cps');
+        const resultLabel = document.getElementById('result-label');
+        const ratingCard = document.getElementById('rating-card');
+        const ratingText = document.getElementById('rating-text');
+        const ratingDesc = document.getElementById('rating-desc');
+
+        personalBestEl.textContent = personalBest.toFixed(1);
+
+        // Timer buttons
+        document.querySelectorAll('.timer-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (isRunning) return;
+                document.querySelectorAll('.timer-btn').forEach(b => {
+                    b.className = 'timer-btn px-4 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-700 text-slate-500 hover:border-red-400 hover:text-red-600 transition-colors';
+                });
+                btn.className = 'timer-btn active-timer px-4 py-1.5 rounded-full text-xs font-bold border border-red-500/30 bg-red-50 dark:bg-red-500/10 text-red-600';
+                selectedTime = parseInt(btn.dataset.time);
+                timeLeft = selectedTime;
+                timeDisplay.textContent = selectedTime + '.0s';
+                progressBar.style.width = '100%';
+                btn.dataset.time === '1' ? (timeDisplay.textContent = '1.0s') : null;
+            });
+        });
+
+        function getRating(cps) {
+            if (cps < 4) return ['Beginner 🐢', 'Keep practicing!'];
+            if (cps < 7) return ['Average 👍', 'Good casual speed!'];
+            if (cps < 10) return ['Good 🎮', 'Skilled gamer!'];
+            if (cps < 14) return ['Pro ⚡', 'Competitive level!'];
+            return ['World Class 🏆', 'World record territory!'];
+        }
+
+        function createRipple(e) {
+            const rect = clickArea.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            const size = 60;
+            const x = (e.clientX - rect.left) - size/2;
+            const y = (e.clientY - rect.top) - size/2;
+            ripple.className = 'ripple-effect';
+            ripple.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${y}px`;
+            document.getElementById('ripple-container').appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        function resetTest() {
+            clearInterval(interval);
+            isRunning = false;
+            clicks = 0;
+            timeLeft = selectedTime;
+            cpsScore.textContent = '0.0';
+            totalClicks.textContent = '0';
+            timeDisplay.textContent = selectedTime + '.0s';
+            progressBar.style.width = '100%';
+            progressBar.className = 'h-full bg-gradient-to-r from-red-500 to-orange-400 transition-all duration-100';
+            clickLabel.textContent = 'CLICK HERE TO START';
+            clickSub.textContent = 'Timer starts on first click';
+            clickIcon.textContent = '🖱️';
+        }
+
+        clickArea.addEventListener('click', (e) => {
+            createRipple(e);
+            clickArea.classList.add('click-pulse');
+            setTimeout(() => clickArea.classList.remove('click-pulse'), 100);
+
+            if (!isRunning) {
+                // Start test
+                isRunning = true;
+                clicks = 1;
+                startTime = Date.now();
+                totalClicks.textContent = '1';
+                clickLabel.textContent = 'KEEP CLICKING!';
+                clickSub.textContent = `${selectedTime} second test in progress...`;
+                clickIcon.textContent = '💥';
+
+                interval = setInterval(() => {
+                    const elapsed = (Date.now() - startTime) / 1000;
+                    timeLeft = Math.max(0, selectedTime - elapsed);
+                    const currentCPS = elapsed > 0 ? (clicks / elapsed) : 0;
+                    cpsScore.textContent = currentCPS.toFixed(1);
+                    timeDisplay.textContent = timeLeft.toFixed(1) + 's';
+                    progressBar.style.width = ((timeLeft / selectedTime) * 100) + '%';
+
+                    if (timeLeft <= 0) {
+                        clearInterval(interval);
+                        isRunning = false;
+                        const finalCPS = parseFloat((clicks / selectedTime).toFixed(1));
+                        cpsScore.textContent = finalCPS.toFixed(1);
+                        timeDisplay.textContent = '0.0s';
+                        progressBar.style.width = '0%';
+                        clickLabel.textContent = `${finalCPS} CPS — Click to retry`;
+                        clickSub.textContent = `${clicks} total clicks in ${selectedTime}s`;
+                        clickIcon.textContent = '🏁';
+
+                        // Update personal best
+                        if (finalCPS > personalBest) {
+                            personalBest = finalCPS;
+                            localStorage.setItem('cps_best', personalBest.toString());
+                            personalBestEl.textContent = personalBest.toFixed(1);
+                        }
+
+                        // Show result
+                        resultCard.classList.remove('hidden');
+                        resultCps.textContent = finalCPS.toFixed(1);
+                        resultLabel.textContent = `clicks in ${selectedTime}s`;
+
+                        // Show rating
+                        const [rating, desc] = getRating(finalCPS);
+                        ratingCard.classList.remove('hidden');
+                        ratingText.textContent = rating;
+                        ratingDesc.textContent = desc;
+                    }
+                }, 50);
+            } else {
+                clicks++;
+                totalClicks.textContent = clicks;
+            }
+        });
+
+        // Theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('theme-toggle-sun');
+        const moonIcon = document.getElementById('theme-toggle-moon');
+        function updateThemeIcon() {
+            if (document.documentElement.classList.contains('dark')) { sunIcon.classList.remove('hidden'); moonIcon.classList.add('hidden'); }
+            else { sunIcon.classList.add('hidden'); moonIcon.classList.remove('hidden'); }
+        }
+        updateThemeIcon();
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('color-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcon();
+        });
+
+        // Mobile menu
+        const mobileToggle = document.getElementById('mobile-menu-toggle');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const hamburgerClose = document.getElementById('hamburger-close');
+
+        // FAQ Accordions
+        document.querySelectorAll('.faq-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const answer = btn.nextElementSibling;
+                const icon = btn.querySelector('.faq-icon');
+                if (answer.classList.contains('hidden')) { answer.classList.remove('hidden'); icon.textContent = '➖'; }
+                else { answer.classList.add('hidden'); icon.textContent = '➕'; }
+            });
+        });
+    });
+    </script>
+</body>
+</html>
