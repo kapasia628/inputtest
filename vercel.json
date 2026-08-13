@@ -1,9 +1,10 @@
-{
+﻿{
     "buildCommand": "",
     "installCommand": "",
     "cleanUrls":  true,
     "trailingSlash":  false,
-    "redirects":  [
+    "redirects": [
+                      {"destination": "/about", "permanent": true, "source": "/about.html"}, {"destination": "/contact", "permanent": true, "source": "/contact.html"},
                       {
                           "source":  "/index.html",
                           "destination":  "/",
