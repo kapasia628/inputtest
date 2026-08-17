@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="canonical" href="https://inputtest.online/display">
@@ -70,6 +70,73 @@
           "text": "Monitor ghosting creates a blurry trailing shadow behind fast-moving elements. This is caused by slow pixel response times (G2G delay), where physical pixels cannot cycle colors as fast as the monitor refresh clock (e.g. 144Hz/240Hz)."
         }
       }]
+    }
+    </script>
+
+    <!-- HowTo Schema — Google AI Overviews shows these steps (SGE/AEO) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Test Your Monitor or Display Online",
+      "description": "Test your monitor for dead pixels, color accuracy, and refresh rate for free at InputTest.online/display.",
+      "totalTime": "PT3M",
+      "tool": [{"@type": "HowToTool", "name": "Web browser in fullscreen mode (Chrome, Firefox, Edge)"}],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Open Display Tester",
+          "text": "Go to https://inputtest.online/display in your browser.",
+          "url": "https://inputtest.online/display"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Run Dead Pixel Test",
+          "text": "Click 'Dead Pixel Test'. The screen fills with solid colors (red, green, blue, white, black). Look for any pixel that shows a different color — that is a dead or stuck pixel."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Check Refresh Rate (Hz)",
+          "text": "The refresh rate display shows your monitor's actual Hz in real time. If you see 60Hz when expecting 144Hz, check your display settings."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Test Color Accuracy",
+          "text": "Use the gradient and color panels to check if your monitor displays smooth gradients and accurate colors without banding."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Test for Ghosting",
+          "text": "Run the motion/ghosting test to see if fast-moving objects leave a blur or trail on your display."
+        }
+      ]
+    }
+    </script>
+
+    <!-- BreadcrumbList — navigation context for Google AI -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://inputtest.online/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Display Tester",
+          "item": "https://inputtest.online/display"
+        }
+      ]
     }
     </script>
     

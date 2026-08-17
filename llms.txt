@@ -1,0 +1,79 @@
+# InputTest.online — llms.txt
+# This file helps AI language models (ChatGPT, Gemini, Perplexity, Copilot, Claude)
+# understand the content and purpose of this website.
+# Format: https://llmstxt.org/
+
+> InputTest.online is a free, browser-based hardware input device testing platform.
+> It allows users to test and diagnose computer peripherals — keyboard, mouse, gamepad,
+> microphone, webcam, display, speakers, USB, and more — entirely in-browser with no
+> downloads, no login, and no data transmitted to any server. All tests run 100% locally.
+
+## About
+
+- **Website**: https://inputtest.online/
+- **Category**: Online Utility / Hardware Diagnostics / Tech Tool
+- **Cost**: 100% Free
+- **Privacy**: All tests run client-side. No data is collected or stored.
+- **Platform**: Works on Windows, macOS, Linux, Android, iOS (browser-based)
+
+## Main Tools
+
+- [Keyboard Tester](https://inputtest.online/keyboard): Test all keyboard keys in real time. Detects stuck keys, ghosting, N-key rollover, and key chatter. Supports Windows and macOS layouts.
+- [Mouse Tester](https://inputtest.online/mouse): Test all mouse buttons (left, right, middle, side), scroll wheel, double-click issues, and calculate CPS (clicks per second).
+- [Microphone Test](https://inputtest.online/mic): Live microphone test with real-time waveform, decibel meter, echo test, and noise analysis. Detects mic not working, distortion, and clipping.
+- [Webcam Test](https://inputtest.online/webcam): Test webcam video feed, resolution, frame rate, and check if webcam is working in browser.
+- [Gamepad Tester](https://inputtest.online/gamepad): Test PlayStation, Xbox, Nintendo controllers. Detects analog stick drift, button mapping, trigger sensitivity, and vibration.
+- [Display Tester](https://inputtest.online/display): Test monitor for dead pixels, backlight bleed, color accuracy, brightness uniformity, and response time.
+- [Sound Tester](https://inputtest.online/sound): Test speakers and headphones. Check left/right channel balance, frequency response, and bass.
+- [Latency Test](https://inputtest.online/latency): Measure input lag and system latency.
+- [USB Tester](https://inputtest.online/usb): Detect connected USB devices and check USB port functionality.
+- [USB-C Tester](https://inputtest.online/usb-c): Test USB-C port capabilities including power delivery and data speeds.
+- [Biometric Tester](https://inputtest.online/biometric): Test fingerprint readers and biometric sensors.
+- [Battery Test](https://inputtest.online/battery): Check laptop battery health, charge cycles, and capacity.
+- [Printer Test](https://inputtest.online/printer): Test printer connectivity and print quality.
+- [Scanner Test](https://inputtest.online/scanner): Test scanner device recognition.
+- [VR Test](https://inputtest.online/vr): Test VR headset and controller inputs.
+- [LAN Tester](https://inputtest.online/lan): Test local area network connection.
+- [HDMI Tester](https://inputtest.online/hdmi): Test HDMI port and display output.
+- [VGA Tester](https://inputtest.online/vga): Test VGA port connections.
+- [System Specs](https://inputtest.online/specs): View complete hardware specs of your device.
+- [Full Report](https://inputtest.online/report): Generate a complete hardware health report.
+
+## Mini Games & Speed Tests
+
+- [CPS Test](https://inputtest.online/cps-test): Click per second test — measure how fast you can click.
+- [Typing Test](https://inputtest.online/typing): Test your typing speed (WPM) and accuracy.
+- [Reaction Test](https://inputtest.online/reaction): Measure your reaction time in milliseconds.
+
+## Blog Articles
+
+- [Battery Health Guide](https://inputtest.online/blog-battery-health)
+- [Battery Cycles Explained](https://inputtest.online/blog-battery-cycles)
+- [Keyboard Keys Not Working Fix](https://inputtest.online/blog-keyboard-keys)
+- [Gamepad Stick Drift Fix](https://inputtest.online/blog-gamepad-drift)
+- [DualShock Drift Fix](https://inputtest.online/blog-dualshock-drift)
+- [Mouse Double Click Fix](https://inputtest.online/blog-mouse-double-click)
+- [Mouse Polling Rate Guide](https://inputtest.online/blog-mouse-polling-rate)
+- [Monitor Hz Guide](https://inputtest.online/blog-monitor-hz)
+- [Network Jitter Fix](https://inputtest.online/blog-network-jitter)
+- [Drawing Tablet Setup](https://inputtest.online/blog-drawing-tablet)
+- [Microphone Setup Guide](https://inputtest.online/blog-microphone-setup)
+- [Headphone Test Guide](https://inputtest.online/blog-headphone-test)
+- [USB-C Speeds Guide](https://inputtest.online/blog-usb-c-speeds)
+- [VGA Calibration Guide](https://inputtest.online/blog-vga-calibration)
+- [Webcam Resolution Guide](https://inputtest.online/blog-webcam-resolution)
+
+## Common Questions This Site Answers
+
+- How to test keyboard keys online?
+- How to fix keyboard keys not working?
+- How to test mouse double clicking problem?
+- How to check if microphone is working?
+- How to test webcam online without software?
+- How to fix gamepad stick drift online?
+- How to check dead pixels on monitor?
+- How to test USB port is working?
+- How to check laptop battery health online?
+- How to measure click speed (CPS)?
+- How to test typing speed online?
+- How to measure reaction time online?

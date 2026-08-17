@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <link rel="canonical" href="https://inputtest.online/">
@@ -26,7 +26,9 @@
     <meta name="keywords" content="keyboard tester, mouse tester, click tester, cps tester, hardware test online, mic check, webcam test, input checker, printer test, scanner check, VR controller test, biometric check, USB profiler">
     <meta name="author" content="InputTest.online">
 
-    <!-- Structured Data (JSON-LD Schemas for Google Rich Results) -->
+    <!-- Structured Data (JSON-LD Schemas for GEO + AEO + SGE Optimization) -->
+
+    <!-- Schema 1: WebApplication -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -41,44 +43,150 @@
         "price": "0",
         "priceCurrency": "USD"
       },
-      "description": "Free online hardware tester to check your keyboard, mouse, microphone, webcam, gamepad, speaker, monitor, and latency."
+      "description": "Free online hardware tester to check your keyboard, mouse, microphone, webcam, gamepad, speaker, monitor, and latency. All tests run 100% locally in the browser.",
+      "featureList": [
+        "Keyboard Tester",
+        "Mouse Tester",
+        "Microphone Test",
+        "Webcam Test",
+        "Gamepad Tester",
+        "Display Tester",
+        "Speaker Test",
+        "Latency Test",
+        "USB Tester",
+        "Battery Health Check",
+        "CPS Test",
+        "Typing Speed Test",
+        "Reaction Time Test"
+      ]
     }
     </script>
+
+    <!-- Schema 2: WebSite with SiteLinksSearchBox (appears in Google results) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "InputTest.online",
-      "url": "https://inputtest.online/"
+      "url": "https://inputtest.online/",
+      "description": "Free browser-based hardware input device testing platform. Test keyboard, mouse, mic, webcam, gamepad and more — no download required.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://inputtest.online/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
     }
     </script>
+
+    <!-- Schema 3: Organization (E-E-A-T Trust Signal for Google AI) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "InputTest.online",
+      "url": "https://inputtest.online/",
+      "logo": "https://inputtest.online/icon-512.png",
+      "description": "InputTest.online provides free, browser-based hardware diagnostic tools to test keyboards, mice, microphones, webcams, gamepads, monitors, and other input devices.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "url": "https://inputtest.online/contact"
+      },
+      "sameAs": []
+    }
+    </script>
+
+    <!-- Schema 4: BreadcrumbList (navigation context for AI) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://inputtest.online/"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Schema 5: FAQPage — Extended Q&As for AI Overviews + AEO -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": ["h1", ".faq-section"]
+      },
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How do I test my keyboard online?",
+          "name": "How do I test my keyboard online for free?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Visit InputTest.online keyboard tester page and press any key on your keyboard. Active keys will highlight instantly with zero latency."
+            "text": "Go to InputTest.online/keyboard and press any key on your keyboard. Each key will light up instantly on the virtual keyboard layout, confirming it works. No download or login is needed. It works on laptops, mechanical keyboards, and gaming keyboards."
           }
         },
         {
           "@type": "Question",
-          "name": "How to test mouse double-clicking issue?",
+          "name": "How to test mouse double-clicking issue online?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Use the Mouse Tester on InputTest.online to perform double-click tests, CPS checks, and scroll wheel testing."
+            "text": "Visit InputTest.online/mouse and click your mouse buttons in the test area. The tool detects double-click failures, missed clicks, and scroll wheel issues in real time. It also measures your CPS (clicks per second)."
           }
         },
         {
           "@type": "Question",
-          "name": "Are these hardware tests 100% free and secure?",
+          "name": "How to check if my microphone is working online?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, all hardware and input device tests on InputTest.online run 100% locally in your web browser without transmitting private data."
+            "text": "Go to InputTest.online/mic, click 'Start Microphone Test', and allow browser microphone access. You will see a live waveform and decibel meter showing your mic is working. An echo test lets you record and play back your voice."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test gamepad or controller online?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Visit InputTest.online/gamepad, connect your Xbox, PlayStation, or Nintendo controller via USB or Bluetooth, and press any button. The tester highlights every button, shows analog stick position, trigger pressure, and detects stick drift instantly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to check dead pixels on my monitor online?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Go to InputTest.online/display and run the dead pixel test. The screen fills with solid colors (red, green, blue, white, black) so you can spot any stuck or dead pixels on your monitor easily."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to test webcam online without installing software?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Visit InputTest.online/webcam and allow browser camera access. Your webcam feed appears instantly showing resolution, frame rate, and whether your camera is working — no software or app needed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to measure my click speed (CPS) online?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Go to InputTest.online/cps-test, click the test area as fast as possible, and your CPS (clicks per second) score is calculated instantly. Average CPS is 6-8 for casual users and 10-14 for gamers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are these hardware tests 100% free and private?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. All hardware and input device tests on InputTest.online are completely free and run 100% locally inside your web browser. No data, keystrokes, audio, or video is ever sent to any server. No account or download is required."
           }
         }
       ]

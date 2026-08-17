@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="canonical" href="https://inputtest.online/gamepad">
@@ -69,6 +69,73 @@
           "text": "Yes. Our standard Web Gamepad API mapper fully supports Xbox 360/One/Series X, PlayStation DualShock 4 & DualSense, Nintendo Switch Pro controllers, and third-party USB joysticks or flight sticks out-of-the-box."
         }
       }]
+    }
+    </script>
+
+    <!-- HowTo Schema — Google AI Overviews shows these steps (SGE/AEO) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Test Your Gamepad or Controller Online",
+      "description": "Test Xbox, PlayStation, and Nintendo controllers for stick drift and button issues for free at InputTest.online/gamepad.",
+      "totalTime": "PT2M",
+      "tool": [{"@type": "HowToTool", "name": "Web browser (Chrome or Edge recommended) + USB or Bluetooth controller"}],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Connect Your Controller",
+          "text": "Connect your Xbox, PlayStation, or Nintendo controller to your computer via USB cable or Bluetooth.",
+          "url": "https://inputtest.online/gamepad"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Open Gamepad Tester",
+          "text": "Go to https://inputtest.online/gamepad. The browser will detect your controller automatically once connected."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Press Any Button to Activate",
+          "text": "Press any button on your controller to activate it. The button map will appear showing all your controller inputs."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Check for Stick Drift",
+          "text": "Leave the analog sticks untouched. If the coordinates show values other than (0.00, 0.00), your controller has stick drift."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Test All Buttons and Triggers",
+          "text": "Press each button, D-pad direction, and trigger. Any button not lighting up on the tester may be broken or stuck."
+        }
+      ]
+    }
+    </script>
+
+    <!-- BreadcrumbList — navigation context for Google AI -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://inputtest.online/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Gamepad Tester",
+          "item": "https://inputtest.online/gamepad"
+        }
+      ]
     }
     </script>
     
