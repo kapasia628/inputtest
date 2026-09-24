@@ -621,6 +621,9 @@
                         <li><a href="/battery" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔋 Battery Health</a></li>
                         <li><a href="/lan" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🌐 LAN Jitter Test</a></li>
                         <li><a href="/usb-c" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ USB-C Profiler</a></li>
+                        <li><a href="/cps-test" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ CPS Click Test</a></li>
+                        <li><a href="/typing" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Typing Speed Test</a></li>
+                        <li><a href="/reaction" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⏱️ Reaction Time Test</a></li>
                     </ul>
                 </div>
                 
@@ -647,6 +650,8 @@
                         <li><a href="/blog" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📝 Blog Guides</a></li>
                         <li><a href="/privacy" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔒 Privacy Policy</a></li>
                         <li><a href="/terms" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚖️ Terms of Service</a></li>
+                        <li><a href="/about" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">ℹ️ About Us</a></li>
+                        <li><a href="/contact" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📬 Contact Us</a></li>
                         <li><a href="#" class="brand-email text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors break-all">✉️ support@inputtest.online</a></li>
                     </ul>
                 </div>
@@ -777,31 +782,30 @@
             
             if (searchBar && searchPanel) {
                 const searchDatabase = [
-                    { title: "Keyboard Tester Online", desc: "Test laptop & mechanical switches", url: "keyboard.html" },
-                    { title: "Mouse & CPS Checker", desc: "Test click, scroll, and speed CPS", url: "mouse.html" },
-                    { title: "Clicks Per Second Test", desc: "10-second high-score speed game", url: "mouse.html#cps" },
-                    { title: "Speaker & Sound Tester", desc: "Stereo balance frequency check", url: "sound.html" },
-                    { title: "Gamepad & Joystick Tester", desc: "Controller buttons stick drift test", url: "gamepad.html" },
-                    { title: "Microphone Voice Tester", desc: "Test decibel telemetry voice echo loop", url: "mic.html" },
-                    { title: "Webcam Calibration Check", desc: "Video test, resolution and FPS check", url: "webcam.html" },
-                    { title: "Display & Screen Tester", desc: "Check dead pixels, monitor Hz, and ghosting", url: "display.html" },
-                    { title: "Drawing Tablet & Touchscreen Tester", desc: "Check pen pressure, touchscreen multi-touch, and drawing accuracy", url: "draw.html" },
-                    { title: "Bluetooth & Audio Latency Tester", desc: "Measure delay and lag of wireless headphones or Bluetooth speakers", url: "latency.html" },
-                    { title: "USB & HID Device Info Profiler", desc: "Scan connected USB/HID peripherals and inspect system hardware capabilities", url: "usb.html" },
-                    { title: "Biometric & Fingerprint Tester", desc: "Test Windows Hello, Touch ID, or security keys via standard client-side WebAuthn diagnostics", url: "biometric.html" },
-                    { title: "Battery Health & Efficiency Analyzer", desc: "Evaluate laptop charging slopes, power draw rates, estimated cycle health, and power source metrics", url: "battery.html" },
-                    { title: "Printer Calibrated Test Page", desc: "Print CMYK color blocks, alignment grids, and evaluate font readability", url: "printer.html" },
-                    { title: "Scanner & Document Capture Checker", desc: "Test document scanners, apply black-and-white Xerox shaders, and scan QR codes", url: "scanner.html" },
-                    { title: "VR & XR Motion Controller Tester", desc: "Test 6-DOF spatial coordinates, analog triggers, and fire rumble haptics", url: "vr.html" },
-                    { title: "PC Hardware Specs Scanner", desc: "Profile processor cores, graphics card GPU model, RAM, and storage disks sizes", url: "specs.html" },
-                    { title: "Certified Diagnostic Report", desc: "Generate secure verified hardware configuration & device checklist PDF", url: "report.html" },
-                    { title: "LAN / Ethernet Port Jitter & Type Tester", desc: "Test network jitter, ping variance, and verify physical cable reliability", url: "lan.html" },
-                    { title: "HDMI & DisplayPort Multi-Screen Analyzer", desc: "Verify monitor refresh rate Hz, display placements, and multi-channel audio", url: "hdmi.html" },
-                    { title: "VGA Analog Calibrator Test Patterns", desc: "Calibrate analog monitor focus, phase adjustment zebra lines, and color bars", url: "vga.html" },
-                    { title: "USB Type-C & Thunderbolt Speed Profiler", desc: "Test alternate mode capabilities, power delivery profiles, and verify speeds", url: "usb-c.html" },
-                    { title: "Privacy Policy Compliance", desc: "AdSense, cookies & safety disclosure", url: "privacy.html" },
-                    { title: "Terms of Service Agreement", desc: "Device diagnostic terms and client-side usage rules", url: "terms.html" },
-                    { title: "Admin Settings Panel", desc: "Export config.js & preview analytics", url: "admin.php" }
+                    { title: "Keyboard Tester Online", desc: "Test laptop & mechanical switches", url: "/keyboard" },
+                    { title: "Mouse & CPS Checker", desc: "Test click, scroll, and speed CPS", url: "/mouse" },
+                    { title: "Clicks Per Second Test", desc: "10-second high-score speed game", url: "/mouse#cps" },
+                    { title: "Speaker & Sound Tester", desc: "Stereo balance frequency check", url: "/sound" },
+                    { title: "Gamepad & Joystick Tester", desc: "Controller buttons stick drift test", url: "/gamepad" },
+                    { title: "Microphone Voice Tester", desc: "Test decibel telemetry voice echo loop", url: "/mic" },
+                    { title: "Webcam Calibration Check", desc: "Video test, resolution and FPS check", url: "/webcam" },
+                    { title: "Display & Screen Tester", desc: "Check dead pixels, monitor Hz, and ghosting", url: "/display" },
+                    { title: "Drawing Tablet & Touchscreen Tester", desc: "Check pen pressure, touchscreen multi-touch, and drawing accuracy", url: "/draw" },
+                    { title: "Bluetooth & Audio Latency Tester", desc: "Measure delay and lag of wireless headphones or Bluetooth speakers", url: "/latency" },
+                    { title: "USB & HID Device Info Profiler", desc: "Scan connected USB/HID peripherals and inspect system hardware capabilities", url: "/usb" },
+                    { title: "Biometric & Fingerprint Tester", desc: "Test Windows Hello, Touch ID, or security keys via standard client-side WebAuthn diagnostics", url: "/biometric" },
+                    { title: "Battery Health & Efficiency Analyzer", desc: "Evaluate laptop charging slopes, power draw rates, estimated cycle health, and power source metrics", url: "/battery" },
+                    { title: "Printer Calibrated Test Page", desc: "Print CMYK color blocks, alignment grids, and evaluate font readability", url: "/printer" },
+                    { title: "Scanner & Document Capture Checker", desc: "Test document scanners, apply black-and-white Xerox shaders, and scan QR codes", url: "/scanner" },
+                    { title: "VR & XR Motion Controller Tester", desc: "Test 6-DOF spatial coordinates, analog triggers, and fire rumble haptics", url: "/vr" },
+                    { title: "PC Hardware Specs Scanner", desc: "Profile processor cores, graphics card GPU model, RAM, and storage disks sizes", url: "/specs" },
+                    { title: "Certified Diagnostic Report", desc: "Generate secure verified hardware configuration & device checklist PDF", url: "/report" },
+                    { title: "LAN / Ethernet Port Jitter & Type Tester", desc: "Test network jitter, ping variance, and verify physical cable reliability", url: "/lan" },
+                    { title: "HDMI & DisplayPort Multi-Screen Analyzer", desc: "Verify monitor refresh rate Hz, display placements, and multi-channel audio", url: "/hdmi" },
+                    { title: "VGA Analog Calibrator Test Patterns", desc: "Calibrate analog monitor focus, phase adjustment zebra lines, and color bars", url: "/vga" },
+                    { title: "USB Type-C & Thunderbolt Speed Profiler", desc: "Test alternate mode capabilities, power delivery profiles, and verify speeds", url: "/usb-c" },
+                    { title: "Privacy Policy Compliance", desc: "AdSense, cookies & safety disclosure", url: "/privacy" },
+                    { title: "Terms of Service Agreement", desc: "Device diagnostic terms and client-side usage rules", url: "/terms" }
                 ];
 
                 window.addEventListener("keydown", (e) => {
