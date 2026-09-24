@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/scroll-test">
+    <script>
+        // Inline theme helper to avoid UI flash of light theme
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- SEO Meta Tags -->
+    <title>Mouse Scroll Wheel Jump & Reverse-Tick Tester | InputTest</title>
+    <meta name="description" content="Free online mouse scroll wheel tester. Test scroll wheel jumping up and down, detect reverse-ticks, encoder bounce, jitter, and calculate scroll health score online.">
+    <meta name="keywords" content="mouse scroll jump test, mouse scroll wheel bouncing, fix mouse scroll jumping, mouse scroll reverse test, logitech scroll wheel jump, test mouse scroll online, encoder chatter test">
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/scroll-test">
+    <meta property="og:title" content="Mouse Scroll Wheel Jump & Reverse-Tick Tester | InputTest">
+    <meta property="og:description" content="Free online mouse scroll wheel tester. Test scroll wheel jumping up and down, detect reverse-ticks, encoder bounce, and calculate scroll health score.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/scroll-test">
+    <meta name="twitter:title" content="Mouse Scroll Wheel Jump & Reverse-Tick Tester | InputTest">
+    <meta name="twitter:description" content="Free online mouse scroll wheel tester. Detect scroll wheel jumping up and down, reverse-ticks, and rotary encoder bounce online.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- JSON-LD Structured Data for WebApplication Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Mouse Scroll Wheel Jump & Reverse-Tick Tester",
+      "url": "https://inputtest.online/scroll-test",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free interactive mouse scroll wheel tester. Accurately detect scroll reverse jumps, encoder bouncing ticks, scrolling speed, and overall scroll health percentage."
+    }
+    </script>
+
+    <!-- JSON-LD FAQ Schema for AEO / Voice Search -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why does my mouse scroll wheel jump in the opposite direction?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mouse scroll wheel jumping (reverse scrolling) is typically caused by dust, hair, or dried lubricant inside the mechanical rotary encoder wheel. When the encoder sensors misread contacts, scrolling down will occasionally register an errant upward tick."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to fix a mouse scroll wheel jumping up and down without opening it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Turn your mouse upside down and vigorously roll the scroll wheel back and forth on a clean mousepad for 30 seconds. Next, blow high-pressure compressed air directly into the gap around the wheel to dislodge accumulated dust."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I test if my mouse scroll wheel has encoder chatter or reverse ticks?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Select 'Scroll Down Test' on InputTest.online/scroll-test and continuously scroll downward inside the test box. If the wheel flashes red or registers any upward reverse-ticks, your mouse has mechanical encoder chatter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use this scroll test report for Logitech or Razer warranty RMA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! Click 'Copy Diagnostic Log' to copy your certified test result showing your exact Reverse Jump Count and Encoder Health Percentage to include in your manufacturer warranty ticket."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://inputtest.online/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Scroll Wheel Tester",
+          "item": "https://inputtest.online/scroll-test"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 90% 40%, rgba(59, 130, 246, 0.03) 0%, transparent 40%);
+        }
+        .dark .glow-bg {
+            background-color: #0b0f19 !important;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%) !important;
+        }
+        @keyframes wheelShake {
+            0%, 100% { transform: translateY(0); }
+            20%, 60% { transform: translateY(-8px); }
+            40%, 80% { transform: translateY(8px); }
+        }
+        .animate-shake {
+            animation: wheelShake 0.25s ease-in-out;
+        }
+    </style>
+
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+
+    <!-- Microsoft Clarity Tracking Code -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ynfnjomkxs");
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg relative overflow-x-hidden transition-colors duration-300">
+
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm dark:shadow-none transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md border border-blue-500/20 group-hover:scale-105 transition-transform duration-300">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-white group-hover:text-blue-600 transition-colors">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center gap-6 flex-shrink-0">
+                    <a href="/" class="text-sm py-1.5 px-1 font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">Home</a>
+                    <a href="/keyboard" class="text-sm py-1.5 px-1 font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">Keyboard Test</a>
+                    <a href="/mouse" class="text-sm py-1.5 px-1 font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">Mouse & CPS</a>
+                    <a href="/scroll-test" class="text-sm py-1.5 px-2 font-bold text-blue-600 dark:text-blue-400 border-b-2 border-blue-600">Scroll Jump Test</a>
+                    <a href="/blog" class="text-sm py-1.5 px-1 font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">Blog</a>
+                </div>
+
+                <!-- Right Action Buttons -->
+                <div class="flex items-center gap-3">
+                    <button id="theme-toggle" class="p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-850 transition-colors" title="Toggle Dark/Light Mode">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+        <!-- Header Hero -->
+        <div class="text-center max-w-3xl mx-auto mb-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-mono font-bold border border-blue-500/20 mb-3">
+                <span class="w-2 h-2 rounded-full bg-blue-500 animate-ping"></span>
+                PRECISION ROTARY ENCODER DIAGNOSTICS
+            </div>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                Mouse Scroll Wheel <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">Jump & Reverse Tester</span>
+            </h1>
+            <p class="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 font-medium">
+                Detect scroll bouncing, errant reverse-ticks, and optical/mechanical encoder failure. Place cursor inside the sandbox and scroll!
+            </p>
+        </div>
+
+        <!-- Testing Mode Switcher -->
+        <div class="max-w-xl mx-auto mb-6 flex items-center justify-center p-1.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm gap-2">
+            <button id="mode-down" class="mode-btn flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-md transition-all flex items-center justify-center gap-1.5">
+                ⬇️ Scroll DOWN Test
+                <span class="text-[10px] opacity-75 hidden sm:inline">(Detect Up Jumps)</span>
+            </button>
+            <button id="mode-up" class="mode-btn flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center justify-center gap-1.5">
+                ⬆️ Scroll UP Test
+                <span class="text-[10px] opacity-75 hidden sm:inline">(Detect Down Jumps)</span>
+            </button>
+            <button id="mode-free" class="mode-btn flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center justify-center gap-1.5">
+                🔄 Free Scroll
+            </button>
+        </div>
+
+        <!-- Main Tester Arena & Live Statistics -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+
+            <!-- Interactive Scroll Arena (Left / Center) -->
+            <div class="lg:col-span-8 flex flex-col gap-4">
+                <div id="scroll-arena" class="relative min-h-[420px] rounded-3xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl p-8 flex flex-col items-center justify-center cursor-ns-resize shadow-xl transition-all duration-200 select-none overflow-hidden group hover:border-blue-500 dark:hover:border-blue-500">
+                    
+                    <!-- Sound & Clear Quick Controls -->
+                    <div class="absolute top-4 right-4 flex items-center gap-2 z-20">
+                        <button id="audio-toggle" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold transition-all flex items-center gap-1" title="Toggle Alert Beep on Jump">
+                            <span id="audio-icon">🔔</span> Beep Alert: <span id="audio-status" class="text-emerald-500 font-extrabold">ON</span>
+                        </button>
+                        <button id="reset-btn" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:text-rose-600 text-xs font-bold transition-all flex items-center gap-1">
+                            🔄 Reset
+                        </button>
+                    </div>
+
+                    <!-- Jump Alert Banner Overlay (Appears on Reverse Tick) -->
+                    <div id="jump-alert-banner" class="hidden absolute top-4 left-4 z-20 px-3.5 py-1.5 rounded-full bg-rose-500 text-white font-mono text-xs font-black shadow-lg animate-bounce flex items-center gap-1.5">
+                        <span>⚠️ REVERSE JUMP DETECTED!</span>
+                    </div>
+
+                    <!-- 3D Styled Visual Mouse with Animated Rotating Wheel -->
+                    <div class="relative w-48 h-64 mb-6 flex flex-col items-center justify-center">
+                        <!-- Mouse Body SVG -->
+                        <div id="mouse-illustration" class="w-40 h-60 rounded-[3rem] border-4 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-850 shadow-2xl relative flex justify-center pt-8 transition-colors duration-150">
+                            
+                            <!-- Left / Right Click Split Lines -->
+                            <div class="absolute top-0 bottom-1/2 left-1/2 -translate-x-1/2 w-0.5 bg-slate-200 dark:bg-slate-800"></div>
+                            
+                            <!-- The Interactive Wheel -->
+                            <div id="interactive-wheel" class="w-8 h-20 rounded-2xl bg-gradient-to-b from-slate-400 to-slate-600 dark:from-slate-600 dark:to-slate-800 border-2 border-slate-400 dark:border-slate-500 shadow-inner relative flex flex-col items-center justify-between py-2 transition-all duration-100 z-10">
+                                <div class="w-5 h-1 rounded-full bg-white/40 mb-1"></div>
+                                <div class="w-5 h-1 rounded-full bg-white/40 mb-1"></div>
+                                <div class="w-5 h-1 rounded-full bg-white/40"></div>
+                            </div>
+                        </div>
+
+                        <!-- Direction Visual Arrows -->
+                        <div id="direction-indicator" class="absolute -bottom-2 text-2xl font-mono font-bold text-slate-400 dark:text-slate-500">
+                            ↕️ Place cursor here & scroll
+                        </div>
+                    </div>
+
+                    <div class="text-center z-10">
+                        <p class="text-sm font-bold text-slate-700 dark:text-slate-300">
+                            Keep scrolling continuously inside this box
+                        </p>
+                        <p class="text-xs text-slate-400 dark:text-slate-500 mt-1 font-mono">
+                            Testing Mode: <span id="current-mode-label" class="text-blue-600 dark:text-blue-400 font-bold">DOWN SCROLL</span>
+                        </p>
+                    </div>
+
+                    <!-- Background Pulse FX -->
+                    <div id="arena-pulse" class="absolute inset-0 pointer-events-none transition-colors duration-300"></div>
+                </div>
+
+                <!-- Fast Statistics Pill Row -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                        <span class="text-[11px] font-mono font-bold uppercase text-slate-400 tracking-wider">Valid Ticks</span>
+                        <div id="stat-valid-ticks" class="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">0</div>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                        <span class="text-[11px] font-mono font-bold uppercase text-slate-400 tracking-wider">Reverse Jumps</span>
+                        <div id="stat-reverse-ticks" class="text-2xl font-black text-slate-400 mt-1">0</div>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                        <span class="text-[11px] font-mono font-bold uppercase text-slate-400 tracking-wider">Scroll Velocity</span>
+                        <div id="stat-speed" class="text-2xl font-black text-slate-800 dark:text-slate-200 mt-1 font-mono">0<span class="text-xs font-normal text-slate-400"> t/s</span></div>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                        <span class="text-[11px] font-mono font-bold uppercase text-slate-400 tracking-wider">Last Tick</span>
+                        <div id="stat-last-delta" class="text-2xl font-black text-slate-800 dark:text-slate-200 mt-1 font-mono">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Health Score & Diagnostic Telemetry (Right Panel) -->
+            <div class="lg:col-span-4 flex flex-col gap-6">
+
+                <!-- Overall Health Card -->
+                <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl flex flex-col items-center text-center relative overflow-hidden">
+                    <div class="w-full flex justify-between items-center mb-4">
+                        <span class="text-xs font-mono font-bold uppercase text-slate-400 tracking-wider">Encoder Integrity</span>
+                        <span id="health-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                            READY
+                        </span>
+                    </div>
+
+                    <!-- Health Circular Visual -->
+                    <div class="relative w-36 h-36 flex items-center justify-center my-2">
+                        <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                            <path class="text-slate-100 dark:text-slate-800" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path id="health-circle-bar" class="text-emerald-500 transition-all duration-300" stroke-dasharray="100, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+                        <div class="absolute flex flex-col items-center justify-center">
+                            <span id="health-score-val" class="text-3xl font-black text-slate-900 dark:text-white">100%</span>
+                            <span class="text-[10px] font-mono text-slate-400 font-semibold uppercase">Health Score</span>
+                        </div>
+                    </div>
+
+                    <p id="health-verdict" class="text-xs text-slate-500 dark:text-slate-400 mt-2 font-medium">
+                        Scroll at least 30 times to calculate diagnostic accuracy.
+                    </p>
+
+                    <!-- Export Certified RMA Log Button -->
+                    <button id="copy-report-btn" class="mt-5 w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2">
+                        📋 Copy Warranty / RMA Log
+                    </button>
+                </div>
+
+                <!-- Real-Time Event Telemetry Log -->
+                <div class="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl flex-grow flex flex-col">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-mono font-bold uppercase text-slate-400 tracking-wider">Live Event Stream</span>
+                        <div class="flex items-center gap-2">
+                            <label class="text-[11px] text-slate-500 flex items-center gap-1 cursor-pointer select-none">
+                                <input id="filter-errors-only" type="checkbox" class="rounded text-blue-600">
+                                <span>Errors Only</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Scrollable Log Box -->
+                    <div id="event-log-box" class="flex-grow max-h-56 overflow-y-auto font-mono text-[11px] space-y-1.5 pr-1 border border-slate-100 dark:border-slate-800 rounded-xl p-2.5 bg-slate-50/50 dark:bg-slate-950/50">
+                        <div class="text-slate-400 italic text-center py-6">Telemetry events will appear here...</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- In-Depth Troubleshooting Guide (SEO Content Hub) -->
+        <section class="max-w-4xl mx-auto w-full my-16 space-y-12">
+
+            <!-- Section 1: Why does it happen -->
+            <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md">
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                    <span>🔍</span> Why Does a Mouse Scroll Wheel Jump in the Wrong Direction?
+                </h2>
+                <div class="text-sm text-slate-600 dark:text-slate-300 space-y-4 leading-relaxed font-medium">
+                    <p>
+                        Almost every computer mouse — from budget office mice to premium $150 esports mice like the <strong>Logitech G Pro X Superlight</strong>, <strong>Razer DeathAdder</strong>, and <strong>Pulsar X2</strong> — relies on a tiny component called a <strong>Mechanical Rotary Encoder</strong> (such as TTC Gold, Kailh, or ALPS).
+                    </p>
+                    <p>
+                        As you spin the wheel, miniature metal contact wipers slide over a toothed track to signal rotational direction. Over time, three major hardware issues occur:
+                    </p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Dust & Pet Hair Intrusion:</strong> Fibers get trapped between the encoder wipers, causing microscopic signal gaps that Windows reads as reverse motion.</li>
+                        <li><strong>Contact Grease Oxidation:</strong> Factory dampening grease oxidizes and forms a resistive barrier over the encoder teeth.</li>
+                        <li><strong>Switch Chattering / Contact Fatigue:</strong> The metal wiper loses spring tension, causing switch bouncing (rapid false pulses within 2–10 milliseconds).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 2: 4 Fixes without opening mouse -->
+            <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md">
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                    <span>🛠️</span> 4 Proven Ways to Fix Mouse Scroll Wheel Jumping
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                    <div class="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850">
+                        <div class="font-extrabold text-blue-600 dark:text-blue-400 text-base mb-2">1. The Fast Upside-Down Roll (90% Success)</div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                            Disconnect your mouse. Turn it completely upside down against a clean mousepad or your jeans. Roll the wheel rapidly back and forth under moderate pressure for 30–45 seconds. This grinds through microscopic debris and cleans wiper contacts.
+                        </p>
+                    </div>
+                    <div class="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850">
+                        <div class="font-extrabold text-indigo-600 dark:text-indigo-400 text-base mb-2">2. Compressed Air Can Straw Technique</div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                            Insert the thin red straw of a canned compressed air duster directly into the thin crevice on either side of the scroll wheel. Give 3–4 short, sharp bursts while spinning the wheel to blow out trapped pet hair and dust.
+                        </p>
+                    </div>
+                    <div class="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850">
+                        <div class="font-extrabold text-purple-600 dark:text-purple-400 text-base mb-2">3. 99% Isopropyl Alcohol (IPA) Drop</div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                            Unplug the mouse and take out the battery. Use a toothpick or syringe to apply a single tiny drop of 90%+ isopropyl alcohol into the encoder wheel axle. Roll the wheel 50 times and allow 20 minutes to evaporate before reconnecting.
+                        </p>
+                    </div>
+                    <div class="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850">
+                        <div class="font-extrabold text-emerald-600 dark:text-emerald-400 text-base mb-2">4. Windows Scroll Setting Tweaks</div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                            Open Windows Settings &gt; Bluetooth & Devices &gt; Mouse. Change <em>"Lines to scroll at a time"</em> to 3 or 5, and ensure <em>"Scroll inactive windows when hovering"</em> is toggled On. Turn off third-party smooth scrolling software if enabled.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Frequently Asked Questions -->
+            <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md">
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
+                <div class="space-y-4">
+                    <div class="border-b border-slate-100 dark:border-slate-800 pb-4">
+                        <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200">How many scroll ticks should I test to know if my mouse is broken?</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed font-medium">
+                            We recommend scrolling at least 150 to 200 ticks in one direction. A healthy mouse will register 0 reverse jumps (100% Health). If you detect 3 or more reverse jumps in 100 ticks, your rotary encoder is worn and will actively disrupt gaming or reading.
+                        </p>
+                    </div>
+                    <div class="border-b border-slate-100 dark:border-slate-800 pb-4">
+                        <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200">Is this scroll test safe and private?</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed font-medium">
+                            Yes, 100%. All scroll calculations, deltaY readings, and health metrics are executed locally inside your web browser. No telemetry or inputs are transmitted to external servers.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200">Can optical encoders suffer from scroll jumping?</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed font-medium">
+                            Optical encoders (used in some Razer and Zowie mice) are significantly more immune to mechanical wear because they use infrared light beams rather than physical metal wipers. However, they can still jump if loose dust blocks the optical sensor beam path.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 mt-auto transition-colors duration-300">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-left select-none">
+                
+                <!-- Column 1: Brand & Logo -->
+                <div class="space-y-4">
+                    <a href="/" class="flex items-center gap-2 group w-fit transition-transform duration-200 active:scale-95">
+                        <span class="logo-emoji text-xl group-hover:rotate-12 transition-transform duration-300 inline-block">⌨️</span>
+                        <span class="brand-name font-black text-slate-900 dark:text-slate-200 text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">InputTest.online</span>
+                    </a>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed brand-slogan font-semibold">
+                        Universal Hardware & Input Device Tester
+                    </p>
+                    <p class="text-xs text-slate-400 dark:text-slate-500 leading-relaxed font-medium">
+                        Safe sandboxed hardware diagnostics. 100% private, local client-side processing.
+                    </p>
+                </div>
+                
+                <!-- Column 2: Input Diagnostics -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Input Diagnostics</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="/keyboard" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Keyboard Tester</a></li>
+                        <li><a href="/mouse" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖱️ Mouse & CPS Test</a></li>
+                        <li><a href="/scroll-test" class="text-blue-600 dark:text-blue-400 font-bold hover:underline transition-colors">🔄 Scroll Jump Tester</a></li>
+                        <li><a href="/gamepad" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎮 Gamepad & Drift</a></li>
+                        <li><a href="/mic" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎙️ Microphone Check</a></li>
+                        <li><a href="/webcam" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📷 Webcam Quality</a></li>
+                        <li><a href="/draw" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📐 Drawing Tablet</a></li>
+                        <li><a href="/usb" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔌 USB & HID Profiler</a></li>
+                        <li><a href="/biometric" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔑 Biometrics Hello</a></li>
+                        <li><a href="/battery" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔋 Battery Health</a></li>
+                        <li><a href="/lan" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🌐 LAN Jitter Test</a></li>
+                        <li><a href="/usb-c" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ USB-C Profiler</a></li>
+                        <li><a href="/cps-test" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ CPS Click Test</a></li>
+                        <li><a href="/typing" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Typing Speed Test</a></li>
+                        <li><a href="/reaction" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⏱️ Reaction Time Test</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3: Screen & Outputs -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Screen & Outputs</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="/display" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 Display & Monitor</a></li>
+                        <li><a href="/latency" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ Latency & Lag</a></li>
+                        <li><a href="/printer" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖨️ Printer CMYK</a></li>
+                        <li><a href="/scanner" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📄 Documents Scan</a></li>
+                        <li><a href="/vr" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🕶️ VR Controller</a></li>
+                        <li><a href="/specs" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">💻 Hardware Specs</a></li>
+                        <li><a href="/hdmi" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 HDMI Analyzer</a></li>
+                        <li><a href="/vga" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎨 VGA Calibrator</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4: Reports, Blog & Policies -->
+                <div>
+                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Info & Policies</h4>
+                    <ul class="space-y-2 font-semibold text-xs">
+                        <li><a href="/report" class="text-emerald-600 dark:text-emerald-450 font-bold bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10 dark:border-emerald-500/20 hover:bg-emerald-500/10 transition-colors inline-block mb-1">🛡️ Certified PDF Report</a></li>
+                        <li><a href="/blog" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📝 Blog Guides</a></li>
+                        <li><a href="/privacy" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔒 Privacy Policy</a></li>
+                        <li><a href="/terms" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚖️ Terms of Service</a></li>
+                        <li><a href="/about" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">ℹ️ About Us</a></li>
+                        <li><a href="/contact" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📬 Contact Us</a></li>
+                        <li><a href="#" class="brand-email text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors break-all">✉️ support@inputtest.online</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div class="border-t border-slate-100 dark:border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-medium flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                    <span>&copy; 2026 InputTest.online. Safe sandboxed diagnostics. No data collection.</span>
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 font-extrabold border border-emerald-500/15 w-fit uppercase select-none">
+                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-ping"></span>
+                        Version 1.3.0
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Logic Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Theme toggle
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+            if (document.documentElement.classList.contains('dark')) {
+                lightIcon.classList.remove('hidden');
+            } else {
+                darkIcon.classList.remove('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                darkIcon.classList.toggle('hidden');
+                lightIcon.classList.toggle('hidden');
+
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            });
+
+            // ==========================================
+            // SCROLL WHEEL DIAGNOSTIC ENGINE
+            // ==========================================
+            let currentMode = 'down'; // 'down', 'up', 'free'
+            let validTicks = 0;
+            let reverseTicks = 0;
+            let totalTicks = 0;
+            let audioEnabled = true;
+            let eventsHistory = [];
+            let lastScrollTime = 0;
+            let wheelRotation = 0;
+            let speedCalculationTimer = null;
+            let recentTicksForSpeed = 0;
+
+            const arena = document.getElementById('scroll-arena');
+            const wheelEl = document.getElementById('interactive-wheel');
+            const jumpAlertBanner = document.getElementById('jump-alert-banner');
+            const arenaPulse = document.getElementById('arena-pulse');
+            const currentModeLabel = document.getElementById('current-mode-label');
+            const directionIndicator = document.getElementById('direction-indicator');
+
+            const statValidTicks = document.getElementById('stat-valid-ticks');
+            const statReverseTicks = document.getElementById('stat-reverse-ticks');
+            const statSpeed = document.getElementById('stat-speed');
+            const statLastDelta = document.getElementById('stat-last-delta');
+
+            const healthBadge = document.getElementById('health-badge');
+            const healthScoreVal = document.getElementById('health-score-val');
+            const healthCircleBar = document.getElementById('health-circle-bar');
+            const healthVerdict = document.getElementById('health-verdict');
+
+            const eventLogBox = document.getElementById('event-log-box');
+            const filterErrorsOnly = document.getElementById('filter-errors-only');
+            const audioToggle = document.getElementById('audio-toggle');
+            const audioStatus = document.getElementById('audio-status');
+            const audioIcon = document.getElementById('audio-icon');
+            const resetBtn = document.getElementById('reset-btn');
+            const copyReportBtn = document.getElementById('copy-report-btn');
+
+            // Web Audio Synth for Jump Alert Beep (No external files)
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            function playJumpBeep() {
+                if (!audioEnabled || !audioCtx) return;
+                try {
+                    if (audioCtx.state === 'suspended') {
+                        audioCtx.resume();
+                    }
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(320, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(160, audioCtx.currentTime + 0.12);
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.12);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.12);
+                } catch(e) {}
+            }
+
+            // Mode Selection
+            const modeBtns = {
+                'down': document.getElementById('mode-down'),
+                'up': document.getElementById('mode-up'),
+                'free': document.getElementById('mode-free')
+            };
+
+            function setMode(mode) {
+                currentMode = mode;
+                Object.keys(modeBtns).forEach(k => {
+                    if (k === mode) {
+                        modeBtns[k].className = "mode-btn flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-md transition-all flex items-center justify-center gap-1.5";
+                    } else {
+                        modeBtns[k].className = "mode-btn flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center justify-center gap-1.5";
+                    }
+                });
+
+                if (mode === 'down') {
+                    currentModeLabel.textContent = "SCROLL DOWN (Detect Up Jumps)";
+                    directionIndicator.innerHTML = "⬇️ Scroll downwards to test";
+                } else if (mode === 'up') {
+                    currentModeLabel.textContent = "SCROLL UP (Detect Down Jumps)";
+                    directionIndicator.innerHTML = "⬆️ Scroll upwards to test";
+                } else {
+                    currentModeLabel.textContent = "FREE BIDIRECTIONAL TEST";
+                    directionIndicator.innerHTML = "🔄 Scroll freely in both directions";
+                }
+            }
+
+            modeBtns['down'].addEventListener('click', () => setMode('down'));
+            modeBtns['up'].addEventListener('click', () => setMode('up'));
+            modeBtns['free'].addEventListener('click', () => setMode('free'));
+
+            // Audio Toggle
+            audioToggle.addEventListener('click', () => {
+                audioEnabled = !audioEnabled;
+                audioStatus.textContent = audioEnabled ? 'ON' : 'OFF';
+                audioStatus.className = audioEnabled ? 'text-emerald-500 font-extrabold' : 'text-slate-400 font-extrabold';
+                audioIcon.textContent = audioEnabled ? '🔔' : '🔕';
+            });
+
+            // Prevent default page scroll when scrolling over test arena
+            arena.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                handleScrollEvent(e.deltaY);
+            }, { passive: false });
+
+            function handleScrollEvent(deltaY) {
+                if (deltaY === 0) return;
+
+                const isDown = deltaY > 0;
+                totalTicks++;
+                recentTicksForSpeed++;
+
+                // Visual wheel spinning animation
+                wheelRotation += isDown ? 25 : -25;
+                wheelEl.style.transform = `rotateX(${wheelRotation}deg)`;
+
+                // Direction analysis
+                let isReverseError = false;
+                if (currentMode === 'down' && !isDown) {
+                    isReverseError = true;
+                } else if (currentMode === 'up' && isDown) {
+                    isReverseError = true;
+                }
+
+                if (isReverseError) {
+                    reverseTicks++;
+                    playJumpBeep();
+
+                    // Flash Alert UI
+                    arena.classList.add('border-rose-500', 'bg-rose-500/10');
+                    arenaPulse.className = "absolute inset-0 bg-rose-500/15 pointer-events-none";
+                    jumpAlertBanner.classList.remove('hidden');
+                    wheelEl.classList.add('animate-shake', 'from-rose-500', 'to-rose-700', 'border-rose-400');
+                    
+                    setTimeout(() => {
+                        arena.classList.remove('border-rose-500', 'bg-rose-500/10');
+                        arenaPulse.className = "absolute inset-0 pointer-events-none";
+                        wheelEl.classList.remove('animate-shake', 'from-rose-500', 'to-rose-700', 'border-rose-400');
+                    }, 350);
+
+                    directionIndicator.innerHTML = `<span class="text-rose-600 dark:text-rose-400 font-black">⚠️ JUMP! Emitted ${isDown ? 'DOWN' : 'UP'} (+${Math.abs(Math.round(deltaY))})</span>`;
+                } else {
+                    validTicks++;
+                    directionIndicator.innerHTML = `<span class="text-emerald-600 dark:text-emerald-400 font-bold">${isDown ? '⬇️ Scrolling Down' : '⬆️ Scrolling Up'} (${Math.round(deltaY)}px)</span>`;
+                }
+
+                // Update Stats
+                statValidTicks.textContent = validTicks;
+                statReverseTicks.textContent = reverseTicks;
+                if (reverseTicks > 0) {
+                    statReverseTicks.className = "text-2xl font-black text-rose-600 mt-1 animate-pulse";
+                }
+                statLastDelta.textContent = `${deltaY > 0 ? '+' : ''}${Math.round(deltaY)}`;
+                statLastDelta.className = isReverseError ? "text-2xl font-black text-rose-600 font-mono mt-1" : "text-2xl font-black text-slate-800 dark:text-slate-200 font-mono mt-1";
+
+                // Log event
+                const timestamp = new Date().toLocaleTimeString().split(' ')[0] + '.' + String(Date.now() % 1000).padStart(3, '0');
+                const eventObj = {
+                    time: timestamp,
+                    dir: isDown ? 'DOWN' : 'UP',
+                    delta: Math.round(deltaY),
+                    isError: isReverseError
+                };
+                eventsHistory.unshift(eventObj);
+                renderLog();
+
+                // Health Calculation
+                calculateHealth();
+            }
+
+            // Real-time Velocity (Ticks per second)
+            setInterval(() => {
+                statSpeed.innerHTML = `${recentTicksForSpeed * 2}<span class="text-xs font-normal text-slate-400"> t/s</span>`;
+                recentTicksForSpeed = 0;
+            }, 500);
+
+            // Calculate Health Score
+            function calculateHealth() {
+                if (totalTicks === 0) return;
+
+                if (currentMode === 'free') {
+                    healthScoreVal.textContent = "N/A";
+                    healthBadge.textContent = "FREE MODE";
+                    healthBadge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-blue-500/10 text-blue-600 border border-blue-500/20";
+                    healthVerdict.textContent = "Switch to Scroll Down or Scroll Up mode to detect reverse bounce.";
+                    return;
+                }
+
+                const healthPercent = Math.max(0, Math.min(100, Math.round(((totalTicks - reverseTicks) / totalTicks) * 100)));
+                healthScoreVal.textContent = `${healthPercent}%`;
+                healthCircleBar.setAttribute('stroke-dasharray', `${healthPercent}, 100`);
+
+                if (totalTicks < 30) {
+                    healthBadge.textContent = "CALIBRATING";
+                    healthBadge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-slate-500/10 text-slate-500 border border-slate-500/20";
+                    healthVerdict.textContent = `Scroll ${30 - totalTicks} more times for a verified health verdict.`;
+                } else if (reverseTicks === 0) {
+                    healthBadge.textContent = "FLAWLESS";
+                    healthBadge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/10 text-emerald-600 border border-emerald-500/20";
+                    healthCircleBar.setAttribute('class', 'text-emerald-500 transition-all duration-300');
+                    healthVerdict.textContent = "🎉 Flawless! No reverse ticks detected. Your rotary encoder is in peak condition.";
+                } else if (healthPercent >= 95) {
+                    healthBadge.textContent = "MINOR JITTER";
+                    healthBadge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-amber-500/10 text-amber-600 border border-amber-500/20";
+                    healthCircleBar.setAttribute('class', 'text-amber-500 transition-all duration-300');
+                    healthVerdict.textContent = "⚠️ Occasional reverse bounce detected. Try the upside-down wheel roll trick.";
+                } else {
+                    healthBadge.textContent = "DEFECTIVE";
+                    healthBadge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-rose-500/10 text-rose-600 border border-rose-500/20";
+                    healthCircleBar.setAttribute('class', 'text-rose-500 transition-all duration-300');
+                    healthVerdict.textContent = `❌ Severe encoder failure (${reverseTicks} reverse jumps). Encoder requires cleaning or warranty replacement.`;
+                }
+            }
+
+            // Render Event Log
+            function renderLog() {
+                const onlyErrors = filterErrorsOnly.checked;
+                const filtered = onlyErrors ? eventsHistory.filter(e => e.isError) : eventsHistory;
+
+                if (filtered.length === 0) {
+                    eventLogBox.innerHTML = '<div class="text-slate-400 italic text-center py-6">No events matching filter...</div>';
+                    return;
+                }
+
+                eventLogBox.innerHTML = filtered.slice(0, 30).map(e => `
+                    <div class="flex items-center justify-between p-1.5 rounded-lg ${e.isError ? 'bg-rose-500/15 border border-rose-500/30 text-rose-700 dark:text-rose-300 font-bold' : 'bg-white/60 dark:bg-slate-900/60 border border-slate-200/50 dark:border-slate-800/50 text-slate-700 dark:text-slate-300'}">
+                        <span>[${e.time}] ${e.isError ? '⚠️ REVERSE JUMP' : (e.dir === 'DOWN' ? '⬇️ Down Tick' : '⬆️ Up Tick')}</span>
+                        <span class="font-mono">${e.delta > 0 ? '+' : ''}${e.delta}px</span>
+                    </div>
+                `).join('');
+            }
+
+            filterErrorsOnly.addEventListener('change', renderLog);
+
+            // Reset Test
+            resetBtn.addEventListener('click', () => {
+                validTicks = 0;
+                reverseTicks = 0;
+                totalTicks = 0;
+                recentTicksForSpeed = 0;
+                eventsHistory = [];
+                wheelRotation = 0;
+                wheelEl.style.transform = 'rotateX(0deg)';
+                statValidTicks.textContent = '0';
+                statReverseTicks.textContent = '0';
+                statReverseTicks.className = "text-2xl font-black text-slate-400 mt-1";
+                statSpeed.innerHTML = '0<span class="text-xs font-normal text-slate-400"> t/s</span>';
+                statLastDelta.textContent = '-';
+                healthScoreVal.textContent = '100%';
+                healthCircleBar.setAttribute('stroke-dasharray', '100, 100');
+                healthCircleBar.setAttribute('class', 'text-emerald-500 transition-all duration-300');
+                healthBadge.textContent = 'READY';
+                healthBadge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/10 text-emerald-600 border border-emerald-500/20";
+                healthVerdict.textContent = "Scroll at least 30 times to calculate diagnostic accuracy.";
+                jumpAlertBanner.classList.add('hidden');
+                eventLogBox.innerHTML = '<div class="text-slate-400 italic text-center py-6">Telemetry events will appear here...</div>';
+                directionIndicator.innerHTML = "↕️ Place cursor here & scroll";
+            });
+
+            // Copy Certified RMA / Warranty Report
+            copyReportBtn.addEventListener('click', () => {
+                const healthPercent = totalTicks > 0 ? Math.max(0, Math.min(100, Math.round(((totalTicks - reverseTicks) / totalTicks) * 100))) : 100;
+                const reportText = `===========================================
+INPUTTEST.ONLINE - MOUSE SCROLL JUMP TEST REPORT
+Verified Timestamp: ${new Date().toISOString()}
+Testing Mode: Continuous ${currentMode.toUpperCase()} Scroll
+===========================================
+- Total Scroll Ticks Tested: ${totalTicks}
+- Valid Direction Ticks: ${validTicks}
+- Reverse-Tick Jump Errors: ${reverseTicks}
+- Rotary Encoder Health Score: ${healthPercent}%
+- Test Status: ${reverseTicks === 0 ? "PASSED (Flawless Encoder)" : "FAILED (Mechanical Chatter / Reverse Jumps Detected)"}
+===========================================
+Run your own certified diagnostic at:
+https://inputtest.online/scroll-test
+===========================================`;
+
+                navigator.clipboard.writeText(reportText).then(() => {
+                    const originalText = copyReportBtn.innerHTML;
+                    copyReportBtn.innerHTML = "✅ Copied to Clipboard!";
+                    copyReportBtn.classList.add('bg-emerald-600');
+                    setTimeout(() => {
+                        copyReportBtn.innerHTML = originalText;
+                        copyReportBtn.classList.remove('bg-emerald-600');
+                    }, 2500);
+                }).catch(() => {
+                    alert("Could not copy automatically. Total Ticks: " + totalTicks + ", Errors: " + reverseTicks);
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

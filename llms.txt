@@ -20,6 +20,7 @@
 
 - [Keyboard Tester](https://inputtest.online/keyboard): Test all keyboard keys in real time. Detects stuck keys, ghosting, N-key rollover, and key chatter. Supports Windows and macOS layouts.
 - [Mouse Tester](https://inputtest.online/mouse): Test all mouse buttons (left, right, middle, side), scroll wheel, double-click issues, and calculate CPS (clicks per second).
+- [Scroll Wheel Jump Tester](https://inputtest.online/scroll-test): Accurately detect mouse scroll wheel jumping in the wrong direction, rotary encoder chatter, reverse-ticks, and calculate scroll health percentage.
 - [Microphone Test](https://inputtest.online/mic): Live microphone test with real-time waveform, decibel meter, echo test, and noise analysis. Detects mic not working, distortion, and clipping.
 - [Webcam Test](https://inputtest.online/webcam): Test webcam video feed, resolution, frame rate, and check if webcam is working in browser.
 - [Gamepad Tester](https://inputtest.online/gamepad): Test PlayStation, Xbox, Nintendo controllers. Detects analog stick drift, button mapping, trigger sensitivity, and vibration.
