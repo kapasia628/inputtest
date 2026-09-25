@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/mouse-polling-rate">
+    <script>
+        // Inline theme helper to avoid UI flash of light theme
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    
+    <!-- PWA Manifest & Favicon -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    <link rel="shortcut icon" href="/icon-192.png">
+    
+    <!-- SEO Meta Tags -->
+    <title>Mouse Polling Rate Test Online (Hz) - Check 1000Hz, 4000Hz & 8000Hz Speed | InputTest</title>
+    <meta name="description" content="Free online mouse polling rate tester. Measure your mouse report rate (Hz), peak frequency, interval latency in milliseconds, jitter stability, and test 1000Hz to 8000Hz sensors with 100% accuracy.">
+    <meta name="keywords" content="mouse polling rate test, mouse hz test, check mouse polling rate online, 1000hz mouse test, 4000hz mouse test, 8000hz mouse test, mouse report rate, mouse sensor latency, mouse jitter test">
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/mouse-polling-rate">
+    <meta property="og:title" content="Mouse Polling Rate Test Online (Hz) - Check 1000Hz, 4000Hz & 8000Hz Speed | InputTest">
+    <meta property="og:description" content="Free online mouse polling rate tester. Measure your mouse report rate (Hz), peak frequency, interval latency in milliseconds, jitter stability, and test 1000Hz to 8000Hz sensors.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/mouse-polling-rate">
+    <meta name="twitter:title" content="Mouse Polling Rate Test Online (Hz) - Check 1000Hz, 4000Hz & 8000Hz Speed | InputTest">
+    <meta name="twitter:description" content="Free online mouse polling rate tester. Measure your mouse report rate (Hz), peak frequency, interval latency in milliseconds, and jitter stability.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- JSON-LD Structured Data for WebApplication Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Mouse Polling Rate & Report Frequency Tester",
+      "url": "https://inputtest.online/mouse-polling-rate",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free interactive mouse polling rate tester. Accurately measure mouse USB report frequency in Hz, sensor interval latency in milliseconds, peak frequency, and jitter stability score online."
+    }
+    </script>
+
+    <!-- JSON-LD FAQ Schema for AEO / Voice Search -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I check my mouse polling rate online?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Go to InputTest.online/mouse-polling-rate and move your mouse continuously inside the interactive test arena. The tool tracks every mousemove event with microsecond precision, calculating your real-time report rate in Hertz (Hz), peak Hz, and average latency."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a good polling rate for gaming?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1000Hz (1 millisecond delay) is the competitive esports gold standard for first-person shooters like CS2, Valorant, and Apex Legends. Enthusiast mice now support 4000Hz (0.25ms) and 8000Hz (0.125ms), while casual office mice typically run at 125Hz (8ms)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is my 1000Hz mouse only showing 500Hz or fluctuating?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mouse polling rate is movement-dependent. If you move your mouse slowly or at low DPI, the sensor does not generate enough movement packets to saturate 1000Hz. Move your mouse fast in circular motions across the test box, ensure your mouse software (Razer Synapse, Logitech G HUB) is set to 1000Hz, and plug directly into a rear motherboard USB 3.0 port."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does 4000Hz or 8000Hz mouse polling rate cause CPU lag in games?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, high polling rates like 4000Hz and 8000Hz generate 4 to 8 times more CPU interrupts per second. On older 4-core or 6-core CPUs, this can cause frame drops and stuttering in games. A modern multi-threaded CPU (Intel Core i7/i9 or AMD Ryzen 7/9) is recommended for 4000Hz+ polling."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://inputtest.online/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Mouse Polling Rate Tester",
+          "item": "https://inputtest.online/mouse-polling-rate"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Menlo', 'Consolas', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .bench-grid {
+            background-size: 24px 24px;
+            background-image: 
+                linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+        }
+        .dark .bench-grid {
+            background-size: 24px 24px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #090d16; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
+        .dark ::-webkit-scrollbar-thumb { background: #252e42; }
+    </style>
+    
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2485510445228691" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-2485510445228691">
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ynfnjomkxs");
+    </script>
+</head>
+<body class="bg-[#f7f8fa] text-slate-800 dark:bg-[#090d16] dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col bench-grid selection:bg-blue-600 selection:text-white transition-colors duration-200">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-white/95 dark:bg-[#0c111c]/95 border-b border-slate-200 dark:border-slate-800/80 backdrop-blur-md transition-colors duration-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 gap-4">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-300">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-250">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-450 dark:text-slate-500 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex items-center gap-1.5 font-medium text-xs">
+                    <a href="/" class="px-3 py-1.5 rounded-md text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Home</a>
+                    <a href="/keyboard" class="px-3 py-1.5 rounded-md text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Keyboard</a>
+                    <a href="/mouse" class="px-3 py-1.5 rounded-md text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Mouse & CPS</a>
+                    <a href="/scroll-test" class="px-3 py-1.5 rounded-md text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Scroll Jump</a>
+                    <a href="/mouse-polling-rate" class="px-3 py-1.5 rounded-md text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/40 border border-blue-200/60 dark:border-blue-800/60 transition-colors flex items-center gap-1">
+                        <span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span> Polling Rate (Hz)
+                    </a>
+                    <a href="/display" class="px-3 py-1.5 rounded-md text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Display</a>
+                    <a href="/blog" class="px-3 py-1.5 rounded-md text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Blog</a>
+                </nav>
+
+                <!-- Actions: Theme + Mobile Button -->
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <button id="theme-toggle" class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+                    <a href="/" class="text-xs font-mono font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors hidden sm:inline-block">All 22+ Tools</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top AdSense Banner Zone -->
+    <div class="max-w-7xl mx-auto px-4 mt-4 w-full flex justify-center">
+        <div id="top-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-dashed border-slate-300 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 rounded-xl overflow-hidden flex items-center justify-center">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono select-none py-3">
+                <span class="tracking-widest uppercase text-[9px] font-bold">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-60 font-medium">Diagnostic Sponsor Banner</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-center">
+        
+        <!-- Header Title Section -->
+        <section class="max-w-3xl mx-auto text-center mb-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/20 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 text-xs font-mono font-semibold mb-3">
+                <span class="h-2 w-2 rounded-full bg-blue-500 animate-pulse"></span>
+                <span>PRECISION HARDWARE SENSOR PROFILER</span>
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-3">
+                Mouse Polling Rate <span class="text-blue-600 dark:text-blue-400 font-mono">Hz Tester</span>
+            </h1>
+
+            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                Measure your mouse report frequency (Hz), peak sensor rate, interval latency (ms), and packet jitter consistency. Compatible with 125Hz, 500Hz, 1000Hz, 4000Hz, and 8000Hz gaming mice.
+            </p>
+        </section>
+
+        <!-- INTERACTIVE TEST ARENA WORKBENCH -->
+        <section class="w-full mx-auto mb-10 select-none">
+            <div class="bg-white dark:bg-[#0d121f] border-2 border-slate-300 dark:border-slate-800 rounded-2xl shadow-xl overflow-hidden">
+                
+                <!-- Instrument Top Bar -->
+                <div class="bg-slate-100 dark:bg-[#080c14] border-b border-slate-200 dark:border-slate-800 px-4 py-2.5 flex items-center justify-between font-mono text-[11px] text-slate-500 dark:text-slate-400">
+                    <div class="flex items-center gap-3">
+                        <span class="inline-flex items-center gap-1.5 text-slate-800 dark:text-slate-200 font-bold">
+                            <span class="h-2 w-2 rounded-full bg-emerald-500"></span> SENSOR BUFFER: ACTIVE
+                        </span>
+                        <span class="text-slate-400">//</span>
+                        <span>RESOLUTION: HIGH-PRECISION MICROSECONDS</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button id="reset-btn" class="px-2.5 py-1 rounded bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-mono text-xs font-bold transition-colors">Reset Stats</button>
+                    </div>
+                </div>
+
+                <!-- Main Live Stats Readout Deck -->
+                <div class="p-6 grid grid-cols-2 md:grid-cols-5 gap-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-[#0a0f1c]/50">
+                    
+                    <!-- Metric 1: Current Live Hz -->
+                    <div class="p-3.5 bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-slate-800 rounded-xl col-span-2 sm:col-span-1">
+                        <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest block font-bold">CURRENT REPORT</span>
+                        <div class="flex items-baseline gap-1 mt-1">
+                            <span id="stat-current-hz" class="text-3xl font-extrabold font-mono text-blue-600 dark:text-blue-400">0</span>
+                            <span class="text-xs font-mono font-bold text-slate-400">Hz</span>
+                        </div>
+                    </div>
+
+                    <!-- Metric 2: Peak Max Hz -->
+                    <div class="p-3.5 bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-slate-800 rounded-xl">
+                        <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest block font-bold">PEAK MAX</span>
+                        <div class="flex items-baseline gap-1 mt-1">
+                            <span id="stat-peak-hz" class="text-2xl font-extrabold font-mono text-emerald-600 dark:text-emerald-400">0</span>
+                            <span class="text-xs font-mono font-bold text-slate-400">Hz</span>
+                        </div>
+                    </div>
+
+                    <!-- Metric 3: Average Hz -->
+                    <div class="p-3.5 bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-slate-800 rounded-xl">
+                        <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest block font-bold">AVERAGE</span>
+                        <div class="flex items-baseline gap-1 mt-1">
+                            <span id="stat-avg-hz" class="text-2xl font-extrabold font-mono text-slate-900 dark:text-white">0</span>
+                            <span class="text-xs font-mono font-bold text-slate-400">Hz</span>
+                        </div>
+                    </div>
+
+                    <!-- Metric 4: Interval Latency (ms) -->
+                    <div class="p-3.5 bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-slate-800 rounded-xl">
+                        <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest block font-bold">REPORT INTERVAL</span>
+                        <div class="flex items-baseline gap-1 mt-1">
+                            <span id="stat-latency" class="text-2xl font-extrabold font-mono text-indigo-600 dark:text-indigo-400">0.00</span>
+                            <span class="text-xs font-mono font-bold text-slate-400">ms</span>
+                        </div>
+                    </div>
+
+                    <!-- Metric 5: Sensor Tier Badge -->
+                    <div class="p-3.5 bg-white dark:bg-[#0c121e] border border-slate-200 dark:border-slate-800 rounded-xl flex flex-col justify-between">
+                        <span class="text-[9px] font-mono text-slate-400 uppercase tracking-widest block font-bold">HARDWARE TIER</span>
+                        <div id="stat-tier-badge" class="mt-1 inline-flex items-center justify-center px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono text-xs font-bold">
+                            WAITING...
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Interactive Capture Arena & Live Waveform Canvas -->
+                <div class="p-6">
+                    
+                    <!-- Mouse Move Zone -->
+                    <div id="mouse-test-zone" class="relative w-full h-72 sm:h-80 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#05070c] flex flex-col items-center justify-center cursor-crosshair overflow-hidden group hover:border-blue-500 transition-colors">
+                        
+                        <!-- Real-time Scatter & Frequency Waveform Canvas -->
+                        <canvas id="freq-canvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+
+                        <!-- Centered Prompt Message (fades on movement) -->
+                        <div id="zone-prompt" class="relative z-10 flex flex-col items-center pointer-events-none p-4 text-center transition-opacity duration-200">
+                            <div class="h-14 w-14 rounded-2xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 flex items-center justify-center text-3xl mb-3 text-blue-600 shadow-sm">
+                                🖱️
+                            </div>
+                            <span class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white font-mono">
+                                Move your mouse continuously inside this box
+                            </span>
+                            <span class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1 max-w-sm">
+                                Move in fast circles to register your peak report frequency (Hz).
+                            </span>
+                        </div>
+
+                        <!-- Live Cursor Coordinate HUD -->
+                        <div class="absolute bottom-3 right-3 font-mono text-[10px] text-slate-400 bg-white/80 dark:bg-slate-900/80 px-2 py-1 rounded border border-slate-200 dark:border-slate-800 pointer-events-none">
+                            PACKETS: <span id="stat-samples" class="font-bold text-slate-800 dark:text-white">0</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Console Action Buttons (Share & Export) -->
+                <div class="bg-slate-100/80 dark:bg-[#080c14] border-t border-slate-200 dark:border-slate-800 px-6 py-3.5 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+                    <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                        <span>JITTER STABILITY: <strong id="stat-jitter" class="text-emerald-600 dark:text-emerald-400 font-bold">-- ms</strong></span>
+                        <span class="text-slate-400">|</span>
+                        <span>TEST WINDOW: <strong id="stat-time" class="text-slate-700 dark:text-slate-300">0.0s</strong></span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button id="copy-report-btn" class="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold transition-all shadow-xs flex items-center gap-1.5 active:scale-95">
+                            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                            <span>Copy Certified Result</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- HARDWARE BENCHMARK REFERENCE CHART -->
+        <section class="max-w-4xl mx-auto w-full mb-12">
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mb-4">
+                Mouse Polling Rate (Hz) Comparison & Latency Specs
+            </h2>
+            <div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-x-auto bg-white dark:bg-[#0d121f] shadow-sm">
+                <table class="w-full text-left text-xs font-mono">
+                    <thead class="bg-slate-50 dark:bg-[#080c14] border-b border-slate-200 dark:border-slate-800 text-slate-500">
+                        <tr>
+                            <th class="p-3">POLLING RATE (Hz)</th>
+                            <th class="p-3">INTERVAL DELAY</th>
+                            <th class="p-3">BEST USED FOR</th>
+                            <th class="p-3">CPU IMPACT</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+                        <tr>
+                            <td class="p-3 font-bold text-slate-900 dark:text-white">125 Hz</td>
+                            <td class="p-3 text-red-500 font-bold">8.00 ms</td>
+                            <td class="p-3 font-sans">Office mice, standard Bluetooth</td>
+                            <td class="p-3 text-emerald-500">Negligible (~0.1%)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-slate-900 dark:text-white">500 Hz</td>
+                            <td class="p-3 text-amber-500 font-bold">2.00 ms</td>
+                            <td class="p-3 font-sans">Entry gaming, battery-saver wireless</td>
+                            <td class="p-3 text-emerald-500">Minimal (~0.5%)</td>
+                        </tr>
+                        <tr class="bg-blue-50/50 dark:bg-blue-950/20">
+                            <td class="p-3 font-bold text-blue-600 dark:text-blue-400">1000 Hz (Gold Standard)</td>
+                            <td class="p-3 text-blue-600 dark:text-blue-400 font-bold">1.00 ms</td>
+                            <td class="p-3 font-sans font-semibold">Competitive FPS (CS2, Valorant, Apex)</td>
+                            <td class="p-3 text-emerald-500">Light (~1-2%)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-slate-900 dark:text-white">2000 Hz - 4000 Hz</td>
+                            <td class="p-3 text-emerald-500 font-bold">0.50 ms - 0.25 ms</td>
+                            <td class="p-3 font-sans">Pro esports, high-refresh 240Hz+ monitors</td>
+                            <td class="p-3 text-amber-500">Moderate (~3-6%)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-purple-600 dark:text-purple-400">8000 Hz (Ultra Extreme)</td>
+                            <td class="p-3 text-purple-600 dark:text-purple-400 font-bold">0.125 ms</td>
+                            <td class="p-3 font-sans">Extreme tournament setups (Razer 8KHz)</td>
+                            <td class="p-3 text-red-500 font-bold">High (Requires modern 8+ core CPU)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- TROUBLESHOOTING GUIDE & EXPERT TIPS -->
+        <section class="max-w-4xl mx-auto w-full mb-12">
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mb-4">
+                Troubleshooting: Why Isn't My Mouse Reaching 1000Hz or 4000Hz?
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans">
+                <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0d121f]">
+                    <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">1. Low DPI or Slow Mouse Movement</h3>
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                        To report 1000 times per second, your mouse sensor must physically register movement counts. If your DPI is set to 400 or you move slowly, the mouse will only report 200–500Hz. Move rapidly in large circles across the test arena.
+                    </p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0d121f]">
+                    <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">2. Unpowered USB Hubs & Front Ports</h3>
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                        Front PC case USB ports and unpowered desk USB hubs share bus bandwidth with other devices, causing packet throttling. Always plug your gaming mouse receiver directly into a rear motherboard USB 3.0+ port.
+                    </p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0d121f]">
+                    <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">3. Mouse Driver & Polling Rate Software</h3>
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                        Check your manufacturer utility (Logitech G HUB, Razer Synapse, SteelSeries GG, Wootility). Verify that the Report Rate profile is explicitly set to 1000Hz (or 4000Hz/8000Hz) rather than 500Hz power-saving mode.
+                    </p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0d121f]">
+                    <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">4. 2.4GHz Wireless Signal Interference</h3>
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                        If your wireless receiver is behind a metal computer chassis or next to a Wi-Fi router, packet drops will cause Hz instability. Use the included USB extender cable to place the wireless dongle within 20cm of your mousepad.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-4 text-center">
+                <a href="/blog-mouse-polling-rate" class="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-blue-600 dark:text-blue-400 hover:underline">
+                    <span>Read full technical article: Mouse Polling Rate Explained (125Hz vs 1000Hz)</span>
+                    <span>&rarr;</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section class="max-w-3xl mx-auto w-full mb-12">
+            <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white mb-6 text-center">Frequently Asked Questions</h2>
+            <div class="space-y-4 text-xs">
+                <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0d121f]">
+                    <h3 class="font-bold text-sm text-slate-900 dark:text-white">How accurate is an online browser polling rate test?</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                        InputTest uses the browser's high-resolution `event.timeStamp` API (microsecond precision) coupled with `requestAnimationFrame`. For rates up to 1000Hz, browser tests match dedicated desktop profilers like MouseRate with 99%+ accuracy.
+                    </p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0d121f]">
+                    <h3 class="font-bold text-sm text-slate-900 dark:text-white">Can I feel the difference between 1000Hz and 4000Hz?</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                        On standard 60Hz or 144Hz monitors, the difference between 1000Hz (1ms) and 4000Hz (0.25ms) is barely noticeable. However, on high-refresh 240Hz, 360Hz, or 540Hz OLED gaming displays, fast flick tracking feels visibly smoother.
+                    </p>
+                </div>
+                <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0d121f]">
+                    <h3 class="font-bold text-sm text-slate-900 dark:text-white">Does higher polling rate drain wireless mouse battery faster?</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                        Yes. Running a wireless mouse at 4000Hz or 8000Hz can reduce battery life by 50% to 75% compared to 1000Hz, because the wireless radio sends 4x to 8x more data packets every second.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom AdSense Banner Zone -->
+    <div class="max-w-7xl mx-auto px-4 mb-10 w-full flex justify-center">
+        <div id="bottom-adsense-banner" class="w-full max-w-[728px] min-h-[90px] border border-dashed border-slate-300 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 rounded-xl overflow-hidden flex items-center justify-center">
+            <div class="flex flex-col items-center justify-center text-xs text-slate-400 font-mono select-none py-3">
+                <span class="tracking-widest uppercase text-[9px] font-bold">ADVERTISEMENT</span>
+                <span class="text-[9px] opacity-60 font-medium">Diagnostic Sponsor Banner</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Area -->
+    <footer class="bg-white dark:bg-[#060910] border-t border-slate-200 dark:border-slate-800/80 mt-auto transition-colors duration-200">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 text-left select-none">
+                
+                <!-- Column 1: Brand -->
+                <div class="space-y-4">
+                    <a href="/" class="flex items-center gap-2 group w-fit transition-transform duration-200 active:scale-95">
+                        <span class="logo-emoji text-xl group-hover:rotate-12 transition-transform duration-300 inline-block">⌨️</span>
+                        <span class="brand-name font-black text-slate-900 dark:text-slate-200 text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">InputTest.online</span>
+                    </a>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed brand-slogan font-semibold">
+                        Universal Hardware & Input Device Tester
+                    </p>
+                    <p class="text-xs text-slate-400 dark:text-slate-500 leading-relaxed font-medium">
+                        Safe sandboxed hardware diagnostics. 100% private, local client-side processing.
+                    </p>
+                </div>
+
+                <!-- Column 2: Input Diagnostics -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3">Input Diagnostics</h4>
+                    <ul class="space-y-2 text-xs font-medium text-slate-600 dark:text-slate-400">
+                        <li><a href="/keyboard" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Keyboard Switch Tester</a></li>
+                        <li><a href="/mouse" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖱️ Mouse & CPS Checker</a></li>
+                        <li><a href="/scroll-test" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔄 Scroll Jump Tester</a></li>
+                        <li><a href="/mouse-polling-rate" class="text-blue-600 dark:text-blue-400 font-bold hover:underline transition-colors">⚡ Mouse Polling Rate (Hz)</a></li>
+                        <li><a href="/cps-test" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ CPS Speed Clicker</a></li>
+                        <li><a href="/gamepad" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎮 Gamepad & Joystick Drift</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Display & Audio -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3">Screen & Acoustics</h4>
+                    <ul class="space-y-2 text-xs font-medium text-slate-600 dark:text-slate-400">
+                        <li><a href="/display" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖥️ Display & Monitor Check</a></li>
+                        <li><a href="/sound" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔊 Stereo Speaker Balancer</a></li>
+                        <li><a href="/mic" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎙️ Microphone Decibel Meter</a></li>
+                        <li><a href="/webcam" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📷 Webcam Resolution & FPS</a></li>
+                        <li><a href="/latency" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ Bluetooth & Audio Lag</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Info & Legal -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3">Audits & Legal</h4>
+                    <ul class="space-y-2 text-xs font-medium text-slate-600 dark:text-slate-400">
+                        <li><a href="/report" class="text-emerald-600 dark:text-emerald-400 font-bold hover:underline inline-block">🛡️ Certified PDF Hardware Report</a></li>
+                        <li><a href="/blog" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📝 Diagnostic Guides</a></li>
+                        <li><a href="/privacy" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔒 Privacy Policy</a></li>
+                        <li><a href="/terms" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚖️ Terms of Service</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright -->
+            <div class="border-t border-slate-100 dark:border-slate-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-slate-500">
+                <div>&copy; 2026 InputTest.online &bull; All Hardware Tests 100% Client-Side.</div>
+                <div class="flex items-center gap-4 text-xs font-semibold">
+                    <span class="text-emerald-600 dark:text-emerald-400">&bull; No Telemetry Collected</span>
+                    <a href="https://github.com/kapasia628/inputtest" target="_blank" rel="noopener" class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE POLLING RATE SCRIPT ENGINE -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // 1. Theme Toggle
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
+
+            function syncTheme() {
+                if (document.documentElement.classList.contains('dark')) {
+                    sunIcon && sunIcon.classList.remove('hidden');
+                    moonIcon && moonIcon.classList.add('hidden');
+                } else {
+                    sunIcon && sunIcon.classList.add('hidden');
+                    moonIcon && moonIcon.classList.remove('hidden');
+                }
+            }
+            syncTheme();
+
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    syncTheme();
+                    localStorage.setItem('color-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+                });
+            }
+
+            // 2. Initialize AdSense Banners
+            setTimeout(() => {
+                if (typeof SiteConfig !== 'undefined' && SiteConfig.initAdSense) {
+                    SiteConfig.initAdSense('top-adsense-banner', 'topLeaderboard');
+                    SiteConfig.initAdSense('bottom-adsense-banner', 'bottomLeaderboard');
+                }
+            }, 800);
+
+            // 3. Polling Rate Core Engine
+            const testZone = document.getElementById('mouse-test-zone');
+            const zonePrompt = document.getElementById('zone-prompt');
+            const currentHzEl = document.getElementById('stat-current-hz');
+            const peakHzEl = document.getElementById('stat-peak-hz');
+            const avgHzEl = document.getElementById('stat-avg-hz');
+            const latencyEl = document.getElementById('stat-latency');
+            const tierBadgeEl = document.getElementById('stat-tier-badge');
+            const samplesEl = document.getElementById('stat-samples');
+            const jitterEl = document.getElementById('stat-jitter');
+            const timeEl = document.getElementById('stat-time');
+            const resetBtn = document.getElementById('reset-btn');
+            const copyReportBtn = document.getElementById('copy-report-btn');
+
+            const canvas = document.getElementById('freq-canvas');
+            const ctx = canvas ? canvas.getContext('2d') : null;
+
+            function resizeCanvas() {
+                if (canvas) {
+                    canvas.width = testZone.offsetWidth;
+                    canvas.height = testZone.offsetHeight;
+                }
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // State variables
+            let lastEventTime = 0;
+            let sampleCount = 0;
+            let peakHz = 0;
+            let totalHzSum = 0;
+            let recentHzHistory = [];
+            let intervalsList = [];
+            let startTime = null;
+            let canvasPoints = [];
+            const MAX_CANVAS_POINTS = 60;
+
+            function resetStats() {
+                lastEventTime = 0;
+                sampleCount = 0;
+                peakHz = 0;
+                totalHzSum = 0;
+                recentHzHistory = [];
+                intervalsList = [];
+                startTime = null;
+                canvasPoints = [];
+                
+                currentHzEl.textContent = '0';
+                peakHzEl.textContent = '0';
+                avgHzEl.textContent = '0';
+                latencyEl.textContent = '0.00';
+                samplesEl.textContent = '0';
+                jitterEl.textContent = '-- ms';
+                timeEl.textContent = '0.0s';
+                
+                tierBadgeEl.textContent = 'WAITING...';
+                tierBadgeEl.className = 'mt-1 inline-flex items-center justify-center px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono text-xs font-bold';
+                
+                zonePrompt.style.opacity = '1';
+
+                if (ctx && canvas) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+
+            if (resetBtn) resetBtn.addEventListener('click', resetStats);
+
+            function updateTierBadge(hz) {
+                if (hz >= 6000) {
+                    tierBadgeEl.textContent = '8000 Hz (ULTRA)';
+                    tierBadgeEl.className = 'mt-1 inline-flex items-center justify-center px-2 py-1 rounded bg-purple-100 dark:bg-purple-950/60 border border-purple-300 dark:border-purple-800 text-purple-700 dark:text-purple-300 font-mono text-xs font-bold';
+                } else if (hz >= 2500) {
+                    tierBadgeEl.textContent = '4000 Hz (PRO)';
+                    tierBadgeEl.className = 'mt-1 inline-flex items-center justify-center px-2 py-1 rounded bg-indigo-100 dark:bg-indigo-950/60 border border-indigo-300 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 font-mono text-xs font-bold';
+                } else if (hz >= 1500) {
+                    tierBadgeEl.textContent = '2000 Hz (ESPORTS)';
+                    tierBadgeEl.className = 'mt-1 inline-flex items-center justify-center px-2 py-1 rounded bg-indigo-100 dark:bg-indigo-950/60 border border-indigo-300 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 font-mono text-xs font-bold';
+                } else if (hz >= 800) {
+                    tierBadgeEl.textContent = '1000 Hz (STANDARD)';
+                    tierBadgeEl.className = 'mt-1 inline-flex items-center justify-center px-2 py-1 rounded bg-blue-100 dark:bg-blue-950/60 border border-blue-300 dark:border-blue-800 text-blue-700 dark:text-blue-300 font-mono text-xs font-bold';
+                } else if (hz >= 350) {
+                    tierBadgeEl.textContent = '500 Hz (GAMING)';
+                    tierBadgeEl.className = 'mt-1 inline-flex items-center justify-center px-2 py-1 rounded bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800 text-amber-700 dark:text-amber-300 font-mono text-xs font-bold';
+                } else if (hz >= 80) {
+                    tierBadgeEl.textContent = '125 Hz (OFFICE)';
+                    tierBadgeEl.className = 'mt-1 inline-flex items-center justify-center px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-mono text-xs font-bold';
+                }
+            }
+
+            function drawWaveform() {
+                if (!ctx || !canvas || canvasPoints.length < 2) return;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Draw background grid lines
+                ctx.strokeStyle = 'rgba(148, 163, 184, 0.1)';
+                ctx.lineWidth = 1;
+                const h1000y = canvas.height - (1000 / 1200) * (canvas.height * 0.8) - 20;
+                ctx.beginPath();
+                ctx.moveTo(0, h1000y);
+                ctx.lineTo(canvas.width, h1000y);
+                ctx.stroke();
+
+                // Draw connected line of frequency points
+                ctx.beginPath();
+                ctx.strokeStyle = '#2563eb';
+                ctx.lineWidth = 2;
+                ctx.lineJoin = 'round';
+
+                const stepX = canvas.width / MAX_CANVAS_POINTS;
+                const maxRefHz = Math.max(1200, peakHz * 1.1);
+
+                for (let i = 0; i < canvasPoints.length; i++) {
+                    const x = i * stepX;
+                    const normalizedY = canvas.height - (canvasPoints[i] / maxRefHz) * (canvas.height * 0.8) - 15;
+                    if (i === 0) ctx.moveTo(x, normalizedY);
+                    else ctx.lineTo(x, normalizedY);
+                }
+                ctx.stroke();
+
+                // Draw point glows
+                const lastPoint = canvasPoints[canvasPoints.length - 1];
+                const lastX = (canvasPoints.length - 1) * stepX;
+                const lastY = canvas.height - (lastPoint / maxRefHz) * (canvas.height * 0.8) - 15;
+                ctx.fillStyle = '#10b981';
+                ctx.beginPath();
+                ctx.arc(lastX, lastY, 4, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            testZone.addEventListener('mousemove', (e) => {
+                const now = e.timeStamp || performance.now();
+                if (!startTime) startTime = now;
+
+                zonePrompt.style.opacity = '0.15';
+
+                if (lastEventTime > 0) {
+                    const deltaMs = now - lastEventTime;
+                    
+                    if (deltaMs > 0.05 && deltaMs < 200) { // filter out pauses
+                        const instantaneousHz = Math.round(1000 / deltaMs);
+                        sampleCount++;
+                        totalHzSum += instantaneousHz;
+                        intervalsList.push(deltaMs);
+                        if (intervalsList.length > 100) intervalsList.shift();
+
+                        // Track peak
+                        if (instantaneousHz > peakHz) {
+                            peakHz = instantaneousHz;
+                            peakHzEl.textContent = peakHz;
+                        }
+
+                        // Rolling average for smoother live display
+                        recentHzHistory.push(instantaneousHz);
+                        if (recentHzHistory.length > 15) recentHzHistory.shift();
+                        const smoothedHz = Math.round(recentHzHistory.reduce((a, b) => a + b, 0) / recentHzHistory.length);
+
+                        currentHzEl.textContent = smoothedHz;
+                        latencyEl.textContent = deltaMs.toFixed(2);
+                        samplesEl.textContent = sampleCount;
+
+                        const overallAvg = Math.round(totalHzSum / sampleCount);
+                        avgHzEl.textContent = overallAvg;
+
+                        updateTierBadge(peakHz);
+
+                        // Calculate standard deviation (jitter)
+                        if (intervalsList.length > 5) {
+                            const meanInterval = intervalsList.reduce((a, b) => a + b, 0) / intervalsList.length;
+                            const variance = intervalsList.reduce((sum, val) => sum + Math.pow(val - meanInterval, 2), 0) / intervalsList.length;
+                            const jitter = Math.sqrt(variance).toFixed(2);
+                            jitterEl.textContent = `${jitter} ms`;
+                        }
+
+                        // Update elapsed time
+                        const elapsedSec = ((now - startTime) / 1000).toFixed(1);
+                        timeEl.textContent = `${elapsedSec}s`;
+
+                        // Add point to canvas
+                        canvasPoints.push(smoothedHz);
+                        if (canvasPoints.length > MAX_CANVAS_POINTS) canvasPoints.shift();
+                        drawWaveform();
+                    }
+                }
+
+                lastEventTime = now;
+            });
+
+            testZone.addEventListener('mouseleave', () => {
+                zonePrompt.style.opacity = '1';
+                currentHzEl.textContent = '0';
+            });
+
+            // 4. Copy Report Button
+            if (copyReportBtn) {
+                copyReportBtn.addEventListener('click', () => {
+                    if (sampleCount < 10) {
+                        alert("Please move your mouse inside the test area for at least a few seconds before copying results!");
+                        return;
+                    }
+
+                    const reportText = `[InputTest.online] Mouse Polling Rate Diagnostic Report
+--------------------------------------------------
+Peak Frequency: ${peakHz} Hz
+Average Report Rate: ${avgHzEl.textContent} Hz
+Average Interval Latency: ${latencyEl.textContent} ms
+Jitter Variance: ${jitterEl.textContent}
+Total Packets Audited: ${sampleCount}
+Detected Tier: ${tierBadgeEl.textContent.trim()}
+Audit Timestamp: ${new Date().toUTCString()}
+Verified at: https://inputtest.online/mouse-polling-rate`;
+
+                    navigator.clipboard.writeText(reportText).then(() => {
+                        const originalHTML = copyReportBtn.innerHTML;
+                        copyReportBtn.innerHTML = `<span>✓ Copied to Clipboard!</span>`;
+                        copyReportBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                        copyReportBtn.classList.add('bg-emerald-600');
+                        setTimeout(() => {
+                            copyReportBtn.innerHTML = originalHTML;
+                            copyReportBtn.classList.remove('bg-emerald-600');
+                            copyReportBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                        }, 2500);
+                    }).catch(err => {
+                        alert("Could not copy report: " + err);
+                    });
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>

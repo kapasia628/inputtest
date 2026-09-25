@@ -14,6 +14,7 @@ const urlList = [
   "https://inputtest.online/keyboard",
   "https://inputtest.online/mouse",
   "https://inputtest.online/scroll-test",
+  "https://inputtest.online/mouse-polling-rate",
   "https://inputtest.online/sound",
   "https://inputtest.online/gamepad",
   "https://inputtest.online/mic",

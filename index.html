@@ -398,6 +398,7 @@
                             <a href="/latency" class="px-2 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-xs text-slate-700 dark:text-slate-300">⚡ Lag & Latency</a>
                             <div class="h-px bg-slate-100 dark:bg-slate-800 col-span-2 my-1"></div>
                             <div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-1 col-span-2 mb-1">Ports & Controllers</div>
+                            <a href="/mouse-polling-rate" class="px-2 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold text-blue-600 dark:text-blue-400">⚡ Polling Rate (Hz)</a>
                             <a href="/gamepad" class="px-2 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-xs text-slate-700 dark:text-slate-300">🎮 Gamepad Drift</a>
                             <a href="/draw" class="px-2 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-xs text-slate-700 dark:text-slate-300">✏️ Stylus Pressure</a>
                             <a href="/usb" class="px-2 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-xs text-slate-700 dark:text-slate-300">🔌 USB Profiler</a>
@@ -448,6 +449,7 @@
                 <a href="/keyboard" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200">⌨️ Keyboard Test</a>
                 <a href="/mouse" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200">🖱️ Mouse & CPS</a>
                 <a href="/scroll-test" class="p-2.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400 font-bold">🔄 Scroll Jump Test</a>
+                <a href="/mouse-polling-rate" class="p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 font-bold">⚡ Polling Rate (Hz)</a>
                 <a href="/display" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200">📺 Display & Hz</a>
                 <a href="/gamepad" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200">🎮 Gamepad Drift</a>
                 <a href="/mic" class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200">🎙️ Microphone</a>
@@ -717,7 +719,29 @@
                     </a>
                 </div>
 
-                <!-- Station 4: Gamepad & Joystick Checker -->
+                <!-- Station: Mouse Polling Rate Tester (HIGH TRAFFIC TOOL) -->
+                <div class="tool-card border-2 border-emerald-500/40 bg-white dark:bg-[#0e1422] rounded-xl p-4 flex flex-col justify-between hover:border-emerald-500 transition-all hover:shadow-md relative overflow-hidden" data-category="inputs">
+                    <div class="absolute top-0 right-0 bg-emerald-600 text-white text-[9px] font-mono font-bold px-2 py-0.5 rounded-bl">1000Hz - 8000Hz</div>
+                    <div>
+                        <div class="flex items-center justify-between font-mono text-[10px] text-slate-400 mb-2">
+                            <span>STATION // 04</span>
+                            <span class="text-emerald-500 font-bold">HZ FREQUENCY</span>
+                        </div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-2xl">⚡</span>
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white">Mouse Polling Rate (Hz)</h3>
+                        </div>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+                            Measure real-time USB report frequency (Hz), peak report rate, interval latency in milliseconds, and packet jitter.
+                        </p>
+                    </div>
+                    <a href="/mouse-polling-rate" class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 hover:underline">
+                        <span>LAUNCH TESTER</span>
+                        <span>&rarr;</span>
+                    </a>
+                </div>
+
+                <!-- Station 5: Gamepad & Joystick Checker -->
                 <div class="tool-card border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0e1422] rounded-xl p-4 flex flex-col justify-between hover:border-blue-500/80 transition-all hover:shadow-md" data-category="inputs">
                     <div>
                         <div class="flex items-center justify-between font-mono text-[10px] text-slate-400 mb-2">
@@ -1335,6 +1359,7 @@
                         <li><a href="/keyboard" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Keyboard Switch Tester</a></li>
                         <li><a href="/mouse" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖱️ Mouse & CPS Checker</a></li>
                         <li><a href="/scroll-test" class="text-blue-600 dark:text-blue-400 font-bold hover:underline transition-colors">🔄 Scroll Jump Tester</a></li>
+                        <li><a href="/mouse-polling-rate" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ Mouse Polling Rate (Hz)</a></li>
                         <li><a href="/cps-test" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ CPS Speed Clicker</a></li>
                         <li><a href="/typing" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Typing Speed WPM Test</a></li>
                         <li><a href="/reaction" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⏱️ Reaction Time Tester</a></li>
@@ -1659,6 +1684,7 @@
                     { title: "Keyboard Tester Online", desc: "Test switches, ghosting, key codes", url: "/keyboard" },
                     { title: "Mouse & CPS Checker", desc: "Test right/left clicks & CPS rate", url: "/mouse" },
                     { title: "Scroll Wheel Jump Tester", desc: "Detect inverted ticks & jumping", url: "/scroll-test" },
+                    { title: "Mouse Polling Rate Tester (Hz)", desc: "Test 1000Hz to 8000Hz report rate & jitter", url: "/mouse-polling-rate" },
                     { title: "Clicks Per Second Test", desc: "Speed clicking game challenge", url: "/mouse#cps" },
                     { title: "Speaker & Sound Tester", desc: "Stereo balance frequency sweep", url: "/sound" },
                     { title: "Gamepad & Joystick Drift", desc: "Controller stick drift analyzer", url: "/gamepad" },
