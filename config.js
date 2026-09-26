@@ -14,7 +14,7 @@ const SiteConfig = {
     // Google AdSense Settings
     adsense: {
         enabled: true,
-        publisherId: "ca-pub-3940256099942544", // Put your real Google AdSense Publisher ID here (e.g. ca-pub-xxxxxxx)
+        publisherId: "ca-pub-2485510445228691", // Put your real Google AdSense Publisher ID here (e.g. ca-pub-xxxxxxx)
         slots: {
             topLeaderboard: "9012345678",        // Top standard banner ad unit ID
             bottomLeaderboard: "8901234567",     // Bottom standard banner ad unit ID
