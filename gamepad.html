@@ -668,6 +668,59 @@
                     <p>
                         Modern controllers incorporate dual-rumble haptic motors and highly responsive analog shoulder triggers (LT/RT). Our haptic diagnostic utility sends vibration packets to the gamepad's internal haptic actuator, checking if left/right rumble balances function. The analog trigger tracker measures trigger pull rates from 0.00 to 1.00, critical for precise throttle control in racing games.
                     </p>
+
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        🕹️ Joystick Sensors: Hall Effect (Magnetic) vs Potentiometer
+                    </h3>
+                    <p>
+                        Controller stick drift is the single most common failure point for modern gamepads. Standard controllers use carbon-film potentiometers, where metal contact wipers scrape against resistive tracks. In contrast, newer esports controllers utilize contactless Hall Effect magnetic sensors that never wear down physically.
+                    </p>
+
+                    <div class="overflow-x-auto my-3">
+                        <table class="w-full text-left font-mono text-[11px] border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                            <thead class="bg-slate-100 dark:bg-slate-850 text-slate-700 dark:text-slate-300">
+                                <tr>
+                                    <th class="p-2 border-b border-slate-200 dark:border-slate-800">Sensor Technology</th>
+                                    <th class="p-2 border-b border-slate-200 dark:border-slate-800">Mechanism</th>
+                                    <th class="p-2 border-b border-slate-200 dark:border-slate-800">Drift Susceptibility</th>
+                                    <th class="p-2 border-b border-slate-200 dark:border-slate-800">Lifespan</th>
+                                    <th class="p-2 border-b border-slate-200 dark:border-slate-800">Common Examples</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-600 dark:text-slate-400">
+                                <tr>
+                                    <td class="p-2 font-bold text-slate-800 dark:text-slate-200">Standard Potentiometer (ALPS)</td>
+                                    <td class="p-2">Physical wiper friction</td>
+                                    <td class="p-2 text-amber-600 font-bold">High (after 400 hrs)</td>
+                                    <td class="p-2">~2 Million Cycles</td>
+                                    <td class="p-2">DualSense PS5, Xbox Wireless</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-bold text-slate-800 dark:text-slate-200">Hall Effect Magnetic Sensors</td>
+                                    <td class="p-2">Permanent magnet field</td>
+                                    <td class="p-2 text-emerald-600 font-bold">Immune (Zero Drift)</td>
+                                    <td class="p-2">10+ Million Cycles</td>
+                                    <td class="p-2">8BitDo Ultimate, Flydigi Vader</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-bold text-slate-800 dark:text-slate-200">TMR (Tunnel Magnetoresistance)</td>
+                                    <td class="p-2">Quantum spin resistance</td>
+                                    <td class="p-2 text-emerald-600 font-bold">Immune (Ultra-Low Power)</td>
+                                    <td class="p-2">15+ Million Cycles</td>
+                                    <td class="p-2">Next-Gen Custom Esports Sticks</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        🛠️ 3 Steps to Fix Controller Stick Drift
+                    </h3>
+                    <p>
+                        1. <strong>Circular Cleaning:</strong> Rotate your analog sticks fully clockwise and spray compressed air or electronic contact cleaner (BW-100) into the ball gimbal to dislodge carbon dust.<br>
+                        2. <strong>Recalibrate via Windows:</strong> Press <kbd class="px-1 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-[10px]">Win + R</kbd>, type <code class="font-mono text-blue-600">joy.cpl</code>, select your controller properties, and run the Windows Calibration Wizard.<br>
+                        3. <strong>Increase In-Game Inner Deadzone:</strong> If your resting drift coordinates on our tester show 0.04 to 0.08, increase your in-game controller deadzone by 5% to eliminate accidental camera movement.
+                    </p>
                 </div>
             </div>
             

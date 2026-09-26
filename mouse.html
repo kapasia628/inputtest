@@ -631,6 +631,71 @@
                     <p>
                         Scroll wheel jumps (where scrolling down occasionally registers as scrolling up) is a common issue caused by hair or dust particles obstructing the optical scroll encoder wheel. We capture scrolling directions (Delta Y coordinates) in our scroll analyzer. If you see rapid red and green lines cycling in the logs for a single direction scroll, it confirms encoder jitter. Use compressed air to clean the wheel housing.
                     </p>
+
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        ⚙️ Mouse Microswitch Comparison: Durability & Latency
+                    </h3>
+                    <p>
+                        Different mice use distinct microswitch architectures. Mechanical switches rely on metal leaf contacts that can oxidize or deform over time, leading to premature double-clicking. Optical switches utilize infrared light beams to register actuations with zero debounce latency.
+                    </p>
+
+                    <div class="overflow-x-auto my-3">
+                        <table class="w-full text-left font-mono text-[11px] border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                            <thead class="bg-slate-100 dark:bg-slate-850 text-slate-700 dark:text-slate-300">
+                                <tr>
+                                    <th class="p-2 border-b border-slate-200 dark:border-slate-800">Switch Model</th>
+                                    <th class="p-2 border-b border-slate-200 dark:border-slate-800">Type</th>
+                                    <th class="p-2 border-b border-slate-200 dark:border-slate-800">Click Rating</th>
+                                    <th class="p-2 border-b border-slate-200 dark:border-slate-800">Debounce</th>
+                                    <th class="p-2 border-b border-slate-200 dark:border-slate-800">Tactile Feel</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-600 dark:text-slate-400">
+                                <tr>
+                                    <td class="p-2 font-bold text-slate-800 dark:text-slate-200">Omron D2FC-F-7N (20M)</td>
+                                    <td class="p-2">Mechanical</td>
+                                    <td class="p-2">20 Million</td>
+                                    <td class="p-2">4–8 ms</td>
+                                    <td class="p-2">Light & crisp</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-bold text-slate-800 dark:text-slate-200">Kailh GM 8.0 Black Mamba</td>
+                                    <td class="p-2">Mechanical</td>
+                                    <td class="p-2">80 Million</td>
+                                    <td class="p-2">2–4 ms</td>
+                                    <td class="p-2">Snappy & stiff</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-bold text-slate-800 dark:text-slate-200">Huano Blue Shell Pink Dot</td>
+                                    <td class="p-2">Mechanical</td>
+                                    <td class="p-2">80 Million</td>
+                                    <td class="p-2">2–4 ms</td>
+                                    <td class="p-2">Firm & tactile</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-bold text-slate-800 dark:text-slate-200">Razer Optical Gen-3</td>
+                                    <td class="p-2">Optical (Light)</td>
+                                    <td class="p-2">90 Million</td>
+                                    <td class="p-2">0.2 ms (Zero)</td>
+                                    <td class="p-2">Smooth & instant</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-bold text-slate-800 dark:text-slate-200">TTC Gold Dustproof</td>
+                                    <td class="p-2">Mechanical</td>
+                                    <td class="p-2">60 Million</td>
+                                    <td class="p-2">3–6 ms</td>
+                                    <td class="p-2">Medium & defined</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide pt-2 font-mono flex items-center gap-1.5 select-none">
+                        🔬 How Debounce Algorithm Fixes Unintended Double Clicks
+                    </h3>
+                    <p>
+                        When a mechanical switch closes, its physical metal spring bounces for 1 to 5 milliseconds before settling into steady contact. Mouse firmware incorporates a <em>debounce time filter</em> that ignores any secondary signals within this window. If a switch oxidizes, its bounce time exceeds the firmware debounce threshold, causing an unwanted double-click. If your mouse software allows debounce configuration, raising it by 2–4ms can temporarily solve double-clicking without replacing the switch.
+                    </p>
                 </div>
             </div>
 
