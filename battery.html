@@ -207,15 +207,15 @@
 </head>
 <body class="bg-slate-50 text-slate-800 dark:text-slate-250 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg relative overflow-x-hidden transition-colors duration-300">
 
-    <!-- Top Navigation Bar -->
-    <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm dark:shadow-none transition-all duration-300">
+    <!-- MAIN NAVIGATION HEADER -->
+    <header class="sticky top-0 z-50 bg-white/90 dark:bg-[#070b14]/90 border-b border-slate-200/80 dark:border-slate-800/80 backdrop-blur-xl transition-all duration-200 shadow-xs dark:shadow-none">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
+            <div class="flex items-center justify-between h-16 gap-3">
                 
-                <!-- Logo -->
-                <div class="flex items-center gap-3 flex-shrink-0">
-                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none">
-                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-300">
+                <!-- Brand Logo (100% Original Preserved) -->
+                <div class="flex items-center gap-3 shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none" aria-label="InputTest.online Home">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-200">
                             <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="2" y="4" width="20" height="16" rx="4" />
                                 <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
@@ -225,84 +225,175 @@
                                 <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
                             </span>
                         </div>
-                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-slate-250 group-hover:text-blue-600 transition-colors duration-250">
+                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                             Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
                         </span>
                     </a>
                 </div>
-                
-                <!-- Center Search Bar -->
-                <div class="hidden lg:flex items-center flex-grow max-w-sm mx-6 relative">
-                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </div>
-                    <input id="nav-search-bar" type="text" placeholder="Search tool, inputs, keys..." class="w-full bg-slate-100/60 hover:bg-slate-200/50 focus:bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-blue-500 rounded-full py-1.5 pl-10 pr-12 text-xs text-slate-700 dark:text-slate-350 font-medium tracking-wide focus:outline-none transition-all shadow-inner focus:shadow-sm dark:shadow-none" autocomplete="off">
-                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        <kbd class="text-[9px] font-mono font-bold text-slate-400 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-1.5 py-0.5 rounded shadow-sm dark:shadow-none">Ctrl K</kbd>
-                    </div>
-                    
-                    <!-- Search Dropdown Panel -->
-                    <div id="search-dropdown-panel" class="hidden absolute top-12 left-0 right-0 bg-white/95 border border-slate-200 rounded-2xl shadow-xl shadow-slate-200/40 p-2 z-50 max-h-64 overflow-y-auto space-y-1 backdrop-blur-md">
-                        <div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>
-                    </div>
-                </div>
-                
-                <!-- Main Nav Links -->
-                <div class="hidden md:flex items-center gap-6 flex-shrink-0">
-                    <a href="/" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Home</a>
-                    <a href="/keyboard" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Keyboard Test</a>
-                    <a href="/mouse" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Mouse & CPS</a>
-                    <a href="/blog" class="text-sm py-1.5 px-1 transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-b-2 dark:hover:border-slate-700 hover:border-slate-400 font-medium">Blog</a>
-                    
-                    <!-- Premium More Tools Dropdown -->
+
+                <!-- Clean Navigation Links -->
+                <nav class="hidden lg:flex items-center gap-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                    <a href="/keyboard" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">
+                        Keyboard
+                    </a>
+                    <a href="/mouse" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">
+                        Mouse
+                    </a>
+                    <a href="/mouse-polling-rate" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">
+                        Polling Rate
+                    </a>
+                    <a href="/scroll-test" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">
+                        Scroll Jump
+                    </a>
+                    <a href="/display" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">
+                        Display
+                    </a>
+                    <a href="/gamepad" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">
+                        Gamepad
+                    </a>
+
+                    <!-- More Tools Mega Dropdown (Fixed 460px Width with High-End Layout) -->
                     <div class="relative group">
-                        <button id="nav-dropdown-btn" class="flex items-center gap-1 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 py-1.5 px-1 focus:outline-none transition-all duration-200">
-                            More Tools
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 group-hover:rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <button id="nav-dropdown-btn" class="flex items-center gap-1.5 px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors focus:outline-none cursor-pointer">
+                            <span>More Tools</span>
+                            <svg class="h-3 w-3 text-slate-400 group-hover:rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
-                        
-                        <!-- Dropdown Menu panel -->
-                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full mt-2 w-80 bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-3 grid grid-cols-2 gap-1.5 backdrop-blur-md z-50 animate-scaleUp">
-                            <div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest px-2 col-span-2 mb-1.5">Top Calibration Utilities</div>
-                            
-                            <a href="/display" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">📺 Display Test</a>
-                            <a href="/specs" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">💻 System Specs</a>
-                            <a href="/gamepad" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 transition-colors">🎮 Gamepad drift</a>
-                            
-                            <a href="/report" class="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/10 dark:border-emerald-500/20 text-xs font-bold text-emerald-600 dark:text-emerald-450 transition-colors col-span-2 shadow-sm">🛡️ Certified PDF Report</a>
-                            
-                            <div class="h-px bg-slate-100 dark:bg-slate-800/60 col-span-2 my-1"></div>
-                            
-                            <a href="/sound" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔊 Speaker test</a>
-                            <a href="/mic" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎙️ Microphone</a>
-                            <a href="/webcam" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📷 Webcam Check</a>
-                            <a href="/draw" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📐 Drawing Tablet</a>
-                            <a href="/latency" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ Latency Check</a>
-                            <a href="/usb" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔌 USB Profiler</a>
-                            <a href="/biometric" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔑 Biometrics Hello</a>
-                            <a href="/printer" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🖨️ Printer CMYK</a>
-                            <a href="/scanner" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📄 Documents scan</a>
-                            <a href="/vr" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🕶️ VR controllers</a>
-                            <a href="/battery" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🔋 Battery Health</a>
-                            <a href="/lan" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🌐 LAN Tester</a>
-                            <a href="/hdmi" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">📺 HDMI & DP</a>
-                            <a href="/vga" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">🎨 VGA Calibrator</a>
-                            <a href="/usb-c" class="text-[10px] font-bold text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 px-2.5 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">⚡ USB-C Profiler</a>
+
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50" style="width: 480px;">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4">
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div class="col-span-2 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1 mb-1 border-b border-slate-100 dark:border-slate-800">
+                                        Audio &amp; Display Diagnostics
+                                    </div>
+                                    <a href="/mic" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">🎙️</span>
+                                        <span>Microphone Test</span>
+                                    </a>
+                                    <a href="/sound" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">🔊</span>
+                                        <span>Stereo Speakers</span>
+                                    </a>
+                                    <a href="/webcam" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">📷</span>
+                                        <span>Webcam Quality</span>
+                                    </a>
+                                    <a href="/latency" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">⚡</span>
+                                        <span>Bluetooth Latency</span>
+                                    </a>
+
+                                    <div class="col-span-2 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pt-2 pb-1 mb-1 border-b border-slate-100 dark:border-slate-800">
+                                        Performance &amp; Hardware Ports
+                                    </div>
+                                    <a href="/cps-test" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">⚡</span>
+                                        <span>CPS Click Tester</span>
+                                    </a>
+                                    <a href="/typing" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">⌨️</span>
+                                        <span>Typing Speed WPM</span>
+                                    </a>
+                                    <a href="/reaction" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">⏱️</span>
+                                        <span>Reaction Reflex</span>
+                                    </a>
+                                    <a href="/draw" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">📐</span>
+                                        <span>Stylus Pressure</span>
+                                    </a>
+                                    <a href="/usb" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">🔌</span>
+                                        <span>USB Device Profiler</span>
+                                    </a>
+                                    <a href="/battery" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">🔋</span>
+                                        <span>Battery Health</span>
+                                    </a>
+                                </div>
+
+                                <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+                                    <a href="/report" class="flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 text-xs font-bold hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors">
+                                        <span>🛡️</span>
+                                        <span>Generate Certified Hardware Report</span>
+                                        <span>&rarr;</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </nav>
+
+                <!-- Actions: Search + PDF Report + Theme Toggle + Mobile Menu -->
+                <div class="flex items-center gap-2 shrink-0">
+                    
+                    <!-- Search Input (Clean & Sleek) -->
+                    <div class="relative hidden sm:block">
+                        <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400">
+                            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        <input id="nav-search-bar" type="text" placeholder="Search module..." 
+                               class="w-36 md:w-44 bg-slate-100/90 dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 focus:border-blue-500 rounded-xl py-1.5 pl-8 pr-7 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all">
+                        <div class="absolute inset-y-0 right-0 pr-1.5 flex items-center pointer-events-none">
+                            <kbd class="text-[9px] font-mono text-slate-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-1 py-0.2 rounded shadow-2xs">⌘K</kbd>
+                        </div>
+                        <!-- Search dropdown -->
+                        <div id="search-dropdown-panel" class="hidden absolute right-0 top-11 w-72 bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-2 z-50 max-h-72 overflow-y-auto space-y-1">
+                        </div>
+                    </div>
+
+                    <!-- PDF Report CTA -->
+                    <a href="/report" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition-colors shadow-xs">
+                        <span>🛡️</span>
+                        <span class="hidden sm:inline">Certified</span> Report
+                    </a>
+
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0c1220] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none cursor-pointer" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <!-- Mobile Hamburger -->
+                    <button id="mobile-menu-toggle" class="p-2 lg:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0c1220] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none cursor-pointer" aria-label="Open mobile menu">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
+            </div>
+        </div>
 
-    </nav>
+        <!-- Mobile Drawer Navigation -->
+        <nav id="mobile-nav-panel" class="hidden lg:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#070b14]/95 backdrop-blur-xl px-4 py-4 space-y-3 shadow-2xl">
+            <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+                <a href="/keyboard" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⌨️ Keyboard</a>
+                <a href="/mouse" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🖱️ Mouse</a>
+                <a href="/mouse-polling-rate" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⚡ Polling Rate</a>
+                <a href="/scroll-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🔄 Scroll Jump</a>
+                <a href="/display" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">📺 Display</a>
+                <a href="/gamepad" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎮 Gamepad</a>
+                <a href="/mic" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎙️ Microphone</a>
+                <a href="/sound" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🔊 Speakers</a>
+                <a href="/webcam" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">📷 Webcam</a>
+                <a href="/latency" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⚡ BT Latency</a>
+                <a href="/report" class="col-span-2 p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400 font-bold text-center flex items-center justify-center gap-2">
+                    🛡️ Certified Hardware PDF Report
+                </a>
+            </div>
+        </nav>
+    </header>
 
-    <!-- Top AdSense Banner -->
-    
-    </div>
-
-    <!-- Main Content Container -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
         
         <!-- Header HUD -->
@@ -531,97 +622,166 @@
     
     </div>
 
-        <!-- Footer Area -->
-        <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 mt-auto transition-colors duration-300">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-left select-none">
-                
-                 <!-- Column 1: Brand & Logo -->
-                <div class="space-y-4">
-                    <a href="/" class="flex items-center gap-2 group w-fit transition-transform duration-200 active:scale-95">
-                        <span class="logo-emoji text-xl group-hover:rotate-12 transition-transform duration-300 inline-block">⌨️</span>
-                        <span class="brand-name font-black text-slate-900 dark:text-slate-200 text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">InputTest.online</span>
-                    </a>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed brand-slogan font-semibold">
-                        Universal Hardware & Input Device Tester
-                    </p>
-                    <p class="text-xs text-slate-400 dark:text-slate-500 leading-relaxed font-medium">
-                        Safe sandboxed hardware diagnostics. 100% private, local client-side processing.
-                    </p>
-                </div>
-                
-                 <!-- Column 2: Input Diagnostics -->
-                <div>
-                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Input Diagnostics</h4>
-                    <ul class="space-y-2 font-semibold text-xs">
-                        <li><a href="/keyboard" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Keyboard Tester</a></li>
-                        <li><a href="/mouse" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖱️ Mouse & CPS Test</a></li>
-                        <li><a href="/gamepad" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎮 Gamepad & Drift</a></li>
-                        <li><a href="/mic" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎙️ Microphone Check</a></li>
-                        <li><a href="/webcam" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📷 Webcam Quality</a></li>
-                        <li><a href="/draw" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📐 Drawing Tablet</a></li>
-                        <li><a href="/usb" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔌 USB & HID Profiler</a></li>
-                        <li><a href="/biometric" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔑 Biometrics Hello</a></li>
-                        <li><a href="/battery" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔋 Battery Health</a></li>
-                        <li><a href="/lan" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🌐 LAN Jitter Test</a></li>
-                        <li><a href="/usb-c" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ USB-C Profiler</a></li>
-                        <li><a href="/cps-test" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ CPS Click Test</a></li>
-                        <li><a href="/typing" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⌨️ Typing Speed Test</a></li>
-                        <li><a href="/reaction" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⏱️ Reaction Time Test</a></li>
-                    </ul>
-                </div>
-                
-                 <!-- Column 3: Screen & Outputs -->
-                <div>
-                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Screen & Outputs</h4>
-                    <ul class="space-y-2 font-semibold text-xs">
-                        <li><a href="/display" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 Display & Monitor</a></li>
-                        <li><a href="/latency" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚡ Latency & Lag</a></li>
-                        <li><a href="/printer" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🖨️ Printer CMYK</a></li>
-                        <li><a href="/scanner" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📄 Documents Scan</a></li>
-                        <li><a href="/vr" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🕶️ VR Controller</a></li>
-                        <li><a href="/specs" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">💻 Hardware Specs</a></li>
-                        <li><a href="/hdmi" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📺 HDMI Analyzer</a></li>
-                        <li><a href="/vga" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🎨 VGA Calibrator</a></li>
-                    </ul>
-                </div>
-                
-                 <!-- Column 4: Reports, Blog & Policies -->
-                <div>
-                    <h4 class="text-xs font-bold text-slate-455 dark:text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-100 dark:border-slate-900 pb-1.5">Info & Policies</h4>
-                    <ul class="space-y-2 font-semibold text-xs">
-                        <li><a href="/report" class="text-emerald-600 dark:text-emerald-450 font-bold bg-emerald-500/5 px-2 py-0.5 rounded border border-emerald-500/10 dark:border-emerald-500/20 hover:bg-emerald-500/10 transition-colors inline-block mb-1">🛡️ Certified PDF Report</a></li>
-                        <li><a href="/blog" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📝 Blog Guides</a></li>
-                        <li><a href="/privacy" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🔒 Privacy Policy</a></li>
-                        <li><a href="/terms" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">⚖️ Terms of Service</a></li>
-                        <li><a href="/about" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">ℹ️ About Us</a></li>
-                        <li><a href="/contact" class="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">📬 Contact Us</a></li>
-                        <li><a href="#" class="brand-email text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors break-all">✉️ support@inputtest.online</a></li>
-                    </ul>
-                </div>
-                
-            </div>
+        <!-- PRO-LEVEL DARK NAVY FOOTER (#0b1329, MATCHING MOCKUP WITH 5-COLUMN MATRIX) -->
+    <footer class="bg-[#0b1329] text-slate-400 border-t border-slate-800/80 mt-auto transition-colors duration-200 select-none">
+        <div class="max-w-7xl mx-auto pt-10 pb-8 px-4 sm:px-6 lg:px-8">
             
-            <div class="border-t border-slate-100 dark:border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-medium flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-                    <span>&copy; 2026 InputTest.online. Safe sandboxed diagnostics. No data collection.</span>
-                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-450 font-extrabold border border-emerald-500/15 w-fit uppercase select-none">
-                        <span class="h-1 w-1 rounded-full bg-emerald-500 animate-ping"></span>
-                        Version 1.2.0 (Updated: June 6, 2026)
-                    </span>
+            <!-- Top Status Bar & Back to top -->
+            <div class="border-b border-slate-800/80 pb-6 mb-10 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="font-bold tracking-wider uppercase text-emerald-400">ALL DIAGNOSTICS OPERATIONAL</span>
+                    <span class="text-slate-500 font-normal">&bull; 100% Client-Side Sandbox</span>
+                </div>
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors cursor-pointer group">
+                    <span>Back to top</span>
+                    <span class="group-hover:-translate-y-0.5 transition-transform">&uarr;</span>
+                </button>
+            </div>
+
+            <!-- 5-Column Grid Matrix -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-12">
+                
+                <!-- Col 1: Brand & Diagnostic Enclave -->
+                <div class="space-y-4">
+                    <a href="/" class="flex items-center gap-2.5 group w-fit focus:outline-none">
+                        <div class="flex items-center justify-center h-9 w-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md text-white font-bold relative">
+                            <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-[#0b1329]"></span>
+                        </div>
+                        <span class="font-black text-xl text-white tracking-tight">InputTest<span class="text-blue-400 font-normal text-xs font-mono">.online</span></span>
+                    </a>
+                    <p class="text-xs text-slate-400 leading-relaxed font-normal">
+                        The open-standard browser hardware diagnostics workstation. Benchmarking switches, polling rates, rotary encoders, display panels, and acoustics in pure client sandboxes without drivers.
+                    </p>
+                    <div class="space-y-2 pt-1 font-mono text-[11px]">
+                        <div class="flex items-center gap-2 text-emerald-400 font-medium">
+                            <svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            <span>100% Client-Side Enclave</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-blue-400 font-medium">
+                            <svg class="w-3.5 h-3.5 text-blue-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            <span>Sub-millisecond Precision</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-indigo-400 font-medium">
+                            <svg class="w-3.5 h-3.5 text-indigo-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            <span>Zero Server Telemetry</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="flex space-x-6">
-                    <a href="#" class="twitter-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
-                        <span class="sr-only">Twitter</span>
-                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
-                    </a>
-                    <a href="#" class="github-link text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 transition-colors" target="_blank" rel="noopener">
-                        <span class="sr-only">GitHub</span>
-                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" clip-rule="evenodd"/></svg>
-                    </a>
+                <!-- Col 2: INPUT & TACTILE -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>⌨️</span> <span>INPUT &amp; TACTILE</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="keyboard.html" class="hover:text-white transition-colors">Keyboard Switch Tester</a></li>
+                        <li><a href="mouse.html" class="hover:text-white transition-colors">Mouse Clicks &amp; CPS</a></li>
+                        <li>
+                            <a href="scroll-test.html" class="text-amber-400 hover:text-amber-300 transition-colors flex items-center justify-between group">
+                                <span>Scroll Jump Tester</span>
+                                <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[9px] font-mono font-bold">HOT</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mouse-polling-rate.html" class="text-cyan-400 hover:text-cyan-300 transition-colors flex items-center justify-between group">
+                                <span>Polling Rate 8000Hz</span>
+                                <span class="px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-[9px] font-mono font-bold">NEW</span>
+                            </a>
+                        </li>
+                        <li><a href="gamepad.html" class="hover:text-white transition-colors">Gamepad Stick Drift</a></li>
+                        <li><a href="cps-test.html" class="hover:text-white transition-colors">CPS Speed Clicker</a></li>
+                        <li><a href="typing.html" class="hover:text-white transition-colors">Typing Speed WPM</a></li>
+                        <li><a href="reaction.html" class="hover:text-white transition-colors">Reaction Time Reflex</a></li>
+                        <li><a href="draw.html" class="hover:text-white transition-colors">Stylus Pen Pressure</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: DISPLAYS & AUDIO -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🖥️</span> <span>DISPLAYS &amp; AUDIO</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="display.html" class="hover:text-white transition-colors">Display Refresh Rate (Hz)</a></li>
+                        <li><a href="display.html#dead-pixel" class="hover:text-white transition-colors">Dead Pixel Sweeper</a></li>
+                        <li><a href="sound.html" class="hover:text-white transition-colors">Stereo Speaker Balancer</a></li>
+                        <li><a href="mic.html" class="hover:text-white transition-colors">Microphone Decibel Meter</a></li>
+                        <li><a href="webcam.html" class="hover:text-white transition-colors">Webcam Resolution &amp; FPS</a></li>
+                        <li><a href="latency.html" class="hover:text-white transition-colors">Bluetooth Audio Latency</a></li>
+                        <li><a href="hdmi.html" class="hover:text-white transition-colors">HDMI &amp; DisplayPort Signal</a></li>
+                        <li><a href="vr.html" class="hover:text-white transition-colors">WebVR Spatial Coordinates</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: SYSTEMS & PORTS -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>⚡</span> <span>SYSTEMS &amp; PORTS</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="specs.html" class="hover:text-white transition-colors">PC Hardware Specs</a></li>
+                        <li><a href="usb.html" class="hover:text-white transition-colors">USB Host Enumerator</a></li>
+                        <li><a href="usb-c.html" class="hover:text-white transition-colors">USB-C Power Profiler</a></li>
+                        <li><a href="specs.html#battery" class="hover:text-white transition-colors">Laptop Battery Health</a></li>
+                        <li><a href="lan.html" class="hover:text-white transition-colors">LAN Cable &amp; Jitter</a></li>
+                        <li><a href="printer.html" class="hover:text-white transition-colors">Printer CMYK Test Page</a></li>
+                        <li><a href="scanner.html" class="hover:text-white transition-colors">Document Scanner DPI</a></li>
+                        <li><a href="#diagnostic-stations" class="hover:text-white transition-colors">Biometric Windows Hello</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 5: AUDITS & TRUST -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🛡️</span> <span>AUDITS &amp; TRUST</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li>
+                            <a href="report.html" class="text-emerald-400 hover:text-emerald-300 transition-colors flex items-center justify-between group">
+                                <span>Certified PDF Report</span>
+                                <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[9px] font-mono font-bold">PRO</span>
+                            </a>
+                        </li>
+                        <li><a href="#guides" class="hover:text-white transition-colors">Diagnostic Field Manuals</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition-colors">About InputTest Project</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Contact Support &amp; Bugs</a></li>
+                        <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy (Zero-Data)</a></li>
+                        <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <li>
+                            <a href="https://github.com/kapasia628/inputtest" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors flex items-center gap-1">
+                                <span>GitHub Source</span>
+                                <span class="text-[10px]">&nearr;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Affiliate & Diagnostic Transparency Disclaimer (Matching Mockup) -->
+            <div class="border-t border-slate-800/80 pt-6 pb-6 text-xs text-slate-400 leading-relaxed font-normal">
+                <p>
+                    <strong class="text-slate-300 font-semibold">Affiliate &amp; Diagnostic Transparency:</strong> InputTest.online is an independent hardware diagnostic suite. Some diagnostic manuals and hardware replacement recommendations feature affiliate links (including Banggood &amp; hardware vendors). If you purchase gear through our verified links, we may receive a modest commission at no additional cost to you. This directly funds our sub-millisecond benchmarking scripts and maintains our serverless diagnostic suite 100% free for everyone.
+                </p>
+            </div>
+
+            <!-- Bottom Copyright & Security Strip -->
+            <div class="border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-slate-500">
+                <div>&copy; 2026 InputTest.online &bull; All Tests 100% Client-Side Sandboxed</div>
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-1.5 text-emerald-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        <span>No Telemetry Collected</span>
+                    </div>
+                    <a href="https://github.com/kapasia628/inputtest" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">GitHub</a>
                 </div>
             </div>
+
         </div>
     </footer>
 

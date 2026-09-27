@@ -101,9 +101,117 @@ const SiteConfig = {
         document.querySelectorAll('.twitter-link').forEach(el => el.href = this.socials.twitter);
         document.querySelectorAll('.github-link').forEach(el => el.href = this.socials.github);
     }
+
+    // Universal Header & Theme Interactivity across all pages
+    initNavAndTheme: function() {
+        // Theme toggle
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('theme-toggle-sun');
+        const moonIcon = document.getElementById('theme-toggle-moon');
+
+        function syncThemeIcons() {
+            if (document.documentElement.classList.contains('dark')) {
+                sunIcon && sunIcon.classList.remove('hidden');
+                moonIcon && moonIcon.classList.add('hidden');
+            } else {
+                sunIcon && sunIcon.classList.add('hidden');
+                moonIcon && moonIcon.classList.remove('hidden');
+            }
+        }
+        syncThemeIcons();
+
+        if (themeToggleBtn && !themeToggleBtn.dataset.themeBound) {
+            themeToggleBtn.dataset.themeBound = 'true';
+            themeToggleBtn.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+                syncThemeIcons();
+                localStorage.setItem('color-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            });
+        }
+
+        // Search Palette in Navbar
+        const searchBar = document.getElementById("nav-search-bar");
+        const searchPanel = document.getElementById("search-dropdown-panel");
+        
+        if (searchBar && searchPanel && !searchBar.dataset.searchBound) {
+            searchBar.dataset.searchBound = 'true';
+            const searchDatabase = [
+                { title: "Keyboard Tester Online", desc: "Test switches, ghosting, key codes", url: "/keyboard" },
+                { title: "Mouse & CPS Checker", desc: "Test clicks & CPS rate", url: "/mouse" },
+                { title: "Scroll Wheel Jump Tester", desc: "Detect inverted ticks & jumping", url: "/scroll-test" },
+                { title: "Mouse Polling Rate (Hz)", desc: "1000Hz to 8000Hz report rate", url: "/mouse-polling-rate" },
+                { title: "Gamepad & Joystick Drift", desc: "Stick drift analyzer", url: "/gamepad" },
+                { title: "Display & Monitor Tester", desc: "Dead pixels, refresh Hz", url: "/display" },
+                { title: "Microphone Audio Check", desc: "Decibel meter & gain staging", url: "/mic" },
+                { title: "Speaker & Sound Test", desc: "Stereo balance frequency sweep", url: "/sound" },
+                { title: "Webcam Calibration Check", desc: "Resolution & FPS sensor test", url: "/webcam" },
+                { title: "Audio & Bluetooth Latency", desc: "Wireless lag audit", url: "/latency" },
+                { title: "USB-C Profiler", desc: "Power delivery profiles & Alt-mode", url: "/usb-c" },
+                { title: "Certified Hardware PDF Report", desc: "Official verification certificate", url: "/report" }
+            ];
+
+            window.addEventListener("keydown", (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+                    e.preventDefault();
+                    searchBar.focus();
+                }
+            });
+
+            document.addEventListener("click", (e) => {
+                if (!searchBar.contains(e.target) && !searchPanel.contains(e.target)) {
+                    searchPanel.classList.add("hidden");
+                }
+            });
+
+            function showSearchResults() {
+                const query = searchBar.value.toLowerCase().trim();
+                searchPanel.innerHTML = '<div class="text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider px-2 py-1">Diagnostic Modules</div>';
+                
+                const filtered = searchDatabase.filter(item => 
+                    item.title.toLowerCase().includes(query) || 
+                    item.desc.toLowerCase().includes(query)
+                );
+
+                if (filtered.length === 0) {
+                    searchPanel.innerHTML += `<div class="px-3 py-2 text-xs text-slate-400 font-mono">No matching modules for "${searchBar.value}"</div>`;
+                } else {
+                    filtered.forEach(item => {
+                        const a = document.createElement("a");
+                        a.href = item.url;
+                        a.className = "flex flex-col px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors";
+                        a.innerHTML = `
+                            <span class="text-xs font-bold text-slate-800 dark:text-slate-200">${item.title}</span>
+                            <span class="text-[10px] text-slate-400 font-medium">${item.desc}</span>
+                        `;
+                        searchPanel.appendChild(a);
+                    });
+                }
+                searchPanel.classList.remove("hidden");
+            }
+
+            searchBar.addEventListener("focus", showSearchResults);
+            searchBar.addEventListener("input", showSearchResults);
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+        const mobileNavPanel = document.getElementById("mobile-nav-panel");
+        const hamburgerIcon = document.getElementById("hamburger-icon");
+        const hamburgerClose = document.getElementById("hamburger-close");
+
+        if (mobileMenuToggle && mobileNavPanel && !mobileMenuToggle.dataset.menuBound) {
+            mobileMenuToggle.dataset.menuBound = 'true';
+            mobileMenuToggle.addEventListener("click", () => {
+                mobileNavPanel.classList.toggle("hidden");
+                hamburgerIcon && hamburgerIcon.classList.toggle("hidden");
+                hamburgerClose && hamburgerClose.classList.toggle("hidden");
+            });
+        }
+    }
 };
 
 // Auto apply brand properties on page load
 document.addEventListener("DOMContentLoaded", () => {
     SiteConfig.applyBrand();
+    SiteConfig.initNavAndTheme();
 });
