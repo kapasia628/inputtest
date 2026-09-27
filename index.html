@@ -1050,9 +1050,9 @@
             </div>
         </section>
 
-        <!-- LAB-TESTED & RECOMMENDED REPLACEMENT GEAR (THE 8 AFFILIATE E-COMMERCE PRODUCTS) -->
+                <!-- LAB-TESTED & RECOMMENDED REPLACEMENT GEAR (17 REAL BANGGOOD AFFILIATE PRODUCTS) -->
         <section id="hardware-gear" class="max-w-7xl mx-auto w-full mb-16 select-none" aria-label="Curated Hardware Lab">
-            <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-4 border-b border-slate-200 dark:border-slate-800 gap-4">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-6 pb-4 border-b border-slate-200 dark:border-slate-800 gap-4">
                 <div>
                     <span class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest">Lab-Tested Replacement Gear</span>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Curated Hardware Lab &amp; Tested Peripherals</h2>
@@ -1060,205 +1060,493 @@
                 </div>
                 <span class="text-xs font-mono text-slate-400 flex items-center gap-1.5 shrink-0">
                     <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                    <span>VERIFIED AFFILIATE GEAR</span>
+                    <span>VERIFIED AFFILIATE GEAR (17)</span>
                 </span>
             </div>
 
-            <!-- 8 Products Grid (4 cols × 2 rows) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                
-                <!-- Product 1: Lenovo ThinkPlus KM210 Pro Combo -->
-                <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all group">
+            <!-- Category Filter Tabs -->
+            <div class="flex flex-wrap items-center gap-2 mb-6" id="gear-category-tabs">
+                <button type="button" data-gear-filter="all" class="gear-filter-btn active px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-blue-600 text-white shadow-sm cursor-pointer">
+                    All Gear (17)
+                </button>
+                <button type="button" data-gear-filter="keyboard" class="gear-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer">
+                    ⌨️ Keyboards (5)
+                </button>
+                <button type="button" data-gear-filter="mouse" class="gear-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer">
+                    🖱️ Mice (5)
+                </button>
+                <button type="button" data-gear-filter="mic" class="gear-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer">
+                    🎙️ Microphones (5)
+                </button>
+                <button type="button" data-gear-filter="webcam" class="gear-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer">
+                    📷 Webcams (1)
+                </button>
+                <button type="button" data-gear-filter="combo" class="gear-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer">
+                    ⭐ Combos (1)
+                </button>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="gear-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+                <!-- Product Card: LENOVO ThinkPlus KM210 Pro 2.4GHz Wireless Combo -->
+                <div data-gear-category="combo" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
                     <div>
                         <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
-                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-blue-600 text-white font-mono font-bold text-[9px]">EDITOR'S PICK</span>
-                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/AF/E0/8fb82d56-9ce7-4be1-b777-8bfa4977a514.jpg.webp" alt="LENOVO ThinkPlus KM210 Pro Wireless Combo" class="h-36 w-auto object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-blue-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">EDITOR CHOICE</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/AF/E0/8fb82d56-9ce7-4be1-b777-8bfa4977a514.jpg.webp" alt="LENOVO ThinkPlus KM210 Pro 2.4GHz Wireless Combo" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
                         </div>
-                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase">WIRELESS KEYBOARD + MOUSE</div>
-                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">WIRELESS COMBO</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
                             LENOVO ThinkPlus KM210 Pro 2.4GHz Wireless Combo
                         </h4>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">104-Key Splashproof Keyboard + 1600 DPI Ergonomic Mouse.</p>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            104-Key Splashproof Keyboard + 1600 DPI Ergonomic Mouse with USB receiver.
+                        </p>
                     </div>
                     <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                         <div>
                             <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹1,499</span>
                             <span class="text-[10px] text-slate-400 line-through ml-1">₹2,499</span>
                         </div>
-                        <a href="https://www.banggood.in/LENOVO-ThinkPlus-KM210-Pro-2_4GHz-Wireless-Keyboard-and-Mouse-Set-104-keys-Keyboard-800-1600DPI-Mouse-Ergonomics-Design-Splashproof-Wireless-Combo-for-PC-Laptop-Computer-p-2046503.html?ID=6287830&warehouse=CN&p=45160818303999201801&custlinkid=5290325" target="_blank" rel="sponsored nofollow noopener" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs">
-                            Buy Now &rarr;
+                        <a href="https://www.banggood.in/LENOVO-ThinkPlus-KM210-Pro-2_4GHz-Wireless-Keyboard-and-Mouse-Set-104-keys-Keyboard-800-1600DPI-Mouse-Ergonomics-Design-Splashproof-Wireless-Combo-for-PC-Laptop-Computer-p-2046503.html?ID=6287830&warehouse=CN&p=45160818303999201801&custlinkid=5290325" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- Product 2: 8000Hz Ultra-High Polling Gaming Mouse -->
-                <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all group">
+                <!-- Product Card: MCHOSE A7 V3 Ultra+ 8K Polling 50000 DPI Esports Mouse -->
+                <div data-gear-category="mouse" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
                     <div>
                         <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
-                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-cyan-600 text-white font-mono font-bold text-[9px]">8000Hz POLLING</span>
-                            <div class="text-6xl group-hover:scale-110 transition-transform duration-300">🖱️</div>
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-cyan-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">8000Hz POLLING</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/6C/9B/fd6b0425-8e06-4615-b2f3-298ca121a18d.jpg.webp" alt="MCHOSE A7 V3 Ultra+ 8K Polling 50000 DPI Esports Mouse" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
                         </div>
-                        <div class="text-[10px] font-mono text-cyan-600 dark:text-cyan-400 font-bold uppercase">ULTRA-FAST SENSOR</div>
-                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
-                            Attack Shark X3 8000Hz PAW3395 Gaming Mouse
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">PAW3955-TI 50K</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            MCHOSE A7 V3 Ultra+ 8K Polling 50000 DPI Esports Mouse
                         </h4>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">26,000 DPI, 49g lightweight chassis, 0.125ms click response.</p>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
-                        <div>
-                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹3,299</span>
-                            <span class="text-[10px] text-slate-400 line-through ml-1">₹4,999</span>
-                        </div>
-                        <a href="https://www.banggood.in/search/8000hz-gaming-mouse.html?p=45160818303999201801&custlinkid=5290325" target="_blank" rel="sponsored nofollow noopener" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs">
-                            Buy Now &rarr;
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Product 3: Hall-Effect Anti-Drift Wireless Gamepad -->
-                <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all group">
-                    <div>
-                        <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
-                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-emerald-600 text-white font-mono font-bold text-[9px]">ZERO STICK DRIFT</span>
-                            <div class="text-6xl group-hover:scale-110 transition-transform duration-300">🎮</div>
-                        </div>
-                        <div class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold uppercase">ELECTROMAGNETIC SENSOR</div>
-                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
-                            Machenike G5 Pro Hall-Effect Wireless Controller
-                        </h4>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Hall Joysticks &amp; Triggers, Mechanical D-pad, PC/Switch/iOS.</p>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
-                        <div>
-                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹3,499</span>
-                            <span class="text-[10px] text-slate-400 line-through ml-1">₹5,299</span>
-                        </div>
-                        <a href="https://www.banggood.in/search/hall-effect-gamepad.html?p=45160818303999201801&custlinkid=5290325" target="_blank" rel="sponsored nofollow noopener" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs">
-                            Buy Now &rarr;
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Product 4: Hot-Swappable 75% Mechanical Keyboard -->
-                <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all group">
-                    <div>
-                        <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
-                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-purple-600 text-white font-mono font-bold text-[9px]">GASKET MOUNT</span>
-                            <div class="text-6xl group-hover:scale-110 transition-transform duration-300">⌨️</div>
-                        </div>
-                        <div class="text-[10px] font-mono text-purple-600 dark:text-purple-400 font-bold uppercase">HOT-SWAP SWITCHES</div>
-                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
-                            Epomaker EK68 65% Wireless Mechanical Keyboard
-                        </h4>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Pre-lubed Linear Switches, Tri-mode BT5.0/2.4G/USB-C, Sound dampening.</p>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            59g ultra-lightweight, 8000Hz wireless polling rate, flagship PAW3955-Ti optical sensor.
+                        </p>
                     </div>
                     <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                         <div>
                             <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹4,999</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹7,299</span>
+                        </div>
+                        <a href="https://www.banggood.in/MCHOSE-A7-V3-Ultra+-Wireless-Gaming-Mouse-Tri-mode-PAW3955-Ti-Sensor-8K-Polling-Rate-59g-Ultra-Lightweight-50000-DPI-Ergonomic-Gamer-Mice-p-2053254.html?ID=6287845&warehouse=CN&p=F2270779039935202609&custlinkid=5290388" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card: AULA F75 75% Tri-Mode Hot-Swappable Mechanical Keyboard -->
+                <div data-gear-category="keyboard" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
+                    <div>
+                        <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-purple-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">GASKET MOUNT</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/F3/55/bf1280dd-6b1b-4724-a7fd-264754e1c3b3.jpg.webp" alt="AULA F75 75% Tri-Mode Hot-Swappable Mechanical Keyboard" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                        </div>
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">75% HOT-SWAP</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            AULA F75 75% Tri-Mode Hot-Swappable Mechanical Keyboard
+                        </h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            Gasket acoustic dampening, pre-lubed switches, Bluetooth/2.4G/Type-C tri-mode connectivity.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                        <div>
+                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹4,899</span>
                             <span class="text-[10px] text-slate-400 line-through ml-1">₹6,999</span>
                         </div>
-                        <a href="https://www.banggood.in/search/mechanical-keyboard-hot-swap.html?p=45160818303999201801&custlinkid=5290325" target="_blank" rel="sponsored nofollow noopener" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs">
-                            Buy Now &rarr;
+                        <a href="https://www.banggood.in/AULA-F75-80-Keys-Tri-mode-Customized-Mechanical-Gaming-Keyboard-Hot-Swappable-RGB-BT-or-2_4G-or-Type-C-75-pencent-Layout-Wireless-Gaming-Keyboard-Gasket-Structure-p-2040415.html?ID=62878326325805&warehouse=CN&p=F2270779039935202609&custlinkid=5290382" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- Product 5: Mouse Rotary Encoder & Microswitch Repair Kit -->
-                <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all group">
+                <!-- Product Card: FURYCUBE G11 Hollow Lightweight 22000 DPI Wireless Mouse -->
+                <div data-gear-category="mouse" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
                     <div>
                         <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
-                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-amber-600 text-white font-mono font-bold text-[9px]">SCROLL JUMP FIX</span>
-                            <div class="text-6xl group-hover:scale-110 transition-transform duration-300">🔧</div>
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-emerald-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">67g LIGHTWEIGHT</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/EA/AC/4d13117d-a318-4f0f-b814-7a0d2776ff7a.jpg.webp" alt="FURYCUBE G11 Hollow Lightweight 22000 DPI Wireless Mouse" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
                         </div>
-                        <div class="text-[10px] font-mono text-amber-600 dark:text-amber-400 font-bold uppercase">REPAIR HARDWARE</div>
-                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
-                            TTC Gold Dustproof Mouse Wheel Encoder &amp; Switch Kit
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">PAW3311 22K</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            FURYCUBE G11 Hollow Lightweight 22000 DPI Wireless Mouse
                         </h4>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">2x TTC Gold 11mm Encoders + 2x Kailh GM 8.0 80M Microswitches.</p>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            Honeycomb shell, PAW3311 sensor with 22,000 DPI, 180+ hours battery life, 3-mode connection.
+                        </p>
                     </div>
                     <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                         <div>
-                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹699</span>
-                            <span class="text-[10px] text-slate-400 line-through ml-1">₹1,199</span>
+                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹2,199</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹3,499</span>
                         </div>
-                        <a href="https://www.banggood.in/search/mouse-encoder-switch.html?p=45160818303999201801&custlinkid=5290325" target="_blank" rel="sponsored nofollow noopener" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs">
-                            Buy Now &rarr;
+                        <a href="https://www.banggood.in/FURYCUBE-G11-Hollow-Design-Wireless-Gaming-Mouse-with-RGB-Light-Three-mode-PAW3311-Sensor-22000DPI-180+-Battery-Life-67g-Lightweight-E-sports-Gamer-Mice-p-2049130.html?ID=6287830&warehouse=CN&p=F2270779039935202609&custlinkid=5290387" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- Product 6: USB Studio Condenser Microphone -->
-                <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all group">
+                <!-- Product Card: MCHOSE Mix87 Hall-Effect Magnetic Esports Keyboard -->
+                <div data-gear-category="keyboard" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
                     <div>
                         <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
-                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-indigo-600 text-white font-mono font-bold text-[9px]">STUDIO AUDIO</span>
-                            <div class="text-6xl group-hover:scale-110 transition-transform duration-300">🎙️</div>
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-amber-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">HALL EFFECT</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/4A/27/870e0f91-9296-4aa8-a21e-9d6c00b56ae1.jpg.webp" alt="MCHOSE Mix87 Hall-Effect Magnetic Esports Keyboard" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
                         </div>
-                        <div class="text-[10px] font-mono text-indigo-600 dark:text-indigo-400 font-bold uppercase">NOISE-CANCELLING MIC</div>
-                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
-                            Fifine AmpliGame A8 USB Cardioid Condenser Mic
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">MAGNETIC SWITCH</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            MCHOSE Mix87 Hall-Effect Magnetic Esports Keyboard
                         </h4>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Touch Mute Sensor, Zero-latency Jack, Boom Arm, RGB Indicator.</p>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            Apollo magnetic switches, dedicated aluminum media knob, custom ARGB per-key backlighting.
+                        </p>
                     </div>
                     <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                         <div>
-                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹3,899</span>
-                            <span class="text-[10px] text-slate-400 line-through ml-1">₹5,499</span>
+                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹6,299</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹8,999</span>
                         </div>
-                        <a href="https://www.banggood.in/search/fifine-usb-microphone.html?p=45160818303999201801&custlinkid=5290325" target="_blank" rel="sponsored nofollow noopener" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs">
-                            Buy Now &rarr;
+                        <a href="https://www.banggood.in/MCHOSE-Mix87-Hall-Effect-Magnetic-Switch-Mechanical-Keyboard-with-Volume-Knob-ARGB-Light-Apollo-Switch-Customization-Wired-Esports-Gaming-Keyboard-p-2048150.html?ID=62878306340230&warehouse=CN&p=F2270779039935202609&custlinkid=5290385" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- Product 7: 2K 60FPS Streaming Webcam -->
-                <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all group">
+                <!-- Product Card: WM16 USB/XLR Dynamic Studio Microphone with DSP -->
+                <div data-gear-category="mic" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
                     <div>
                         <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
-                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-rose-600 text-white font-mono font-bold text-[9px]">2K 60FPS</span>
-                            <div class="text-6xl group-hover:scale-110 transition-transform duration-300">📷</div>
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-indigo-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">XLR + USB DUAL</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/D3/06/69882448-366d-4a26-820e-db46e3c0897e.jpg.webp" alt="WM16 USB/XLR Dynamic Studio Microphone with DSP" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
                         </div>
-                        <div class="text-[10px] font-mono text-rose-600 dark:text-rose-400 font-bold uppercase">OPTICAL SENSOR</div>
-                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
-                            Anker PowerConf C200 2K 60FPS Auto-Focus Webcam
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">STUDIO DYNAMIC</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            WM16 USB/XLR Dynamic Studio Microphone with DSP
                         </h4>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Wide-angle lens, hardware privacy shutter, low-light AI sensors.</p>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            Cardioid dynamic capsule, dual USB/XLR outputs, built-in DSP noise suppression, RGB ring.
+                        </p>
                     </div>
                     <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                         <div>
-                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹4,499</span>
-                            <span class="text-[10px] text-slate-400 line-through ml-1">₹6,299</span>
+                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹3,199</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹4,999</span>
                         </div>
-                        <a href="https://www.banggood.in/search/2k-60fps-webcam.html?p=45160818303999201801&custlinkid=5290325" target="_blank" rel="sponsored nofollow noopener" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs">
-                            Buy Now &rarr;
+                        <a href="https://www.banggood.in/WM16-USB-XLR-Dynamic-Microphone-with-RGB-Lighting-DSP-Noise-Reduction-Cardioid-Condenser-Plug-and-Play-for-Streaming-Podcast-Gaming-Recording-Studio-Mic-p-2048524.html?ID=6287830&warehouse=CN&p=F2270779039935202609&custlinkid=5290392" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
                         </a>
                     </div>
                 </div>
 
-                <!-- Product 8: USB-C Hardware Power & Voltage Meter -->
-                <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all group">
+                <!-- Product Card: CW100 1080P Full HD Windows Hello Facial Recognition Webcam -->
+                <div data-gear-category="webcam" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
                     <div>
                         <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
-                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-blue-600 text-white font-mono font-bold text-[9px]">240W PD TESTER</span>
-                            <div class="text-6xl group-hover:scale-110 transition-transform duration-300">⚡</div>
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-rose-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">WINDOWS HELLO</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/AE/AF/ba78e7d7-b158-430b-b5a5-24ecbb66c790.jpg.webp" alt="CW100 1080P Full HD Windows Hello Facial Recognition Webcam" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
                         </div>
-                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase">HARDWARE DIAGNOSTIC</div>
-                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
-                            FNIRSI FNB58 USB-C Power Delivery &amp; Voltage Tester
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">1080P FULL HD</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            CW100 1080P Full HD Windows Hello Facial Recognition Webcam
                         </h4>
-                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">2.0-inch HD color screen, real-time ripple curve &amp; fast charging protocol.</p>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            Infrared biometric unlock, 1080P 30FPS clear stream, dual noise-cancelling mics, plug & play.
+                        </p>
                     </div>
                     <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                         <div>
                             <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹2,999</span>
-                            <span class="text-[10px] text-slate-400 line-through ml-1">₹4,199</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹4,699</span>
                         </div>
-                        <a href="https://www.banggood.in/search/usb-c-tester-fnb58.html?p=45160818303999201801&custlinkid=5290325" target="_blank" rel="sponsored nofollow noopener" class="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs">
-                            Buy Now &rarr;
+                        <a href="https://www.banggood.in/CW100-Webcam-1080P-Full-HD-Windows-Hello-Facial-Recognition-USB-Computer-Cam-Noise-Cancelling-Microphone-Plug-and-Play-for-Video-Calling-Conference-p-2046249.html?ID=6287830&warehouse=CN&p=F2270779039935202609&custlinkid=5290397" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
                         </a>
                     </div>
                 </div>
 
+                <!-- Product Card: PISEN MC1 2.4G HiFi Wireless Lavalier with Charging Case -->
+                <div data-gear-category="mic" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
+                    <div>
+                        <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-emerald-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">HIFI WIRELESS</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/3C/31/01c0dc61-375b-4022-9fde-d07cf1c9e6e8.jpg.webp" alt="PISEN MC1 2.4G HiFi Wireless Lavalier with Charging Case" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                        </div>
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">CHARGING CASE</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            PISEN MC1 2.4G HiFi Wireless Lavalier with Charging Case
+                        </h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            360° omnidirectional condenser, real-time headphone monitor, smart digital power display box.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                        <div>
+                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹2,799</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹4,499</span>
+                        </div>
+                        <a href="https://www.banggood.in/PISEN-MC1-1-To-1-or-1-To-2-2_4G-Wireless-Lavalier-Microphone-with-Charging-Case-360-Omnidirectional-HiFi-Mic-DSP-Noise-Cancelling-LED-Display-40M-Transmission-Real-time-Monitoring-for-Vlogging-Live-Streaming-Interview-Plug-and-Play-p-2055430.html?ID=6293810&warehouse=CN&p=F2270779039935202609&custlinkid=5290395" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card: MOFii AI Voice Wireless Keyboard & Mouse Combo -->
+                <div data-gear-category="keyboard" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
+                    <div>
+                        <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-blue-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">AI VOICE TRANSLATE</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/A2/3F/bf9f8314-6281-4fdf-af3a-264a4b602425.jpg.webp" alt="MOFii AI Voice Wireless Keyboard & Mouse Combo" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                        </div>
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">66 LANGUAGES</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            MOFii AI Voice Wireless Keyboard & Mouse Combo
+                        </h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            AI shortcut keys, 66 languages real-time translation, Type-C rechargeable dual combo.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                        <div>
+                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹2,899</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹4,199</span>
+                        </div>
+                        <a href="https://www.banggood.in/MOFii-AI-Voice-Keyboard-and-Mouse-Set-Wireless-bluetooth-Combo-66-Languages-Translation-Type-C-Rechargeable-AI-Shortcut-Key-for-Computer-Laptop-p-2051135.html?ID=6287836&warehouse=CN&p=F2270779039935202609&custlinkid=5290381" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card: MCHOSE Ace 60Pro 8K Polling Magnetic Switch Keyboard -->
+                <div data-gear-category="keyboard" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
+                    <div>
+                        <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-purple-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">8000Hz POLLING</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/30/E9/882cbf86-41b6-481f-90b9-90777bcc4841.jpg.webp" alt="MCHOSE Ace 60Pro 8K Polling Magnetic Switch Keyboard" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                        </div>
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">MAGNETIC SWITCH</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            MCHOSE Ace 60Pro 8K Polling Magnetic Switch Keyboard
+                        </h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            8000Hz hyper-polling rate, rapid trigger magnetic switches, RGB hot-swappable 60% layout.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                        <div>
+                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹5,499</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹7,899</span>
+                        </div>
+                        <a href="https://www.banggood.in/MCHOSE-Ace-60Pro-Magnetic-Switch-Mechanical-Keyboard-RGB-Hot-Swap-8K-Polling-Rate-61-Keys-60-pencent-Layout-USB-Wired-Gaming-Keyboards-p-2028223.html?ID=62878306331298&warehouse=CN&p=F2270779039935202609&custlinkid=5290384" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card: MCHOSE Ace 68 Air 0.08ms Latency Magnetic Keyboard -->
+                <div data-gear-category="keyboard" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
+                    <div>
+                        <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-indigo-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">0.08ms LATENCY</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/7F/30/ac249d40-5573-4673-8c01-5b8d52aee14a.jpg.webp" alt="MCHOSE Ace 68 Air 0.08ms Latency Magnetic Keyboard" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                        </div>
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">256K SCAN RATE</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            MCHOSE Ace 68 Air 0.08ms Latency Magnetic Keyboard
+                        </h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            256K scan rate, 0.08ms ultra-low latency, adaptive calibration, magnetic light box design.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                        <div>
+                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹6,999</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹9,499</span>
+                        </div>
+                        <a href="https://www.banggood.in/MCHOSE-Ace-68-Air-Magnetic-Switch-Mechanical-Keyboard-with-RGB-Light-Box-8K-Polling-Rate-256K-Scan-Rate-0_08ms-Latency-Adaptive-Calibration-Wired-Gaming-Keyboards-p-2041209.html?ID=62878456335171&warehouse=CN&p=F2270779039935202609&custlinkid=5290386" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card: HXSJ T90 Tri-Mode Rechargeable RGB Gaming Mouse -->
+                <div data-gear-category="mouse" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
+                    <div>
+                        <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-pink-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">RGB STREAMER</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/C1/A1/efd4647a-618d-401f-9286-98169198c421.jpg.webp" alt="HXSJ T90 Tri-Mode Rechargeable RGB Gaming Mouse" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                        </div>
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">750mAh RECHARGEABLE</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            HXSJ T90 Tri-Mode Rechargeable RGB Gaming Mouse
+                        </h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            3600 DPI adjustable optical engine, 750mAh rechargeable cell, dynamic RGB streamer lighting.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                        <div>
+                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹1,299</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹2,199</span>
+                        </div>
+                        <a href="https://www.banggood.in/HXSJ-T90-2_4G-Triple-Mode-Wireless-Mouse-800-3600DPI-Adjustable-RGB-Backlight-750mAh-Type-C-Rechargeable-Gamer-Mouse-p-1988878.html?ID=6323085&warehouse=CN&p=F2270779039935202609&custlinkid=5290389" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card: FURYCUBE G13S 55g Tri-Mode 22000 DPI Esports Mouse -->
+                <div data-gear-category="mouse" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
+                    <div>
+                        <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-teal-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">55g FEATHER</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/D9/99/8b1488bb-4047-43dd-937e-3ab5c5628340.jpg.webp" alt="FURYCUBE G13S 55g Tri-Mode 22000 DPI Esports Mouse" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                        </div>
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">600H ENDURANCE</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            FURYCUBE G13S 55g Tri-Mode 22000 DPI Esports Mouse
+                        </h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            55g featherweight ergonomic shell, PAW3311 optical engine, massive 600-hour battery stamina.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                        <div>
+                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹2,499</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹3,899</span>
+                        </div>
+                        <a href="https://www.banggood.in/FURYCUBE-G13S-Tri-Mode-Gaming-Mouse-PAW3311-Sensor-22000DPI-600H-Battery-Life-55g-Lightweight-2_4G-or-Wired-or-bluetooth-E-sports-Gamer-Mice-for-PC-Laptop-Computer-p-2049131.html?ID=6287830&warehouse=CN&p=F2270779039935202609&custlinkid=5290390" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card: FURYCUBE F1 Carbon 49g Ultra-Lightweight Esports Mouse -->
+                <div data-gear-category="mouse" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
+                    <div>
+                        <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-zinc-700 text-white font-mono font-bold text-[9px] shadow-sm z-10">49g SUB-50G</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/8C/44/2f9db020-69d4-4fb0-a441-c2865c09cb8d.jpg.webp" alt="FURYCUBE F1 Carbon 49g Ultra-Lightweight Esports Mouse" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                        </div>
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">CARBON FIBER</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            FURYCUBE F1 Carbon 49g Ultra-Lightweight Esports Mouse
+                        </h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            Carbon texture composite chassis, 49 grams total weight, PAW3315 optical tracking, 600h run.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                        <div>
+                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹2,899</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹4,299</span>
+                        </div>
+                        <a href="https://www.banggood.in/FURYCUBE-F1-Carbon-Series-Wireless-Tri-Mode-Gaming-Mouse-PAW3315-Sensor-800-12000DPI-600H-Battery-Life-49g-Lightweight-E-sports-Gamer-Mice-for-PC-Laptop-Computer-p-2049134.html?ID=6287853&warehouse=CN&p=F2270779039935202609&custlinkid=5290391" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card: Yesido KR24 AI Noise Reduction 48kHz Wireless Lapel Mic -->
+                <div data-gear-category="mic" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
+                    <div>
+                        <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-cyan-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">48kHz 24-BIT</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/AF/5A/c4a28252-dc9c-43d2-9d86-c9f172d92b3f.jpg.webp" alt="Yesido KR24 AI Noise Reduction 48kHz Wireless Lapel Mic" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                        </div>
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">3-LEVEL AI NOISE</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            Yesido KR24 AI Noise Reduction 48kHz Wireless Lapel Mic
+                        </h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            48kHz/24-bit lossless audio, 3-level AI noise reduction, 50m line-of-sight range, 36h total battery.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                        <div>
+                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹1,999</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹3,299</span>
+                        </div>
+                        <a href="https://www.banggood.in/Yesido-KR24-Hidden-Lavalier-Microphone-Wireless-Clip-Mic-AI-3-Level-Noise-Reduction-48kHz-24bit-50m-Range-36H-Total-Battery-for-Live-Streaming-Vlog-p-2051521.html?ID=6287830&warehouse=CN&p=F2270779039935202609&custlinkid=5290393" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card: BOYA Mini Wireless Lavalier AI Noise-Cancelling Lapel Mic -->
+                <div data-gear-category="mic" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
+                    <div>
+                        <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-blue-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">BOYA OFFICIAL</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/8C/7B/49652860-06fb-438c-a741-43e5940e4d77.jpg.webp" alt="BOYA Mini Wireless Lavalier AI Noise-Cancelling Lapel Mic" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                        </div>
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">AI NOISE CANCEL</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            BOYA Mini Wireless Lavalier AI Noise-Cancelling Lapel Mic
+                        </h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            Ultra-compact clip-on profile, plug-and-play Type-C/Lightning receiver, crystal speech clarity.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                        <div>
+                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹2,499</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹3,999</span>
+                        </div>
+                        <a href="https://www.banggood.in/BOYA-Mini-Wireless-Lavalier-Lapel-Microphone-AI-Intelligent-Noise-Cancelling-Mic-for-iPhone-Android-Type-C-Phone-Live-Broadcast-Audio-Video-Recording-Vlog-p-2025811.html?ID=6330262&warehouse=CN&p=F2270779039935202609&custlinkid=5290394" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product Card: BM800 Studio Condenser Mic + V8 Bluetooth Mixer Kit -->
+                <div data-gear-category="mic" class="gear-card bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
+                    <div>
+                        <div class="relative w-full h-44 rounded-xl bg-slate-50 dark:bg-slate-900/60 overflow-hidden flex items-center justify-center mb-3">
+                            <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-purple-600 text-white font-mono font-bold text-[9px] shadow-sm z-10">V8 SOUND CARD</span>
+                            <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/B7/5D/b1bda73e-50b7-4aaa-a492-33fb071538f2.jpg.webp" alt="BM800 Studio Condenser Mic + V8 Bluetooth Mixer Kit" class="h-36 w-auto max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                        </div>
+                        <div class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">STUDIO BUNDLE</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                            BM800 Studio Condenser Mic + V8 Bluetooth Mixer Kit
+                        </h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            Large diaphragm condenser mic, shock mount, pop filter, multi-effect Bluetooth V8 mixer board.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                        <div>
+                            <span class="text-sm font-extrabold text-slate-900 dark:text-white">₹1,899</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹3,199</span>
+                        </div>
+                        <a href="https://www.banggood.in/BM800-Condenser-Microphone-V8-Sound-Card-Kit-Muti-functional-bluetooth-Sound-Card-for-Studio-Mobile-Phone-PC-Laptop-Recording-Live-Broadcast-p-1782376.html?ID=232&warehouse=CN&p=F2270779039935202609&custlinkid=5290396" target="_blank" rel="sponsored nofollow noopener" class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors shadow-2xs flex items-center gap-1 group/btn">
+                            <span>Buy Now</span>
+                            <span class="group-hover/btn:translate-x-0.5 transition-transform">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -1587,6 +1875,35 @@
     <!-- INTERACTIVE SCRIPTS & ENGINES -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+
+            
+            // Hardware Gear Category Filter Tabs Logic
+            const gearTabs = document.querySelectorAll('#gear-category-tabs .gear-filter-btn');
+            const gearCards = document.querySelectorAll('#gear-products-grid .gear-card');
+            
+            gearTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const filter = tab.getAttribute('data-gear-filter');
+                    
+                    // Update active tab styles
+                    gearTabs.forEach(t => {
+                        t.classList.remove('active', 'bg-blue-600', 'text-white', 'shadow-sm');
+                        t.classList.add('bg-slate-100', 'dark:bg-slate-800/80', 'text-slate-600', 'dark:text-slate-300');
+                    });
+                    tab.classList.add('active', 'bg-blue-600', 'text-white', 'shadow-sm');
+                    tab.classList.remove('bg-slate-100', 'dark:bg-slate-800/80', 'text-slate-600', 'dark:text-slate-300');
+                    
+                    // Filter cards
+                    gearCards.forEach(card => {
+                        const cat = card.getAttribute('data-gear-category');
+                        if (filter === 'all' || cat === filter) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
 
             // 2. Dark/Light Mode Theme Toggle
             const themeToggleBtn = document.getElementById('theme-toggle');
