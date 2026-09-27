@@ -84,13 +84,8 @@ const SiteConfig = {
         } catch (e) {
             // AdSense script not loaded yet or blocked by ad-blocker
             console.log("AdSense load skipped or adblocker detected: " + e.message);
-            // Show custom elegant placeholder indicating ad zone
-            container.innerHTML = `
-                <div class="flex flex-col items-center justify-center h-full text-xs text-slate-500 font-mono select-none">
-                    <span class="tracking-widest opacity-40 uppercase">ADVERTISEMENT</span>
-                    <span class="text-[10px] opacity-30 mt-1">${this.adsense.publisherId}</span>
-                </div>
-            `;
+            // Hide container if ad cannot be loaded
+            if (container) container.style.display = "none";
         }
     },
     
