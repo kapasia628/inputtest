@@ -100,7 +100,7 @@ const SiteConfig = {
         });
         document.querySelectorAll('.twitter-link').forEach(el => el.href = this.socials.twitter);
         document.querySelectorAll('.github-link').forEach(el => el.href = this.socials.github);
-    }
+    },
 
     // Universal Header & Theme Interactivity across all pages
     initNavAndTheme: function() {
@@ -146,6 +146,9 @@ const SiteConfig = {
                 { title: "Speaker & Sound Test", desc: "Stereo balance frequency sweep", url: "/sound" },
                 { title: "Webcam Calibration Check", desc: "Resolution & FPS sensor test", url: "/webcam" },
                 { title: "Audio & Bluetooth Latency", desc: "Wireless lag audit", url: "/latency" },
+                { title: "Mouse Double Click Test", desc: "Detect faulty microswitch debounce chatter", url: "/mouse-double-click-test" },
+                { title: "Keyboard Chatter Test", desc: "Detect multi-chatter mechanical switches", url: "/keyboard-chatter-test" },
+                { title: "Controller Stick Drift Test", desc: "Measure stick circularity error & drift", url: "/controller-stick-drift-test" },
                 { title: "USB-C Profiler", desc: "Power delivery profiles & Alt-mode", url: "/usb-c" },
                 { title: "Certified Hardware PDF Report", desc: "Official verification certificate", url: "/report" }
             ];
@@ -210,8 +213,15 @@ const SiteConfig = {
     }
 };
 
-// Auto apply brand properties on page load
+// Auto apply brand properties and global features on page load
 document.addEventListener("DOMContentLoaded", () => {
+    // Dynamically load internationalization (i18n) if not present
+    if (!window.InputTestI18n && !document.querySelector('script[src*="i18n.js"]')) {
+        const s = document.createElement('script');
+        s.src = '/i18n.js';
+        s.defer = true;
+        document.head.appendChild(s);
+    }
     SiteConfig.applyBrand();
     SiteConfig.initNavAndTheme();
 });

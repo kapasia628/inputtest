@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InputTest - Hardware Diagnostic Suite</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="extension-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-box">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="4" />
+            <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+          </svg>
+          <span class="live-dot"></span>
+        </div>
+        <div>
+          <div class="brand-title">Input<span>Test</span><span class="tld">.online</span></div>
+          <div class="brand-subtitle">Hardware Diagnostics</div>
+        </div>
+      </div>
+      <a href="https://inputtest.online/" target="_blank" class="open-site-btn" title="Open Full Suite">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+    </header>
+
+    <!-- Mini Instant Diagnostics Tab Bar -->
+    <div class="mini-tool-section">
+      <div class="mini-tool-tabs">
+        <button id="tab-cps" class="tab-btn active">⚡ Mini CPS</button>
+        <button id="tab-key" class="tab-btn">⌨️ Key Press</button>
+      </div>
+
+      <!-- Tab 1: Mini CPS -->
+      <div id="pane-cps" class="mini-pane active">
+        <div class="cps-display">
+          <div class="cps-stat"><span class="stat-label">Clicks</span><span id="click-count" class="stat-val">0</span></div>
+          <div class="cps-stat"><span class="stat-label">CPS</span><span id="cps-val" class="stat-val highlight">0.0</span></div>
+          <div class="cps-stat"><span class="stat-label">Time</span><span id="timer-val" class="stat-val">5.0s</span></div>
+        </div>
+        <button id="cps-click-btn" class="cps-action-btn">CLICK HERE AS FAST AS POSSIBLE</button>
+        <div class="mini-hint">Click button repeatedly to measure CPS speed!</div>
+      </div>
+
+      <!-- Tab 2: Mini Key Press -->
+      <div id="pane-key" class="mini-pane">
+        <div class="key-monitor">
+          <div id="last-key" class="key-box">Press Any Key</div>
+          <div class="key-details">
+            <div>Code: <strong id="key-code">-</strong></div>
+            <div>Key: <strong id="key-name">-</strong></div>
+            <div>KeyCode: <strong id="key-which">-</strong></div>
+          </div>
+        </div>
+        <div class="mini-hint">Press any mechanical or laptop switch to verify response.</div>
+      </div>
+    </div>
+
+    <!-- Quick Launch Grid -->
+    <div class="section-title">FULL DIAGNOSTIC TOOLS</div>
+    <div class="tools-grid">
+      <a href="https://inputtest.online/keyboard" target="_blank" class="tool-card">
+        <span class="tool-emoji">⌨️</span>
+        <div class="tool-text">
+          <span class="tool-name">Keyboard Test</span>
+          <span class="tool-sub">Ghosting &amp; Latency</span>
+        </div>
+      </a>
+      <a href="https://inputtest.online/mouse" target="_blank" class="tool-card">
+        <span class="tool-emoji">🖱️</span>
+        <div class="tool-text">
+          <span class="tool-name">Mouse &amp; CPS</span>
+          <span class="tool-sub">Clicks &amp; Precision</span>
+        </div>
+      </a>
+      <a href="https://inputtest.online/mouse-double-click-test" target="_blank" class="tool-card highlight-card">
+        <span class="tool-emoji">⚡</span>
+        <div class="tool-text">
+          <span class="tool-name">Double-Click Test</span>
+          <span class="tool-sub">Switch Chatter Fix</span>
+        </div>
+      </a>
+      <a href="https://inputtest.online/keyboard-chatter-test" target="_blank" class="tool-card highlight-card">
+        <span class="tool-emoji">🔤</span>
+        <div class="tool-text">
+          <span class="tool-name">Key Chatter Test</span>
+          <span class="tool-sub">Debounce Analysis</span>
+        </div>
+      </a>
+      <a href="https://inputtest.online/scroll-test" target="_blank" class="tool-card">
+        <span class="tool-emoji">🔄</span>
+        <div class="tool-text">
+          <span class="tool-name">Scroll Wheel</span>
+          <span class="tool-sub">Detect Reverse Jump</span>
+        </div>
+      </a>
+      <a href="https://inputtest.online/mouse-polling-rate" target="_blank" class="tool-card">
+        <span class="tool-emoji">🎯</span>
+        <div class="tool-text">
+          <span class="tool-name">Polling Rate (Hz)</span>
+          <span class="tool-sub">1000Hz to 8000Hz</span>
+        </div>
+      </a>
+      <a href="https://inputtest.online/gamepad" target="_blank" class="tool-card">
+        <span class="tool-emoji">🎮</span>
+        <div class="tool-text">
+          <span class="tool-name">Gamepad &amp; Sticks</span>
+          <span class="tool-sub">Circularity &amp; Drift</span>
+        </div>
+      </a>
+      <a href="https://inputtest.online/display" target="_blank" class="tool-card">
+        <span class="tool-emoji">📺</span>
+        <div class="tool-text">
+          <span class="tool-name">Display &amp; Pixels</span>
+          <span class="tool-sub">Dead Pixels &amp; Hz</span>
+        </div>
+      </a>
+      <a href="https://inputtest.online/mic" target="_blank" class="tool-card">
+        <span class="tool-emoji">🎙️</span>
+        <div class="tool-text">
+          <span class="tool-name">Microphone</span>
+          <span class="tool-sub">Decibels &amp; Gain</span>
+        </div>
+      </a>
+      <a href="https://inputtest.online/webcam" target="_blank" class="tool-card">
+        <span class="tool-emoji">📷</span>
+        <div class="tool-text">
+          <span class="tool-name">Webcam Quality</span>
+          <span class="tool-sub">FPS &amp; Resolution</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Certified Report CTA -->
+    <a href="https://inputtest.online/report" target="_blank" class="cert-banner">
+      <span class="shield-icon">🛡️</span>
+      <div class="cert-info">
+        <strong>Certified Hardware Report</strong>
+        <span>Generate official hardware verification PDF</span>
+      </div>
+      <span class="arrow">&rarr;</span>
+    </a>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>100% Free &amp; Private • Runs Locally</span>
+      <a href="https://inputtest.online/" target="_blank">InputTest.online</a>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

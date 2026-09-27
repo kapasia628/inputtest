@@ -1,98 +1,39 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="dark">
 <head>
-    <link rel="canonical" href="https://inputtest.online/reaction">
-    <script>
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else { document.documentElement.classList.remove('dark'); }
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index, follow">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2563eb">
-    <link rel="apple-touch-icon" href="icon-192.png">
-    <link rel="icon" type="image/png" href="icon-192.png">
+    <title>Mouse Double Click Test Online — Free Microswitch Chatter &amp; Debounce Checker</title>
+    <meta name="description" content="Free online mouse double-click tester. Test if your left, right, or middle mouse switch is failing, chattering, or registering unintended double clicks in milliseconds.">
+    <meta name="keywords" content="mouse double click test, mouse chatter test, left click double clicking, test mouse switch, omron double click test, debounce test online">
+    <link rel="canonical" href="https://inputtest.online/mouse-double-click-test">
 
-    <title>Reaction Time Test Online - Test Your Reflexes | InputTest</title>
-    <meta name="description" content="Free online reaction time test. Measure your human reflex speed in milliseconds. Compare your reaction time to the average (250ms) and improve your gaming performance.">
-    <meta name="keywords" content="reaction time test, reflex test, reaction speed test, human reaction time, gaming reaction test, latency reflex online, click reaction test">
-
+    <meta property="og:title" content="Mouse Double Click Test Online — Detect Microswitch Chattering">
+    <meta property="og:description" content="Instantly test your mouse for unintended double clicks, switch bounce, and microswitch failure in your browser.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://inputtest.online/reaction">
-    <meta property="og:title" content="Reaction Time Test - Test Your Reflexes Online | InputTest">
-    <meta property="og:description" content="Measure your reaction time in milliseconds. How fast are your reflexes? Compare with the average human (250ms)!">
-    <meta property="og:image" content="https://inputtest.online/blog_generic.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://inputtest.online/reaction">
-    <meta name="twitter:title" content="Reaction Time Test - Test Your Reflexes Online | InputTest">
-    <meta name="twitter:description" content="Measure your reaction time in milliseconds. Compare with average humans and pro gamers!">
-    <meta name="twitter:image" content="https://inputtest.online/blog_generic.png">
+    <meta property="og:url" content="https://inputtest.online/mouse-double-click-test">
+    <meta property="og:image" content="https://inputtest.online/blog_mouse.png">
+
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2485510445228691" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-2485510445228691">
 
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Reaction Time Test - InputTest.online",
-      "url": "https://inputtest.online/reaction",
+      "name": "Mouse Double Click Test",
+      "url": "https://inputtest.online/mouse-double-click-test",
+      "description": "Free browser-based diagnostic utility to test mouse switches for unwanted double clicks and debounce chattering.",
       "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "All",
-      "browserRequirements": "Requires JavaScript",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-      "description": "Free online reaction time test. Measures human reflex speed in milliseconds with visual and color stimuli."
+      "operatingSystem": "All"
     }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is a good reaction time?",
-          "acceptedAnswer": { "@type": "Answer", "text": "The average human visual reaction time is around 200-250ms. Trained athletes and gamers typically react between 150-200ms. Under 150ms is considered exceptional. Pro esports players average around 150-180ms." }
-        },
-        {
-          "@type": "Question",
-          "name": "How can I improve my reaction time?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Regular practice with reaction time tests, gaming, proper sleep, hydration, and caffeine in moderation can help. Exercise and reducing stress also improve neural processing speed. Consistent daily practice yields the best results." }
-        }
-      ]
-    }
-    </script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Outfit','sans-serif'], mono: ['JetBrains Mono','monospace'] } } } }</script>
-    <style>
-        .glow-bg { background-color: #f8fafc; background-image: radial-gradient(circle at 50% 0%, rgba(16,185,129,0.08) 0%, transparent 50%); }
-        .dark .glow-bg { background-color: #0b0f19 !important; background-image: radial-gradient(circle at 50% 0%, rgba(16,185,129,0.15) 0%, transparent 50%) !important; }
-        @keyframes scaleUp { 0%{opacity:0;transform:scale(0.95) translateY(4px)} 100%{opacity:1;transform:scale(1) translateY(0)} }
-        .animate-scaleUp { animation: scaleUp 0.18s cubic-bezier(0.34,1.56,0.64,1) forwards; }
-        @keyframes pulse-green { 0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,0.4)} 70%{box-shadow:0 0 0 15px rgba(16,185,129,0)} }
-        .pulse-green { animation: pulse-green 1s infinite; }
-        #reaction-box { transition: background-color 0.05s ease; }
-        .dark ::-webkit-scrollbar-track { background:#0f172a!important; }
-        .dark ::-webkit-scrollbar-thumb { background:#334155!important; }
-    </style>
-    <script src="config.js" defer></script>
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2485510445228691"
-         crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-2485510445228691">
-    <!-- Microsoft Clarity Tracking Code -->
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "ynfnjomkxs");
     </script>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg relative overflow-x-hidden transition-colors duration-300">
+<body class="bg-slate-50 text-slate-800 dark:bg-[#070b14] dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col transition-colors duration-200">
 
     <!-- MAIN NAVIGATION HEADER -->
     <header class="sticky top-0 z-50 bg-white/90 dark:bg-[#070b14]/90 border-b border-slate-200/80 dark:border-slate-800/80 backdrop-blur-xl transition-all duration-200 shadow-xs dark:shadow-none">
@@ -281,133 +222,112 @@
         </nav>
     </header>
 
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+        
+        <nav class="flex text-xs font-semibold text-slate-400 dark:text-slate-500 mb-6 uppercase tracking-wider select-none">
+            <a href="/" class="hover:text-blue-600">Home</a>
+            <span class="mx-2">&gt;</span>
+            <a href="/mouse" class="hover:text-blue-600">Mouse Tools</a>
+            <span class="mx-2">&gt;</span>
+            <span class="text-slate-600 dark:text-slate-300">Double Click Test</span>
+        </nav>
+
         <div class="mb-8">
-            <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white flex items-center gap-3">
-                Reaction Time Test
-                <span class="text-xs font-mono font-bold px-2 py-0.5 rounded border border-emerald-500/15 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 uppercase tracking-widest">Reflex Meter</span>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-[10px] font-mono font-bold text-blue-700 dark:text-blue-400 tracking-wide mb-2">
+                <span>🖱️ HARDWARE SWITCH DEBOUNCE DIAGNOSTICS</span>
+            </div>
+            <h1 class="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
+                Mouse Double Click Test Online
             </h1>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">
-                Measure your visual reaction time in milliseconds. Click when the screen turns green. Average human: ~250ms.
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-2 font-medium max-w-3xl">
+                Test your Left, Right, and Middle mouse buttons for hardware switch chatter. Any consecutive click registered faster than 80ms is highlighted as an unintended double click defect.
             </p>
         </div>
 
-        <!-- Main Test Area -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-            <!-- Stats -->
-            <div class="space-y-4 lg:col-span-1">
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm">
-                    <div class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1">Last Reaction</div>
-                    <div id="last-reaction" class="text-4xl font-black text-emerald-500 font-mono">—</div>
-                    <div class="text-[9px] text-slate-400 font-mono mt-1">milliseconds</div>
+        <div class="bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm backdrop-blur-md mb-8">
+            
+            <div id="click-target-box" class="w-full min-h-64 sm:min-h-72 rounded-2xl border-2 border-dashed border-blue-400 dark:border-blue-500/50 bg-blue-50/50 dark:bg-slate-950/60 hover:bg-blue-50 dark:hover:bg-slate-950 flex flex-col items-center justify-center p-6 text-center cursor-pointer select-none transition-all active:scale-[0.99] group">
+                <div class="w-16 h-16 rounded-2xl bg-blue-600/10 flex items-center justify-center text-3xl mb-3 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
+                    🖱️
                 </div>
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm">
-                    <div class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1">Average (5 tests)</div>
-                    <div id="avg-reaction" class="text-4xl font-black text-slate-800 dark:text-slate-100 font-mono">—</div>
-                    <div class="text-[9px] text-slate-400 font-mono mt-1">milliseconds</div>
+                <h3 class="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
+                    Click repeatedly inside this box
+                </h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-md">
+                    Click naturally with Left, Right, or Middle mouse buttons. We will measure the exact millisecond interval between clicks.
+                </p>
+                <div id="click-feedback-badge" class="mt-4 px-4 py-1.5 rounded-full font-mono font-bold text-xs bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                    Awaiting First Click...
                 </div>
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-center shadow-sm">
-                    <div class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1">Personal Best</div>
-                    <div id="best-reaction" class="text-4xl font-black text-yellow-500 font-mono">—</div>
-                    <div class="text-[9px] text-slate-400 font-mono mt-1">milliseconds</div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-100 dark:border-slate-800 text-center">
+                    <div class="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-bold">Total Clicks</div>
+                    <div id="stat-total-clicks" class="text-2xl font-black text-slate-900 dark:text-white font-mono mt-0.5">0</div>
                 </div>
-                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
-                    <div class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-3">Recent History</div>
-                    <div id="history-list" class="space-y-1.5 text-xs font-mono">
-                        <div class="text-slate-300 dark:text-slate-600">No tests yet...</div>
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-100 dark:border-slate-800 text-center">
+                    <div class="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-bold">Fastest Interval</div>
+                    <div id="stat-fastest-interval" class="text-2xl font-black text-blue-600 dark:text-blue-400 font-mono mt-0.5">—</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-100 dark:border-slate-800 text-center">
+                    <div class="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-bold">Double Clicks (&lt;80ms)</div>
+                    <div id="stat-double-clicks" class="text-2xl font-black text-emerald-500 font-mono mt-0.5">0</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/50 border border-slate-100 dark:border-slate-800 text-center">
+                    <div class="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-bold">Switch Health</div>
+                    <div id="stat-switch-health" class="text-xs font-bold text-emerald-500 font-mono mt-2">100% HEALTHY</div>
+                </div>
+            </div>
+
+            <div class="flex justify-end mt-4">
+                <button id="btn-reset-clicks" class="px-4 py-2 rounded-xl text-xs font-mono font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors cursor-pointer">
+                    🔄 Reset Counter
+                </button>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800">
+                <div class="flex items-center justify-between text-xs font-mono font-bold text-slate-400 uppercase tracking-wider mb-3">
+                    <span>Recent Click Telemetry Log</span>
+                    <span id="log-count">0 events logged</span>
+                </div>
+                <div id="click-log-container" class="max-h-48 overflow-y-auto space-y-1.5 font-mono text-xs text-slate-600 dark:text-slate-400">
+                    <div class="text-slate-400 dark:text-slate-600 italic">No clicks recorded yet. Click inside the box above.</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RECOMMENDED HARDWARE SOLUTIONS -->
+        <section class="mb-12">
+            <div class="flex items-center justify-between mb-4 border-b border-slate-200 dark:border-slate-800 pb-2">
+                <h3 class="text-lg font-black text-slate-900 dark:text-white">
+                    Optical Gaming Mice (100% Double-Click Immune)
+                </h3>
+                <span class="text-xs font-mono text-blue-500 font-bold">Tested Hardware</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex gap-4 items-center">
+                    <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/6C/9B/fd6b0425-8e06-4615-b2f3-298ca121a18d.jpg.webp" alt="MCHOSE A7 V3 Ultra+" class="w-20 h-20 object-contain">
+                    <div>
+                        <div class="text-[10px] font-mono text-cyan-500 font-bold uppercase">8000Hz Optical Sensor</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white">MCHOSE A7 V3 Ultra+ 8K Gaming Mouse</h4>
+                        <div class="text-xs font-bold text-emerald-500 mt-1">₹4,999</div>
+                        <a href="https://www.banggood.in/MCHOSE-A7-V3-Ultra+-Wireless-Gaming-Mouse-Tri-mode-PAW3955-Ti-Sensor-8K-Polling-Rate-59g-Ultra-Lightweight-50000-DPI-Ergonomic-Gamer-Mice-p-2053254.html?ID=6287845&warehouse=CN&p=F2270779039935202609&custlinkid=5290388" target="_blank" rel="sponsored nofollow noopener" class="inline-block mt-2 px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold">Buy Now &rarr;</a>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex gap-4 items-center">
+                    <img src="https://imgaz.staticbg.com/images/oaupload/banggood/images/EA/AC/4d13117d-a318-4f0f-b814-7a0d2776ff7a.jpg.webp" alt="FURYCUBE G11" class="w-20 h-20 object-contain">
+                    <div>
+                        <div class="text-[10px] font-mono text-emerald-500 font-bold uppercase">Honeycomb Lightweight</div>
+                        <h4 class="text-xs font-bold text-slate-900 dark:text-white">FURYCUBE G11 22,000 DPI Mouse</h4>
+                        <div class="text-xs font-bold text-emerald-500 mt-1">₹2,199</div>
+                        <a href="https://www.banggood.in/FURYCUBE-G11-Hollow-Design-Wireless-Gaming-Mouse-with-RGB-Light-Three-mode-PAW3311-Sensor-22000DPI-180+-Battery-Life-67g-Lightweight-E-sports-Gamer-Mice-p-2049130.html?ID=6287830&warehouse=CN&p=F2270779039935202609&custlinkid=5290387" target="_blank" rel="sponsored nofollow noopener" class="inline-block mt-2 px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold">Buy Now &rarr;</a>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Click Area -->
-            <div class="lg:col-span-2 flex flex-col">
-                <div id="reaction-box" class="flex-1 min-h-72 bg-slate-800 dark:bg-slate-950 rounded-3xl flex flex-col items-center justify-center cursor-pointer select-none transition-colors duration-75 relative overflow-hidden shadow-lg" id="reaction-box">
-                    <div id="reaction-icon" class="text-6xl mb-4 select-none pointer-events-none transition-all duration-100">⏳</div>
-                    <div id="reaction-title" class="text-2xl font-black text-white tracking-wider select-none pointer-events-none">CLICK TO START</div>
-                    <div id="reaction-sub" class="text-sm text-slate-400 font-mono mt-2 select-none pointer-events-none">Wait for GREEN, then click as fast as you can</div>
-                </div>
-                <div class="mt-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
-                    <div id="rating-bar" class="text-center">
-                        <div id="rating-display" class="text-sm font-bold text-slate-500 dark:text-slate-400">Complete a test to see your rating</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Comparison Table -->
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 mb-8 shadow-sm">
-            <h2 class="text-base font-extrabold text-slate-800 dark:text-slate-100 mb-4">⚡ How Do You Compare?</h2>
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm">
-                    <thead>
-                        <tr class="border-b border-slate-100 dark:border-slate-800">
-                            <th class="text-left py-2 px-3 text-[10px] font-mono text-slate-400 uppercase tracking-widest">Category</th>
-                            <th class="text-center py-2 px-3 text-[10px] font-mono text-slate-400 uppercase tracking-widest">Reaction Time</th>
-                            <th class="text-left py-2 px-3 text-[10px] font-mono text-slate-400 uppercase tracking-widest">Who</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-50 dark:divide-slate-800/50">
-                        <tr><td class="py-2.5 px-3 font-bold text-red-500">🔴 Elite Pro</td><td class="py-2.5 px-3 text-center font-mono font-bold text-red-500">&lt; 150ms</td><td class="py-2.5 px-3 text-slate-500">Top esports professionals</td></tr>
-                        <tr><td class="py-2.5 px-3 font-bold text-orange-500">🟠 Pro Gamer</td><td class="py-2.5 px-3 text-center font-mono font-bold text-orange-500">150–180ms</td><td class="py-2.5 px-3 text-slate-500">Competitive FPS / MOBA players</td></tr>
-                        <tr><td class="py-2.5 px-3 font-bold text-yellow-500">🟡 Skilled</td><td class="py-2.5 px-3 text-center font-mono font-bold text-yellow-500">180–220ms</td><td class="py-2.5 px-3 text-slate-500">Above average gamers</td></tr>
-                        <tr><td class="py-2.5 px-3 font-bold text-emerald-500">🟢 Average</td><td class="py-2.5 px-3 text-center font-mono font-bold text-emerald-500">220–280ms</td><td class="py-2.5 px-3 text-slate-500">Normal human reaction time</td></tr>
-                        <tr><td class="py-2.5 px-3 font-bold text-blue-500">🔵 Slow</td><td class="py-2.5 px-3 text-center font-mono font-bold text-blue-500">280–350ms</td><td class="py-2.5 px-3 text-slate-500">Casual / fatigued users</td></tr>
-                        <tr><td class="py-2.5 px-3 font-bold text-slate-400">⚪ Very Slow</td><td class="py-2.5 px-3 text-center font-mono font-bold text-slate-400">&gt; 350ms</td><td class="py-2.5 px-3 text-slate-500">Tired, medicated, or distracted</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- SEO Content -->
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 mb-8 shadow-sm">
-            <h2 class="text-xl font-extrabold text-slate-800 dark:text-slate-100 mb-4">What is Reaction Time?</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                <div>
-                    <p class="mb-3"><strong>Reaction time</strong> is the interval between a sensory stimulus (like a color change) and your motor response (clicking). This test measures <strong>visual reaction time</strong> — how quickly your eyes detect the green color and your brain sends a signal to your finger.</p>
-                    <p>The average human visual reaction time is <strong>200–250 milliseconds</strong>. Competitive gamers in FPS games like CS2, Valorant, and Apex Legends typically achieve 150–200ms, giving them a significant in-game advantage.</p>
-                </div>
-                <div>
-                    <h3 class="font-bold text-slate-700 dark:text-slate-200 mb-2">Tips to Improve Reaction Time:</h3>
-                    <ul class="space-y-1.5">
-                        <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">•</span><div><strong>Practice daily:</strong> Regular reaction tests build neural pathways</div></li>
-                        <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">•</span><div><strong>Sleep well:</strong> Fatigue increases reaction time by 20-50ms</div></li>
-                        <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">•</span><div><strong>Stay hydrated:</strong> Dehydration slows neural signaling</div></li>
-                        <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">•</span><div><strong>Exercise:</strong> Physical fitness improves neural processing</div></li>
-                        <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold">•</span><div><strong>Low monitor latency:</strong> High refresh rate monitors reduce input lag</div></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- FAQ -->
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm mb-8">
-            <h2 class="text-xl font-extrabold text-slate-800 dark:text-slate-100 mb-4">Frequently Asked Questions</h2>
-            <div class="space-y-3">
-                <div class="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden">
-                    <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-semibold text-slate-700 dark:text-slate-200 text-sm hover:bg-slate-50 dark:hover:bg-slate-800/50">What is a good reaction time? <span class="faq-icon text-slate-400 text-xs ml-2">➕</span></button>
-                    <div class="hidden px-4 pb-4 text-sm text-slate-500 dark:text-slate-400">The average human reaction time is 200-250ms. Under 200ms is considered good. Professional gamers average 150-180ms. Under 150ms is exceptional and rare.</div>
-                </div>
-                <div class="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden">
-                    <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-semibold text-slate-700 dark:text-slate-200 text-sm hover:bg-slate-50 dark:hover:bg-slate-800/50">Why is my first reaction always slower? <span class="faq-icon text-slate-400 text-xs ml-2">➕</span></button>
-                    <div class="hidden px-4 pb-4 text-sm text-slate-500 dark:text-slate-400">The first reaction is always slower due to the "warm-up" effect. Your brain and nervous system need a moment to calibrate. We recommend taking 5+ tests and using the average for an accurate measurement.</div>
-                </div>
-                <div class="border border-slate-100 dark:border-slate-800 rounded-xl overflow-hidden">
-                    <button class="faq-btn w-full flex justify-between items-center p-4 text-left font-semibold text-slate-700 dark:text-slate-200 text-sm hover:bg-slate-50 dark:hover:bg-slate-800/50">Does monitor refresh rate affect the test? <span class="faq-icon text-slate-400 text-xs ml-2">➕</span></button>
-                    <div class="hidden px-4 pb-4 text-sm text-slate-500 dark:text-slate-400">Yes. On a 60Hz monitor, frame rendering adds ~16ms latency. A 144Hz monitor reduces this to ~7ms, and 240Hz to ~4ms. For accurate testing, use your typical gaming setup. The test accounts for JavaScript event timing, not display latency.</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Related Tools -->
-        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
-            <h2 class="text-base font-extrabold text-slate-800 dark:text-slate-100 mb-4">Related Tools</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <a href="/cps-test" class="flex items-center gap-2 p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-500/5 transition-colors text-sm font-semibold text-slate-700 dark:text-slate-300">🖱️ CPS Test</a>
-                <a href="/latency" class="flex items-center gap-2 p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-500/5 transition-colors text-sm font-semibold text-slate-700 dark:text-slate-300">⚡ Latency Test</a>
-                <a href="/mouse" class="flex items-center gap-2 p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-500/5 transition-colors text-sm font-semibold text-slate-700 dark:text-slate-300">🖱️ Mouse Tester</a>
-                <a href="/typing" class="flex items-center gap-2 p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-500/5 transition-colors text-sm font-semibold text-slate-700 dark:text-slate-300">⌨️ Typing Test</a>
-            </div>
-        </div>
     </main>
 
     <!-- PRO-LEVEL DARK NAVY FOOTER (#0b1329, MATCHING MOCKUP WITH 5-COLUMN MATRIX) -->
@@ -573,155 +493,114 @@
         </div>
     </footer>
 
+    <script src="config.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const box = document.getElementById('reaction-box');
-        const icon = document.getElementById('reaction-icon');
-        const title = document.getElementById('reaction-title');
-        const sub = document.getElementById('reaction-sub');
-        const lastEl = document.getElementById('last-reaction');
-        const avgEl = document.getElementById('avg-reaction');
-        const bestEl = document.getElementById('best-reaction');
-        const historyList = document.getElementById('history-list');
-        const ratingDisplay = document.getElementById('rating-display');
+        document.addEventListener("DOMContentLoaded", () => {
+            const targetBox = document.getElementById("click-target-box");
+            const feedbackBadge = document.getElementById("click-feedback-badge");
+            const totalClicksEl = document.getElementById("stat-total-clicks");
+            const fastestIntervalEl = document.getElementById("stat-fastest-interval");
+            const doubleClicksEl = document.getElementById("stat-double-clicks");
+            const switchHealthEl = document.getElementById("stat-switch-health");
+            const logContainer = document.getElementById("click-log-container");
+            const logCountEl = document.getElementById("log-count");
+            const resetBtn = document.getElementById("btn-reset-clicks");
 
-        let state = 'idle'; // idle, waiting, ready, early
-        let startTime = null;
-        let timeout = null;
-        let results = [];
-        let personalBest = parseInt(localStorage.getItem('reaction_best') || '9999');
+            let totalClicks = 0;
+            let doubleClicks = 0;
+            let fastestInterval = Infinity;
+            let lastClickTime = 0;
+            let lastButton = null;
 
-        if (personalBest < 9999) bestEl.textContent = personalBest + 'ms';
+            const buttonNames = { 0: "Left Button", 1: "Middle Button", 2: "Right Button" };
 
-        function getRating(ms) {
-            if (ms < 150) return { label: '🔴 Elite Pro Gamer!', color: 'text-red-500', bg: 'bg-red-50 dark:bg-red-500/10 border-red-200 dark:border-red-500/20' };
-            if (ms < 180) return { label: '🟠 Pro Gamer Level', color: 'text-orange-500', bg: 'bg-orange-50 dark:bg-orange-500/10 border-orange-200 dark:border-orange-500/20' };
-            if (ms < 220) return { label: '🟡 Skilled — Above Average', color: 'text-yellow-500', bg: 'bg-yellow-50 dark:bg-yellow-500/10 border-yellow-200 dark:border-yellow-500/20' };
-            if (ms < 280) return { label: '🟢 Average Human', color: 'text-emerald-500', bg: 'bg-emerald-50 dark:bg-emerald-500/10 border-emerald-200 dark:border-emerald-500/20' };
-            if (ms < 350) return { label: '🔵 Below Average', color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/20' };
-            return { label: '⚪ Very Slow — Try Again', color: 'text-slate-400', bg: 'bg-slate-50 dark:bg-slate-800 border-slate-200' };
-        }
+            targetBox.addEventListener("mousedown", (e) => {
+                e.preventDefault();
+                const now = performance.now();
+                totalClicks++;
 
-        function setIdle() {
-            state = 'idle';
-            box.className = 'flex-1 min-h-72 bg-slate-800 dark:bg-slate-950 rounded-3xl flex flex-col items-center justify-center cursor-pointer select-none transition-colors duration-75 relative overflow-hidden shadow-lg';
-            icon.textContent = '⏳';
-            title.textContent = 'CLICK TO START';
-            title.className = 'text-2xl font-black text-white tracking-wider select-none pointer-events-none';
-            sub.textContent = 'Wait for GREEN, then click as fast as you can';
-            sub.className = 'text-sm text-slate-400 font-mono mt-2 select-none pointer-events-none';
-        }
+                let interval = null;
+                let isDouble = false;
 
-        function setWaiting() {
-            state = 'waiting';
-            box.className = 'flex-1 min-h-72 bg-red-900/80 dark:bg-red-950 rounded-3xl flex flex-col items-center justify-center cursor-pointer select-none transition-colors duration-75 relative overflow-hidden shadow-lg';
-            icon.textContent = '🔴';
-            title.textContent = 'WAIT...';
-            title.className = 'text-2xl font-black text-red-200 tracking-wider select-none pointer-events-none';
-            sub.textContent = 'Do not click yet! Wait for GREEN...';
-            sub.className = 'text-sm text-red-300 font-mono mt-2 select-none pointer-events-none';
-            const delay = 1500 + Math.random() * 3500;
-            timeout = setTimeout(setGreen, delay);
-        }
+                if (lastClickTime > 0 && lastButton === e.button) {
+                    interval = Math.round(now - lastClickTime);
+                    if (interval < fastestInterval) {
+                        fastestInterval = interval;
+                        fastestIntervalEl.textContent = interval + "ms";
+                    }
 
-        function setGreen() {
-            state = 'ready';
-            startTime = performance.now();
-            box.className = 'flex-1 min-h-72 bg-emerald-500 rounded-3xl flex flex-col items-center justify-center cursor-pointer select-none transition-colors duration-75 relative overflow-hidden shadow-lg pulse-green';
-            icon.textContent = '🟢';
-            title.textContent = 'CLICK NOW!';
-            title.className = 'text-3xl font-black text-white tracking-wider select-none pointer-events-none';
-            sub.textContent = 'Click as fast as you can!';
-            sub.className = 'text-sm text-emerald-100 font-mono mt-2 select-none pointer-events-none';
-        }
+                    if (interval < 80) {
+                        isDouble = true;
+                        doubleClicks++;
+                    }
+                }
 
-        function setEarly() {
-            state = 'early';
-            clearTimeout(timeout);
-            box.className = 'flex-1 min-h-72 bg-yellow-500 rounded-3xl flex flex-col items-center justify-center cursor-pointer select-none transition-colors duration-75 relative overflow-hidden shadow-lg';
-            icon.textContent = '⚠️';
-            title.textContent = 'TOO EARLY!';
-            title.className = 'text-2xl font-black text-white tracking-wider select-none pointer-events-none';
-            sub.textContent = 'You clicked before green. Click to try again.';
-            sub.className = 'text-sm text-yellow-100 font-mono mt-2 select-none pointer-events-none';
-        }
+                lastClickTime = now;
+                lastButton = e.button;
 
-        function recordResult(ms) {
-            results.push(ms);
-            if (results.length > 10) results.shift();
-            lastEl.textContent = ms + 'ms';
+                totalClicksEl.textContent = totalClicks;
+                doubleClicksEl.textContent = doubleClicks;
+                
+                const btnName = buttonNames[e.button] || ("Button " + e.button);
 
-            const avg = Math.round(results.reduce((a, b) => a + b, 0) / results.length);
-            avgEl.textContent = avg + 'ms';
+                if (isDouble) {
+                    feedbackBadge.className = "mt-4 px-4 py-1.5 rounded-full font-mono font-bold text-xs bg-red-600 text-white animate-bounce";
+                    feedbackBadge.textContent = `⚠️ DOUBLE CLICK DETECTED! (${interval}ms) on ${btnName}`;
+                    doubleClicksEl.className = "text-2xl font-black text-red-500 font-mono mt-0.5";
+                } else if (interval !== null) {
+                    feedbackBadge.className = "mt-4 px-4 py-1.5 rounded-full font-mono font-bold text-xs bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400";
+                    feedbackBadge.textContent = `Clean Click: ${interval}ms interval (${btnName})`;
+                } else {
+                    feedbackBadge.className = "mt-4 px-4 py-1.5 rounded-full font-mono font-bold text-xs bg-blue-100 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400";
+                    feedbackBadge.textContent = `First click registered: ${btnName}`;
+                }
 
-            if (ms < personalBest) {
-                personalBest = ms;
-                localStorage.setItem('reaction_best', ms.toString());
-                bestEl.textContent = ms + 'ms';
-            }
+                if (totalClicks > 5) {
+                    const errorPct = (doubleClicks / totalClicks) * 100;
+                    if (errorPct > 10) {
+                        switchHealthEl.textContent = "DEFECTIVE SWITCH";
+                        switchHealthEl.className = "text-xs font-bold text-red-500 font-mono mt-2";
+                    } else if (errorPct > 0) {
+                        switchHealthEl.textContent = "DEBOUNCE WARNING";
+                        switchHealthEl.className = "text-xs font-bold text-amber-500 font-mono mt-2";
+                    } else {
+                        switchHealthEl.textContent = "100% HEALTHY";
+                        switchHealthEl.className = "text-xs font-bold text-emerald-500 font-mono mt-2";
+                    }
+                }
 
-            // Rating
-            const r = getRating(ms);
-            ratingDisplay.textContent = r.label;
-            ratingDisplay.className = 'text-sm font-bold ' + r.color;
+                if (logContainer.querySelector('.italic')) logContainer.innerHTML = '';
+                const logEntry = document.createElement("div");
+                logEntry.className = `flex items-center justify-between p-2 rounded-lg ${isDouble ? 'bg-red-500/10 border border-red-500/20 text-red-400' : 'bg-slate-50 dark:bg-slate-950/40'}`;
+                logEntry.innerHTML = `
+                    <span>#${totalClicks} ${btnName}</span>
+                    <span class="font-bold">${interval !== null ? interval + 'ms' : 'First Click'} ${isDouble ? '⚠️ DOUBLE' : '✓ OK'}</span>
+                `;
+                logContainer.insertBefore(logEntry, logContainer.firstChild);
+                logCountEl.textContent = `${totalClicks} events logged`;
+            });
 
-            // History
-            const histEntry = document.createElement('div');
-            histEntry.className = 'flex justify-between items-center';
-            const ratingR = getRating(ms);
-            histEntry.innerHTML = `<span class="text-slate-400">#${results.length}</span><span class="font-bold font-mono ${ratingR.color}">${ms}ms</span>`;
-            if (historyList.querySelector('.text-slate-300')) historyList.innerHTML = '';
-            historyList.insertBefore(histEntry, historyList.firstChild);
+            targetBox.addEventListener("contextmenu", (e) => e.preventDefault());
 
-            // Show next state
-            setTimeout(() => {
-                box.className = 'flex-1 min-h-72 bg-slate-700 dark:bg-slate-900 rounded-3xl flex flex-col items-center justify-center cursor-pointer select-none transition-colors duration-75 relative overflow-hidden shadow-lg';
-                icon.textContent = '✅';
-                title.textContent = ms + 'ms';
-                title.className = 'text-4xl font-black text-white tracking-wider select-none pointer-events-none font-mono';
-                sub.textContent = r.label + ' — Click to test again';
-                sub.className = 'text-sm text-slate-300 font-mono mt-2 select-none pointer-events-none';
-                state = 'result';
-            }, 300);
-        }
+            resetBtn.addEventListener("click", () => {
+                totalClicks = 0;
+                doubleClicks = 0;
+                fastestInterval = Infinity;
+                lastClickTime = 0;
+                lastButton = null;
 
-        box.addEventListener('click', () => {
-            if (state === 'idle' || state === 'result') { setWaiting(); }
-            else if (state === 'waiting') { setEarly(); }
-            else if (state === 'ready') {
-                const ms = Math.round(performance.now() - startTime);
-                recordResult(ms);
-                state = 'recording';
-            }
-            else if (state === 'early') { setWaiting(); }
-        });
-
-        // Theme
-        const themeToggle = document.getElementById('theme-toggle');
-        const sunIcon = document.getElementById('theme-toggle-sun');
-        const moonIcon = document.getElementById('theme-toggle-moon');
-        function updateThemeIcon() {
-            if (document.documentElement.classList.contains('dark')) { sunIcon.classList.remove('hidden'); moonIcon.classList.add('hidden'); }
-            else { sunIcon.classList.add('hidden'); moonIcon.classList.remove('hidden'); }
-        }
-        updateThemeIcon();
-        themeToggle.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            localStorage.setItem('color-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-            updateThemeIcon();
-        });
-
-        // FAQ
-        document.querySelectorAll('.faq-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const answer = btn.nextElementSibling;
-                const ic = btn.querySelector('.faq-icon');
-                if (answer.classList.contains('hidden')) { answer.classList.remove('hidden'); ic.textContent = '➖'; }
-                else { answer.classList.add('hidden'); ic.textContent = '➕'; }
+                totalClicksEl.textContent = "0";
+                fastestIntervalEl.textContent = "—";
+                doubleClicksEl.textContent = "0";
+                doubleClicksEl.className = "text-2xl font-black text-emerald-500 font-mono mt-0.5";
+                switchHealthEl.textContent = "100% HEALTHY";
+                switchHealthEl.className = "text-xs font-bold text-emerald-500 font-mono mt-2";
+                feedbackBadge.className = "mt-4 px-4 py-1.5 rounded-full font-mono font-bold text-xs bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300";
+                feedbackBadge.textContent = "Awaiting First Click...";
+                logContainer.innerHTML = '<div class="text-slate-400 dark:text-slate-600 italic">No clicks recorded yet. Click inside the box above.</div>';
+                logCountEl.textContent = "0 events logged";
             });
         });
-    });
     </script>
-    <script src="badge-generator.js"></script>
 </body>
 </html>

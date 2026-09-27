@@ -379,6 +379,16 @@
                 <div id="rating-text" class="text-xl font-black text-indigo-500 font-mono">—</div>
                 <div id="rating-desc" class="text-[9px] text-slate-400 font-mono mt-1">Complete a test</div>
             </div>
+        
+            <!-- Viral Share Badge Action -->
+            <div id="share-badge-container" class="hidden md:col-span-3 mt-4 text-center">
+                <button id="btn-trigger-badge" class="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 active:scale-95 transition-all cursor-pointer">
+                    <span class="text-base">🏆</span>
+                    <span>Generate Official Score Card &amp; Share</span>
+                    <span class="text-xs font-mono font-normal opacity-75">(Discord / Twitter / Reddit)</span>
+                </button>
+            </div>
+
         </div>
 
         <!-- CPS Rating Scale -->
@@ -782,6 +792,41 @@
             }
         });
 
+        
+        // Viral Share Badge Trigger
+        const btnTriggerBadge = document.getElementById('btn-trigger-badge');
+        if (btnTriggerBadge) {
+            btnTriggerBadge.addEventListener('click', () => {
+                const finalCPS = parseFloat(document.getElementById('cps-score').textContent) || 0;
+                const [rating] = getRating(finalCPS);
+                const clicksCount = parseInt(document.getElementById('total-clicks').textContent) || 0;
+                
+                let percentile = 'Top 50% of Players';
+                let rankColor = '#3b82f6';
+                if (finalCPS >= 14) { percentile = 'Faster than 99% of Gamers (Godlike)'; rankColor = '#ef4444'; }
+                else if (finalCPS >= 10) { percentile = 'Faster than 92% of Gamers (Pro Tier)'; rankColor = '#f97316'; }
+                else if (finalCPS >= 7) { percentile = 'Faster than 75% of Gamers (Skilled)'; rankColor = '#10b981'; }
+
+                if (window.BadgeGenerator) {
+                    window.BadgeGenerator.show({
+                        title: 'CLICK SPEED BENCHMARK (CPS)',
+                        score: finalCPS.toFixed(1),
+                        scoreUnit: 'CPS',
+                        rankTitle: rating,
+                        rankColor: rankColor,
+                        percentile: percentile,
+                        metrics: [
+                            { label: 'Total Clicks', value: `${clicksCount} Clicks` },
+                            { label: 'Timer Duration', value: `${selectedTime}s Sustained` },
+                            { label: 'Matrix Telemetry', value: 'Verified Real Human' }
+                        ],
+                        shareText: `⚡ I just scored ${finalCPS.toFixed(1)} CPS on the official CPS Click Speed Test! Can you beat my score?`,
+                        shareUrl: 'https://inputtest.online/cps-test'
+                    });
+                }
+            });
+        }
+
         // Theme toggle
         const themeToggle = document.getElementById('theme-toggle');
         const sunIcon = document.getElementById('theme-toggle-sun');
@@ -813,5 +858,6 @@
         });
     });
     </script>
+    <script src="badge-generator.js"></script>
 </body>
 </html>

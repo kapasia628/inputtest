@@ -276,9 +276,22 @@
       <priority>0.7</priority>
    </url>
    <url>
-      <loc>https://inputtest.online/contact</loc>
-      <lastmod>2026-09-24</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.7</priority>
-   </url></urlset>
+      <loc>https://inputtest.online/mouse-double-click-test</loc>
+      <lastmod>2026-09-27</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
+   </url>
+   <url>
+      <loc>https://inputtest.online/keyboard-chatter-test</loc>
+      <lastmod>2026-09-27</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
+   </url>
+   <url>
+      <loc>https://inputtest.online/controller-stick-drift-test</loc>
+      <lastmod>2026-09-27</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
+   </url>
+</urlset>
 
