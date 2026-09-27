@@ -57,6 +57,9 @@ const urlList = [
   "https://inputtest.online/blog-usb-c-speeds",
   "https://inputtest.online/blog-vga-calibration",
   "https://inputtest.online/blog-webcam-resolution",
+  "https://inputtest.online/mouse-double-click-test",
+  "https://inputtest.online/keyboard-chatter-test",
+  "https://inputtest.online/controller-stick-drift-test",
 ];
 
 const payload = JSON.stringify({
