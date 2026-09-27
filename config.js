@@ -34,6 +34,13 @@ const SiteConfig = {
         pdfPriceINR: 19,        // Price in Rupees for UPI QR payment modal
         pdfPriceUSD: 0.99       // Price in USD for Card payment modal
     },
+
+    // Chrome Web Store Extension Settings
+    chromeExtension: {
+        enabled: true,
+        storeUrl: "#", // Update with your live Chrome Web Store URL once Google review completes
+        downloadZipUrl: "/inputtest-chrome-extension.zip"
+    },
     
     // Feature Toggles (true = fully active, false = shows premium 'Coming Soon' placeholder)
     features: {

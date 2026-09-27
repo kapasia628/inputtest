@@ -44,6 +44,7 @@
             nav_mouse_double_click: "Mouse Double Click Test",
             nav_keyboard_chatter: "Keyboard Chatter Test",
             nav_stick_drift: "Controller Stick Drift Test",
+            nav_add_to_chrome: "Add to Chrome",
 
             // General & Actions
             btn_start_test: "Start Test",
@@ -82,6 +83,7 @@
             nav_mouse_double_click: "Prueba Doble Clic Ratón",
             nav_keyboard_chatter: "Prueba de Rebote de Teclado",
             nav_stick_drift: "Prueba de Deriva de Palanca",
+            nav_add_to_chrome: "Añadir a Chrome",
 
             // General & Actions
             btn_start_test: "Iniciar Prueba",
@@ -120,6 +122,7 @@
             nav_mouse_double_click: "Teste Duplo Clique Mouse",
             nav_keyboard_chatter: "Teste de Repetição Teclado",
             nav_stick_drift: "Teste Drift de Analógico",
+            nav_add_to_chrome: "Adicionar ao Chrome",
 
             // General & Actions
             btn_start_test: "Iniciar Teste",
@@ -158,6 +161,7 @@
             nav_mouse_double_click: "Maus-Doppelklick-Test",
             nav_keyboard_chatter: "Tastatur-Chatter-Test",
             nav_stick_drift: "Gamepad Stick-Drift-Test",
+            nav_add_to_chrome: "Zu Chrome hinzufügen",
 
             // General & Actions
             btn_start_test: "Test Starten",
@@ -196,6 +200,7 @@
             nav_mouse_double_click: "माउस डबल क्लिक टेस्ट",
             nav_keyboard_chatter: "कीबोर्ड चैटर टेस्ट",
             nav_stick_drift: "कंट्रोलर स्टिक ड्रिफ्ट टेस्ट",
+            nav_add_to_chrome: "Chrome में जोड़ें",
 
             // General & Actions
             btn_start_test: "टेस्ट शुरू करें",
