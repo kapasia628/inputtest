@@ -62,6 +62,7 @@ const urlList = [
   "https://inputtest.online/controller-stick-drift-test",
   "https://inputtest.online/software",
   "https://inputtest.online/mouse-double-click-fixer",
+  "https://inputtest.online/mouse-scroll-wheel-fixer",
 ];
 
 const payload = JSON.stringify({
