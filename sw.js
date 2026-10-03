@@ -1,4 +1,4 @@
-const CACHE_NAME = 'inputtest-cache-v10';
+const CACHE_NAME = 'inputtest-cache-v11';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -7,6 +7,7 @@ const ASSETS_TO_CACHE = [
     './software.html',
     './mouse-double-click-fixer.html',
     './mouse-scroll-wheel-fixer.html',
+    './mouse-dpi-tester.html',
     './battery.html',
     './biometric.html',
     './config.js',

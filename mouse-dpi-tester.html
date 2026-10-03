@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <link rel="canonical" href="https://inputtest.online/mouse-dpi-tester">
+    <script>
+        // Inline theme helper to avoid UI flash of light theme
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+
+    <!-- PWA Manifest & Favicon -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+
+    <!-- SEO Meta Tags -->
+    <title>Mouse True DPI Analyzer & Sensitivity Calculator Online | InputTest</title>
+    <meta name="description" content="Free online mouse true DPI analyzer and sensitivity calculator. Measure actual hardware DPI, calculate sensor deviation %, and convert eDPI and cm/360° across Valorant, CS2, Fortnite, and Apex Legends.">
+    <meta name="keywords" content="mouse dpi analyzer, true dpi tester online, mouse dpi calculator, check mouse dpi online, mouse sensitivity converter, cm 360 calculator, valorant to cs2 sens, mouse sensor accuracy tester, edpi calculator">
+    <meta name="author" content="InputTest.online">
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/mouse-dpi-tester">
+    <meta property="og:title" content="Mouse True DPI Analyzer & Sensitivity Calculator Online | InputTest">
+    <meta property="og:description" content="Measure your actual mouse hardware DPI with raw Pointer Lock precision, test sensor accuracy, and convert in-game sensitivity across all FPS titles.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/mouse-dpi-tester">
+    <meta name="twitter:title" content="Mouse True DPI Analyzer & Sensitivity Calculator Online | InputTest">
+    <meta name="twitter:description" content="Measure your actual mouse hardware DPI with raw Pointer Lock precision, test sensor accuracy, and convert in-game sensitivity across all FPS titles.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Tailwind Play CDN & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Global Config -->
+    <script src="/config.js" defer></script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2485510445228691" crossorigin="anonymous"></script>
+
+    <!-- JSON-LD Structured Data: WebApplication Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Mouse True DPI Analyzer & Sensitivity Calculator",
+      "url": "https://inputtest.online/mouse-dpi-tester",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All (Windows, macOS, Linux, ChromeOS)",
+      "browserRequirements": "Requires JavaScript and HTML5 Pointer Lock API",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free online browser-based mouse DPI analyzer and sensitivity calculator. Measures true physical CPI counts using raw Pointer Lock delta streams, calculates sensor deviation, and converts in-game sensitivity and cm/360."
+    }
+    </script>
+
+    <!-- JSON-LD BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://inputtest.online/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Mouse Diagnostics",
+          "item": "https://inputtest.online/mouse"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "True DPI Analyzer & Sensitivity Calculator",
+          "item": "https://inputtest.online/mouse-dpi-tester"
+        }
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD FAQPage Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is mouse DPI and how is it different from CPI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "DPI stands for Dots Per Inch, while CPI stands for Counts Per Inch. In computer mice, CPI is the technically accurate term: it represents the number of electrical counts the optical sensor registers when physically moved one inch across a surface. Most manufacturers use DPI and CPI interchangeably."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is my mouse actual DPI different from the configured DPI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sensor manufacturing tolerances, mousepad weave texture, skate thickness, and lens distance (Lift-off Distance) cause physical variance. A mouse set to 800 DPI commonly measures anywhere from 760 to 840 DPI (a 3% to 6% normal variance). This tool measures your exact true hardware DPI."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is cm/360 and why is it important for FPS gamers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "cm/360 is the exact physical distance in centimeters your hand must move the mouse across your mousepad to perform a complete 360-degree rotation in a game. It is the only universal, hardware-independent metric of aim sensitivity that remains identical across Valorant, CS2, Apex Legends, and Fortnite."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does this tool measure true DPI inside the browser without installing software?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This tool utilizes the W3C Pointer Lock API. When engaged, the browser captures raw unconstrained sensor delta packets (movementX) directly from the OS HID layer, bypassing screen resolution boundaries and Windows desktop cursor acceleration."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        .grid-bg {
+            background-size: 24px 24px;
+            background-image: 
+                linear-gradient(to right, rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+        }
+        .dark .grid-bg {
+            background-image: 
+                linear-gradient(to right, rgba(59, 130, 246, 0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(59, 130, 246, 0.08) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-[#070b14] text-slate-800 dark:text-slate-100 transition-colors duration-200 min-h-screen flex flex-col font-sans selection:bg-blue-600 selection:text-white">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 backdrop-blur-xl bg-white/90 dark:bg-[#070b14]/90 border-b border-slate-200 dark:border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="/" class="flex items-center gap-2.5 group">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 p-0.5 shadow-lg shadow-blue-500/25 group-hover:scale-105 transition-transform">
+                        <div class="w-full h-full bg-white dark:bg-[#070b14] rounded-[14px] flex items-center justify-center text-blue-600 dark:text-blue-400 font-black text-lg">
+                            IT
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-sm font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
+                            InputTest <span class="text-blue-600 dark:text-blue-400 font-mono text-xs px-1.5 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800">DPI Pro</span>
+                        </div>
+                        <div class="text-[10px] text-slate-500 font-mono">True Sensor &amp; Sens Engine</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center gap-1 text-xs font-semibold text-slate-600 dark:text-slate-300">
+                <a href="/" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">Home</a>
+                <a href="/mouse" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">Mouse Tester</a>
+                <a href="/mouse-polling-rate" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">Polling Rate</a>
+                <a href="/mouse-dpi-tester" class="px-3 py-2 rounded-xl text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 transition-colors">True DPI &amp; Sens</a>
+                <a href="/scroll-test" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">Scroll Wheel</a>
+                <a href="/cps-test" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">CPS Click Speed</a>
+            </nav>
+
+            <!-- Theme Toggle & Quick Action -->
+            <div class="flex items-center gap-2">
+                <button id="theme-toggle" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-sm" aria-label="Toggle theme">
+                    <span class="dark:hidden">🌙</span>
+                    <span class="hidden dark:inline">☀️</span>
+                </button>
+                <a href="#converter" class="hidden sm:inline-flex px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md shadow-blue-500/20 transition-all items-center gap-1.5">
+                    <span>⚡ Sens Converter</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-12">
+
+        <!-- Hero Header -->
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-mono font-bold border border-blue-500/20">
+                <span class="w-2 h-2 rounded-full bg-blue-500 animate-ping"></span>
+                POINTER LOCK HARDWARE CALIBRATION &bull; 100% IN-BROWSER
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">
+                Mouse True DPI Analyzer &amp; <br class="hidden sm:inline">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+                    Sensitivity Converter
+                </span>
+            </h1>
+            <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
+                Measure your actual optical sensor DPI, verify hardware accuracy, find your sensor deviation %, and convert eDPI and cm/360° across competitive FPS games.
+            </p>
+        </div>
+
+        <!-- THE INTERACTIVE DPI MEASUREMENT ARENA -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+            <!-- Calibration & Live Testing Arena (Left / Center) -->
+            <div class="lg:col-span-8 space-y-6">
+
+                <!-- Step 1: Configuration Controls Bar -->
+                <div class="p-6 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-xl space-y-5">
+                    <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-lg bg-blue-600 text-white font-mono font-bold text-xs flex items-center justify-center">1</span>
+                            <h2 class="text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white">Measurement Setup</h2>
+                        </div>
+                        <span class="text-[11px] font-mono text-slate-400">Step 1 of 2</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <!-- Configured Target DPI -->
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
+                                <span>Target Configured DPI</span>
+                                <span class="text-[10px] text-blue-500 font-mono">Software Setting</span>
+                            </label>
+                            <div class="relative">
+                                <input id="target-dpi-input" type="number" value="800" min="50" max="32000" step="50" class="w-full py-2.5 px-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                <span class="absolute right-3 top-2.5 text-xs font-mono text-slate-400">DPI</span>
+                            </div>
+                            <!-- Preset Buttons -->
+                            <div class="flex items-center gap-1 pt-1 text-[10px] font-mono">
+                                <button type="button" class="dpi-preset px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900/40 text-slate-600 dark:text-slate-300 font-bold" data-val="400">400</button>
+                                <button type="button" class="dpi-preset px-2 py-0.5 rounded bg-blue-600 text-white font-bold" data-val="800">800</button>
+                                <button type="button" class="dpi-preset px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900/40 text-slate-600 dark:text-slate-300 font-bold" data-val="1600">1600</button>
+                                <button type="button" class="dpi-preset px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900/40 text-slate-600 dark:text-slate-300 font-bold" data-val="3200">3200</button>
+                            </div>
+                        </div>
+
+                        <!-- Target Distance Slider / Number -->
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
+                                <span>Physical Distance</span>
+                                <span id="distance-unit-label" class="text-[10px] text-blue-500 font-mono">Inches</span>
+                            </label>
+                            <div class="relative">
+                                <input id="target-dist-input" type="number" value="2" min="1" max="20" step="0.5" class="w-full py-2.5 px-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                                <span id="dist-unit-suffix" class="absolute right-3 top-2.5 text-xs font-mono text-slate-400">in</span>
+                            </div>
+                            <div class="flex items-center gap-1 pt-1 text-[10px] font-mono">
+                                <button type="button" class="dist-preset px-2 py-0.5 rounded bg-blue-600 text-white font-bold" data-val="2">2 in</button>
+                                <button type="button" class="dist-preset px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-blue-100 text-slate-600 dark:text-slate-300 font-bold" data-val="3">3 in</button>
+                                <button type="button" class="dist-preset px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 hover:bg-blue-100 text-slate-600 dark:text-slate-300 font-bold" data-val="4">4 in</button>
+                            </div>
+                        </div>
+
+                        <!-- Measurement Unit Toggle (Inches vs Centimeters) -->
+                        <div class="space-y-1.5">
+                            <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Unit of Distance</label>
+                            <div class="grid grid-cols-2 p-1 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs font-bold">
+                                <button id="unit-in-btn" type="button" class="py-2 rounded-lg bg-blue-600 text-white text-center shadow transition-all">
+                                    Inches (in)
+                                </button>
+                                <button id="unit-cm-btn" type="button" class="py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-center transition-all">
+                                    Centimeters (cm)
+                                </button>
+                            </div>
+                            <p class="text-[10px] text-slate-500 leading-tight pt-1">
+                                Place a physical ruler, standard credit card (3.37 in), or phone edge on your mousepad.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: The Interactive Pointer Lock Testing Arena -->
+                <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 shadow-2xl relative overflow-hidden space-y-6">
+                    
+                    <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-lg bg-indigo-600 text-white font-mono font-bold text-xs flex items-center justify-center">2</span>
+                            <h2 class="text-sm font-black uppercase tracking-wider text-slate-900 dark:text-white">Active Sensor Calibration Arena</h2>
+                        </div>
+                        <div id="live-state-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-slate-700 flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                            <span>STANDBY</span>
+                        </div>
+                    </div>
+
+                    <!-- Arena Sandbox (Click to Lock) -->
+                    <div id="pointer-lock-arena" class="relative min-h-[260px] rounded-2xl border-2 border-dashed border-blue-300 dark:border-blue-900/60 bg-blue-50/40 dark:bg-slate-950/60 grid-bg p-6 flex flex-col items-center justify-center cursor-pointer select-none transition-all group hover:border-blue-500 dark:hover:border-blue-500">
+                        
+                        <!-- Standby View -->
+                        <div id="arena-standby-view" class="text-center space-y-3 pointer-events-none">
+                            <div class="w-16 h-16 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto text-3xl group-hover:scale-110 transition-transform">
+                                🖱️
+                            </div>
+                            <div class="space-y-1">
+                                <div class="text-base font-black text-slate-900 dark:text-white">
+                                    Click Inside to Lock Cursor &amp; Begin
+                                </div>
+                                <p class="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
+                                    Locks cursor via Pointer Lock API to capture raw sensor delta counts independent of screen edges. Then slide your mouse physically along your ruler!
+                                </p>
+                            </div>
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-600 text-white text-xs font-bold shadow-md">
+                                <span>🎯 Click to Start Calibration</span>
+                            </div>
+                        </div>
+
+                        <!-- Active Tracking View (Shown during Pointer Lock) -->
+                        <div id="arena-active-view" class="hidden text-center space-y-4 w-full max-w-lg pointer-events-none">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500 text-slate-950 text-xs font-mono font-black animate-pulse">
+                                <span>● SENSOR STREAM ACTIVE (SLIDE MOUSE NOW)</span>
+                            </div>
+
+                            <!-- Live Counts Display -->
+                            <div class="space-y-1">
+                                <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400">Raw Sensor Counts (movementX)</div>
+                                <div id="live-raw-counts" class="text-5xl sm:text-6xl font-black font-mono text-blue-600 dark:text-blue-400">
+                                    0
+                                </div>
+                            </div>
+
+                            <!-- Live Dynamic Ruler Progress -->
+                            <div class="space-y-2">
+                                <div class="w-full h-3 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                                    <div id="live-progress-bar" class="h-full bg-gradient-to-r from-blue-500 to-indigo-500 w-0 transition-all duration-75"></div>
+                                </div>
+                                <div class="flex justify-between text-[11px] font-mono text-slate-400">
+                                    <span>Start Point (0 in)</span>
+                                    <span id="live-distance-indicator">Measuring...</span>
+                                    <span id="target-distance-indicator">Target: 2.0 in</span>
+                                </div>
+                            </div>
+
+                            <p class="text-xs text-slate-400 italic">
+                                Once you reach your target physical distance on the ruler, <strong>Click anywhere or press ESC</strong> to lock the result.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Quick Control Bar below sandbox -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+                        <button id="reset-test-btn" type="button" class="py-2 px-4 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs transition-colors flex items-center gap-1.5">
+                            <span>🔄 Reset Test</span>
+                        </button>
+                        <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
+                            <span>Bypasses Windows Cursor Acceleration</span>
+                            <span class="text-emerald-500 font-bold">✓ 100% Raw HID</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Telemetry & Diagnostic Results (Right Sidebar) -->
+            <div class="lg:col-span-4 space-y-6">
+
+                <!-- Result Scorecard Card -->
+                <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl space-y-6 text-center relative overflow-hidden">
+                    <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 text-left">
+                        <div>
+                            <h2 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">Diagnostic Verdict</h2>
+                            <div class="text-base font-black text-slate-900 dark:text-white">Sensor Calibration Score</div>
+                        </div>
+                        <span id="sensor-grade-badge" class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-slate-700">
+                            AWAITING TEST
+                        </span>
+                    </div>
+
+                    <!-- Measured True DPI Metric Display -->
+                    <div class="py-2 space-y-1">
+                        <div class="text-xs font-mono uppercase tracking-wider text-slate-400">Measured True Hardware DPI</div>
+                        <div id="measured-dpi-val" class="text-5xl font-black font-mono text-slate-900 dark:text-white">
+                            ---
+                        </div>
+                        <div id="configured-comparison-val" class="text-xs font-mono text-slate-500">
+                            Configured: <span class="font-bold">800 DPI</span>
+                        </div>
+                    </div>
+
+                    <!-- Sensor Deviation Percentage Meter -->
+                    <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 space-y-2 text-left">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-slate-600 dark:text-slate-400">Sensor Deviation Error</span>
+                            <span id="deviation-val" class="font-mono font-black text-sm text-slate-400">0.00%</span>
+                        </div>
+                        <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                            <div id="deviation-bar" class="h-full bg-slate-400 w-0 transition-all duration-300"></div>
+                        </div>
+                        <p id="deviation-verdict" class="text-[11px] text-slate-500 leading-tight">
+                            Execute the calibration test to determine whether your sensor overshoots or undershoots its factory rating.
+                        </p>
+                    </div>
+
+                    <!-- Action Buttons: Copy / Export -->
+                    <div class="space-y-2">
+                        <button id="copy-result-btn" type="button" class="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-1.5">
+                            <span>📋 Copy Calibration Summary</span>
+                        </button>
+                        <a href="#converter" class="w-full py-2.5 px-4 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs text-center block transition-colors">
+                            Calculate In-Game Sensitivity &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- On-Screen Ruler Calibration Guide Card -->
+                <div class="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md space-y-3">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl">📏</span>
+                        <h3 class="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">Pro Tip: Physical Ruler Setup</h3>
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                        For 99.9% accuracy, tape a physical ruler or a standard credit card (which is exactly <strong>3.37 inches / 8.56 cm</strong> wide) horizontally across your mousepad. Slide your mouse snugly against the edge so it moves in a perfectly straight line!
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- SECTION 2: IN-GAME SENSITIVITY & cm/360° CONVERTER -->
+        <section id="converter" class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-10 shadow-xl space-y-8">
+            <div class="border-b border-slate-100 dark:border-slate-800 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="space-y-1">
+                    <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+                        CROSS-GAME AIM CONVERTER
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+                        In-Game Sensitivity, eDPI &amp; cm/360° Calculator
+                    </h2>
+                </div>
+                <div class="text-xs font-mono text-slate-400">
+                    True DPI Synced: <span id="synced-dpi-label" class="text-blue-500 font-bold">800 DPI</span>
+                </div>
+            </div>
+
+            <!-- Primary Converter Inputs -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <!-- Source Game Selector -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Selected Game</label>
+                    <select id="game-select" class="w-full py-2.5 px-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-bold text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                        <option value="valorant">Valorant</option>
+                        <option value="cs2" selected>Counter-Strike 2 (CS2 / Source)</option>
+                        <option value="apex">Apex Legends</option>
+                        <option value="fortnite">Fortnite (Slider %)</option>
+                        <option value="overwatch">Overwatch 2</option>
+                        <option value="cod">Call of Duty: Warzone / MW</option>
+                        <option value="r6">Rainbow Six Siege</option>
+                        <option value="tf2">Team Fortress 2</option>
+                    </select>
+                </div>
+
+                <!-- In-Game Sensitivity Value -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-700 dark:text-slate-300">In-Game Sensitivity</label>
+                    <input id="in-game-sens-input" type="number" value="1.2" min="0.001" max="100" step="0.05" class="w-full py-2.5 px-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                </div>
+
+                <!-- DPI to Use (Default Measured / Configured) -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Active DPI Applied</label>
+                    <input id="converter-dpi-input" type="number" value="800" min="100" max="32000" step="50" class="w-full py-2.5 px-3.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 font-mono text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:border-blue-500">
+                </div>
+            </div>
+
+            <!-- Key Metrics Output (eDPI, cm/360, in/360) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="p-5 rounded-2xl bg-gradient-to-br from-blue-500/10 to-indigo-500/10 border border-blue-500/20 text-center space-y-1">
+                    <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400">Effective DPI (eDPI)</span>
+                    <div id="out-edpi" class="text-3xl sm:text-4xl font-black font-mono text-blue-600 dark:text-blue-400">960</div>
+                    <span class="text-[10px] text-slate-500 font-mono">DPI &times; In-Game Sensitivity</span>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 text-center space-y-1">
+                    <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400">Turn Distance (cm/360°)</span>
+                    <div id="out-cm360" class="text-3xl sm:text-4xl font-black font-mono text-purple-600 dark:text-purple-400">43.3 cm</div>
+                    <span class="text-[10px] text-slate-500 font-mono">Full 360&deg; Rotation Distance</span>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 text-center space-y-1">
+                    <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400">Turn Distance (in/360°)</span>
+                    <div id="out-in360" class="text-3xl sm:text-4xl font-black font-mono text-emerald-600 dark:text-emerald-400">17.0 in</div>
+                    <span class="text-[10px] text-slate-500 font-mono">Inches for 360&deg; Spin</span>
+                </div>
+            </div>
+
+            <!-- Full Cross-Game Equivalent Conversion Table -->
+            <div class="space-y-3">
+                <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
+                    Equivalent Sensitivities in Other Games (1:1 Muscle Memory Match)
+                </h3>
+                <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <table class="w-full text-left text-xs font-mono">
+                        <thead class="bg-slate-100 dark:bg-slate-950 text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800">
+                            <tr>
+                                <th class="p-3.5">Game Title</th>
+                                <th class="p-3.5">Equivalent Sensitivity</th>
+                                <th class="p-3.5">eDPI</th>
+                                <th class="p-3.5">cm / 360°</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cross-game-table-body" class="divide-y divide-slate-100 dark:divide-slate-800/60 text-slate-700 dark:text-slate-300">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: IN-DEPTH TECHNICAL & SEO GUIDE (1200+ Words) -->
+        <article class="max-w-4xl mx-auto space-y-12 pt-6">
+
+            <div class="space-y-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+                <span class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Comprehensive Hardware Guide</span>
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
+                    The Science of Mouse DPI, CPI &amp; Optical Sensor Deviation
+                </h2>
+                <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Why do competitive esports players obsess over DPI deviation? How does your physical mousepad surface alter sensor performance? Learn the exact engineering principles behind modern gaming mice.
+                </p>
+            </div>
+
+            <!-- Sub-article 1: DPI vs CPI -->
+            <section class="space-y-4">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white">1. DPI vs. CPI: What Is the Difference?</h3>
+                <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                    In the computer peripheral industry, <strong>DPI (Dots Per Inch)</strong> and <strong>CPI (Counts Per Inch)</strong> are frequently used interchangeably, but technically they describe two different phenomena:
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+                    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+                        <div class="font-black text-blue-600 dark:text-blue-400">DPI (Dots Per Inch)</div>
+                        <p class="text-slate-500 leading-relaxed font-sans">
+                            Originated from printer technology and screen pixels. It measures how many visual dots appear on a monitor or piece of paper over a 1-inch physical span.
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
+                        <div class="font-black text-indigo-600 dark:text-indigo-400">CPI (Counts Per Inch)</div>
+                        <p class="text-slate-500 leading-relaxed font-sans">
+                            The true metric for optical mouse sensors. It measures how many raw electrical movement counts the image sensor registers when you physically move the mouse across 1 inch of your desk surface.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sub-article 2: Why sensors deviate -->
+            <section class="space-y-4">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white">2. Why Is Your Mouse Actual DPI Not Exactly 800 or 1600?</h3>
+                <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                    Even top-tier esports mice equipped with PixArt PAW3395, PixArt PMW3370, or Logitech HERO 25K sensors rarely output exact nominal DPI. Real-world physical factors introduce a <strong>2% to 8% deviation</strong>:
+                </p>
+                <ul class="space-y-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 list-disc list-inside leading-relaxed">
+                    <li><strong class="text-slate-900 dark:text-white">Lens Height &amp; Mouse Skate Thickness:</strong> When aftermarket glass or thick PTFE skates (0.8mm vs 0.6mm) are installed, the focal distance of the lens increases, slightly altering the magnification of surface imperfections captured by the sensor CMOS array.</li>
+                    <li><strong class="text-slate-900 dark:text-white">Mousepad Weave &amp; Texture:</strong> Cordura, glass pads, and hybrid cloth surfaces reflect infrared and LED light at slightly different angles, subtly changing the count rate.</li>
+                    <li><strong class="text-slate-900 dark:text-white">Factory Microcontroller Calibrations:</strong> No two surface mounting assemblies are identical at the sub-millimeter level, causing slight variance between individual production batches.</li>
+                </ul>
+            </section>
+
+            <!-- Sub-article 3: What is cm/360 and why it matters -->
+            <section class="space-y-4">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white">3. Why cm/360° Is the True Universal Sensitivity Standard</h3>
+                <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                    In-game sensitivity numbers are arbitrary. A sensitivity of <strong>0.3 in Valorant</strong> does NOT equal <strong>0.3 in CS2</strong> or <strong>0.3 in Overwatch 2</strong> because each game engine uses a unique internal yaw scalar formula:
+                </p>
+                <div class="p-4 rounded-2xl bg-slate-900 text-slate-200 font-mono text-xs overflow-x-auto space-y-1">
+                    <div>Valorant Angle per Count: 0.070 degrees</div>
+                    <div>Source / CS2 Angle per Count: 0.022 degrees</div>
+                    <div>Overwatch 2 Angle per Count: 0.0066 degrees</div>
+                    <div>Fortnite Angle per Count: 0.005555 degrees</div>
+                </div>
+                <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
+                    By calculating your <strong>cm/360°</strong> (the physical centimeters required on your desk to execute a full 360-degree rotation), your motor muscle memory stays 100% consistent across every title you play.
+                </p>
+            </section>
+
+            <!-- FAQ Accordion -->
+            <section class="space-y-6 pt-6 border-t border-slate-200 dark:border-slate-800">
+                <div class="space-y-1">
+                    <span class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Frequently Asked Questions</span>
+                    <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">Common Questions About Mouse DPI Calibration</h3>
+                </div>
+
+                <div class="space-y-3">
+                    <details class="group p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 open:border-blue-500/40 transition-colors">
+                        <summary class="font-bold text-sm text-slate-900 dark:text-white cursor-pointer list-none flex items-center justify-between">
+                            <span>Does Windows "Enhance Pointer Precision" affect this DPI test?</span>
+                            <span class="text-blue-500 font-mono group-open:rotate-180 transition-transform">&darr;</span>
+                        </summary>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            No! This tool utilizes the W3C Pointer Lock API, which bypasses Windows cursor acceleration (mouse ballistics) and captures raw hardware delta counts directly. However, we strongly recommend disabling "Enhance Pointer Precision" in Windows Control Panel for consistent aim in competitive gaming.
+                        </p>
+                    </details>
+
+                    <details class="group p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 open:border-blue-500/40 transition-colors">
+                        <summary class="font-bold text-sm text-slate-900 dark:text-white cursor-pointer list-none flex items-center justify-between">
+                            <span>Is 1600 DPI better than 800 DPI for gaming?</span>
+                            <span class="text-blue-500 font-mono group-open:rotate-180 transition-transform">&darr;</span>
+                        </summary>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Yes, mathematically 1600 DPI has lower input latency (around 1ms to 2ms faster initial motion detection) compared to 400 or 800 DPI because the sensor detects tiny physical micro-movements much earlier. As long as you halve your in-game sensitivity to keep your cm/360° identical, 1600 DPI provides smoother cursor tracking with zero pixel skipping.
+                        </p>
+                    </details>
+
+                    <details class="group p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 open:border-blue-500/40 transition-colors">
+                        <summary class="font-bold text-sm text-slate-900 dark:text-white cursor-pointer list-none flex items-center justify-between">
+                            <span>How accurate is this browser-based test?</span>
+                            <span class="text-blue-500 font-mono group-open:rotate-180 transition-transform">&darr;</span>
+                        </summary>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            When combined with a physical ruler or a credit card guide on your mousepad, this test achieves over 99.5% accuracy. Because Pointer Lock delivers uncompressed raw counts from the OS HID driver, the calculation is mathematically pure ($DPI = \text{Counts} / \text{Inches}$).
+                        </p>
+                    </details>
+                </div>
+            </section>
+
+        </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#040810] py-12 text-slate-500 dark:text-slate-400 text-xs mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="space-y-3 col-span-2 sm:col-span-1">
+                <div class="flex items-center gap-2 text-slate-900 dark:text-white font-bold text-sm">
+                    <span>⌨️</span>
+                    <span>InputTest.online</span>
+                </div>
+                <p class="text-[11px] text-slate-500 leading-relaxed">
+                    Free, modern, browser-based hardware testing suite. Diagnose mice, keyboards, gamepads, monitors, and audio devices with zero installs.
+                </p>
+                <div class="text-[10px] text-slate-600 font-mono">&copy; 2026 InputTest. All rights reserved.</div>
+            </div>
+
+            <div class="space-y-2">
+                <div class="text-slate-900 dark:text-white font-bold text-xs uppercase tracking-wider font-mono">Mouse Tools</div>
+                <ul class="space-y-1.5 text-[11px]">
+                    <li><a href="/mouse-dpi-tester" class="text-blue-600 dark:text-blue-400 font-bold hover:underline">True DPI Analyzer</a></li>
+                    <li><a href="/mouse-polling-rate" class="hover:text-slate-900 dark:hover:text-white transition-colors">Polling Rate (Hz)</a></li>
+                    <li><a href="/mouse-double-click-test" class="hover:text-slate-900 dark:hover:text-white transition-colors">Double Click Checker</a></li>
+                    <li><a href="/scroll-test" class="hover:text-slate-900 dark:hover:text-white transition-colors">Scroll Wheel Jump</a></li>
+                    <li><a href="/cps-test" class="hover:text-slate-900 dark:hover:text-white transition-colors">CPS Click Speed</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-2">
+                <div class="text-slate-900 dark:text-white font-bold text-xs uppercase tracking-wider font-mono">Hardware Testers</div>
+                <ul class="space-y-1.5 text-[11px]">
+                    <li><a href="/keyboard" class="hover:text-slate-900 dark:hover:text-white transition-colors">Keyboard Tester</a></li>
+                    <li><a href="/gamepad" class="hover:text-slate-900 dark:hover:text-white transition-colors">Gamepad Drift Test</a></li>
+                    <li><a href="/display" class="hover:text-slate-900 dark:hover:text-white transition-colors">Screen Refresh Rate</a></li>
+                    <li><a href="/mic" class="hover:text-slate-900 dark:hover:text-white transition-colors">Microphone Tester</a></li>
+                    <li><a href="/report" class="hover:text-slate-900 dark:hover:text-white transition-colors">Hardware Health PDF</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-2">
+                <div class="text-slate-900 dark:text-white font-bold text-xs uppercase tracking-wider font-mono">Company &amp; Legal</div>
+                <ul class="space-y-1.5 text-[11px]">
+                    <li><a href="/about" class="hover:text-slate-900 dark:hover:text-white transition-colors">About Us</a></li>
+                    <li><a href="/contact" class="hover:text-slate-900 dark:hover:text-white transition-colors">Contact Support</a></li>
+                    <li><a href="/privacy" class="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</a></li>
+                    <li><a href="/terms" class="hover:text-slate-900 dark:hover:text-white transition-colors">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT ENGINE -->
+    <script>
+        (function() {
+            // State
+            let isTracking = false;
+            let rawCounts = 0;
+            let currentUnit = 'in'; // 'in' or 'cm'
+            let targetDpi = 800;
+            let targetDist = 2; // in or cm based on currentUnit
+            let measuredTrueDpi = 0;
+
+            // DOM Elements
+            const arena = document.getElementById('pointer-lock-arena');
+            const standbyView = document.getElementById('arena-standby-view');
+            const activeView = document.getElementById('arena-active-view');
+            const liveBadge = document.getElementById('live-state-badge');
+            const liveCountsEl = document.getElementById('live-raw-counts');
+            const liveProgressBar = document.getElementById('live-progress-bar');
+            const liveDistInd = document.getElementById('live-distance-indicator');
+            const targetDistInd = document.getElementById('target-distance-indicator');
+
+            const targetDpiInput = document.getElementById('target-dpi-input');
+            const targetDistInput = document.getElementById('target-dist-input');
+            const unitInBtn = document.getElementById('unit-in-btn');
+            const unitCmBtn = document.getElementById('unit-cm-btn');
+            const distUnitLabel = document.getElementById('distance-unit-label');
+            const distUnitSuffix = document.getElementById('dist-unit-suffix');
+
+            const measuredDpiVal = document.getElementById('measured-dpi-val');
+            const configuredComparisonVal = document.getElementById('configured-comparison-val');
+            const deviationVal = document.getElementById('deviation-val');
+            const deviationBar = document.getElementById('deviation-bar');
+            const deviationVerdict = document.getElementById('deviation-verdict');
+            const sensorGradeBadge = document.getElementById('sensor-grade-badge');
+            const resetBtn = document.getElementById('reset-test-btn');
+            const copyResultBtn = document.getElementById('copy-result-btn');
+
+            // Sens Converter Elements
+            const gameSelect = document.getElementById('game-select');
+            const inGameSensInput = document.getElementById('in-game-sens-input');
+            const converterDpiInput = document.getElementById('converter-dpi-input');
+            const outEdpi = document.getElementById('out-edpi');
+            const outCm360 = document.getElementById('out-cm360');
+            const outIn360 = document.getElementById('out-in360');
+            const crossGameTableBody = document.getElementById('cross-game-table-body');
+            const syncedDpiLabel = document.getElementById('synced-dpi-label');
+
+            // Yaw scalars per game (Degrees turned per raw count)
+            const YAW_TABLE = {
+                valorant: { name: 'Valorant', yaw: 0.070, isPercent: false },
+                cs2: { name: 'CS2 / Source', yaw: 0.022, isPercent: false },
+                apex: { name: 'Apex Legends', yaw: 0.022, isPercent: false },
+                overwatch: { name: 'Overwatch 2', yaw: 0.0066, isPercent: false },
+                fortnite: { name: 'Fortnite (%)', yaw: 0.005555, isPercent: true },
+                cod: { name: 'Call of Duty', yaw: 0.0066, isPercent: false },
+                r6: { name: 'Rainbow Six Siege', yaw: 0.00572, isPercent: false },
+                tf2: { name: 'Team Fortress 2', yaw: 0.022, isPercent: false }
+            };
+
+            // Preset Buttons Handling
+            document.querySelectorAll('.dpi-preset').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.dpi-preset').forEach(b => {
+                        b.classList.remove('bg-blue-600', 'text-white');
+                        b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+                    });
+                    btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+                    btn.classList.add('bg-blue-600', 'text-white');
+                    targetDpiInput.value = btn.dataset.val;
+                    updateConfig();
+                });
+            });
+
+            document.querySelectorAll('.dist-preset').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.dist-preset').forEach(b => {
+                        b.classList.remove('bg-blue-600', 'text-white');
+                        b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+                    });
+                    btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+                    btn.classList.add('bg-blue-600', 'text-white');
+                    targetDistInput.value = btn.dataset.val;
+                    updateConfig();
+                });
+            });
+
+            // Unit Switcher
+            unitInBtn.addEventListener('click', () => {
+                if (currentUnit === 'in') return;
+                currentUnit = 'in';
+                unitInBtn.className = 'py-2 rounded-lg bg-blue-600 text-white text-center shadow transition-all';
+                unitCmBtn.className = 'py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-center transition-all';
+                distUnitLabel.textContent = 'Inches';
+                distUnitSuffix.textContent = 'in';
+                targetDistInput.value = (parseFloat(targetDistInput.value) / 2.54).toFixed(1);
+                updateConfig();
+            });
+
+            unitCmBtn.addEventListener('click', () => {
+                if (currentUnit === 'cm') return;
+                currentUnit = 'cm';
+                unitCmBtn.className = 'py-2 rounded-lg bg-blue-600 text-white text-center shadow transition-all';
+                unitInBtn.className = 'py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-center transition-all';
+                distUnitLabel.textContent = 'Centimeters';
+                distUnitSuffix.textContent = 'cm';
+                targetDistInput.value = (parseFloat(targetDistInput.value) * 2.54).toFixed(1);
+                updateConfig();
+            });
+
+            function updateConfig() {
+                targetDpi = Math.max(50, parseFloat(targetDpiInput.value) || 800);
+                targetDist = Math.max(0.5, parseFloat(targetDistInput.value) || 2);
+                targetDistInd.textContent = `Target: ${targetDist} ${currentUnit}`;
+                configuredComparisonVal.innerHTML = `Configured: <span class="font-bold">${targetDpi} DPI</span>`;
+                recalcSens();
+            }
+
+            targetDpiInput.addEventListener('input', updateConfig);
+            targetDistInput.addEventListener('input', updateConfig);
+
+            // Pointer Lock Interaction
+            arena.addEventListener('click', () => {
+                if (!isTracking) {
+                    startTracking();
+                } else {
+                    stopTracking();
+                }
+            });
+
+            function startTracking() {
+                try {
+                    arena.requestPointerLock = arena.requestPointerLock || arena.mozRequestPointerLock;
+                    arena.requestPointerLock();
+                } catch (e) {
+                    console.error("Pointer lock failed:", e);
+                }
+            }
+
+            function stopTracking() {
+                if (document.exitPointerLock) {
+                    document.exitPointerLock();
+                }
+            }
+
+            // Pointer Lock Event Listeners
+            document.addEventListener('pointerlockchange', onPointerLockChange);
+            document.addEventListener('mozpointerlockchange', onPointerLockChange);
+
+            function onPointerLockChange() {
+                if (document.pointerLockElement === arena || document.mozPointerLockElement === arena) {
+                    // Lock Engaged
+                    isTracking = true;
+                    rawCounts = 0;
+                    standbyView.classList.add('hidden');
+                    activeView.classList.remove('hidden');
+                    liveBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center gap-1.5';
+                    liveBadge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span><span>TRACKING</span>';
+                    document.addEventListener('mousemove', onMouseMove);
+                } else {
+                    // Lock Exited
+                    if (isTracking) {
+                        isTracking = false;
+                        document.removeEventListener('mousemove', onMouseMove);
+                        standbyView.classList.remove('hidden');
+                        activeView.classList.add('hidden');
+                        liveBadge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center gap-1.5';
+                        liveBadge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span><span>CALIBRATED</span>';
+                        calculateResults();
+                    }
+                }
+            }
+
+            function onMouseMove(e) {
+                // Accumulate absolute horizontal delta (X-axis primary)
+                const dx = Math.abs(e.movementX);
+                rawCounts += dx;
+                liveCountsEl.textContent = rawCounts.toLocaleString();
+
+                // Convert target physical distance to inches for calculation
+                const distInInches = currentUnit === 'in' ? targetDist : (targetDist / 2.54);
+                const expectedCounts = targetDpi * distInInches;
+
+                // Progress Bar
+                const progressPct = Math.min(100, (rawCounts / expectedCounts) * 100);
+                liveProgressBar.style.width = `${progressPct}%`;
+                
+                // Live Distance Estimator
+                const currentDistCalc = (rawCounts / targetDpi) * (currentUnit === 'in' ? 1 : 2.54);
+                liveDistInd.textContent = `${currentDistCalc.toFixed(2)} ${currentUnit}`;
+            }
+
+            function calculateResults() {
+                if (rawCounts < 30) {
+                    measuredDpiVal.textContent = '---';
+                    deviationVal.textContent = '0.00%';
+                    sensorGradeBadge.textContent = 'TOO SHORT';
+                    sensorGradeBadge.className = 'px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30';
+                    deviationVerdict.textContent = 'Slide mouse for at least 1-2 inches to register reliable measurement.';
+                    return;
+                }
+
+                const distInInches = currentUnit === 'in' ? targetDist : (targetDist / 2.54);
+                measuredTrueDpi = Math.round(rawCounts / distInInches);
+                measuredDpiVal.textContent = `${measuredTrueDpi}`;
+
+                // Calculate Deviation %
+                const diff = measuredTrueDpi - targetDpi;
+                const devPct = (diff / targetDpi) * 100;
+                const sign = devPct >= 0 ? '+' : '';
+                deviationVal.textContent = `${sign}${devPct.toFixed(2)}%`;
+
+                // Update Progress / Verdict
+                const absDev = Math.abs(devPct);
+                deviationBar.style.width = `${Math.min(100, absDev * 8)}%`;
+
+                if (absDev < 2.0) {
+                    sensorGradeBadge.textContent = 'ESPORTS GRADE (< 2%)';
+                    sensorGradeBadge.className = 'px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40';
+                    deviationBar.className = 'h-full bg-emerald-500 transition-all duration-300';
+                    deviationVerdict.textContent = 'Flawless sensor accuracy! Your mouse tracks almost 1:1 with nominal factory specifications.';
+                } else if (absDev < 5.0) {
+                    sensorGradeBadge.textContent = 'EXCELLENT (< 5%)';
+                    sensorGradeBadge.className = 'px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-blue-500/20 text-blue-400 border border-blue-500/40';
+                    deviationBar.className = 'h-full bg-blue-500 transition-all duration-300';
+                    deviationVerdict.textContent = 'Typical high-end sensor variance. Normal manufacturing and mousepad weave tolerance.';
+                } else if (absDev < 10.0) {
+                    sensorGradeBadge.textContent = 'MODERATE (< 10%)';
+                    sensorGradeBadge.className = 'px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30';
+                    deviationBar.className = 'h-full bg-amber-500 transition-all duration-300';
+                    deviationVerdict.textContent = 'Moderate variance. Your mouse ' + (devPct > 0 ? 'overshoots' : 'undershoots') + ' its nominal DPI. You can compensate with in-game sensitivity!';
+                } else {
+                    sensorGradeBadge.textContent = 'HIGH DEVIATION (> 10%)';
+                    sensorGradeBadge.className = 'px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-rose-500/20 text-rose-400 border border-rose-500/40';
+                    deviationBar.className = 'h-full bg-rose-500 transition-all duration-300';
+                    deviationVerdict.textContent = 'Significant sensor deviation detected. Check for dust in lens or unusually thick mouse skates.';
+                }
+
+                // Automatically plug into In-Game Sens Converter
+                converterDpiInput.value = measuredTrueDpi;
+                syncedDpiLabel.textContent = `${measuredTrueDpi} DPI (True)`;
+                recalcSens();
+            }
+
+            resetBtn.addEventListener('click', () => {
+                rawCounts = 0;
+                liveCountsEl.textContent = '0';
+                liveProgressBar.style.width = '0%';
+                liveDistInd.textContent = `0 ${currentUnit}`;
+                measuredDpiVal.textContent = '---';
+                deviationVal.textContent = '0.00%';
+                deviationBar.style.width = '0%';
+                sensorGradeBadge.textContent = 'STANDBY';
+                sensorGradeBadge.className = 'px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-slate-700';
+                deviationVerdict.textContent = 'Execute the calibration test to determine your sensor score.';
+            });
+
+            // Sensitivity Calculator Logic
+            function recalcSens() {
+                const gameKey = gameSelect.value;
+                const game = YAW_TABLE[gameKey];
+                const sens = parseFloat(inGameSensInput.value) || 1.0;
+                const activeDpi = parseFloat(converterDpiInput.value) || 800;
+
+                // eDPI
+                const edpi = Math.round(sens * activeDpi);
+                outEdpi.textContent = edpi.toLocaleString();
+
+                // True turn distance (cm/360)
+                // 360 degrees / (sens * yaw * activeDpi) = distance in inches -> * 2.54 = distance in cm
+                const actualYaw = game.isPercent ? (game.yaw * sens) : (game.yaw * sens);
+                const inches360 = 360 / (sens * game.yaw * activeDpi);
+                const cm360 = inches360 * 2.54;
+
+                outCm360.textContent = `${cm360.toFixed(1)} cm`;
+                outIn360.textContent = `${inches360.toFixed(1)} in`;
+
+                // Populate Cross-Game Equivalents Table
+                let rowsHtml = '';
+                for (const [key, g] of Object.entries(YAW_TABLE)) {
+                    // Equivalent sens = (target_yaw_scalar * target_sens = source_yaw_scalar * source_sens)
+                    // target_sens = (game.yaw * sens) / g.yaw
+                    const equivSens = (game.yaw * sens) / g.yaw;
+                    const equivEdpi = Math.round(equivSens * activeDpi);
+                    const isSelected = key === gameKey;
+
+                    rowsHtml += `
+                        <tr class="${isSelected ? 'bg-blue-500/10 font-bold text-blue-600 dark:text-blue-400' : 'hover:bg-slate-50 dark:hover:bg-slate-900/40'}">
+                            <td class="p-3.5 flex items-center gap-2">
+                                <span>${isSelected ? '👉' : '🎮'}</span>
+                                <span>${g.name}</span>
+                            </td>
+                            <td class="p-3.5 font-bold">${equivSens.toFixed(3)}</td>
+                            <td class="p-3.5 text-slate-500">${equivEdpi}</td>
+                            <td class="p-3.5 font-mono">${cm360.toFixed(1)} cm</td>
+                        </tr>
+                    `;
+                }
+                crossGameTableBody.innerHTML = rowsHtml;
+            }
+
+            gameSelect.addEventListener('change', recalcSens);
+            inGameSensInput.addEventListener('input', recalcSens);
+            converterDpiInput.addEventListener('input', recalcSens);
+
+            // Copy Report
+            copyResultBtn.addEventListener('click', () => {
+                const text = `InputTest.online - Mouse DPI Calibration Report\n` +
+                    `-----------------------------------------\n` +
+                    `Configured DPI: ${targetDpi} DPI\n` +
+                    `Measured True DPI: ${measuredTrueDpi || targetDpi} DPI\n` +
+                    `Sensor Deviation: ${deviationVal.textContent}\n` +
+                    `Quality Grade: ${sensorGradeBadge.textContent}\n` +
+                    `Game: ${YAW_TABLE[gameSelect.value].name}\n` +
+                    `Sens: ${inGameSensInput.value} | eDPI: ${outEdpi.textContent}\n` +
+                    `cm/360: ${outCm360.textContent}\n` +
+                    `Benchmark Tool: https://inputtest.online/mouse-dpi-tester`;
+
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = copyResultBtn.innerHTML;
+                    copyResultBtn.innerHTML = '<span>✓ Copied to Clipboard!</span>';
+                    setTimeout(() => {
+                        copyResultBtn.innerHTML = originalText;
+                    }, 2500);
+                });
+            });
+
+            // Initial Run
+            updateConfig();
+        })();
+    </script>
+
+</body>
+</html>

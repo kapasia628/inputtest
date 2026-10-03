@@ -63,6 +63,7 @@ const urlList = [
   "https://inputtest.online/software",
   "https://inputtest.online/mouse-double-click-fixer",
   "https://inputtest.online/mouse-scroll-wheel-fixer",
+  "https://inputtest.online/mouse-dpi-tester",
 ];
 
 const payload = JSON.stringify({
