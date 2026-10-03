@@ -62,7 +62,7 @@ const SiteConfig = {
     // Social Links & Resources
     socials: {
         twitter: "https://twitter.com/InputTestOnline",
-        github: "https://github.com/Abbas/inputtest-online"
+        github: "https://github.com/kapasia628/inputtest"
     },
     
     // Application Helper Methods
@@ -129,7 +129,13 @@ const SiteConfig = {
 
         if (themeToggleBtn && !themeToggleBtn.dataset.themeBound) {
             themeToggleBtn.dataset.themeBound = 'true';
-            themeToggleBtn.addEventListener('click', () => {
+            // Clone and replace element to strip any rogue or duplicate inline listeners
+            const cleanToggleBtn = themeToggleBtn.cloneNode(true);
+            themeToggleBtn.parentNode.replaceChild(cleanToggleBtn, themeToggleBtn);
+            cleanToggleBtn.dataset.themeBound = 'true';
+            cleanToggleBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 document.documentElement.classList.toggle('dark');
                 syncThemeIcons();
                 localStorage.setItem('color-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
@@ -157,6 +163,8 @@ const SiteConfig = {
                 { title: "Keyboard Chatter Test", desc: "Detect multi-chatter mechanical switches", url: "/keyboard-chatter-test" },
                 { title: "Controller Stick Drift Test", desc: "Measure stick circularity error & drift", url: "/controller-stick-drift-test" },
                 { title: "USB-C Profiler", desc: "Power delivery profiles & Alt-mode", url: "/usb-c" },
+                { title: "InputTest ClickShield™ (Double-Click Fixer)", desc: "Download portable utility to fix mouse double clicks", url: "/mouse-double-click-fixer" },
+                { title: "Desktop Software Utilities Suite", desc: "Download free portable Windows tools", url: "/software" },
                 { title: "Certified Hardware PDF Report", desc: "Official verification certificate", url: "/report" }
             ];
 
@@ -206,13 +214,19 @@ const SiteConfig = {
         // Mobile Menu Toggle
         const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
         const mobileNavPanel = document.getElementById("mobile-nav-panel");
-        const hamburgerIcon = document.getElementById("hamburger-icon");
-        const hamburgerClose = document.getElementById("hamburger-close");
 
         if (mobileMenuToggle && mobileNavPanel && !mobileMenuToggle.dataset.menuBound) {
             mobileMenuToggle.dataset.menuBound = 'true';
-            mobileMenuToggle.addEventListener("click", () => {
+            // Clone and replace element to strip any rogue or duplicate inline listeners
+            const cleanMenuToggle = mobileMenuToggle.cloneNode(true);
+            mobileMenuToggle.parentNode.replaceChild(cleanMenuToggle, mobileMenuToggle);
+            cleanMenuToggle.dataset.menuBound = 'true';
+            cleanMenuToggle.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 mobileNavPanel.classList.toggle("hidden");
+                const hamburgerIcon = document.getElementById("hamburger-icon");
+                const hamburgerClose = document.getElementById("hamburger-close");
                 hamburgerIcon && hamburgerIcon.classList.toggle("hidden");
                 hamburgerClose && hamburgerClose.classList.toggle("hidden");
             });

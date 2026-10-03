@@ -40,6 +40,8 @@
 - [VGA Tester](https://inputtest.online/vga): Test VGA port connections.
 - [System Specs](https://inputtest.online/specs): View complete hardware specs of your device.
 - [Full Report](https://inputtest.online/report): Generate a complete hardware health report.
+- [Desktop Software Suite](https://inputtest.online/software): Free lightweight portable Windows utilities for gamers and power users.
+- [InputTest ClickShield™](https://inputtest.online/mouse-double-click-fixer): Free portable Windows utility to eliminate mouse double-clicking and switch debounce chatter in real time.
 
 ## Mini Games & Speed Tests
 

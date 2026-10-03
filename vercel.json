@@ -38,6 +38,19 @@
             ]
         },
         {
+            "source": "/sw.js",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=0, must-revalidate"
+                },
+                {
+                    "key": "Service-Worker-Allowed",
+                    "value": "/"
+                }
+            ]
+        },
+        {
             "source": "/(.*)\\.(js|css|png|jpg|jpeg|gif|webp|svg|ico|woff|woff2|ttf|otf)",
             "headers": [
                 {
