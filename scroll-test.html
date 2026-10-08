@@ -140,8 +140,15 @@
                             50: '#f8fafc',
                             100: '#f1f5f9',
                             200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
                             800: '#1e293b',
+                            850: '#151f32',
                             900: '#0f172a',
+                            950: '#020617',
                         }
                     }
                 }
@@ -540,6 +547,7 @@
                 </div>
 
             </div>
+        </div>
 
         <!-- PROMO BANNER: InputTest ScrollShield™ -->
         <div class="my-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-emerald-950/60 via-slate-900 to-teal-950/60 border border-emerald-500/40 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
@@ -816,29 +824,31 @@
     <!-- Interactive Logic Script -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Theme toggle
+            // Theme toggle (Safe with sun/moon icons)
             const themeToggleBtn = document.getElementById('theme-toggle');
-            const darkIcon = document.getElementById('theme-toggle-dark-icon');
-            const lightIcon = document.getElementById('theme-toggle-light-icon');
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
 
-            if (document.documentElement.classList.contains('dark')) {
-                lightIcon.classList.remove('hidden');
-            } else {
-                darkIcon.classList.remove('hidden');
-            }
-
-            themeToggleBtn.addEventListener('click', () => {
-                darkIcon.classList.toggle('hidden');
-                lightIcon.classList.toggle('hidden');
-
+            if (themeToggleBtn && sunIcon && moonIcon) {
                 if (document.documentElement.classList.contains('dark')) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
                 } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
                 }
-            });
+
+                themeToggleBtn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    sunIcon.classList.toggle('hidden');
+                    moonIcon.classList.toggle('hidden');
+                    if (document.documentElement.classList.contains('dark')) {
+                        localStorage.setItem('color-theme', 'dark');
+                    } else {
+                        localStorage.setItem('color-theme', 'light');
+                    }
+                });
+            }
 
             // ==========================================
             // SCROLL WHEEL DIAGNOSTIC ENGINE
@@ -1133,7 +1143,99 @@ https://inputtest.online/scroll-test
                 });
             });
 
+            // Instant Search & Command Palette Logic
+            const searchBar = document.getElementById("nav-search-bar");
+            const searchPanel = document.getElementById("search-dropdown-panel");
+            
+            if (searchBar && searchPanel) {
+                const searchDatabase = [
+                    { title: "Keyboard Tester Online", desc: "Test laptop & mechanical switches", url: "/keyboard" },
+                    { title: "Mouse & CPS Checker", desc: "Test click, scroll, and speed CPS", url: "/mouse" },
+                    { title: "Scroll Wheel Jump Tester", desc: "Detect mouse reverse-ticks and encoder bounce", url: "/scroll-test" },
+                    { title: "Mouse Polling Rate (8000Hz)", desc: "Measure mouse update frequency and sensor stability", url: "/mouse-polling-rate" },
+                    { title: "Mouse Scroll Wheel Fixer", desc: "Download free ScrollShield utility to stop scroll bounce", url: "/mouse-scroll-wheel-fixer" },
+                    { title: "Speaker & Sound Tester", desc: "Stereo balance frequency check", url: "/sound" },
+                    { title: "Gamepad & Joystick Tester", desc: "Controller buttons stick drift test", url: "/gamepad" },
+                    { title: "Microphone Voice Tester", desc: "Test decibel telemetry voice echo loop", url: "/mic" },
+                    { title: "Webcam Calibration Check", desc: "Video test, resolution and FPS check", url: "/webcam" },
+                    { title: "Display & Screen Tester", desc: "Check dead pixels, monitor Hz, and ghosting", url: "/display" },
+                    { title: "Drawing Tablet & Touchscreen Tester", desc: "Check pen pressure and touchscreen multi-touch", url: "/draw" },
+                    { title: "Bluetooth & Audio Latency Tester", desc: "Measure delay and lag of wireless audio", url: "/latency" },
+                    { title: "USB & HID Device Info Profiler", desc: "Scan connected USB/HID peripherals", url: "/usb" },
+                    { title: "Battery Health & Efficiency Analyzer", desc: "Evaluate laptop battery cycles and power draw", url: "/battery" },
+                    { title: "Certified Diagnostic Report", desc: "Generate secure verified hardware PDF report", url: "/report" }
+                ];
+
+                window.addEventListener("keydown", (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+                        e.preventDefault();
+                        searchBar.focus();
+                    }
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!searchBar.contains(e.target) && !searchPanel.contains(e.target)) {
+                        searchPanel.classList.add("hidden");
+                    }
+                });
+
+                searchBar.addEventListener("focus", showResults);
+                searchBar.addEventListener("input", showResults);
+
+                function showResults() {
+                    const query = searchBar.value.toLowerCase().trim();
+                    searchPanel.innerHTML = '<div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>';
+                    
+                    const filtered = searchDatabase.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.desc.toLowerCase().includes(query)
+                    );
+
+                    if (filtered.length === 0) {
+                        searchPanel.innerHTML += `
+                            <div class="px-2 py-3 text-center text-xs text-slate-400 font-semibold">
+                                No results found for "${searchBar.value}"
+                            </div>
+                        `;
+                    } else {
+                        filtered.forEach(item => {
+                            const itemEl = document.createElement("a");
+                            itemEl.href = item.url;
+                            itemEl.className = "flex flex-col px-3 py-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-700 transition-all duration-150 select-none group";
+                            itemEl.innerHTML = `
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">${item.title}</span>
+                                <span class="text-[10px] text-slate-400 font-semibold">${item.desc}</span>
+                            `;
+                            searchPanel.appendChild(itemEl);
+                        });
+                    }
+                    searchPanel.classList.remove("hidden");
+                }
+            }
+
+            // Mobile Navigation Toggle
+            const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+            const mobileNavPanel = document.getElementById("mobile-nav-panel");
+            const hamburgerIcon = document.getElementById("hamburger-icon");
+            const hamburgerClose = document.getElementById("hamburger-close");
+
+            if (mobileMenuToggle && mobileNavPanel && hamburgerIcon && hamburgerClose) {
+                mobileMenuToggle.addEventListener("click", () => {
+                    mobileNavPanel.classList.toggle("hidden");
+                    hamburgerIcon.classList.toggle("hidden");
+                    hamburgerClose.classList.toggle("hidden");
+                });
+            }
         });
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('[PWA] Service Worker registered scope:', reg.scope))
+                    .catch(err => console.error('[PWA] Service Worker registration failed:', err));
+            });
+        }
     </script>
 </body>
 </html>
