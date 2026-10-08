@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
@@ -319,6 +319,143 @@
                         <h4 class="text-xs font-bold text-slate-900 dark:text-white">Machenike G5 Pro Wireless Gamepad</h4>
                         <div class="text-xs font-bold text-emerald-500 mt-1">₹3,499</div>
                         <a href="https://www.banggood.in/search/hall-effect-gamepad.html?p=F2270779039935202609&custlinkid=5290385" target="_blank" rel="sponsored nofollow noopener" class="inline-block mt-2 px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold">Buy Now &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        <!-- COMPREHENSIVE TECHNICAL DIAGNOSTIC GUIDE & FAQ ACCORDION -->
+        <section class="mb-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start select-none">
+            
+            <!-- Left 7-Column: Deep Technical Guide -->
+            <div class="lg:col-span-7 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 sm:p-10 shadow-sm backdrop-blur-md space-y-6">
+                <span class="text-[9px] font-mono text-purple-600 dark:text-purple-400 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-800 pb-3 mb-6">📚 Engineering Manual & Diagnostic Guide</span>
+                
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                    Understanding Controller Stick Drift, Deadzones, &amp; Hall-Effect Sensors
+                </h2>
+                
+                <div class="text-xs sm:text-sm font-normal text-slate-600 dark:text-slate-400 space-y-5 leading-relaxed">
+                    <p>
+                        <strong>Analog stick drift</strong> is the involuntary movement of your in-game character or camera reticle when your thumbs are completely off the joysticks. It plagues modern gamepads across PlayStation 5 (DualSense), Xbox Series X/S, Nintendo Switch (Joy-Cons), and Steam Deck. While often dismissed as "bad software settings," stick drift is fundamentally a mechanical wear failure within the joystick module.
+                    </p>
+                    
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white pt-2 font-mono flex items-center gap-2">
+                        🎮 The Anatomy of Traditional Potentiometer Joysticks
+                    </h3>
+                    <p>
+                        Almost all legacy gamepads use analog thumbstick modules manufactured by <strong>ALPS Alpine</strong>. Each joystick utilizes two rotary potentiometers (one for the X-axis horizontal movement and one for the Y-axis vertical movement). Inside each potentiometer:
+                    </p>
+                    <ul class="list-disc list-inside space-y-1.5 pl-1">
+                        <li>A curved resistive carbon film track acts as a variable resistor.</li>
+                        <li>A microscopic metal wiper prong physically scrapes across this carbon surface as you tilt the stick.</li>
+                        <li>The controller's ADC (Analog-to-Digital Converter) translates the resulting voltage into normalized coordinates between <code class="font-mono text-purple-500">-1.0</code> and <code class="font-mono text-purple-500">+1.0</code>.</li>
+                    </ul>
+                    <p>
+                        Because the metal wiper is in constant physical friction with the carbon track, it physically wears away carbon powder over 400 to 800 hours of aggressive gameplay. The worn graphite dust creates conductive micro-debris, warping the electrical voltage at resting position. Simultaneously, the internal steel centering spring relaxes, failing to return the stick to true electrical zero (0, 0).
+                    </p>
+
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white pt-2 font-mono flex items-center gap-2">
+                        📊 Potentiometer vs Hall Effect vs TMR Joysticks
+                    </h3>
+                    <p>
+                        The gaming industry is transitioning toward contactless magnetic sensor architectures:
+                    </p>
+
+                    <!-- Technical Comparison Table -->
+                    <div class="overflow-x-auto my-4">
+                        <table class="w-full text-left font-mono text-xs border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                            <thead class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                                <tr>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Sensor Technology</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Contact Method</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Lifespan Rotations</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Drift Immunity</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Min Deadzone</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 text-slate-600 dark:text-slate-400">
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">ALPS Potentiometer</td>
+                                    <td class="p-2.5">Friction carbon wiper</td>
+                                    <td class="p-2.5">2 Million cycles</td>
+                                    <td class="p-2.5 text-amber-500 font-bold">Vulnerable (fails fast)</td>
+                                    <td class="p-2.5">5% &ndash; 15%</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">Hall Effect (JH16 / K-Silver)</td>
+                                    <td class="p-2.5">Magnetic flux density</td>
+                                    <td class="p-2.5">10 Million cycles</td>
+                                    <td class="p-2.5 text-emerald-500 font-bold">100% Drift Immune</td>
+                                    <td class="p-2.5">0% &ndash; 2%</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">TMR (Tunneling Magnetoresistive)</td>
+                                    <td class="p-2.5">Quantum magnetic spin</td>
+                                    <td class="p-2.5">20 Million cycles</td>
+                                    <td class="p-2.5 text-emerald-500 font-bold">Permanent Immunity</td>
+                                    <td class="p-2.5">&lt; 1% (Ultra-high res)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white pt-2 font-mono flex items-center gap-2">
+                        🛠️ How to Calibrate and Fix Controller Stick Drift
+                    </h3>
+                    <p>
+                        If our online tool detects drift outside the 5% resting deadzone circle, here are the recommended remediation steps:
+                    </p>
+                    <ol class="list-decimal list-inside space-y-2.5 pl-1">
+                        <li><strong>Recalibrate in Windows Game Controller Settings:</strong> Press <kbd class="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 font-mono text-xs">Win + R</kbd>, type <code class="font-mono text-purple-500 font-bold">joy.cpl</code>, select your controller &gt; Properties &gt; Settings &gt; Calibrate. Rotate the sticks in complete circles to reset axis boundaries.</li>
+                        <li><strong>Adjust Deadzones in Game / Steam Input:</strong> If hardware drift is minimal (under 8%), increase your inner deadzone in Steam Input or game settings (e.g., Call of Duty, Fortnite, Apex Legends) from 0.03 up to 0.08. This tells the game engine to ignore minor baseline voltage flutter.</li>
+                        <li><strong>Electrical Contact Cleaner Spray:</strong> If the controller is out of warranty, remove the faceplate, spray <em>WD-40 Specialist Electrical Contact Cleaner</em> directly into the ALPS potentiometer housing, and rotate the stick 40 times to wash out accumulated carbon dust.</li>
+                        <li><strong>Upgrade to Hall-Effect Joysticks:</strong> For permanent immunity, replace the thumbstick modules with Hall-Effect drop-in replacements (such as GuliKit KingKong, Flydigi Vader, or 8BitDo Ultimate controllers).</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Right 5-Column: Interactive FAQ Accordion -->
+            <div class="lg:col-span-5 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 sm:p-10 shadow-sm backdrop-blur-md space-y-6">
+                <span class="text-[9px] font-mono text-purple-600 dark:text-purple-400 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-800 pb-3">❓ Frequently Asked Questions</span>
+                
+                <div class="space-y-4">
+                    <div class="border-b border-slate-100 dark:border-slate-800/80 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-800 dark:text-slate-200 group-hover:text-purple-500 dark:group-hover:text-purple-400 transition-colors">What is acceptable stick drift vs broken stick?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-medium text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Even brand-new factory controllers have slight mechanical centering tolerance. A resting offset between <strong>0.00 and 0.05 (0% to 5%)</strong> is completely normal and handled by default game deadzones. If your resting position exceeds 0.08 (8%) or jumps erratically without input, the potentiometer is severely degraded.
+                        </div>
+                    </div>
+
+                    <div class="border-b border-slate-100 dark:border-slate-800/80 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-800 dark:text-slate-200 group-hover:text-purple-500 dark:group-hover:text-purple-400 transition-colors">What is Circularity Error and why does it matter?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-medium text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Circularity error measures how closely your joystick's physical range of motion matches a true mathematical circle. High circularity error (above 15%) means the stick clips into a squircle or box, making diagonal aiming uneven and inconsistent in competitive FPS titles.
+                        </div>
+                    </div>
+
+                    <div class="border-b border-slate-100 dark:border-slate-800/80 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-800 dark:text-slate-200 group-hover:text-purple-500 dark:group-hover:text-purple-400 transition-colors">Can stick drift be caused by firmware or Bluetooth interference?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-medium text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Yes. Packet drop over congested 2.4GHz Bluetooth can cause the OS to hold the last received axis packet, creating a temporary phantom drift. Always test the gamepad via a direct USB cable first to verify whether the drift is physical hardware degradation or RF packet loss.
+                        </div>
+                    </div>
+
+                    <div class="pb-2">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-800 dark:text-slate-200 group-hover:text-purple-500 dark:group-hover:text-purple-400 transition-colors">Why do PS5 DualSense and Xbox controllers still use potentiometers?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-medium text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            ALPS potentiometers have been the mass-production component standard for 25+ years, costing console makers only ~$0.15 per module compared to ~$1.50+ for magnetic Hall-Effect assemblies. Additionally, console manufacturers sell first-party replacements, reducing economic incentive for permanent lifespan components.
+                        </div>
                     </div>
                 </div>
             </div>

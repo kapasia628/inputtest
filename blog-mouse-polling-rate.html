@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="canonical" href="https://inputtest.online/blog-mouse-polling-rate">
@@ -358,17 +358,103 @@
                     Mouse polling rate refers to how frequently your mouse reports its position to your computer. Expressed in Hertz (Hz), this rate directly determines how smooth your cursor movements are and how much latency exists between physical movement and on-screen response.
                 </p>
 
-                <div class="space-y-2.5 text-left">
-                    <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">1. USB Report Rates & Interface Bandwidth</h2>
-                    <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed">The reporting frequency determines the time interval between reports: 125Hz has an 8ms delay, 500Hz has 2ms, and 1000Hz has just 1ms. Make sure your gaming mouse is plugged into a USB 3.0 port or directly into your motherboard to avoid latency sharing with other USB peripherals.</p>
-                </div>
-                <div class="space-y-2.5 text-left">
-                    <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">2. Test Sensor Stability and Tracking</h2>
-                    <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed">Ensure any custom mouse software (like Logitech G Hub, Razer Synapse, or SteelSeries GG) is open and configured. Open our Mouse Tester, and move your cursor rapidly. Keep an eye on frequency spikes: a steady line indicates solid sensor stability, while large drops point to CPU throttling or driver conflicts.</p>
-                </div>
-                <div class="space-y-2.5 text-left">
-                    <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">3. Match Polling Rate with Monitor Hz</h2>
-                    <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed">If you use a high-refresh-rate monitor (144Hz, 240Hz, or 360Hz), a low mouse polling rate (125Hz) will make your cursor appear to skip and lag. Ensure your mouse is set to 1000Hz or higher so the cursor position reports align smoothly with the display refreshes.</p>
+                <div class="space-y-4 text-left text-xs sm:text-sm font-normal text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <p>
+                        In esports and high-tier competitive gaming, input latency is measured down to fractions of a millisecond. While mouse marketing heavily advertises astronomical DPI numbers (20,000 to 50,000 DPI), the true determinant of smooth tracking and instantaneous cursor response is the <strong>USB Polling Rate (measured in Hertz / Hz)</strong>.
+                    </p>
+                    <p>
+                        With the rise of 4,000Hz and 8,000Hz gaming mice, many gamers find that their frame rates drop or stutter when moving their mouse in games like Valorant, CS2, or Apex Legends. In this deep-dive technical guide, we break down how USB interrupt reporting works, why polling rate must scale with your monitor's refresh rate, and the hidden CPU bottleneck behind 8K polling.
+                    </p>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-2">
+                        1. Understanding USB Report Intervals &amp; Microsecond Latency
+                    </h2>
+                    <p>
+                        Your mouse is a USB HID (Human Interface Device) endpoint. Instead of constantly transmitting data, the USB host controller on your motherboard queries ("polls") the mouse for new movement coordinate packets at fixed time intervals:
+                    </p>
+                    <ul class="list-disc list-inside space-y-1.5 pl-1">
+                        <li><strong>125Hz (Office Default):</strong> 1 report every 8.0 milliseconds.</li>
+                        <li><strong>500Hz (Balanced):</strong> 1 report every 2.0 milliseconds.</li>
+                        <li><strong>1,000Hz (Esports Standard):</strong> 1 report every 1.0 millisecond (1,000 microseconds).</li>
+                        <li><strong>4,000Hz (Enthusiast):</strong> 1 report every 0.25 milliseconds (250 microseconds).</li>
+                        <li><strong>8,000Hz (Tournament Flagship):</strong> 1 report every 0.125 milliseconds (125 microseconds).</li>
+                    </ul>
+                    <p>
+                        A higher polling rate significantly compresses the temporal gap between physical hand motion and the game engine rendering that movement on screen.
+                    </p>
+
+                    <!-- Technical Polling Rate Comparison Table -->
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        2. Polling Frequency vs Latency &amp; System Overhead
+                    </h2>
+                    <div class="overflow-x-auto my-3">
+                        <table class="w-full text-left font-mono text-xs border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                            <thead class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                                <tr>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Polling Rate</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Report Interval</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Theoretical Latency</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">CPU Core Impact</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Recommended Display</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 text-slate-600 dark:text-slate-400">
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">125 Hz</td>
+                                    <td class="p-2.5">8,000 &mu;s</td>
+                                    <td class="p-2.5">8.0 ms</td>
+                                    <td class="p-2.5 text-slate-400">0.05%</td>
+                                    <td class="p-2.5">60 Hz Standard</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">500 Hz</td>
+                                    <td class="p-2.5">2,000 &mu;s</td>
+                                    <td class="p-2.5">2.0 ms</td>
+                                    <td class="p-2.5 text-slate-400">0.3%</td>
+                                    <td class="p-2.5">75 Hz &ndash; 120 Hz</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">1,000 Hz</td>
+                                    <td class="p-2.5">1,000 &mu;s</td>
+                                    <td class="p-2.5">1.0 ms</td>
+                                    <td class="p-2.5 text-blue-500 font-bold">1.0%</td>
+                                    <td class="p-2.5">144 Hz &ndash; 240 Hz</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">4,000 Hz</td>
+                                    <td class="p-2.5">250 &mu;s</td>
+                                    <td class="p-2.5">0.25 ms</td>
+                                    <td class="p-2.5 text-amber-500 font-bold">4.0% &ndash; 7.0%</td>
+                                    <td class="p-2.5">240 Hz &ndash; 360 Hz</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">8,000 Hz</td>
+                                    <td class="p-2.5">125 &mu;s</td>
+                                    <td class="p-2.5">0.125 ms</td>
+                                    <td class="p-2.5 text-purple-500 font-bold">8.0% &ndash; 15.0%</td>
+                                    <td class="p-2.5">360 Hz &ndash; 540 Hz</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        3. The 8000Hz Paradox: Why Games Stutter &amp; How to Fix It
+                    </h2>
+                    <p>
+                        Gamers who switch to an 8,000Hz mouse frequently experience massive in-game FPS drops whenever they flick their mouse. This occurs due to two technical bottlenecks:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 pl-1">
+                        <li><strong>DPI Saturation Rule:</strong> At 400 or 800 DPI, your mouse sensor does not register enough distinct movement counts per second to saturate 8,000 reports unless moving at absurdly high physical velocities. To feed an 8K polling pipeline with consistent packets, you must run at least <strong>1,600 to 3,200 DPI</strong> and lower your in-game sensitivity accordingly.</li>
+                        <li><strong>CPU Interrupt Storm:</strong> Delivering 8,000 hardware interrupts per second taxes the OS kernel scheduler. If a game runs on older engines with single-threaded raw input dispatchers, handling 8,000 interrupts starves the main render thread, causing micro-stutters. Modern games with "Raw Input Buffer" support (Valorant, CS2) handle 8K smoothly, but older titles require setting polling to 1,000Hz or 2,000Hz.</li>
+                    </ul>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        4. Matching Polling Rate with Monitor Refresh Rates
+                    </h2>
+                    <p>
+                        If you game on a 240Hz, 360Hz, or 540Hz esports monitor, a 125Hz office mouse will visually "teleport" across the screen because your monitor refreshes 2 to 4 times between every cursor coordinate update. Aligning with at least 1,000Hz ensures that for every rendered monitor frame, 2 to 4 fresh cursor coordinates are ready in memory, eliminating micro-jitter in fast panning.
+                    </p>
                 </div>
                 <!-- Interactive Call to Action Card -->
                 <div class="p-6 bg-gradient-to-br from-blue-600/10 to-indigo-600/10 dark:from-blue-600/20 dark:to-indigo-650/15 border-2 border-blue-500/30 rounded-3xl mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">

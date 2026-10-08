@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
@@ -338,6 +338,145 @@
                         <h4 class="text-xs font-bold text-slate-900 dark:text-white">MCHOSE Mix87 Esports Keyboard</h4>
                         <div class="text-xs font-bold text-emerald-500 mt-1">₹6,299</div>
                         <a href="https://www.banggood.in/MCHOSE-Mix87-Hall-Effect-Magnetic-Switch-Mechanical-Keyboard-with-Volume-Knob-ARGB-Light-Apollo-Switch-Customization-Wired-Esports-Gaming-Keyboard-p-2048150.html?ID=62878306340230&warehouse=CN&p=F2270779039935202609&custlinkid=5290385" target="_blank" rel="sponsored nofollow noopener" class="inline-block mt-2 px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold">Buy Now &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        <!-- COMPREHENSIVE TECHNICAL DIAGNOSTIC GUIDE & FAQ ACCORDION -->
+        <section class="mb-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start select-none">
+            
+            <!-- Left 7-Column: Deep Technical Guide -->
+            <div class="lg:col-span-7 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 sm:p-10 shadow-sm backdrop-blur-md space-y-6">
+                <span class="text-[9px] font-mono text-blue-600 dark:text-blue-400 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-800 pb-3 mb-6">📚 Engineering Manual & Diagnostic Guide</span>
+                
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                    Understanding Key Chatter, Contact Bounce, & Switch Debouncing
+                </h2>
+                
+                <div class="text-xs sm:text-sm font-normal text-slate-600 dark:text-slate-400 space-y-5 leading-relaxed">
+                    <p>
+                        <strong>Key chatter</strong> (also referred to as switch bounce or key double-typing) is one of the most frustrating defects in mechanical keyboards. It manifests when a single physical keypress registers twice or more in rapid succession (e.g., typing <em>"ttoool"</em> instead of <em>"tool"</em>). While it feels like a software glitch, it is fundamentally an electromechanical phenomenon rooted in metal contact physics.
+                    </p>
+                    
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white pt-2 font-mono flex items-center gap-2">
+                        ⚡ The Electromechanical Physics of Switch Chatter
+                    </h3>
+                    <p>
+                        In a traditional mechanical keyboard switch (such as Cherry MX, Gateron, or Outemu), two gold-plated copper alloy contact leaves collide when the plastic stem is pressed downwards. Because metal has elasticity, these contact leaves do not immediately lock together upon impact; they physically bounce against each other for a brief interval of <strong>1 to 5 milliseconds</strong> before settling into continuous electrical conduction.
+                    </p>
+                    <p>
+                        Keyboard microcontrollers utilize a firmware routine called <strong>debounce filtering</strong> to ignore any voltage oscillations that occur within this settling window. However, when dust, hair, moisture, or copper oxide accumulates on the contact surfaces, or when the leaf spring undergoes metal fatigue, the contact bounce duration exceeds the microcontroller's debounce threshold (often 5ms–10ms). The microcontroller interprets the extended oscillation as multiple distinct keypresses, causing key chatter.
+                    </p>
+
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white pt-2 font-mono flex items-center gap-2">
+                        📊 Switch Architecture Comparison: Chatter Vulnerability
+                    </h3>
+                    <p>
+                        Not all switches are equally susceptible to contact bounce. Modern keyboards employ three major switch architectures:
+                    </p>
+
+                    <!-- Technical Comparison Table -->
+                    <div class="overflow-x-auto my-4">
+                        <table class="w-full text-left font-mono text-xs border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                            <thead class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                                <tr>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Architecture</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Actuation Method</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Debounce Delay</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Chatter Risk</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Lifespan</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 text-slate-600 dark:text-slate-400">
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">Traditional Mechanical</td>
+                                    <td class="p-2.5">Metal leaf contact</td>
+                                    <td class="p-2.5">5ms &ndash; 15ms</td>
+                                    <td class="p-2.5 text-amber-500 font-bold">High (oxidation)</td>
+                                    <td class="p-2.5">50M Clicks</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">Optical Microswitch</td>
+                                    <td class="p-2.5">Infrared light beam</td>
+                                    <td class="p-2.5">0.2ms (Near-Zero)</td>
+                                    <td class="p-2.5 text-emerald-500 font-bold">Immune</td>
+                                    <td class="p-2.5">100M Clicks</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">Magnetic Hall Effect</td>
+                                    <td class="p-2.5">Magnetic flux density</td>
+                                    <td class="p-2.5">0.1ms (Analog)</td>
+                                    <td class="p-2.5 text-emerald-500 font-bold">Immune</td>
+                                    <td class="p-2.5">150M+ Clicks</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">Membrane / Scissor</td>
+                                    <td class="p-2.5">Conductive carbon pad</td>
+                                    <td class="p-2.5">10ms &ndash; 20ms</td>
+                                    <td class="p-2.5 text-blue-500 font-bold">Low (dome tear)</td>
+                                    <td class="p-2.5">5M &ndash; 10M Clicks</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white pt-2 font-mono flex items-center gap-2">
+                        🛠️ Step-by-Step Guide to Fixing Keyboard Key Chatter at Home
+                    </h3>
+                    <p>
+                        Before throwing away an expensive keyboard or desoldering switches, follow this proven sequential repair workflow:
+                    </p>
+                    <ol class="list-decimal list-inside space-y-2.5 pl-1">
+                        <li><strong>High-Pressure Dust Purge:</strong> Unplug the keyboard, pull off the keycap using a wire keycap puller, depress the switch stem, and use compressed air at a 45-degree angle to dislodge debris trapped inside the leaf chamber.</li>
+                        <li><strong>99% Isopropyl Alcohol Flush:</strong> If contact oxidation is the culprit, apply 2 drops of high-purity (99% or 91%) Isopropyl Alcohol (IPA) directly into the depressed switch stem. Rapidly cycle the key 50–80 times to break down tarnish. Allow 45 minutes for the solvent to evaporate completely before reconnecting power.</li>
+                        <li><strong>Hot-Swap Switch Replacement:</strong> If your board has hot-swap sockets (Kailh or Gateron CIY), use a switch puller to extract the faulty unit and pop in a fresh $0.30 replacement switch.</li>
+                        <li><strong>Firmware Debounce Configuration:</strong> If using QMK, VIA, or OEM software (Wooting, Razer Synapse, Keychron Engine), raise your debounce filter threshold from 2ms up to 8ms–10ms. This masks the leaf bounce without noticeable input latency in everyday typing.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Right 5-Column: Interactive FAQ Accordion -->
+            <div class="lg:col-span-5 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 sm:p-10 shadow-sm backdrop-blur-md space-y-6">
+                <span class="text-[9px] font-mono text-emerald-600 dark:text-emerald-400 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-800 pb-3">❓ Frequently Asked Questions</span>
+                
+                <div class="space-y-4">
+                    <div class="border-b border-slate-100 dark:border-slate-800/80 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">What threshold indicates real key chatter vs fast typing?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-medium text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Human finger muscles physically cannot tap the same key twice in less than 40 to 50 milliseconds (even professional gamers top out around 60ms–70ms). If our diagnostic tester detects consecutive keydown events on the identical keycode within 10ms to 35ms, it is a 100% confirmed mechanical contact bounce anomaly.
+                        </div>
+                    </div>
+
+                    <div class="border-b border-slate-100 dark:border-slate-800/80 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Can Windows Filter Keys fix key chatter?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-medium text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Yes! In Windows Settings &gt; Accessibility &gt; Keyboard, enabling "Filter Keys" and configuring "Bounce Keys" instructs Windows to ignore keystrokes repeated within a user-defined window (e.g., 0.5s). While effective for typists, it can cause input lag in competitive gaming.
+                        </div>
+                    </div>
+
+                    <div class="border-b border-slate-100 dark:border-slate-800/80 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Does contact cleaner (like WD-40 Specialist) ruin switches?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-medium text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Never use standard WD-40 multi-use lubricant (it dissolves plastic housing and leaves sticky conductive residue). Only use dedicated <em>WD-40 Specialist Electrical Contact Cleaner</em> or high-grade 99% Isopropyl Alcohol, as they leave zero residue and evaporate cleanly without degrading switch plastics.
+                        </div>
+                    </div>
+
+                    <div class="pb-2">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Why are Magnetic Hall Effect keyboards completely chatter-free?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-medium text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Magnetic Hall Effect switches (such as Wooting Lekker or Gateron Magnetic) contain zero physical electrical contact leaves. Instead, a permanent magnet on the stem moves closer to a PCB sensor, which measures continuous magnetic field voltage. Because there are no physical metal leaves to collide or bounce, electrical chatter is physically impossible.
+                        </div>
                     </div>
                 </div>
             </div>

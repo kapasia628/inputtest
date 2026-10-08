@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="canonical" href="https://inputtest.online/blog-monitor-hz">
@@ -364,17 +364,105 @@
                 </p>
 
                 
-                <div class="space-y-2.5 text-left">
-                    <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">1. Check Display Settings in Windows/macOS</h2>
-                    <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed">In Windows, go to Settings -> System -> Display -> Advanced Display. Under "Choose a refresh rate," check if your monitor is set to its maximum capacity. In macOS, go to System Settings -> Displays, and verify the Refresh Rate dropdown is set to the highest supported frequency.</p>
-                </div>
-                <div class="space-y-2.5 text-left">
-                    <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">2. Verify Cable Bandwidth (HDMI vs DisplayPort)</h2>
-                    <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed">Not all cables support high resolutions and refresh rates simultaneously. Older HDMI 1.4 cables are capped at 1080p @ 120Hz or 4K @ 30Hz. To run 144Hz or 240Hz at 1440p or 4K, you must use a DisplayPort 1.4, DisplayPort 2.0, or an HDMI 2.1 cable connected to a compatible port.</p>
-                </div>
-                <div class="space-y-2.5 text-left">
-                    <h2 class="text-xl font-bold text-slate-900 dark:text-white tracking-tight">3. Configure GPU Driver Settings</h2>
-                    <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 leading-relaxed">Sometimes the display refresh rate is capped in your graphics card control panel. Right-click your desktop, open NVIDIA Control Panel or AMD Software, go to Display -> Resolution settings, and verify the refresh rate under the PC resolution section is set to its native high value.</p>
+                <div class="space-y-4 text-left text-xs sm:text-sm font-normal text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <p>
+                        Upgrading to a high refresh rate gaming monitor (144Hz, 240Hz, 360Hz, or 540Hz OLED) is one of the single most dramatic visual enhancements a PC gamer can make. Cursor movement becomes fluid as water, motion blur dissipates, and tracking fast-moving targets in competitive FPS games becomes effortless.
+                    </p>
+                    <p>
+                        Yet surveys consistently reveal a shocking statistic: <strong>over 25% of gamers who buy a high-refresh-rate monitor run it at 60Hz for months or years without knowing it</strong>. Modern operating systems frequently default new display connections to baseline 60Hz safety profiles. Furthermore, using outdated video cables, incorrect port assignments, or mismatched GPU driver resolution profiles silently caps refresh rates.
+                    </p>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-2">
+                        1. Refresh Rate (Hz) vs Frame Rate (FPS): The Critical Difference
+                    </h2>
+                    <p>
+                        Before diagnosing cable bandwidth, you must understand the distinction between hardware refresh rate and software frame generation:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 pl-1">
+                        <li><strong>Frame Rate (FPS):</strong> Generated entirely by your GPU and CPU. It represents how many raw image frames your rendering engine calculates per second.</li>
+                        <li><strong>Refresh Rate (Hz):</strong> Dictated by your physical monitor's display panel controller. It represents how many times per second the liquid crystals, OLED diodes, or phosphors physically illuminate a fresh frame.</li>
+                    </ul>
+                    <p>
+                        If your graphics card renders 300 FPS in Counter-Strike 2, but your monitor is running at 60Hz, your physical eyes are only witnessing 60 frames every second. The remaining 240 frames are discarded, creating tearing artifacts rather than true motion clarity.
+                    </p>
+
+                    <!-- Technical Display Cable Bandwidth Table -->
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        2. Cable Bandwidth Limits: HDMI vs DisplayPort Standard Matrix
+                    </h2>
+                    <p>
+                        High refresh rates require billions of bits of raw video data per second. If your cable lacks sufficient bandwidth, the operating system simply will not display high-refresh options in settings:
+                    </p>
+                    <div class="overflow-x-auto my-3">
+                        <table class="w-full text-left font-mono text-xs border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                            <thead class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                                <tr>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Cable Interface</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Max Raw Bandwidth</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Max 1080p Cap</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Max 1440p Cap</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Max 4K Cap</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 text-slate-600 dark:text-slate-400">
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">HDMI 1.4</td>
+                                    <td class="p-2.5">10.2 Gbps</td>
+                                    <td class="p-2.5">144 Hz (8-bit)</td>
+                                    <td class="p-2.5 text-amber-500 font-bold">75 Hz</td>
+                                    <td class="p-2.5 text-amber-500 font-bold">30 Hz</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">HDMI 2.0</td>
+                                    <td class="p-2.5">18.0 Gbps</td>
+                                    <td class="p-2.5">240 Hz</td>
+                                    <td class="p-2.5">144 Hz</td>
+                                    <td class="p-2.5">60 Hz</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">DisplayPort 1.4 (HBR3)</td>
+                                    <td class="p-2.5">32.4 Gbps</td>
+                                    <td class="p-2.5">360 Hz</td>
+                                    <td class="p-2.5">240 Hz</td>
+                                    <td class="p-2.5 text-blue-500 font-bold">144 Hz (DSC)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">HDMI 2.1 (FRL6)</td>
+                                    <td class="p-2.5">48.0 Gbps</td>
+                                    <td class="p-2.5">540 Hz</td>
+                                    <td class="p-2.5">360 Hz</td>
+                                    <td class="p-2.5 text-emerald-500 font-bold">144 Hz (Native)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">DisplayPort 2.1 (UHBR20)</td>
+                                    <td class="p-2.5">80.0 Gbps</td>
+                                    <td class="p-2.5">540 Hz+</td>
+                                    <td class="p-2.5">500 Hz</td>
+                                    <td class="p-2.5 text-emerald-500 font-bold">240 Hz (Native)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        3. How to Unlock Native High Refresh Rates in Windows &amp; macOS
+                    </h2>
+                    <p>
+                        Follow these sequential steps to ensure your hardware is fully configured for maximum refresh rate:
+                    </p>
+                    <ol class="list-decimal list-inside space-y-2.5 pl-1">
+                        <li><strong>Windows Advanced Display Settings:</strong> Open Windows Settings &gt; System &gt; Display &gt; <em>Advanced display</em>. Under "Choose a refresh rate", click the dropdown and select the maximum value (e.g., 144Hz, 240Hz). If it only shows 60Hz, proceed to step 2.</li>
+                        <li><strong>NVIDIA Control Panel "PC" vs "Ultra HD" Trap:</strong> Right-click your desktop and open <em>NVIDIA Control Panel</em> &gt; <em>Change resolution</em>. Scroll past the top section labeled "Ultra HD, HD, SD" down to the section titled <strong>"PC"</strong>. Select your native resolution here; this unlocks the high-frequency refresh rate dropdown menu.</li>
+                        <li><strong>Plug into Dedicated GPU (Not Motherboard):</strong> Verify your video cable is connected to your discrete graphics card (NVIDIA GeForce or AMD Radeon) at the bottom rear of your PC case, NOT the motherboard HDMI port near the USB ports. Motherboard outputs use integrated CPU graphics which are often restricted to 60Hz.</li>
+                        <li><strong>Verify DisplayPort Over HDMI:</strong> High-refresh gaming monitors almost always reserve their highest bandwidth for DisplayPort connections. If your monitor included a DisplayPort cable in the box, always prefer DisplayPort over standard HDMI.</li>
+                    </ol>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        4. Detecting Frame Skipping with High-Speed Cameras
+                    </h2>
+                    <p>
+                        Some budget high-refresh monitors suffer from internal scalar defects known as <strong>frame skipping</strong>. The monitor claims to accept a 144Hz signal, but internally drops every other frame, effectively displaying 72Hz. To test for frame skipping: launch our online display motion benchmark, switch your smartphone camera to Slow-Motion (120fps or 240fps), and record the screen for 5 seconds. If all moving visual squares illuminate sequentially without missing gaps, your panel is running true native high refresh rates.
+                    </p>
                 </div>
 
                 <!-- Interactive Call to Action Card -->

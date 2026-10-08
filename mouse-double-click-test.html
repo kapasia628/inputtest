@@ -350,6 +350,156 @@
                     </div>
                 </div>
             </div>
+        <!-- COMPREHENSIVE TECHNICAL DIAGNOSTIC GUIDE & FAQ ACCORDION -->
+        <section class="mb-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start select-none">
+            
+            <!-- Left 7-Column: Deep Technical Guide -->
+            <div class="lg:col-span-7 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 sm:p-10 shadow-sm backdrop-blur-md space-y-6">
+                <span class="text-[9px] font-mono text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-800 pb-3 mb-6">📚 Engineering Manual & Diagnostic Guide</span>
+                
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                    Why Mouse Switches Double-Click: The Anatomy of Microswitch Degradation
+                </h2>
+                
+                <div class="text-xs sm:text-sm font-normal text-slate-600 dark:text-slate-400 space-y-5 leading-relaxed">
+                    <p>
+                        A mouse that registers an unwanted double-click when you click once is one of the most disruptive hardware failures in computing. It causes accidental file moves, dragged windows closing unexpectedly, and disastrous misfires in games. While many users assume their mouse software is corrupt, the root cause is almost always <strong>electromechanical degradation of the microswitch contact leaf</strong>.
+                    </p>
+                    
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white pt-2 font-mono flex items-center gap-2">
+                        🔬 How Mechanical Microswitches Work (and Why They Fail)
+                    </h3>
+                    <p>
+                        Standard mechanical gaming mice utilize sub-miniature snap-action microswitches (such as the classic Omron D2FC series). Inside the switch housing sits a tiny curved spring stamped from a beryllium-copper alloy. When you depress the mouse button, this leaf spring snaps downward, driving a silver or gold-plated contact pad against a stationary terminal.
+                    </p>
+                    <p>
+                        Two primary degradation modes trigger the double-click defect:
+                    </p>
+                    <ul class="list-disc list-inside space-y-1.5 pl-1">
+                        <li><strong>Spring Metal Fatigue &amp; Plastic Deformation:</strong> Over tens of millions of actuations, the copper leaf loses its tension. When released, it no longer separates cleanly; instead, it chatters against the stationary terminal, generating secondary electrical pulses.</li>
+                        <li><strong>Fretting Corrosion &amp; Contact Oxidation:</strong> Low operating voltages in modern wireless mice (3.3V or lower) lack the electrical wetting current needed to burn away microscopic oxide layers. When contact resistance increases, micro-arcing occurs, creating erratic voltage spikes that trip the microcontroller multiple times.</li>
+                    </ul>
+
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white pt-2 font-mono flex items-center gap-2">
+                        📊 Popular Mouse Microswitches: Longevity & Debounce Ratings
+                    </h3>
+                    <p>
+                        Here is an engineering breakdown of popular switch models benchmarked for contact stability and double-click resistance:
+                    </p>
+
+                    <!-- Technical Comparison Table -->
+                    <div class="overflow-x-auto my-4">
+                        <table class="w-full text-left font-mono text-xs border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                            <thead class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                                <tr>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Switch Model</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Mechanism</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Operating Force</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Durability</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Double-Click Resistance</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 text-slate-600 dark:text-slate-400">
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">Omron D2FC-F-7N (20M)</td>
+                                    <td class="p-2.5">Mechanical Copper</td>
+                                    <td class="p-2.5">60gf &plusmn; 15</td>
+                                    <td class="p-2.5">20 Million</td>
+                                    <td class="p-2.5 text-amber-500 font-bold">Moderate (high wear)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">Kailh GM 8.0 Black Mamba</td>
+                                    <td class="p-2.5">Mechanical 24K Gold</td>
+                                    <td class="p-2.5">65gf &plusmn; 10</td>
+                                    <td class="p-2.5">80 Million</td>
+                                    <td class="p-2.5 text-blue-500 font-bold">High (corrosion-proof)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">Huano Blue Shell Pink Dot</td>
+                                    <td class="p-2.5">Silver Alloy Contacts</td>
+                                    <td class="p-2.5">70gf &plusmn; 10</td>
+                                    <td class="p-2.5">80 Million</td>
+                                    <td class="p-2.5 text-blue-500 font-bold">High (crisp snap)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">TTC Gold Dustproof 80M</td>
+                                    <td class="p-2.5">Dustproof Mechanical</td>
+                                    <td class="p-2.5">60gf &plusmn; 15</td>
+                                    <td class="p-2.5">80 Million</td>
+                                    <td class="p-2.5 text-blue-500 font-bold">Very High</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-900 dark:text-white">Razer Optical Gen-3 / LK</td>
+                                    <td class="p-2.5">Infrared Optical Shutter</td>
+                                    <td class="p-2.5">65gf &plusmn; 10</td>
+                                    <td class="p-2.5">90 Million</td>
+                                    <td class="p-2.5 text-emerald-500 font-bold">100% Immune</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white pt-2 font-mono flex items-center gap-2">
+                        🛠️ 4 Effective Ways to Fix Mouse Double-Clicking
+                    </h3>
+                    <p>
+                        Depending on your technical expertise and mouse model, several solutions can resolve or mitigate double-clicking:
+                    </p>
+                    <ol class="list-decimal list-inside space-y-2.5 pl-1">
+                        <li><strong>Raise Debounce Delay in Software:</strong> Many gaming mouse companion apps (Logitech G HUB, Razer Synapse, Glorious Core, Pulsar Fusion) allow configuring debounce time. Increasing debounce from 2ms or 4ms up to <strong>8ms–12ms</strong> instructs the MCU to ignore late bounce pulses, eliminating the defect without hardware disassembly.</li>
+                        <li><strong>Use InputTest ClickShield™ Fixer:</strong> If your mouse driver does not provide debounce sliders, our lightweight desktop background utility (<a href="/software" class="text-cyan-500 underline font-bold">ClickShield™</a>) intercepts Windows mouse events at the OS driver level and filters out unintended sub-60ms duplicate clicks.</li>
+                        <li><strong>Clean with 99% Isopropyl Alcohol:</strong> Open the mouse casing, unclip the tiny plastic cover of the microswitch using a needle, and clean the metal contact pad with an IPA-soaked swab to dissolve accumulated oxidation.</li>
+                        <li><strong>Switch to Optical Mice:</strong> Optical switches use an infrared light shutter instead of touching metal leaves. Because no physical electrical contact takes place, optical mice are physically incapable of ever developing the double-click issue.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Right 5-Column: Interactive FAQ Accordion -->
+            <div class="lg:col-span-5 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-8 sm:p-10 shadow-sm backdrop-blur-md space-y-6">
+                <span class="text-[9px] font-mono text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-extrabold block border-b border-slate-100 dark:border-slate-800 pb-3">❓ Frequently Asked Questions</span>
+                
+                <div class="space-y-4">
+                    <div class="border-b border-slate-100 dark:border-slate-800/80 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-800 dark:text-slate-200 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors">How does this online tester detect double-clicks?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-medium text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Our diagnostic engine timestamps every mouse down and mouse up event using the browser's High Resolution Time API (<code class="font-mono text-cyan-500">performance.now()</code>). If two consecutive click events occur within your chosen debounce threshold (default 80ms) without sufficient finger release interval, the test records and displays an amber warning flag.
+                        </div>
+                    </div>
+
+                    <div class="border-b border-slate-100 dark:border-slate-800/80 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-800 dark:text-slate-200 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors">Can static electricity cause mouse double clicking?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-medium text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Yes! In dry winter environments or on synthetic mousepads, electrostatic charge accumulates in wireless mice. A classic technician trick is to turn off the mouse, remove the battery, and click both buttons rapidly for 60 seconds to completely discharge internal capacitor capacitance.
+                        </div>
+                    </div>
+
+                    <div class="border-b border-slate-100 dark:border-slate-800/80 pb-4">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-800 dark:text-slate-200 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors">Is double-clicking covered under mouse warranty?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-medium text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Almost all major manufacturers (Logitech, Razer, SteelSeries, Corsair) cover switch chatter and premature double-clicking within their standard 1 to 2-year warranty period. You can export a certified diagnostic test log from our tool as timestamped proof for your warranty RMA ticket.
+                        </div>
+                    </div>
+
+                    <div class="pb-2">
+                        <button class="faq-btn w-full flex items-center justify-between text-left focus:outline-none group">
+                            <span class="text-xs font-extrabold text-slate-800 dark:text-slate-200 group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors">Why don't optical mouse switches double-click?</span>
+                            <span class="faq-icon text-[10px] text-slate-400 font-bold transition-transform duration-200 ml-2">➕</span>
+                        </button>
+                        <div class="faq-answer hidden text-xs font-medium text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+                            Optical switches replace the physical metal electrical contact leaf with an internal infrared LED and photodetector. When you click, a physical shutter interrupts or exposes the light beam. Because actuation is light-driven, there are no metal surfaces to bounce, oxidize, or wear out electrically.
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
     </main>
