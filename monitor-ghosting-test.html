@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/monitor-ghosting-test">
+    <script>
+        // Inline theme helper to avoid UI flash of light theme
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>Monitor Ghosting & Motion Blur UFO Tester | InputTest</title>
+    <meta name="description" content="Free online monitor ghosting and pixel response time tester. Measure display motion blur, inverse overshoot, VA black smearing, and GtG response at 60Hz, 144Hz, 240Hz, and 360Hz online.">
+    <meta name="keywords" content="monitor ghosting test, motion blur test online, ufo test alternative, pixel response time test, gtg test, inverse ghosting test, oled black smear test, 144hz ghosting test, 240hz motion test">
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/monitor-ghosting-test">
+    <meta property="og:title" content="Monitor Ghosting & Motion Blur UFO Tester | InputTest">
+    <meta property="og:description" content="Free online monitor ghosting and pixel response time tester. Measure display motion blur, inverse overshoot, VA black smearing, and GtG response at 60Hz, 144Hz, 240Hz, and 360Hz.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/monitor-ghosting-test">
+    <meta name="twitter:title" content="Monitor Ghosting & Motion Blur UFO Tester | InputTest">
+    <meta name="twitter:description" content="Test monitor ghosting, motion blur, and overdrive pixel overshoot online at 60Hz, 144Hz, 240Hz, and 360Hz with zero download.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- JSON-LD Structured Data: WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Monitor Ghosting & Motion Blur UFO Tester",
+      "url": "https://inputtest.online/monitor-ghosting-test",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5 Canvas.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "High-precision browser benchmark to test monitor ghosting, motion blur, pixel response time (GtG), inverse overdrive overshoot, and VA panel black smearing."
+    }
+    </script>
+
+    <!-- JSON-LD FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is monitor ghosting and what causes it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Monitor ghosting is a visual artifact where moving objects leave a faint, blurry trail or clone behind them on the screen. It is caused by slow pixel response time (GtG - Grey-to-Grey), where liquid crystals cannot shift color fast enough to keep up with the monitor's refresh rate."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is inverse ghosting or pixel overshoot?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Inverse ghosting (also known as pixel overshoot or coronas) creates a bright white or glowing trail ahead or behind moving objects. It happens when the monitor's Overdrive setting is pushed too high, applying excessive voltage that overshoots the target color."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is ghosting worse on VA panels compared to IPS or OLED?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "VA (Vertical Alignment) panels have deep contrast ratios, but their liquid crystals rotate significantly slower when transitioning from deep black to dark grey. This delay causes notorious 'black smearing', which is practically absent on Fast IPS and completely non-existent on 0.03ms OLED displays."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I fix or reduce ghosting on my gaming monitor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1. Open your monitor's OSD physical buttons and tune the 'Overdrive' or 'Response Time' setting to 'Fast' or 'Normal' (avoid 'Fastest/Extreme' to eliminate overshoot). 2. Ensure your monitor is running at its maximum refresh rate (e.g., 144Hz or 240Hz). 3. Enable strobing technologies like ULMB, DyAc, or ELMB if available. 4. Use DisplayPort 1.4 or HDMI 2.1 cables."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://inputtest.online/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Monitor Ghosting Test",
+          "item": "https://inputtest.online/monitor-ghosting-test"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            850: '#151f32',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 90% 40%, rgba(59, 130, 246, 0.03) 0%, transparent 40%);
+        }
+        .dark .glow-bg {
+            background-color: #0b0f19 !important;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%) !important;
+        }
+        .canvas-shadow {
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.35);
+        }
+    </style>
+
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2485510445228691" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-2485510445228691">
+
+    <!-- Microsoft Clarity Tracking Code -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ynfnjomkxs");
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg relative overflow-x-hidden transition-colors duration-300">
+
+    <!-- MAIN NAVIGATION HEADER -->
+    <header class="sticky top-0 z-50 bg-white/90 dark:bg-[#070b14]/90 border-b border-slate-200/80 dark:border-slate-800/80 backdrop-blur-xl transition-all duration-200 shadow-xs dark:shadow-none">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 gap-3">
+                
+                <!-- Brand Logo -->
+                <div class="flex items-center gap-3 shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none" aria-label="InputTest.online Home">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-200">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Clean Navigation Links -->
+                <nav class="hidden lg:flex items-center gap-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                    <a href="/keyboard" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">Keyboard</a>
+                    <a href="/mouse" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">Mouse</a>
+                    <a href="/display" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">Display Hz</a>
+                    <a href="/monitor-ghosting-test" class="px-3 py-2 rounded-xl text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 font-bold transition-colors">UFO Ghosting</a>
+                    <a href="/scroll-test" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">Scroll Jump</a>
+                    <a href="/gamepad" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">Gamepad</a>
+
+                    <!-- More Tools Mega Dropdown -->
+                    <div class="relative group">
+                        <button id="nav-dropdown-btn" class="flex items-center gap-1.5 px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors focus:outline-none cursor-pointer">
+                            <span>More Tools</span>
+                            <svg class="h-3 w-3 text-slate-400 group-hover:rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50" style="width: 480px;">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4">
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div class="col-span-2 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1 mb-1 border-b border-slate-100 dark:border-slate-800">
+                                        Audio &amp; Display Diagnostics
+                                    </div>
+                                    <a href="/mic" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">🎙️</span><span>Microphone Test</span>
+                                    </a>
+                                    <a href="/sound" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">🔊</span><span>Stereo Speakers</span>
+                                    </a>
+                                    <a href="/webcam" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">📷</span><span>Webcam Quality</span>
+                                    </a>
+                                    <a href="/latency" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">⚡</span><span>Bluetooth Latency</span>
+                                    </a>
+
+                                    <div class="col-span-2 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pt-2 pb-1 mb-1 border-b border-slate-100 dark:border-slate-800">
+                                        Performance &amp; Hardware Ports
+                                    </div>
+                                    <a href="/mouse-polling-rate" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">⚡</span><span>Polling Rate 8000Hz</span>
+                                    </a>
+                                    <a href="/cps-test" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">⚡</span><span>CPS Click Tester</span>
+                                    </a>
+                                    <a href="/typing" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">⌨️</span><span>Typing Speed WPM</span>
+                                    </a>
+                                    <a href="/battery" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">🔋</span><span>Battery Health</span>
+                                    </a>
+                                </div>
+                                <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+                                    <a href="/report" class="flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 text-xs font-bold hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors">
+                                        <span>🛡️</span><span>Generate Certified Hardware Report</span><span>&rarr;</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Actions: Search + Theme Toggle + Mobile Menu -->
+                <div class="flex items-center gap-2 shrink-0">
+                    <div class="relative hidden sm:block">
+                        <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400">
+                            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        <input id="nav-search-bar" type="text" placeholder="Search module..." 
+                               class="w-36 md:w-44 bg-slate-100/90 dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 focus:border-blue-500 rounded-xl py-1.5 pl-8 pr-7 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all">
+                        <div class="absolute inset-y-0 right-0 pr-1.5 flex items-center pointer-events-none">
+                            <kbd class="text-[9px] font-mono text-slate-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-1 py-0.2 rounded shadow-2xs">⌘K</kbd>
+                        </div>
+                        <div id="search-dropdown-panel" class="hidden absolute right-0 top-11 w-72 bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-2 z-50 max-h-72 overflow-y-auto space-y-1"></div>
+                    </div>
+
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0c1220] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none cursor-pointer" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <!-- Mobile Hamburger -->
+                    <button id="mobile-menu-toggle" class="p-2 lg:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0c1220] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none cursor-pointer" aria-label="Open mobile menu">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <nav id="mobile-nav-panel" class="hidden lg:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#070b14]/95 backdrop-blur-xl px-4 py-4 space-y-3 shadow-2xl">
+            <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+                <a href="/keyboard" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⌨️ Keyboard</a>
+                <a href="/mouse" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🖱️ Mouse</a>
+                <a href="/display" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">📺 Display Hz</a>
+                <a href="/monitor-ghosting-test" class="p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/50 border border-blue-300 dark:border-blue-800 text-blue-600 dark:text-blue-400 flex items-center gap-2 font-bold">🛸 UFO Ghosting</a>
+                <a href="/scroll-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🔄 Scroll Jump</a>
+                <a href="/gamepad" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎮 Gamepad</a>
+                <a href="/mic" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎙️ Microphone</a>
+                <a href="/sound" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🔊 Speakers</a>
+                <a href="/webcam" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">📷 Webcam</a>
+                <a href="/report" class="col-span-2 p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400 font-bold text-center flex items-center justify-center gap-2">
+                    🛡️ Certified Hardware PDF Report
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+        <!-- Hero Header -->
+        <div class="text-center max-w-3xl mx-auto mb-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-mono font-bold border border-blue-500/20 mb-3">
+                <span class="w-2 h-2 rounded-full bg-blue-500 animate-ping"></span>
+                DISPLAY RESPONSE TIME &amp; PURSUIT BENCHMARK
+            </div>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                Monitor Ghosting &amp; <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">Motion Blur UFO Tester</span>
+            </h1>
+            <p class="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 font-medium">
+                Benchmark pixel response time (GtG), inverse overdrive overshoot, and VA black smearing in pure client-side 60Hz, 144Hz, 240Hz, and 360Hz refresh cycles.
+            </p>
+        </div>
+
+        <!-- Live Refresh Telemetry Pill Row -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto mb-6">
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                <span class="text-[10px] font-mono font-bold uppercase text-slate-400 tracking-wider">Detected Refresh Rate</span>
+                <div id="stat-refresh-rate" class="text-2xl font-black text-blue-600 dark:text-blue-400 mt-0.5">-- Hz</div>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                <span class="text-[10px] font-mono font-bold uppercase text-slate-400 tracking-wider">Frame Render Time</span>
+                <div id="stat-frame-time" class="text-2xl font-black text-slate-800 dark:text-slate-200 mt-0.5 font-mono">-- ms</div>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                <span class="text-[10px] font-mono font-bold uppercase text-slate-400 tracking-wider">Estimated MPRT Blur</span>
+                <div id="stat-mprt" class="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-0.5 font-mono">-- ms</div>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                <span class="text-[10px] font-mono font-bold uppercase text-slate-400 tracking-wider">Frame Sync Purity</span>
+                <div id="stat-sync-status" class="text-2xl font-black text-emerald-500 mt-0.5 font-mono">100%</div>
+            </div>
+        </div>
+
+        <!-- UFO Canvas Control Bar -->
+        <div class="max-w-5xl mx-auto mb-3 flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-xs font-mono font-bold text-slate-500 uppercase">Background:</span>
+                <button class="bg-opt-btn px-2.5 py-1 rounded-lg text-xs font-bold border transition-all bg-slate-900 text-white border-blue-500" data-bg="#0b1329">Navy (Default)</button>
+                <button class="bg-opt-btn px-2.5 py-1 rounded-lg text-xs font-bold border transition-all bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-blue-500" data-bg="#808080">Gray (GtG 128)</button>
+                <button class="bg-opt-btn px-2.5 py-1 rounded-lg text-xs font-bold border transition-all bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-blue-500" data-bg="#000000">Black (VA Smear)</button>
+                <button class="bg-opt-btn px-2.5 py-1 rounded-lg text-xs font-bold border transition-all bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-blue-500" data-bg="#ffffff">White</button>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <label class="text-xs font-bold text-slate-600 dark:text-slate-300 flex items-center gap-1.5 cursor-pointer select-none">
+                    <input id="toggle-pursuit-grid" type="checkbox" checked class="rounded text-blue-600 focus:ring-0">
+                    <span>Pursuit Sync Markers</span>
+                </label>
+                <button id="fullscreen-btn" class="px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors flex items-center gap-1">
+                    <span>⛶</span> Fullscreen
+                </button>
+            </div>
+        </div>
+
+        <!-- MAIN UFO BENCHMARK CANVAS CONTAINER -->
+        <div id="canvas-wrapper" class="max-w-5xl mx-auto rounded-3xl overflow-hidden border-2 border-slate-300 dark:border-slate-700 shadow-2xl relative bg-[#0b1329] select-none">
+            
+            <!-- Canvas Object -->
+            <canvas id="ufo-canvas" class="w-full h-[440px] block cursor-crosshair"></canvas>
+
+            <!-- Bottom Speed Legend Strip -->
+            <div class="absolute bottom-0 inset-x-0 bg-slate-950/80 backdrop-blur-md px-4 py-2 border-t border-slate-800 flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-400">
+                <div class="flex items-center gap-4">
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span> Track 1: 960 px/sec (Fast Gaming)</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Track 2: 480 px/sec (Standard Motion)</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span> Track 3: 240 px/sec (Slow Pan)</span>
+                </div>
+                <div class="text-slate-500 hidden sm:block">
+                    Look directly at the UFO alien eyes as it passes
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Motion Evaluation & Diagnostic Tool -->
+        <div class="max-w-5xl mx-auto my-10 p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl">
+            <div class="text-center max-w-2xl mx-auto mb-6">
+                <div class="text-xs font-mono font-bold uppercase text-blue-600 dark:text-blue-400 tracking-wider mb-1">INTERACTIVE VISUAL AUDIT</div>
+                <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">What Do You Observe Behind the Moving UFOs?</h3>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Select the condition that matches what your eyes see on the screen to receive tailored hardware tuning advice.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <!-- Card 1: Clean -->
+                <button class="artifact-card text-left p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-800 hover:border-emerald-500 dark:hover:border-emerald-500 bg-slate-50 dark:bg-slate-850 transition-all flex flex-col justify-between group" data-type="clean">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xl">✨</span>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">IDEAL</span>
+                        </div>
+                        <h4 class="font-extrabold text-slate-800 dark:text-slate-200 text-sm group-hover:text-emerald-500 transition-colors">Sharp &amp; Clear</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">UFO edges remain crisp. Minimal natural motion blur matching refresh rate.</p>
+                    </div>
+                </button>
+
+                <!-- Card 2: Ghosting -->
+                <button class="artifact-card text-left p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-800 hover:border-amber-500 dark:hover:border-amber-500 bg-slate-50 dark:bg-slate-850 transition-all flex flex-col justify-between group" data-type="ghosting">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xl">🌫️</span>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400">COMMON</span>
+                        </div>
+                        <h4 class="font-extrabold text-slate-800 dark:text-slate-200 text-sm group-hover:text-amber-500 transition-colors">Dark Trailing (Ghosting)</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Faint duplicate or faded shadow trailing behind the moving UFO.</p>
+                    </div>
+                </button>
+
+                <!-- Card 3: Inverse Overshoot -->
+                <button class="artifact-card text-left p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-500 bg-slate-50 dark:bg-slate-850 transition-all flex flex-col justify-between group" data-type="overshoot">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xl">⚡</span>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-purple-500/10 text-purple-600 dark:text-purple-400">OVERDRIVE</span>
+                        </div>
+                        <h4 class="font-extrabold text-slate-800 dark:text-slate-200 text-sm group-hover:text-purple-500 transition-colors">White Glow / Corona</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Bright white or glowing inverse artifact trailing behind or ahead of the UFO.</p>
+                    </div>
+                </button>
+
+                <!-- Card 4: VA Smear -->
+                <button class="artifact-card text-left p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-800 hover:border-rose-500 dark:hover:border-rose-500 bg-slate-50 dark:bg-slate-850 transition-all flex flex-col justify-between group" data-type="smear">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xl">⬛</span>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold bg-rose-500/10 text-rose-600 dark:text-rose-400">VA ISSUE</span>
+                        </div>
+                        <h4 class="font-extrabold text-slate-800 dark:text-slate-200 text-sm group-hover:text-rose-500 transition-colors">Heavy Black Smear</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Severe purple or black sludge trailing during dark background transitions.</p>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Dynamic Diagnostic Advice Box -->
+            <div id="diagnostic-result-box" class="p-4 sm:p-5 rounded-2xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+                <div class="flex items-center gap-2 font-bold text-blue-700 dark:text-blue-400 mb-1">
+                    <span>💡 Monitor Calibration Recommendation:</span>
+                </div>
+                <p id="diagnostic-text">Click on any visual condition above to receive step-by-step OSD tuning advice for your monitor panel.</p>
+            </div>
+
+            <!-- Copy Test Log Button -->
+            <div class="mt-4 flex justify-end">
+                <button id="copy-report-btn" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center gap-2">
+                    📋 Copy Monitor Ghosting Benchmark Report
+                </button>
+            </div>
+        </div>
+
+        <!-- In-Depth Technical Guide & SEO Authority Hub -->
+        <section class="max-w-4xl mx-auto w-full my-16 space-y-12">
+
+            <!-- Section 1: The Physics of Monitor Ghosting -->
+            <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md">
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                    <span>🔬</span> The Physics of Monitor Ghosting: GtG vs. MPRT
+                </h2>
+                <div class="text-sm text-slate-600 dark:text-slate-300 space-y-4 leading-relaxed font-medium">
+                    <p>
+                        When evaluating motion clarity on a gaming monitor, two fundamentally different physical metrics govern what you see: <strong>GtG (Grey-to-Grey Response Time)</strong> and <strong>MPRT (Moving Picture Response Time)</strong>.
+                    </p>
+                    <p>
+                        <strong>Grey-to-Grey (GtG)</strong> measures the physical duration required for liquid crystal molecules inside the panel to physically rotate and change from one shade of grey to another. If a monitor refreshes at 144Hz (producing a new frame every <strong>6.94 milliseconds</strong>), but the liquid crystals require 12ms to shift colors, the pixels cannot finish transitioning before the next frame is pushed. The leftover old pixel states create physical <em>ghosting</em>.
+                    </p>
+                    <p>
+                        <strong>MPRT (Moving Picture Response Time)</strong>, by contrast, is dictated by the sample-and-hold nature of modern LCD and OLED displays. Because a frame remains illuminated continuously for the full frame duration, your eye tracks moving objects smoothly across the screen while the frame is stationary, causing retinal motion blur. The formula is straightforward:
+                    </p>
+                    <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/80 font-mono text-center text-xs sm:text-sm font-bold text-blue-600 dark:text-blue-400">
+                        MPRT (ms) ≈ 1000 / Refresh Rate (Hz)
+                    </div>
+                    <p>
+                        At 60Hz, MPRT blur is 16.6ms. At 144Hz, it drops to 6.9ms. At 240Hz, it reaches 4.1ms. Even an OLED with a near-instant 0.03ms GtG response time will still exhibit eye-tracking motion blur unless high refresh rates or backlight strobing (BFI) are engaged.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Section 2: Panel Comparison Matrix -->
+            <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md">
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                    <span>📊</span> Display Panel Comparison: Ghosting &amp; Response Times
+                </h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-400 font-mono uppercase tracking-wider">
+                                <th class="py-3 px-3">Panel Technology</th>
+                                <th class="py-3 px-3">Average GtG</th>
+                                <th class="py-3 px-3">Contrast Ratio</th>
+                                <th class="py-3 px-3">Ghosting Tendency</th>
+                                <th class="py-3 px-3">Best Use Case</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60 font-medium text-slate-700 dark:text-slate-300">
+                            <tr>
+                                <td class="py-3 px-3 font-bold text-blue-600 dark:text-blue-400">OLED / QD-OLED</td>
+                                <td class="py-3 px-3 font-mono">0.03ms</td>
+                                <td class="py-3 px-3 font-mono">Infinite (True Black)</td>
+                                <td class="py-3 px-3 font-bold text-emerald-500">Zero Ghosting</td>
+                                <td class="py-3 px-3">Competitive Esports &amp; HDR Gaming</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-3 font-bold text-slate-900 dark:text-white">Fast IPS (Nano IPS)</td>
+                                <td class="py-3 px-3 font-mono">1.0ms – 3.5ms</td>
+                                <td class="py-3 px-3 font-mono">1,000:1</td>
+                                <td class="py-3 px-3 font-bold text-emerald-500">Extremely Low</td>
+                                <td class="py-3 px-3">All-Round Gaming &amp; Content Creation</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-3 font-bold text-slate-900 dark:text-white">TN (Twisted Nematic)</td>
+                                <td class="py-3 px-3 font-mono">0.5ms – 2.0ms</td>
+                                <td class="py-3 px-3 font-mono">800:1</td>
+                                <td class="py-3 px-3 font-bold text-emerald-500">Minimal (Washed Colors)</td>
+                                <td class="py-3 px-3">Legacy Pure Esports 360Hz Monitors</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-3 font-bold text-slate-900 dark:text-white">VA (Vertical Alignment)</td>
+                                <td class="py-3 px-3 font-mono">4.0ms – 18.0ms</td>
+                                <td class="py-3 px-3 font-mono">3,000:1 – 4,000:1</td>
+                                <td class="py-3 px-3 font-bold text-rose-500">High (Black Smearing)</td>
+                                <td class="py-3 px-3">Immersive Dark Room Single-Player RPGs</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 3: 4 Steps to Eliminate Ghosting -->
+            <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md">
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                    <span>🛠️</span> 4 Actionable Steps to Reduce Monitor Ghosting
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                    <div class="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850">
+                        <div class="font-extrabold text-blue-600 dark:text-blue-400 text-base mb-2">1. Calibrate Monitor OSD Overdrive</div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                            Reach behind your monitor and open the hardware OSD menu. Look for <em>Response Time</em> or <em>Overdrive (TraceFree / AMA)</em>. Switch it to <strong>"Fast"</strong> or <strong>"Medium"</strong>. Never use "Fastest / Extreme" unless you want glaring white corona overshoot.
+                        </p>
+                    </div>
+                    <div class="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850">
+                        <div class="font-extrabold text-indigo-600 dark:text-indigo-400 text-base mb-2">2. Engage Motion Blur Reduction (BFI)</div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                            If your monitor supports backlight strobing (such as <strong>ASUS ELMB</strong>, <strong>BenQ DyAc</strong>, or <strong>ULMB</strong>), enable it. Strobing strobes the backlight between frames, cutting sample-and-hold MPRT blur down to under 1.0ms.
+                        </p>
+                    </div>
+                    <div class="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850">
+                        <div class="font-extrabold text-purple-600 dark:text-purple-400 text-base mb-2">3. Verify Native Maximum Refresh Rate</div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                            Many users buy 144Hz or 240Hz monitors but leave Windows running at 60Hz. Open Windows Settings &gt; Display &gt; Advanced Display and ensure your monitor is set to its highest native refresh rate over DisplayPort 1.4 or HDMI 2.1.
+                        </p>
+                    </div>
+                    <div class="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850">
+                        <div class="font-extrabold text-emerald-600 dark:text-emerald-400 text-base mb-2">4. Smartphone Pursuit Camera Method</div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                            To scientifically capture ghosting without human eye adaptation, pan your smartphone smoothly alongside the moving UFO at 960 px/sec. Take a snapshot with a shutter speed of approximately 1/4th of your refresh rate (e.g. 1/60s for 240Hz).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Frequently Asked Questions -->
+            <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md">
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
+                <div class="space-y-4">
+                    <div class="border-b border-slate-100 dark:border-slate-800 pb-4">
+                        <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200">Can ghosting permanently damage my monitor?</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed font-medium">
+                            No. Ghosting is entirely an optical characteristic of liquid crystal switching speed and sample-and-hold persistence. It causes zero physical wear or damage to the panel itself.
+                        </p>
+                    </div>
+                    <div class="border-b border-slate-100 dark:border-slate-800 pb-4">
+                        <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200">Why does my VA panel have terrible purple/black trailing when scrolling?</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed font-medium">
+                            This is known as VA black smearing. Vertical Alignment panels excel at deep black levels, but transitioning from 0% black to 10% dark grey can take up to 30ms on budget VA panels. Tuning Overdrive and raising the monitor's Black Equalizer or Gamma slightly will mitigate the effect.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200">Does G-Sync or FreeSync introduce ghosting?</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed font-medium">
+                            Variable Refresh Rate (VRR) dynamically changes your monitor's Hz. If your monitor lacks "Variable Overdrive", an overdrive setting tuned for 144Hz may cause severe inverse overshoot when your framerate drops to 70FPS. High-end G-Sync modules use variable overdrive to prevent this.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- PRO-LEVEL DARK NAVY FOOTER (#0b1329, MATCHING MOCKUP WITH 5-COLUMN MATRIX) -->
+    <footer class="bg-[#0b1329] text-slate-400 border-t border-slate-800/80 mt-auto transition-colors duration-200 select-none">
+        <div class="max-w-7xl mx-auto pt-10 pb-8 px-4 sm:px-6 lg:px-8">
+            
+            <!-- Top Status Bar & Back to top -->
+            <div class="border-b border-slate-800/80 pb-6 mb-10 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="font-bold tracking-wider uppercase text-emerald-400">ALL DIAGNOSTICS OPERATIONAL</span>
+                    <span class="text-slate-500 font-normal">&bull; 100% Client-Side Sandbox</span>
+                </div>
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors cursor-pointer group">
+                    <span>Back to top</span>
+                    <span class="group-hover:-translate-y-0.5 transition-transform">&uarr;</span>
+                </button>
+            </div>
+
+            <!-- 5-Column Grid Matrix -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-12">
+                
+                <!-- Col 1: Brand & Diagnostic Enclave -->
+                <div class="space-y-4">
+                    <a href="/" class="flex items-center gap-2.5 group w-fit focus:outline-none">
+                        <div class="flex items-center justify-center h-9 w-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md text-white font-bold relative">
+                            <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-[#0b1329]"></span>
+                        </div>
+                        <span class="font-black text-xl text-white tracking-tight">InputTest<span class="text-blue-400 font-normal text-xs font-mono">.online</span></span>
+                    </a>
+                    <p class="text-xs text-slate-400 leading-relaxed font-normal">
+                        The open-standard browser hardware diagnostics workstation. Benchmarking switches, polling rates, rotary encoders, display panels, and acoustics in pure client sandboxes without drivers.
+                    </p>
+                    <div class="space-y-2 pt-1 font-mono text-[11px]">
+                        <div class="flex items-center gap-2 text-emerald-400 font-medium">
+                            <svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            <span>100% Client-Side Enclave</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-blue-400 font-medium">
+                            <svg class="w-3.5 h-3.5 text-blue-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            <span>Sub-millisecond Precision</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-indigo-400 font-medium">
+                            <svg class="w-3.5 h-3.5 text-indigo-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            <span>Zero Server Telemetry</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Col 2: INPUT & TACTILE -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>⌨️</span> <span>INPUT &amp; TACTILE</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/keyboard" class="hover:text-white transition-colors">Keyboard Switch Tester</a></li>
+                        <li><a href="/mouse" class="hover:text-white transition-colors">Mouse Clicks &amp; CPS</a></li>
+                        <li><a href="/scroll-test" class="hover:text-white transition-colors">Scroll Jump Tester</a></li>
+                        <li><a href="/mouse-polling-rate" class="hover:text-white transition-colors">Polling Rate 8000Hz</a></li>
+                        <li><a href="/gamepad" class="hover:text-white transition-colors">Gamepad Stick Drift</a></li>
+                        <li><a href="/cps-test" class="hover:text-white transition-colors">CPS Speed Clicker</a></li>
+                        <li><a href="/typing" class="hover:text-white transition-colors">Typing Speed WPM</a></li>
+                        <li><a href="/reaction" class="hover:text-white transition-colors">Reaction Time Reflex</a></li>
+                        <li><a href="/draw" class="hover:text-white transition-colors">Stylus Pen Pressure</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: DISPLAYS & AUDIO -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🖥️</span> <span>DISPLAYS &amp; AUDIO</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/display" class="hover:text-white transition-colors">Display Refresh Rate (Hz)</a></li>
+                        <li>
+                            <a href="/monitor-ghosting-test" class="text-amber-400 hover:text-amber-300 transition-colors flex items-center justify-between group">
+                                <span>Monitor UFO Ghosting</span>
+                                <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[9px] font-mono font-bold">NEW</span>
+                            </a>
+                        </li>
+                        <li><a href="/display#dead-pixel" class="hover:text-white transition-colors">Dead Pixel Sweeper</a></li>
+                        <li><a href="/sound" class="hover:text-white transition-colors">Stereo Speaker Balancer</a></li>
+                        <li><a href="/mic" class="hover:text-white transition-colors">Microphone Decibel Meter</a></li>
+                        <li><a href="/webcam" class="hover:text-white transition-colors">Webcam Resolution &amp; FPS</a></li>
+                        <li><a href="/latency" class="hover:text-white transition-colors">Bluetooth Audio Latency</a></li>
+                        <li><a href="/hdmi" class="hover:text-white transition-colors">HDMI &amp; DisplayPort Signal</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: SYSTEMS & PORTS -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>⚡</span> <span>SYSTEMS &amp; PORTS</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/specs" class="hover:text-white transition-colors">PC Hardware Specs</a></li>
+                        <li><a href="/usb" class="hover:text-white transition-colors">USB Host Enumerator</a></li>
+                        <li><a href="/usb-c" class="hover:text-white transition-colors">USB-C Power Profiler</a></li>
+                        <li><a href="/specs#battery" class="hover:text-white transition-colors">Laptop Battery Health</a></li>
+                        <li><a href="/lan" class="hover:text-white transition-colors">LAN Cable &amp; Jitter</a></li>
+                        <li><a href="/printer" class="hover:text-white transition-colors">Printer CMYK Test Page</a></li>
+                        <li><a href="/scanner" class="hover:text-white transition-colors">Document Scanner DPI</a></li>
+                        <li><a href="/biometric" class="hover:text-white transition-colors">Biometric Windows Hello</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 5: AUDITS & TRUST -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🛡️</span> <span>AUDITS &amp; TRUST</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/report" class="text-emerald-400 hover:text-emerald-300 transition-colors">Certified PDF Report</a></li>
+                        <li><a href="/blog" class="hover:text-white transition-colors">Hardware Field Manuals</a></li>
+                        <li><a href="/about" class="hover:text-white transition-colors">About InputTest Project</a></li>
+                        <li><a href="/contact" class="hover:text-white transition-colors">Contact Support &amp; Bugs</a></li>
+                        <li><a href="/privacy" class="hover:text-white transition-colors">Privacy Policy (Zero-Data)</a></li>
+                        <li><a href="/terms" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <li>
+                            <a href="https://github.com/kapasia628/inputtest" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors flex items-center gap-1">
+                                <span>GitHub Source</span>
+                                <span class="text-[10px]">&nearr;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright Strip -->
+            <div class="border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-slate-500">
+                <div>&copy; 2026 InputTest.online &bull; All Tests 100% Client-Side Sandboxed</div>
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-1.5 text-emerald-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        <span>No Telemetry Collected</span>
+                    </div>
+                    <a href="https://github.com/kapasia628/inputtest" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">GitHub</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE UFO MOTION ENGINE SCRIPT -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Theme toggle
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
+
+            if (themeToggleBtn && sunIcon && moonIcon) {
+                if (document.documentElement.classList.contains('dark')) {
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                } else {
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                }
+
+                themeToggleBtn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    sunIcon.classList.toggle('hidden');
+                    moonIcon.classList.toggle('hidden');
+                    if (document.documentElement.classList.contains('dark')) {
+                        localStorage.setItem('color-theme', 'dark');
+                    } else {
+                        localStorage.setItem('color-theme', 'light');
+                    }
+                });
+            }
+
+            // ==========================================
+            // UFO HIGH-PRECISION MOTION ENGINE
+            // ==========================================
+            const canvas = document.getElementById('ufo-canvas');
+            const ctx = canvas.getContext('2d');
+            const canvasWrapper = document.getElementById('canvas-wrapper');
+
+            const statRefreshRate = document.getElementById('stat-refresh-rate');
+            const statFrameTime = document.getElementById('stat-frame-time');
+            const statMprt = document.getElementById('stat-mprt');
+            const statSyncStatus = document.getElementById('stat-sync-status');
+            const togglePursuitGrid = document.getElementById('toggle-pursuit-grid');
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+            let canvasBg = "#0b1329";
+            let lastTimestamp = performance.now();
+            let frameTimes = [];
+            let detectedHz = 60;
+            let showGrid = true;
+
+            // 3 Horizontal Motion Tracks (px/sec)
+            const tracks = [
+                { yRatio: 0.22, speed: 960, color: "#22d3ee", label: "960 px/sec" },
+                { yRatio: 0.52, speed: 480, color: "#fbbf24", label: "480 px/sec" },
+                { yRatio: 0.82, speed: 240, color: "#c084fc", label: "240 px/sec" }
+            ];
+
+            // Resize canvas to internal display pixel ratio
+            function resizeCanvas() {
+                const rect = canvas.getBoundingClientRect();
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = rect.width * dpr;
+                canvas.height = rect.height * dpr;
+                ctx.scale(dpr, dpr);
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            // Background Selectors
+            document.querySelectorAll('.bg-opt-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.bg-opt-btn').forEach(b => {
+                        b.classList.remove('border-blue-500', 'bg-slate-900', 'text-white');
+                        b.classList.add('bg-slate-100', 'text-slate-700');
+                    });
+                    btn.classList.add('border-blue-500', 'bg-slate-900', 'text-white');
+                    canvasBg = btn.dataset.bg;
+                    canvasWrapper.style.backgroundColor = canvasBg;
+                });
+            });
+
+            // Toggle Pursuit Grid
+            togglePursuitGrid.addEventListener('change', () => {
+                showGrid = togglePursuitGrid.checked;
+            });
+
+            // Fullscreen
+            fullscreenBtn.addEventListener('click', () => {
+                if (!document.fullscreenElement) {
+                    canvasWrapper.requestFullscreen().catch(err => alert("Fullscreen error: " + err.message));
+                } else {
+                    document.exitFullscreen();
+                }
+            });
+
+            // Draw a high-contrast UFO Sprite
+            function drawUfo(x, y, trackColor) {
+                const ufoWidth = 64;
+                const ufoHeight = 32;
+
+                ctx.save();
+                ctx.translate(x, y);
+
+                // Glass Dome (Cockpit)
+                ctx.beginPath();
+                ctx.arc(0, -6, 14, Math.PI, 0);
+                ctx.fillStyle = "rgba(186, 230, 253, 0.9)";
+                ctx.fill();
+                ctx.strokeStyle = "rgba(125, 211, 252, 1)";
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // Cute Little Alien Driver
+                ctx.beginPath();
+                ctx.arc(0, -9, 5, 0, Math.PI * 2);
+                ctx.fillStyle = "#10b981"; // Alien Green
+                ctx.fill();
+                // Alien Eyes (High contrast points for human vision tracking)
+                ctx.fillStyle = "#ffffff";
+                ctx.beginPath();
+                ctx.arc(-2, -9.5, 1.5, 0, Math.PI * 2);
+                ctx.arc(2, -9.5, 1.5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = "#000000";
+                ctx.beginPath();
+                ctx.arc(-2, -9.5, 0.8, 0, Math.PI * 2);
+                ctx.arc(2, -9.5, 0.8, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Flying Saucer Body (Metallic Disc)
+                ctx.beginPath();
+                ctx.ellipse(0, 2, ufoWidth / 2, ufoHeight / 4, 0, 0, Math.PI * 2);
+                ctx.fillStyle = "#cbd5e1";
+                ctx.fill();
+                ctx.strokeStyle = "#475569";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Saucer Rim Gradient Accent
+                ctx.beginPath();
+                ctx.ellipse(0, 5, (ufoWidth / 2) - 4, (ufoHeight / 4) - 3, 0, 0, Math.PI * 2);
+                ctx.fillStyle = trackColor;
+                ctx.fill();
+
+                // 3 Glowing Propulsion Beams
+                const glowColors = ["#ffffff", "#38bdf8", "#ffffff"];
+                [-14, 0, 14].forEach((dotX, idx) => {
+                    ctx.beginPath();
+                    ctx.arc(dotX, 5, 2.5, 0, Math.PI * 2);
+                    ctx.fillStyle = glowColors[idx];
+                    ctx.fill();
+                });
+
+                ctx.restore();
+            }
+
+            // Main Animation Render Loop
+            let globalTime = 0;
+            function renderLoop(currentTimestamp) {
+                const deltaMs = currentTimestamp - lastTimestamp;
+                lastTimestamp = currentTimestamp;
+
+                if (deltaMs > 0 && deltaMs < 100) {
+                    frameTimes.push(deltaMs);
+                    if (frameTimes.length > 30) frameTimes.shift();
+
+                    const avgDelta = frameTimes.reduce((a, b) => a + b, 0) / frameTimes.length;
+                    detectedHz = Math.round(1000 / avgDelta);
+
+                    // Update UI Telemetry every ~15 frames
+                    if (Math.random() < 0.08) {
+                        statRefreshRate.textContent = `${detectedHz} Hz`;
+                        statFrameTime.textContent = `${avgDelta.toFixed(2)} ms`;
+                        statMprt.textContent = `${(1000 / detectedHz).toFixed(1)} ms`;
+                        
+                        // Jitter variance
+                        const maxDiff = Math.max(...frameTimes) - Math.min(...frameTimes);
+                        if (maxDiff < 3) {
+                            statSyncStatus.textContent = "100% Locked";
+                            statSyncStatus.className = "text-2xl font-black text-emerald-500 mt-0.5 font-mono";
+                        } else if (maxDiff < 7) {
+                            statSyncStatus.textContent = "98% Normal";
+                            statSyncStatus.className = "text-2xl font-black text-blue-500 mt-0.5 font-mono";
+                        } else {
+                            statSyncStatus.textContent = "Stutter / Sync Drop";
+                            statSyncStatus.className = "text-2xl font-black text-amber-500 mt-0.5 font-mono";
+                        }
+                    }
+                }
+
+                globalTime = currentTimestamp / 1000;
+                const rect = canvas.getBoundingClientRect();
+                const width = rect.width;
+                const height = rect.height;
+
+                // Clear background
+                ctx.fillStyle = canvasBg;
+                ctx.fillRect(0, 0, width, height);
+
+                // Draw Pursuit Camera Vertical Alignment Lines
+                if (showGrid) {
+                    ctx.strokeStyle = canvasBg === "#ffffff" ? "rgba(0, 0, 0, 0.08)" : "rgba(255, 255, 255, 0.08)";
+                    ctx.lineWidth = 1;
+                    const step = 64;
+                    for (let x = 0; x < width; x += step) {
+                        ctx.beginPath();
+                        ctx.moveTo(x, 0);
+                        ctx.lineTo(x, height);
+                        ctx.stroke();
+                    }
+                }
+
+                // Draw Track Dividers
+                ctx.strokeStyle = canvasBg === "#ffffff" ? "rgba(0, 0, 0, 0.15)" : "rgba(255, 255, 255, 0.12)";
+                ctx.lineWidth = 1;
+                [height * 0.36, height * 0.68].forEach(y => {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(width, y);
+                    ctx.stroke();
+                });
+
+                // Render UFO on each track
+                tracks.forEach((track, idx) => {
+                    const trackY = height * track.yRatio;
+                    // Calculate horizontal position
+                    const totalTrackWidth = width + 100;
+                    const x = ((globalTime * track.speed) % totalTrackWidth) - 50;
+
+                    // Draw Track Label in corner
+                    ctx.fillStyle = canvasBg === "#ffffff" ? "rgba(0, 0, 0, 0.4)" : "rgba(255, 255, 255, 0.4)";
+                    ctx.font = "bold 11px JetBrains Mono, monospace";
+                    ctx.fillText(`${track.label}`, 12, trackY - 26);
+
+                    // Draw UFO
+                    drawUfo(x, trackY, track.color);
+                });
+
+                requestAnimationFrame(renderLoop);
+            }
+
+            requestAnimationFrame(renderLoop);
+
+            // ==========================================
+            // ARTIFACT DIAGNOSTIC RECOMMENDATIONS
+            // ==========================================
+            const artifactCards = document.querySelectorAll('.artifact-card');
+            const diagnosticResultBox = document.getElementById('diagnostic-result-box');
+            const diagnosticText = document.getElementById('diagnostic-text');
+            let selectedArtifact = "clean";
+
+            const adviceMap = {
+                "clean": {
+                    title: "✨ Flawless Pixel Transition (Minimal Motion Blur)",
+                    text: "Your monitor's liquid crystals are transitioning within the refresh interval! The subtle softness you see is natural sample-and-hold human eye tracking blur (MPRT). No OSD adjustments are needed. If you want even higher clarity, consider enabling backlight strobing (BFI/DyAc/ELMB).",
+                    color: "text-emerald-600 dark:text-emerald-400"
+                },
+                "ghosting": {
+                    title: "🌫️ Slow GtG Ghosting Detected (Dark Trailing)",
+                    text: "Your panel's pixels are switching slower than your refresh cycle. Open your monitor's physical OSD buttons, find 'Response Time' or 'Overdrive', and increase it by one step (e.g. from Off to Normal or Fast). Also verify you are using DisplayPort rather than an older HDMI cable.",
+                    color: "text-amber-600 dark:text-amber-400"
+                },
+                "overshoot": {
+                    title: "⚡ Severe Inverse Ghosting / Pixel Overshoot (Coronas)",
+                    text: "You are seeing glowing white trails caused by overly aggressive Overdrive voltage! Your monitor is overshooting its target color before stabilizing. Go into your monitor OSD and LOWER your Overdrive setting (e.g. change 'Fastest / Extreme' down to 'Fast' or 'Level 2').",
+                    color: "text-purple-600 dark:text-purple-400"
+                },
+                "smear": {
+                    title: "⬛ VA Panel Black Smearing (Slow Dark Level Transitions)",
+                    text: "This is a classic characteristic of Vertical Alignment (VA) panels. Liquid crystals take significantly longer to rotate out of 0% black. To minimize it: 1. Raise your monitor's 'Black Equalizer' or 'Shadow Boost' by 10%. 2. Set Overdrive to Fast. 3. Avoid pure black backgrounds in gaming.",
+                    color: "text-rose-600 dark:text-rose-400"
+                }
+            };
+
+            artifactCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    artifactCards.forEach(c => c.classList.remove('border-blue-500', 'dark:border-blue-500', 'bg-blue-50/50', 'dark:bg-blue-950/40'));
+                    card.classList.add('border-blue-500', 'dark:border-blue-500', 'bg-blue-50/50', 'dark:bg-blue-950/40');
+                    selectedArtifact = card.dataset.type;
+                    const advice = adviceMap[selectedArtifact];
+                    diagnosticResultBox.innerHTML = `
+                        <div class="flex items-center gap-2 font-bold ${advice.color} mb-1.5 text-sm sm:text-base">
+                            <span>${advice.title}</span>
+                        </div>
+                        <p class="leading-relaxed">${advice.text}</p>
+                    `;
+                });
+            });
+
+            // Copy Certified Report
+            const copyReportBtn = document.getElementById('copy-report-btn');
+            copyReportBtn.addEventListener('click', () => {
+                const report = `===========================================
+INPUTTEST.ONLINE - MONITOR GHOSTING & MOTION BLUR REPORT
+Timestamp: ${new Date().toISOString()}
+===========================================
+- Tested Refresh Rate: ${detectedHz} Hz
+- Measured Frame Time: ${(1000 / detectedHz).toFixed(2)} ms
+- Estimated Sample-and-Hold MPRT: ${(1000 / detectedHz).toFixed(1)} ms
+- Visual Ghosting Observation: ${adviceMap[selectedArtifact].title}
+- Recommended Action:
+  ${adviceMap[selectedArtifact].text}
+===========================================
+Benchmark your own monitor motion clarity at:
+https://inputtest.online/monitor-ghosting-test
+===========================================`;
+
+                navigator.clipboard.writeText(report).then(() => {
+                    const oldText = copyReportBtn.innerHTML;
+                    copyReportBtn.innerHTML = "✅ Copied Diagnostic Report to Clipboard!";
+                    copyReportBtn.classList.add('bg-emerald-600');
+                    setTimeout(() => {
+                        copyReportBtn.innerHTML = oldText;
+                        copyReportBtn.classList.remove('bg-emerald-600');
+                    }, 2500);
+                }).catch(() => {
+                    alert("Report: " + detectedHz + "Hz - " + adviceMap[selectedArtifact].title);
+                });
+            });
+
+            // Instant Search & Command Palette Logic
+            const searchBar = document.getElementById("nav-search-bar");
+            const searchPanel = document.getElementById("search-dropdown-panel");
+            
+            if (searchBar && searchPanel) {
+                const searchDatabase = [
+                    { title: "Monitor UFO Ghosting Tester", desc: "Benchmark pixel response time & motion blur", url: "/monitor-ghosting-test" },
+                    { title: "Display Refresh Rate (Hz)", desc: "Detect exact monitor refresh rate & FPS", url: "/display" },
+                    { title: "Keyboard Switch Tester Online", desc: "Test laptop & mechanical switches", url: "/keyboard" },
+                    { title: "Mouse & CPS Checker", desc: "Test click, scroll, and speed CPS", url: "/mouse" },
+                    { title: "Scroll Wheel Jump Tester", desc: "Detect mouse reverse-ticks and encoder bounce", url: "/scroll-test" },
+                    { title: "Mouse Polling Rate (8000Hz)", desc: "Measure mouse update frequency and sensor stability", url: "/mouse-polling-rate" },
+                    { title: "Gamepad Stick Drift Tester", desc: "Controller buttons stick drift test", url: "/gamepad" },
+                    { title: "Microphone Voice Tester", desc: "Test decibel telemetry voice echo loop", url: "/mic" },
+                    { title: "Webcam Calibration Check", desc: "Video test, resolution and FPS check", url: "/webcam" },
+                    { title: "Certified Hardware PDF Report", desc: "Generate secure verified hardware PDF report", url: "/report" }
+                ];
+
+                window.addEventListener("keydown", (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+                        e.preventDefault();
+                        searchBar.focus();
+                    }
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!searchBar.contains(e.target) && !searchPanel.contains(e.target)) {
+                        searchPanel.classList.add("hidden");
+                    }
+                });
+
+                searchBar.addEventListener("focus", showResults);
+                searchBar.addEventListener("input", showResults);
+
+                function showResults() {
+                    const query = searchBar.value.toLowerCase().trim();
+                    searchPanel.innerHTML = '<div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>';
+                    
+                    const filtered = searchDatabase.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.desc.toLowerCase().includes(query)
+                    );
+
+                    if (filtered.length === 0) {
+                        searchPanel.innerHTML += `
+                            <div class="px-2 py-3 text-center text-xs text-slate-400 font-semibold">
+                                No results found for "${searchBar.value}"
+                            </div>
+                        `;
+                    } else {
+                        filtered.forEach(item => {
+                            const itemEl = document.createElement("a");
+                            itemEl.href = item.url;
+                            itemEl.className = "flex flex-col px-3 py-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-700 transition-all duration-150 select-none group";
+                            itemEl.innerHTML = `
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">${item.title}</span>
+                                <span class="text-[10px] text-slate-400 font-semibold">${item.desc}</span>
+                            `;
+                            searchPanel.appendChild(itemEl);
+                        });
+                    }
+                    searchPanel.classList.remove("hidden");
+                }
+            }
+
+            // Mobile Navigation Toggle
+            const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+            const mobileNavPanel = document.getElementById("mobile-nav-panel");
+            const hamburgerIcon = document.getElementById("hamburger-icon");
+            const hamburgerClose = document.getElementById("hamburger-close");
+
+            if (mobileMenuToggle && mobileNavPanel && hamburgerIcon && hamburgerClose) {
+                mobileMenuToggle.addEventListener("click", () => {
+                    mobileNavPanel.classList.toggle("hidden");
+                    hamburgerIcon.classList.toggle("hidden");
+                    hamburgerClose.classList.toggle("hidden");
+                });
+            }
+        });
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('[PWA] Service Worker registered scope:', reg.scope))
+                    .catch(err => console.error('[PWA] Service Worker registration failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>

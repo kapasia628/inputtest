@@ -447,8 +447,12 @@
                                         <span>Webcam Quality</span>
                                     </a>
                                     <a href="/latency" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
-                                        <span class="text-sm">âš¡</span>
+                                        <span class="text-sm">⚡</span>
                                         <span>Bluetooth Latency</span>
+                                    </a>
+                                    <a href="/monitor-ghosting-test" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">🛸</span>
+                                        <span>UFO Ghosting Test</span>
                                     </a>
 
                                     <div class="col-span-2 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pt-2 pb-1 mb-1 border-b border-slate-100 dark:border-slate-800">
@@ -2232,6 +2236,12 @@
                     </h4>
                     <ul class="space-y-2.5 text-xs">
                         <li><a href="/display" class="hover:text-white transition-colors">Display Refresh Rate (Hz)</a></li>
+                        <li>
+                            <a href="/monitor-ghosting-test" class="text-amber-400 hover:text-amber-300 transition-colors flex items-center justify-between group">
+                                <span>Monitor UFO Ghosting</span>
+                                <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[9px] font-mono font-bold">HOT</span>
+                            </a>
+                        </li>
                         <li><a href="/display#dead-pixel" class="hover:text-white transition-colors">Dead Pixel Sweeper</a></li>
                         <li><a href="/sound" class="hover:text-white transition-colors">Stereo Speaker Balancer</a></li>
                         <li><a href="/mic" class="hover:text-white transition-colors">Microphone Decibel Meter</a></li>
@@ -2582,6 +2592,7 @@
                     { title: "Scroll Wheel Jump Tester", desc: "Detect inverted ticks & jumping", url: "/scroll-test" },
                     { title: "Mouse Polling Rate (Hz)", desc: "1000Hz to 8000Hz report rate", url: "/mouse-polling-rate" },
                     { title: "Gamepad & Joystick Drift", desc: "Stick drift analyzer", url: "/gamepad" },
+                    { title: "Monitor UFO Ghosting & Motion Blur", desc: "Pixel response time GtG & MPRT test", url: "/monitor-ghosting-test" },
                     { title: "Display & Monitor Tester", desc: "Dead pixels, refresh Hz", url: "/display" },
                     { title: "Microphone Audio Check", desc: "Decibel meter & gain staging", url: "/mic" },
                     { title: "Speaker & Sound Test", desc: "Stereo balance frequency sweep", url: "/sound" },
