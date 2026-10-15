@@ -1,4 +1,4 @@
-const CACHE_NAME = 'inputtest-cache-v11';
+const CACHE_NAME = 'inputtest-cache-v12';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -25,6 +25,10 @@ const ASSETS_TO_CACHE = [
     './mouse-double-click-test.html',
     './keyboard-chatter-test.html',
     './controller-stick-drift-test.html',
+    './monitor-ghosting-test.html',
+    './mouse-angle-snapping-test.html',
+    './audio-frequency-test.html',
+    './controller-circularity-test.html',
     './cps-test.html',
     './typing.html',
     './reaction.html',
@@ -63,29 +67,32 @@ const ASSETS_TO_CACHE = [
     './blog-webcam-resolution.html',
     './manifest.json',
     './icon-192.png',
-    './icon-512.png'
+    './icon-512.png',
+    './favicon.ico'
 ];
 
-// Install Event - Pre-cache diagnostic assets
+// Install Event - Pre-cache diagnostic assets with skipWaiting
 self.addEventListener('install', event => {
+    self.skipWaiting();
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(cache => {
                 console.log('[Service Worker] Caching diagnostic suite assets...');
-                return cache.addAll(ASSETS_TO_CACHE);
+                return Promise.allSettled(
+                    ASSETS_TO_CACHE.map(url => cache.add(url).catch(err => console.warn('Cache add skipped for ' + url, err)))
+                );
             })
-            .then(() => self.skipWaiting())
     );
 });
 
-// Activate Event - Clean up old caches
+// Activate Event - Clean up old caches and claim all clients immediately
 self.addEventListener('activate', event => {
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.map(cache => {
                     if (cache !== CACHE_NAME) {
-                        console.log('[Service Worker] Removing old cached assets:', cache);
+                        console.log('[Service Worker] Purging outdated cache:', cache);
                         return caches.delete(cache);
                     }
                 })
@@ -94,36 +101,41 @@ self.addEventListener('activate', event => {
     );
 });
 
-// Fetch Event - Stale-While-Revalidate caching strategy
+// Fetch Event - Network-First for Navigation, Stale-While-Revalidate for Assets
 self.addEventListener('fetch', event => {
-    // Only cache local requests (HTTP/HTTPS)
-    if (!event.request.url.startsWith(self.location.origin)) {
+    // Only cache GET requests originating from our domain
+    if (event.request.method !== 'GET' || !event.request.url.startsWith(self.location.origin)) {
         return;
     }
 
+    // HTML Navigation requests: ALWAYS NETWORK-FIRST (guarantees latest fresh content)
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            fetch(event.request)
+                .then(networkResponse => {
+                    if (networkResponse && networkResponse.status === 200) {
+                        const copy = networkResponse.clone();
+                        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+                    }
+                    return networkResponse;
+                })
+                .catch(() => caches.match(event.request))
+        );
+        return;
+    }
+
+    // Static Assets: Stale-While-Revalidate
     event.respondWith(
         caches.match(event.request).then(cachedResponse => {
-            if (cachedResponse) {
-                // Return cached asset immediately, fetch updated asset in background
-                fetch(event.request)
-                    .then(networkResponse => {
-                        if (networkResponse.status === 200) {
-                            caches.open(CACHE_NAME).then(cache => cache.put(event.request, networkResponse));
-                        }
-                    })
-                    .catch(err => console.log('[Service Worker] Offline fetch fallback: serving from cache'));
-                return cachedResponse;
-            }
-
-            // Fallback to network
-            return fetch(event.request).then(networkResponse => {
-                if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-                    return networkResponse;
+            const fetchPromise = fetch(event.request).then(networkResponse => {
+                if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+                    const copy = networkResponse.clone();
+                    caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
                 }
-                const responseToCache = networkResponse.clone();
-                caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseToCache));
                 return networkResponse;
-            });
+            }).catch(() => cachedResponse);
+
+            return cachedResponse || fetchPromise;
         })
     );
 });
