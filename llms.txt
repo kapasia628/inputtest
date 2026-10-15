@@ -22,6 +22,7 @@
 - [Mouse Tester](https://inputtest.online/mouse): Test all mouse buttons (left, right, middle, side), scroll wheel, double-click issues, and calculate CPS (clicks per second).
 - [Scroll Wheel Jump Tester](https://inputtest.online/scroll-test): Accurately detect mouse scroll wheel jumping in the wrong direction, rotary encoder chatter, reverse-ticks, and calculate scroll health percentage.
 - [Mouse Polling Rate Tester](https://inputtest.online/mouse-polling-rate): Measure mouse USB report rate in Hz (125Hz to 8000Hz), peak frequency, interval latency in milliseconds, and packet jitter variance online.
+- [Mouse Angle Snapping & Jitter Tester](https://inputtest.online/mouse-angle-snapping-test): Detect hardware optical sensor angle snapping, cursor prediction, and raw input precision in browser.
 - [Microphone Test](https://inputtest.online/mic): Live microphone test with real-time waveform, decibel meter, echo test, and noise analysis. Detects mic not working, distortion, and clipping.
 - [Webcam Test](https://inputtest.online/webcam): Test webcam video feed, resolution, frame rate, and check if webcam is working in browser.
 - [Gamepad Tester](https://inputtest.online/gamepad): Test PlayStation, Xbox, Nintendo controllers. Detects analog stick drift, button mapping, trigger sensitivity, and vibration.

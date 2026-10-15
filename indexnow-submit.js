@@ -65,6 +65,7 @@ const urlList = [
   "https://inputtest.online/mouse-scroll-wheel-fixer",
   "https://inputtest.online/mouse-dpi-tester",
   "https://inputtest.online/monitor-ghosting-test",
+  "https://inputtest.online/mouse-angle-snapping-test",
 ];
 
 const payload = JSON.stringify({

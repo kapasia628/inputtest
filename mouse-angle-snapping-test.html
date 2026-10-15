@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/mouse-angle-snapping-test">
+    <script>
+        // Inline theme helper to avoid UI flash of light theme
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>Mouse Angle Snapping & Sensor Jitter Tester | InputTest</title>
+    <meta name="description" content="Free online mouse angle snapping and sensor jitter test. Detect hardware mouse prediction, cursor artificial smoothing, and pixel skipping in your browser with zero download.">
+    <meta name="keywords" content="mouse angle snapping test, angle snapping checker online, mouse sensor jitter test, mouse prediction test, pixel skipping test, test mouse sensor online, valorant mouse test, raw input test">
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/mouse-angle-snapping-test">
+    <meta property="og:title" content="Mouse Angle Snapping & Sensor Jitter Tester | InputTest">
+    <meta property="og:description" content="Free online mouse angle snapping and sensor jitter test. Detect hardware mouse prediction, artificial axis smoothing, and raw input fidelity online.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/mouse-angle-snapping-test">
+    <meta name="twitter:title" content="Mouse Angle Snapping & Sensor Jitter Tester | InputTest">
+    <meta name="twitter:description" content="Accurately test mouse angle snapping, sensor prediction, and raw input precision online. No software download required.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- JSON-LD Structured Data: WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Mouse Angle Snapping & Sensor Jitter Tester",
+      "url": "https://inputtest.online/mouse-angle-snapping-test",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5 Canvas.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Interactive browser diagnostic tool to detect mouse sensor angle snapping, hardware prediction, pixel skipping, and raw aiming precision."
+    }
+    </script>
+
+    <!-- JSON-LD FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is mouse angle snapping and why is it bad for gaming?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Angle snapping (also known as sensor prediction) is an algorithm in some optical sensors that artificially straightens your mouse movements. When you move at a slight diagonal or curve, the sensor assumes you wanted a straight line and locks your crosshair to the horizontal or vertical axis. In FPS games like Valorant or CS2, this prevents fine micro-adjustments and ruins headshot precision."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does this online angle snapping test work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When you draw circles or diagonal lines inside the interactive test canvas, our math engine analyzes the coordinate deltas. A raw sensor exhibits natural micro-wobbles from your human hand. A sensor with angle snapping will produce flat artificial plateaus (zero delta streaks) along the cardinal axes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I turn off angle snapping on my mouse?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1. Open your mouse manufacturer's software (Logitech G HUB, Razer Synapse, Glorious Core, or SteelSeries GG). 2. Navigate to Sensor/Performance settings. 3. Find 'Angle Snapping' or 'Sensor Prediction' and toggle it OFF. 4. In Windows Settings, go to Mouse > Additional Mouse Options and ensure 'Enhance pointer precision' is UNCHECKED."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do modern gaming mice have angle snapping by default?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Premium esports mice equipped with PixArt PAW3395, Focus Pro 30K, or HERO 25K sensors have 1:1 raw tracking with zero angle snapping by default. However, budget office mice and certain gaming mice with enabled driver settings often have prediction turned on."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://inputtest.online/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Mouse Angle Snapping Test",
+          "item": "https://inputtest.online/mouse-angle-snapping-test"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            850: '#151f32',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 90% 40%, rgba(59, 130, 246, 0.03) 0%, transparent 40%);
+        }
+        .dark .glow-bg {
+            background-color: #0b0f19 !important;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%) !important;
+        }
+        .drawing-grid {
+            background-size: 20px 20px;
+            background-image: 
+                linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+        }
+        .dark .drawing-grid {
+            background-size: 20px 20px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+        }
+    </style>
+
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2485510445228691" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-2485510445228691">
+
+    <!-- Microsoft Clarity Tracking Code -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ynfnjomkxs");
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 font-sans antialiased min-h-screen flex flex-col glow-bg relative overflow-x-hidden transition-colors duration-300">
+
+    <!-- MAIN NAVIGATION HEADER -->
+    <header class="sticky top-0 z-50 bg-white/90 dark:bg-[#070b14]/90 border-b border-slate-200/80 dark:border-slate-800/80 backdrop-blur-xl transition-all duration-200 shadow-xs dark:shadow-none">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 gap-3">
+                
+                <!-- Brand Logo -->
+                <div class="flex items-center gap-3 shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none" aria-label="InputTest.online Home">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/10 border border-blue-500/20 group-hover:scale-105 transition-transform duration-200">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="brand-name font-black text-xl tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Clean Navigation Links -->
+                <nav class="hidden lg:flex items-center gap-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                    <a href="/keyboard" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">Keyboard</a>
+                    <a href="/mouse" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">Mouse</a>
+                    <a href="/mouse-polling-rate" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">Polling Rate</a>
+                    <a href="/mouse-angle-snapping-test" class="px-3 py-2 rounded-xl text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 font-bold transition-colors">Angle Snapping</a>
+                    <a href="/scroll-test" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">Scroll Jump</a>
+                    <a href="/display" class="px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">Display</a>
+
+                    <!-- More Tools Mega Dropdown -->
+                    <div class="relative group">
+                        <button id="nav-dropdown-btn" class="flex items-center gap-1.5 px-3 py-2 rounded-xl hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors focus:outline-none cursor-pointer">
+                            <span>More Tools</span>
+                            <svg class="h-3 w-3 text-slate-400 group-hover:rotate-180 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50" style="width: 480px;">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4">
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div class="col-span-2 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1 mb-1 border-b border-slate-100 dark:border-slate-800">
+                                        Sensors &amp; Input Devices
+                                    </div>
+                                    <a href="/gamepad" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">🎮</span><span>Gamepad Drift Test</span>
+                                    </a>
+                                    <a href="/monitor-ghosting-test" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">🛸</span><span>UFO Ghosting Test</span>
+                                    </a>
+                                    <a href="/mic" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">🎙️</span><span>Microphone Test</span>
+                                    </a>
+                                    <a href="/sound" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">🔊</span><span>Stereo Speakers</span>
+                                    </a>
+                                    <a href="/webcam" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">📷</span><span>Webcam Quality</span>
+                                    </a>
+                                    <a href="/latency" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">⚡</span><span>Bluetooth Latency</span>
+                                    </a>
+
+                                    <div class="col-span-2 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pt-2 pb-1 mb-1 border-b border-slate-100 dark:border-slate-800">
+                                        Gaming Performance
+                                    </div>
+                                    <a href="/cps-test" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">⚡</span><span>CPS Click Tester</span>
+                                    </a>
+                                    <a href="/typing" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">⌨️</span><span>Typing Speed WPM</span>
+                                    </a>
+                                    <a href="/reaction" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">⏱️</span><span>Reaction Reflex</span>
+                                    </a>
+                                    <a href="/battery" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">🔋</span><span>Battery Health</span>
+                                    </a>
+                                </div>
+                                <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+                                    <a href="/report" class="flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 text-xs font-bold hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors">
+                                        <span>🛡️</span><span>Generate Certified Hardware Report</span><span>&rarr;</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Actions: Search + Theme Toggle + Mobile Menu -->
+                <div class="flex items-center gap-2 shrink-0">
+                    <div class="relative hidden sm:block">
+                        <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-slate-400">
+                            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        <input id="nav-search-bar" type="text" placeholder="Search module..." 
+                               class="w-36 md:w-44 bg-slate-100/90 dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 focus:border-blue-500 rounded-xl py-1.5 pl-8 pr-7 text-xs text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all">
+                        <div class="absolute inset-y-0 right-0 pr-1.5 flex items-center pointer-events-none">
+                            <kbd class="text-[9px] font-mono text-slate-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-1 py-0.2 rounded shadow-2xs">⌘K</kbd>
+                        </div>
+                        <div id="search-dropdown-panel" class="hidden absolute right-0 top-11 w-72 bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-2 z-50 max-h-72 overflow-y-auto space-y-1"></div>
+                    </div>
+
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0c1220] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none cursor-pointer" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <!-- Mobile Hamburger -->
+                    <button id="mobile-menu-toggle" class="p-2 lg:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0c1220] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none cursor-pointer" aria-label="Open mobile menu">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <nav id="mobile-nav-panel" class="hidden lg:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#070b14]/95 backdrop-blur-xl px-4 py-4 space-y-3 shadow-2xl">
+            <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+                <a href="/keyboard" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⌨️ Keyboard</a>
+                <a href="/mouse" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🖱️ Mouse</a>
+                <a href="/mouse-polling-rate" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⚡ Polling Rate</a>
+                <a href="/mouse-angle-snapping-test" class="p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/50 border border-blue-300 dark:border-blue-800 text-blue-600 dark:text-blue-400 flex items-center gap-2 font-bold">🎯 Angle Snapping</a>
+                <a href="/scroll-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🔄 Scroll Jump</a>
+                <a href="/monitor-ghosting-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🛸 UFO Ghosting</a>
+                <a href="/gamepad" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎮 Gamepad</a>
+                <a href="/mic" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎙️ Microphone</a>
+                <a href="/sound" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🔊 Speakers</a>
+                <a href="/report" class="col-span-2 p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400 font-bold text-center flex items-center justify-center gap-2">
+                    🛡️ Certified Hardware PDF Report
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+        <!-- Hero Header -->
+        <div class="text-center max-w-3xl mx-auto mb-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-mono font-bold border border-blue-500/20 mb-3">
+                <span class="w-2 h-2 rounded-full bg-blue-500 animate-ping"></span>
+                RAW SENSOR LINEARITY &amp; PREDICTION AUDIT
+            </div>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+                Mouse Angle Snapping &amp; <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">Sensor Jitter Tester</span>
+            </h1>
+            <p class="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 font-medium">
+                Detect artificial crosshair line straightening, hardware sensor prediction, and raw input micro-jitter in pure client-side mathematical benchmarks.
+            </p>
+        </div>
+
+        <!-- Testing Mode Switcher -->
+        <div class="max-w-xl mx-auto mb-6 flex items-center justify-center p-1.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm gap-2">
+            <button id="mode-circle" class="mode-btn flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-md transition-all flex items-center justify-center gap-1.5">
+                ⭕ Draw Circles
+                <span class="text-[10px] opacity-75 hidden sm:inline">(Best for Flattening)</span>
+            </button>
+            <button id="mode-diagonal" class="mode-btn flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center justify-center gap-1.5">
+                ↗️ Diagonal Lines
+                <span class="text-[10px] opacity-75 hidden sm:inline">(Linearity Deviation)</span>
+            </button>
+            <button id="mode-free" class="mode-btn flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center justify-center gap-1.5">
+                〰️ Freehand Wave
+            </button>
+        </div>
+
+        <!-- Main Tester Arena & Live Statistics Matrix -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+
+            <!-- Interactive Drawing Pad (Left / Center - 8 cols) -->
+            <div class="lg:col-span-8 flex flex-col gap-4">
+                <div class="relative rounded-3xl border-2 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl overflow-hidden flex flex-col">
+                    
+                    <!-- Canvas Toolbar Header -->
+                    <div class="flex items-center justify-between px-5 py-3 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 text-xs">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span id="canvas-status-hint" class="font-bold text-slate-700 dark:text-slate-300">Click &amp; hold left mouse button to draw</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="clear-canvas-btn" class="px-3 py-1.5 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-rose-50 dark:hover:bg-rose-950/50 hover:text-rose-600 text-slate-700 dark:text-slate-300 font-bold transition-colors flex items-center gap-1">
+                                <span>🔄 Clear Pad</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- The High-Precision Drawing Canvas -->
+                    <div class="relative w-full h-[460px] drawing-grid cursor-crosshair">
+                        <canvas id="drawing-canvas" class="w-full h-full block"></canvas>
+                        
+                        <!-- Floating Instructional Overlay -->
+                        <div id="instruction-pill" class="absolute bottom-4 left-1/2 -translate-x-1/2 pointer-events-none px-4 py-1.5 rounded-full bg-slate-950/80 backdrop-blur-md border border-slate-700 text-white font-mono text-[11px] font-bold shadow-lg flex items-center gap-2">
+                            <span>✍️ Slowly draw 3 to 4 continuous circles or diagonal lines</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fast Telemetry Row -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                        <span class="text-[11px] font-mono font-bold uppercase text-slate-400 tracking-wider">Samples Analyzed</span>
+                        <div id="stat-samples" class="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">0</div>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                        <span class="text-[11px] font-mono font-bold uppercase text-slate-400 tracking-wider">Max Zero-Delta Run</span>
+                        <div id="stat-max-run" class="text-2xl font-black text-slate-800 dark:text-slate-200 mt-1 font-mono">0<span class="text-xs font-normal text-slate-400"> pts</span></div>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                        <span class="text-[11px] font-mono font-bold uppercase text-slate-400 tracking-wider">Axis Flattening</span>
+                        <div id="stat-flattening" class="text-2xl font-black text-slate-800 dark:text-slate-200 mt-1 font-mono">0.0%</div>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                        <span class="text-[11px] font-mono font-bold uppercase text-slate-400 tracking-wider">Jitter Variance</span>
+                        <div id="stat-jitter" class="text-2xl font-black text-slate-800 dark:text-slate-200 mt-1 font-mono">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Health Score & Diagnostic Telemetry (Right Panel - 4 cols) -->
+            <div class="lg:col-span-4 flex flex-col gap-6">
+
+                <!-- Overall Verdict Card -->
+                <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl flex flex-col items-center text-center relative overflow-hidden">
+                    <div class="w-full flex justify-between items-center mb-4">
+                        <span class="text-xs font-mono font-bold uppercase text-slate-400 tracking-wider">Prediction Engine</span>
+                        <span id="verdict-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                            AWAITING INPUT
+                        </span>
+                    </div>
+
+                    <!-- Gauge Visual -->
+                    <div class="relative w-40 h-40 flex items-center justify-center my-2">
+                        <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                            <path class="text-slate-100 dark:text-slate-800" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path id="prediction-circle-bar" class="text-emerald-500 transition-all duration-300" stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+                        <div class="absolute flex flex-col items-center justify-center">
+                            <span id="prediction-score-val" class="text-3xl font-black text-slate-900 dark:text-white">0%</span>
+                            <span class="text-[10px] font-mono text-slate-400 font-semibold uppercase">Snapping Likelihood</span>
+                        </div>
+                    </div>
+
+                    <h4 id="verdict-title" class="font-black text-slate-800 dark:text-slate-100 text-base mt-2">Ready to Analyze</h4>
+                    <p id="verdict-description" class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 font-medium leading-relaxed">
+                        Draw freehand circles or diagonals in the pad. We will measure if the line is artificially forced into axis lock.
+                    </p>
+
+                    <!-- Copy Report Button -->
+                    <button id="copy-report-btn" class="mt-5 w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2">
+                        📋 Copy Sensor Analysis Log
+                    </button>
+                </div>
+
+                <!-- Explanation Box -->
+                <div class="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl flex-grow flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-mono font-bold uppercase text-blue-600 dark:text-blue-400 tracking-wider">HOW TO READ RESULTS</span>
+                        <div class="mt-3 space-y-3 text-xs text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+                            <div class="flex items-start gap-2">
+                                <span class="text-emerald-500 font-bold">✔ 0% - 15% (Raw Input):</span>
+                                <span>Ideal for competitive gaming. Natural human hand curves are fully preserved.</span>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="text-amber-500 font-bold">⚠️ 16% - 40% (Mild Prediction):</span>
+                                <span>Minor line smoothing or driver acceleration detected.</span>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="text-rose-500 font-bold">❌ 41%+ (Angle Snapping Active):</span>
+                                <span>Hardware sensor is artificially locking your crosshair to straight axes.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- In-Depth Technical Guide & SEO Authority Hub -->
+        <section class="max-w-4xl mx-auto w-full my-16 space-y-12">
+
+            <!-- Section 1: What is Angle Snapping -->
+            <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md">
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                    <span>🎯</span> What is Mouse Angle Snapping (Sensor Prediction)?
+                </h2>
+                <div class="text-sm text-slate-600 dark:text-slate-300 space-y-4 leading-relaxed font-medium">
+                    <p>
+                        <strong>Angle Snapping</strong> (often referred to as <em>sensor prediction</em> or <em>axis correction</em>) is an algorithmic post-processing filter embedded inside optical mouse firmware. When you guide your mouse across a mousepad, human hands naturally produce tiny, microscopic fluctuations (wobbles).
+                    </p>
+                    <p>
+                        For office workers drawing horizontal borders in Microsoft Excel or dragging folders across a desktop, these wobbles can feel imperfect. To "help" the user, an angle-snapping algorithm monitors cursor vectors. If the movement angle is within approximately <strong>±5° to ±15°</strong> of a straight horizontal or vertical trajectory, the sensor forcibly locks all output coordinates to a single axis ($dy = 0$ or $dx = 0$).
+                    </p>
+                    <p>
+                        While convenient for spreadsheets, <strong>angle snapping is catastrophic for competitive FPS gamers</strong>. When attempting to land a pixel-perfect headshot in <em>Valorant</em> or track an airborne enemy in <em>Apex Legends</em>, the mouse will artificially refuse to register subtle micro-adjustments, causing your crosshair to "snap" onto a rigid horizontal plane instead of following your real physical aim.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Section 2: Sensor Comparison Matrix -->
+            <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md">
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                    <span>📊</span> Sensor Comparison: Raw Input vs. Prediction
+                </h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-400 font-mono uppercase tracking-wider">
+                                <th class="py-3 px-3">Optical Sensor Model</th>
+                                <th class="py-3 px-3">Default Angle Snapping</th>
+                                <th class="py-3 px-3">Tracking Precision</th>
+                                <th class="py-3 px-3">Found In Popular Mice</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60 font-medium text-slate-700 dark:text-slate-300">
+                            <tr>
+                                <td class="py-3 px-3 font-bold text-blue-600 dark:text-blue-400">PixArt PAW3395 / PAW3950</td>
+                                <td class="py-3 px-3 font-bold text-emerald-500">100% Pure Raw (0%)</td>
+                                <td class="py-3 px-3 font-mono">26,000 – 30,000 DPI</td>
+                                <td class="py-3 px-3">Pulsar X2, Lamzu Atlantis, Ninjutso Sora</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-3 font-bold text-slate-900 dark:text-white">Razer Focus Pro 30K / 35K</td>
+                                <td class="py-3 px-3 font-bold text-emerald-500">Pure Raw (Optional Toggle)</td>
+                                <td class="py-3 px-3 font-mono">30,000 – 35,000 DPI</td>
+                                <td class="py-3 px-3">Razer Viper V3 Pro, DeathAdder V3 Pro</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-3 font-bold text-slate-900 dark:text-white">Logitech HERO 25K</td>
+                                <td class="py-3 px-3 font-bold text-emerald-500">Zero Smoothing / Raw</td>
+                                <td class="py-3 px-3 font-mono">25,600 DPI</td>
+                                <td class="py-3 px-3">Logitech G Pro X Superlight 1 &amp; 2, G502X</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-3 font-bold text-slate-900 dark:text-white">Budget Office Sensors (Avago/OEM)</td>
+                                <td class="py-3 px-3 font-bold text-rose-500">Aggressive Hardware Snapping</td>
+                                <td class="py-3 px-3 font-mono">800 – 1,600 DPI</td>
+                                <td class="py-3 px-3">Generic USB Office Mice, Cheap Wireless Bundles</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 3: 4 Steps to Disable Prediction -->
+            <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md">
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                    <span>🛠️</span> How to Disable Angle Snapping &amp; Enable 1:1 Raw Aim
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                    <div class="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850">
+                        <div class="font-extrabold text-blue-600 dark:text-blue-400 text-base mb-2">1. Check Driver Suite Settings</div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                            Open your mouse companion app (Razer Synapse, Logitech G HUB, SteelSeries Engine). Open Performance or Sensor calibration. Look for <em>"Angle Snapping"</em> or <em>"Prediction"</em> and verify it is set to <strong>OFF</strong>.
+                        </p>
+                    </div>
+                    <div class="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850">
+                        <div class="font-extrabold text-indigo-600 dark:text-indigo-400 text-base mb-2">2. Uncheck "Enhance Pointer Precision"</div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                            In Windows, open <strong>Settings &gt; Bluetooth & Devices &gt; Mouse &gt; Additional mouse settings</strong>. Switch to the <em>Pointer Options</em> tab. Ensure <strong>"Enhance pointer precision" is unchecked</strong> to eliminate Windows cursor acceleration.
+                        </p>
+                    </div>
+                    <div class="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850">
+                        <div class="font-extrabold text-purple-600 dark:text-purple-400 text-base mb-2">3. Enable "Raw Input" in Game Settings</div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                            In games like <em>Counter-Strike 2</em>, <em>Valorant</em>, and <em>Overwatch 2</em>, enable <strong>Raw Input Buffer</strong>. This forces the game engine to read directly from the Windows HID API, bypassing OS-level cursor modifications.
+                        </p>
+                    </div>
+                    <div class="p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850">
+                        <div class="font-extrabold text-emerald-600 dark:text-emerald-400 text-base mb-2">4. Clean Sensor Lens &amp; Mousepad</div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                            Sensor jitter is frequently caused by a single stray hair lodged across the optical prism. Blow compressed air directly into the sensor cavity and ensure your cloth mousepad is wiped free of dust and debris.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Frequently Asked Questions -->
+            <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md">
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-6">Frequently Asked Questions</h2>
+                <div class="space-y-4">
+                    <div class="border-b border-slate-100 dark:border-slate-800 pb-4">
+                        <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200">Is angle snapping ever beneficial for anyone?</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed font-medium">
+                            Yes, in graphic design and digital drafting. Digital artists and CAD engineers who don't have a graphics tablet occasionally enable angle snapping to draw perfectly straight horizontal or vertical lines without holding Shift.
+                        </p>
+                    </div>
+                    <div class="border-b border-slate-100 dark:border-slate-800 pb-4">
+                        <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200">How can I tell if my circle test failed?</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed font-medium">
+                            When drawing freehand circles, look at the extreme top, bottom, left, and right points. A pure mouse sensor will produce smooth, continuous arcs. A mouse with angle snapping will generate flattened straight lines at the poles, making the circle look like an octagon or rounded diamond.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200">Does DPI affect angle snapping detection?</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed font-medium">
+                            Higher DPI (such as 1600 or 3200 DPI) provides higher sample density, making our mathematical regression even more sensitive to artificial plateau runs. We recommend testing at your normal gaming DPI (800 or 1600 DPI).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- PRO-LEVEL DARK NAVY FOOTER (#0b1329, MATCHING MOCKUP WITH 5-COLUMN MATRIX) -->
+    <footer class="bg-[#0b1329] text-slate-400 border-t border-slate-800/80 mt-auto transition-colors duration-200 select-none">
+        <div class="max-w-7xl mx-auto pt-10 pb-8 px-4 sm:px-6 lg:px-8">
+            
+            <!-- Top Status Bar & Back to top -->
+            <div class="border-b border-slate-800/80 pb-6 mb-10 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="font-bold tracking-wider uppercase text-emerald-400">ALL DIAGNOSTICS OPERATIONAL</span>
+                    <span class="text-slate-500 font-normal">&bull; 100% Client-Side Sandbox</span>
+                </div>
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors cursor-pointer group">
+                    <span>Back to top</span>
+                    <span class="group-hover:-translate-y-0.5 transition-transform">&uarr;</span>
+                </button>
+            </div>
+
+            <!-- 5-Column Grid Matrix -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-12">
+                
+                <!-- Col 1: Brand & Diagnostic Enclave -->
+                <div class="space-y-4">
+                    <a href="/" class="flex items-center gap-2.5 group w-fit focus:outline-none">
+                        <div class="flex items-center justify-center h-9 w-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md text-white font-bold relative">
+                            <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-[#0b1329]"></span>
+                        </div>
+                        <span class="font-black text-xl text-white tracking-tight">InputTest<span class="text-blue-400 font-normal text-xs font-mono">.online</span></span>
+                    </a>
+                    <p class="text-xs text-slate-400 leading-relaxed font-normal">
+                        The open-standard browser hardware diagnostics workstation. Benchmarking switches, polling rates, rotary encoders, display panels, and acoustics in pure client sandboxes without drivers.
+                    </p>
+                    <div class="space-y-2 pt-1 font-mono text-[11px]">
+                        <div class="flex items-center gap-2 text-emerald-400 font-medium">
+                            <svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            <span>100% Client-Side Enclave</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-blue-400 font-medium">
+                            <svg class="w-3.5 h-3.5 text-blue-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            <span>Sub-millisecond Precision</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-indigo-400 font-medium">
+                            <svg class="w-3.5 h-3.5 text-indigo-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            <span>Zero Server Telemetry</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Col 2: INPUT & TACTILE -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>⌨️</span> <span>INPUT &amp; TACTILE</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/keyboard" class="hover:text-white transition-colors">Keyboard Switch Tester</a></li>
+                        <li><a href="/mouse" class="hover:text-white transition-colors">Mouse Clicks &amp; CPS</a></li>
+                        <li>
+                            <a href="/mouse-angle-snapping-test" class="text-amber-400 hover:text-amber-300 transition-colors flex items-center justify-between group">
+                                <span>Angle Snapping Test</span>
+                                <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[9px] font-mono font-bold">HOT</span>
+                            </a>
+                        </li>
+                        <li><a href="/scroll-test" class="hover:text-white transition-colors">Scroll Jump Tester</a></li>
+                        <li><a href="/mouse-polling-rate" class="hover:text-white transition-colors">Polling Rate 8000Hz</a></li>
+                        <li><a href="/gamepad" class="hover:text-white transition-colors">Gamepad Stick Drift</a></li>
+                        <li><a href="/cps-test" class="hover:text-white transition-colors">CPS Speed Clicker</a></li>
+                        <li><a href="/typing" class="hover:text-white transition-colors">Typing Speed WPM</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: DISPLAYS & AUDIO -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🖥️</span> <span>DISPLAYS &amp; AUDIO</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/display" class="hover:text-white transition-colors">Display Refresh Rate (Hz)</a></li>
+                        <li><a href="/monitor-ghosting-test" class="hover:text-white transition-colors">Monitor UFO Ghosting</a></li>
+                        <li><a href="/display#dead-pixel" class="hover:text-white transition-colors">Dead Pixel Sweeper</a></li>
+                        <li><a href="/sound" class="hover:text-white transition-colors">Stereo Speaker Balancer</a></li>
+                        <li><a href="/mic" class="hover:text-white transition-colors">Microphone Decibel Meter</a></li>
+                        <li><a href="/webcam" class="hover:text-white transition-colors">Webcam Resolution &amp; FPS</a></li>
+                        <li><a href="/latency" class="hover:text-white transition-colors">Bluetooth Audio Latency</a></li>
+                        <li><a href="/hdmi" class="hover:text-white transition-colors">HDMI &amp; DisplayPort Signal</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: SYSTEMS & PORTS -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>⚡</span> <span>SYSTEMS &amp; PORTS</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/specs" class="hover:text-white transition-colors">PC Hardware Specs</a></li>
+                        <li><a href="/usb" class="hover:text-white transition-colors">USB Host Enumerator</a></li>
+                        <li><a href="/usb-c" class="hover:text-white transition-colors">USB-C Power Profiler</a></li>
+                        <li><a href="/specs#battery" class="hover:text-white transition-colors">Laptop Battery Health</a></li>
+                        <li><a href="/lan" class="hover:text-white transition-colors">LAN Cable &amp; Jitter</a></li>
+                        <li><a href="/printer" class="hover:text-white transition-colors">Printer CMYK Test Page</a></li>
+                        <li><a href="/scanner" class="hover:text-white transition-colors">Document Scanner DPI</a></li>
+                        <li><a href="/biometric" class="hover:text-white transition-colors">Biometric Windows Hello</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 5: AUDITS & TRUST -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🛡️</span> <span>AUDITS &amp; TRUST</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/report" class="text-emerald-400 hover:text-emerald-300 transition-colors">Certified PDF Report</a></li>
+                        <li><a href="/blog" class="hover:text-white transition-colors">Hardware Field Manuals</a></li>
+                        <li><a href="/about" class="hover:text-white transition-colors">About InputTest Project</a></li>
+                        <li><a href="/contact" class="hover:text-white transition-colors">Contact Support &amp; Bugs</a></li>
+                        <li><a href="/privacy" class="hover:text-white transition-colors">Privacy Policy (Zero-Data)</a></li>
+                        <li><a href="/terms" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <li>
+                            <a href="https://github.com/kapasia628/inputtest" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors flex items-center gap-1">
+                                <span>GitHub Source</span>
+                                <span class="text-[10px]">&nearr;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright Strip -->
+            <div class="border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-slate-500">
+                <div>&copy; 2026 InputTest.online &bull; All Tests 100% Client-Side Sandboxed</div>
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-1.5 text-emerald-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        <span>No Telemetry Collected</span>
+                    </div>
+                    <a href="https://github.com/kapasia628/inputtest" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">GitHub</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE MATHEMATICAL ANGLE SNAPPING SCRIPT -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Theme toggle
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-toggle-sun');
+            const moonIcon = document.getElementById('theme-toggle-moon');
+
+            if (themeToggleBtn && sunIcon && moonIcon) {
+                if (document.documentElement.classList.contains('dark')) {
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                } else {
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                }
+
+                themeToggleBtn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    sunIcon.classList.toggle('hidden');
+                    moonIcon.classList.toggle('hidden');
+                    if (document.documentElement.classList.contains('dark')) {
+                        localStorage.setItem('color-theme', 'dark');
+                    } else {
+                        localStorage.setItem('color-theme', 'light');
+                    }
+                });
+            }
+
+            // ==========================================
+            // REAL ANGLE SNAPPING DETECTION ENGINE
+            // ==========================================
+            const canvas = document.getElementById('drawing-canvas');
+            const ctx = canvas.getContext('2d');
+            const clearBtn = document.getElementById('clear-canvas-btn');
+            const statusHint = document.getElementById('canvas-status-hint');
+
+            const statSamples = document.getElementById('stat-samples');
+            const statMaxRun = document.getElementById('stat-max-run');
+            const statFlattening = document.getElementById('stat-flattening');
+            const statJitter = document.getElementById('stat-jitter');
+
+            const verdictBadge = document.getElementById('verdict-badge');
+            const predictionScoreVal = document.getElementById('prediction-score-val');
+            const predictionCircleBar = document.getElementById('prediction-circle-bar');
+            const verdictTitle = document.getElementById('verdict-title');
+            const verdictDescription = document.getElementById('verdict-description');
+            const copyReportBtn = document.getElementById('copy-report-btn');
+
+            let isDrawing = false;
+            let currentStroke = [];
+            let allStrokes = [];
+            let totalSampleCount = 0;
+            let highestZeroRun = 0;
+            let flatteningScore = 0;
+            let activeMode = "circle"; // 'circle', 'diagonal', 'free'
+
+            // Resize canvas to display
+            function resizeCanvas() {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = rect.width * dpr;
+                canvas.height = rect.height * dpr;
+                ctx.scale(dpr, dpr);
+                redrawAll();
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            // Mode Selector
+            const modeBtns = {
+                'circle': document.getElementById('mode-circle'),
+                'diagonal': document.getElementById('mode-diagonal'),
+                'free': document.getElementById('mode-free')
+            };
+
+            function setMode(mode) {
+                activeMode = mode;
+                Object.keys(modeBtns).forEach(k => {
+                    if (k === mode) {
+                        modeBtns[k].className = "mode-btn flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold bg-blue-600 text-white shadow-md transition-all flex items-center justify-center gap-1.5";
+                    } else {
+                        modeBtns[k].className = "mode-btn flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center justify-center gap-1.5";
+                    }
+                });
+                resetAnalysis();
+            }
+
+            modeBtns['circle'].addEventListener('click', () => setMode('circle'));
+            modeBtns['diagonal'].addEventListener('click', () => setMode('diagonal'));
+            modeBtns['free'].addEventListener('click', () => setMode('free'));
+
+            // Clear Canvas
+            clearBtn.addEventListener('click', resetAnalysis);
+
+            function resetAnalysis() {
+                allStrokes = [];
+                currentStroke = [];
+                totalSampleCount = 0;
+                highestZeroRun = 0;
+                flatteningScore = 0;
+                statSamples.textContent = "0";
+                statMaxRun.innerHTML = '0<span class="text-xs font-normal text-slate-400"> pts</span>';
+                statFlattening.textContent = "0.0%";
+                statJitter.textContent = "--";
+                predictionScoreVal.textContent = "0%";
+                predictionCircleBar.setAttribute('stroke-dasharray', '0, 100');
+                verdictBadge.textContent = "AWAITING INPUT";
+                verdictBadge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20";
+                verdictTitle.textContent = "Ready to Analyze";
+                verdictDescription.textContent = "Draw freehand circles or diagonals in the pad. We will measure if the line is artificially forced into axis lock.";
+                
+                const rect = canvas.parentElement.getBoundingClientRect();
+                ctx.clearRect(0, 0, rect.width, rect.height);
+            }
+
+            // Canvas Drawing Listeners
+            canvas.addEventListener('mousedown', (e) => {
+                isDrawing = true;
+                currentStroke = [];
+                const pt = getCanvasPos(e);
+                currentStroke.push(pt);
+                statusHint.textContent = "Drawing... keep moving smoothly";
+            });
+
+            window.addEventListener('mouseup', () => {
+                if (isDrawing) {
+                    isDrawing = false;
+                    if (currentStroke.length > 5) {
+                        allStrokes.push(currentStroke);
+                        analyzeStrokes();
+                    }
+                    statusHint.textContent = "Stroke registered! Add more circles/lines or inspect score";
+                }
+            });
+
+            canvas.addEventListener('mousemove', (e) => {
+                if (!isDrawing) return;
+                const pt = getCanvasPos(e);
+                currentStroke.push(pt);
+                totalSampleCount++;
+                statSamples.textContent = totalSampleCount;
+
+                // Draw live line
+                const len = currentStroke.length;
+                if (len >= 2) {
+                    const p1 = currentStroke[len - 2];
+                    const p2 = currentStroke[len - 1];
+
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.strokeStyle = "#3b82f6";
+                    ctx.lineWidth = 2.5;
+                    ctx.lineCap = "round";
+                    ctx.lineJoin = "round";
+                    ctx.stroke();
+                }
+            });
+
+            function getCanvasPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                return {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top,
+                    time: performance.now()
+                };
+            }
+
+            function redrawAll() {
+                const rect = canvas.parentElement.getBoundingClientRect();
+                ctx.clearRect(0, 0, rect.width, rect.height);
+
+                allStrokes.forEach(stroke => {
+                    if (stroke.length < 2) return;
+                    ctx.beginPath();
+                    ctx.moveTo(stroke[0].x, stroke[0].y);
+                    for (let i = 1; i < stroke.length; i++) {
+                        ctx.lineTo(stroke[i].x, stroke[i].y);
+                    }
+                    ctx.strokeStyle = "#3b82f6";
+                    ctx.lineWidth = 2.5;
+                    ctx.lineCap = "round";
+                    ctx.lineJoin = "round";
+                    ctx.stroke();
+                });
+            }
+
+            // ==========================================
+            // MATHEMATICAL SENSOR ANALYSIS ALGORITHM
+            // ==========================================
+            function analyzeStrokes() {
+                if (allStrokes.length === 0) return;
+
+                let longestRunX = 0;
+                let longestRunY = 0;
+                let totalAxisZeroPoints = 0;
+                let totalDeltas = 0;
+                let jitterDeltas = [];
+
+                allStrokes.forEach(stroke => {
+                    let curRunX = 0;
+                    let curRunY = 0;
+
+                    for (let i = 1; i < stroke.length; i++) {
+                        const dx = Math.abs(stroke[i].x - stroke[i - 1].x);
+                        const dy = Math.abs(stroke[i].y - stroke[i - 1].y);
+                        const dist = Math.hypot(dx, dy);
+
+                        if (dist > 0.5) {
+                            totalDeltas++;
+                            jitterDeltas.push(dist);
+
+                            // Test for horizontal line snapping (dy == 0 while dx > 0)
+                            if (dy === 0 && dx > 0) {
+                                curRunX++;
+                                totalAxisZeroPoints++;
+                                if (curRunX > longestRunX) longestRunX = curRunX;
+                            } else {
+                                curRunX = 0;
+                            }
+
+                            // Test for vertical line snapping (dx == 0 while dy > 0)
+                            if (dx === 0 && dy > 0) {
+                                curRunY++;
+                                totalAxisZeroPoints++;
+                                if (curRunY > longestRunY) longestRunY = curRunY;
+                            } else {
+                                curRunY = 0;
+                            }
+                        }
+                    }
+                });
+
+                highestZeroRun = Math.max(longestRunX, longestRunY);
+                statMaxRun.innerHTML = `${highestZeroRun}<span class="text-xs font-normal text-slate-400"> pts</span>`;
+
+                const zeroRatio = totalDeltas > 0 ? (totalAxisZeroPoints / totalDeltas) : 0;
+                flatteningScore = Math.min(100, Math.round(zeroRatio * 250));
+                statFlattening.textContent = `${(zeroRatio * 100).toFixed(1)}%`;
+
+                // Calculate jitter variance (standard deviation of step lengths)
+                if (jitterDeltas.length > 10) {
+                    const avg = jitterDeltas.reduce((a, b) => a + b, 0) / jitterDeltas.length;
+                    const variance = jitterDeltas.reduce((a, b) => a + Math.pow(b - avg, 2), 0) / jitterDeltas.length;
+                    const stdDev = Math.sqrt(variance);
+                    statJitter.textContent = `${stdDev.toFixed(1)} px`;
+                }
+
+                // Overall Snapping Likelihood Calculation
+                let likelihood = 0;
+                if (highestZeroRun >= 12) {
+                    likelihood = Math.min(100, 60 + (highestZeroRun * 2));
+                } else if (highestZeroRun >= 6) {
+                    likelihood = Math.min(60, 25 + (highestZeroRun * 4));
+                } else {
+                    likelihood = Math.max(0, Math.min(15, Math.round(flatteningScore * 0.8)));
+                }
+
+                predictionScoreVal.textContent = `${likelihood}%`;
+                predictionCircleBar.setAttribute('stroke-dasharray', `${likelihood}, 100`);
+
+                // Verdict formatting
+                if (likelihood <= 15) {
+                    verdictBadge.textContent = "RAW 1:1 INPUT (FLAWLESS)";
+                    verdictBadge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20";
+                    predictionCircleBar.setAttribute('class', 'text-emerald-500 transition-all duration-300');
+                    verdictTitle.textContent = "🎯 No Angle Snapping Detected";
+                    verdictDescription.textContent = "Awesome! Your optical sensor outputs 100% pure raw coordinates. Hand wobbles and diagonal arcs are faithfully represented with zero artificial axis locking.";
+                } else if (likelihood <= 40) {
+                    verdictBadge.textContent = "MILD SMOOTHING";
+                    verdictBadge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20";
+                    predictionCircleBar.setAttribute('class', 'text-amber-500 transition-all duration-300');
+                    verdictTitle.textContent = "⚠️ Minor Axis Correction Detected";
+                    verdictDescription.textContent = "Occasional straight line streaks were measured. Check your driver suite or disable Windows 'Enhance pointer precision'.";
+                } else {
+                    verdictBadge.textContent = "ANGLE SNAPPING ACTIVE";
+                    verdictBadge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20";
+                    predictionCircleBar.setAttribute('class', 'text-rose-500 transition-all duration-300');
+                    verdictTitle.textContent = "❌ Strong Hardware Prediction Detected";
+                    verdictDescription.textContent = `Your mouse sensor is artificially straightening your aim (${highestZeroRun} consecutive locked points). This will disrupt micro-adjustments in competitive FPS gaming.`;
+                }
+            }
+
+            // Copy Diagnostic Report
+            copyReportBtn.addEventListener('click', () => {
+                const report = `===========================================
+INPUTTEST.ONLINE - MOUSE ANGLE SNAPPING BENCHMARK
+Timestamp: ${new Date().toISOString()}
+===========================================
+- Samples Analyzed: ${totalSampleCount}
+- Highest Zero-Delta Run: ${highestZeroRun} points
+- Axis Flattening Rate: ${statFlattening.textContent}
+- Measured Jitter Variance: ${statJitter.textContent}
+- Snapping Likelihood: ${predictionScoreVal.textContent}
+- Status: ${verdictTitle.textContent}
+- Recommendation:
+  ${verdictDescription.textContent}
+===========================================
+Test your mouse raw sensor precision at:
+https://inputtest.online/mouse-angle-snapping-test
+===========================================`;
+
+                navigator.clipboard.writeText(report).then(() => {
+                    const oldText = copyReportBtn.innerHTML;
+                    copyReportBtn.innerHTML = "✅ Copied Analysis Log to Clipboard!";
+                    copyReportBtn.classList.add('bg-emerald-600');
+                    setTimeout(() => {
+                        copyReportBtn.innerHTML = oldText;
+                        copyReportBtn.classList.remove('bg-emerald-600');
+                    }, 2500);
+                }).catch(() => {
+                    alert("Report: " + verdictTitle.textContent + " (" + predictionScoreVal.textContent + ")");
+                });
+            });
+
+            // Instant Search & Command Palette Logic
+            const searchBar = document.getElementById("nav-search-bar");
+            const searchPanel = document.getElementById("search-dropdown-panel");
+            
+            if (searchBar && searchPanel) {
+                const searchDatabase = [
+                    { title: "Mouse Angle Snapping Tester", desc: "Detect hardware sensor prediction & raw input", url: "/mouse-angle-snapping-test" },
+                    { title: "Mouse Polling Rate (8000Hz)", desc: "Measure mouse update frequency & sensor stability", url: "/mouse-polling-rate" },
+                    { title: "Scroll Wheel Jump Tester", desc: "Detect mouse reverse-ticks and encoder bounce", url: "/scroll-test" },
+                    { title: "Mouse & CPS Checker", desc: "Test click, scroll, and speed CPS", url: "/mouse" },
+                    { title: "Monitor UFO Ghosting Tester", desc: "Benchmark pixel response time & motion blur", url: "/monitor-ghosting-test" },
+                    { title: "Keyboard Switch Tester Online", desc: "Test laptop & mechanical switches", url: "/keyboard" },
+                    { title: "Gamepad Stick Drift Tester", desc: "Controller buttons stick drift test", url: "/gamepad" },
+                    { title: "Certified Hardware PDF Report", desc: "Generate secure verified hardware PDF report", url: "/report" }
+                ];
+
+                window.addEventListener("keydown", (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+                        e.preventDefault();
+                        searchBar.focus();
+                    }
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (!searchBar.contains(e.target) && !searchPanel.contains(e.target)) {
+                        searchPanel.classList.add("hidden");
+                    }
+                });
+
+                searchBar.addEventListener("focus", showResults);
+                searchBar.addEventListener("input", showResults);
+
+                function showResults() {
+                    const query = searchBar.value.toLowerCase().trim();
+                    searchPanel.innerHTML = '<div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>';
+                    
+                    const filtered = searchDatabase.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.desc.toLowerCase().includes(query)
+                    );
+
+                    if (filtered.length === 0) {
+                        searchPanel.innerHTML += `
+                            <div class="px-2 py-3 text-center text-xs text-slate-400 font-semibold">
+                                No results found for "${searchBar.value}"
+                            </div>
+                        `;
+                    } else {
+                        filtered.forEach(item => {
+                            const itemEl = document.createElement("a");
+                            itemEl.href = item.url;
+                            itemEl.className = "flex flex-col px-3 py-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-700 transition-all duration-150 select-none group";
+                            itemEl.innerHTML = `
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">${item.title}</span>
+                                <span class="text-[10px] text-slate-400 font-semibold">${item.desc}</span>
+                            `;
+                            searchPanel.appendChild(itemEl);
+                        });
+                    }
+                    searchPanel.classList.remove("hidden");
+                }
+            }
+
+            // Mobile Navigation Toggle
+            const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+            const mobileNavPanel = document.getElementById("mobile-nav-panel");
+            const hamburgerIcon = document.getElementById("hamburger-icon");
+            const hamburgerClose = document.getElementById("hamburger-close");
+
+            if (mobileMenuToggle && mobileNavPanel && hamburgerIcon && hamburgerClose) {
+                mobileMenuToggle.addEventListener("click", () => {
+                    mobileNavPanel.classList.toggle("hidden");
+                    hamburgerIcon.classList.toggle("hidden");
+                    hamburgerClose.classList.toggle("hidden");
+                });
+            }
+        });
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('[PWA] Service Worker registered scope:', reg.scope))
+                    .catch(err => console.error('[PWA] Service Worker registration failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>
