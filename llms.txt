@@ -26,9 +26,11 @@
 - [Microphone Test](https://inputtest.online/mic): Live microphone test with real-time waveform, decibel meter, echo test, and noise analysis. Detects mic not working, distortion, and clipping.
 - [Webcam Test](https://inputtest.online/webcam): Test webcam video feed, resolution, frame rate, and check if webcam is working in browser.
 - [Gamepad Tester](https://inputtest.online/gamepad): Test PlayStation, Xbox, Nintendo controllers. Detects analog stick drift, button mapping, trigger sensitivity, and vibration.
+- [Controller Stick Circularity Test](https://inputtest.online/controller-circularity-test): Calculate gamepad analog stick circularity error percentage, Hall Effect magnetic sensor fidelity, resting stick drift, and cardinal deadzones online.
 - [Display Tester](https://inputtest.online/display): Test monitor for dead pixels, backlight bleed, color accuracy, brightness uniformity, and response time.
 - [Monitor Ghosting & UFO Tester](https://inputtest.online/monitor-ghosting-test): Benchmark pixel response time (GtG), inverse overdrive overshoot, motion blur, and VA black smearing at 60Hz, 144Hz, 240Hz, and 360Hz.
 - [Sound Tester](https://inputtest.online/sound): Test speakers and headphones. Check left/right channel balance, frequency response, and bass.
+- [Audio Frequency & Bass Tester](https://inputtest.online/audio-frequency-test): Test headphone bass rumble (10Hz–200Hz), hearing high-frequency limits (8kHz–20kHz), and generate pure audio tones using Web Audio API.
 - [Latency Test](https://inputtest.online/latency): Measure input lag and system latency.
 - [USB Tester](https://inputtest.online/usb): Detect connected USB devices and check USB port functionality.
 - [USB-C Tester](https://inputtest.online/usb-c): Test USB-C port capabilities including power delivery and data speeds.

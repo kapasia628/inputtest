@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/controller-circularity-test">
+    <script>
+        // Inline theme helper to avoid UI flash of light theme
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>Controller Analog Stick Circularity Test & Drift Benchmark | InputTest</title>
+    <meta name="description" content="Free online gamepad stick circularity test. Benchmark outer circularity error percentage, Hall Effect joystick precision, stick drift jitter, and deadzones with live Gamepad API.">
+    <meta name="keywords" content="controller circularity test, analog stick circularity test online, gamepad circularity error tester, hall effect stick test online, ps5 stick drift circularity, xbox controller circularity test, stick drift test online, dualsense stick error rate">
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/controller-circularity-test">
+    <meta property="og:title" content="Controller Analog Stick Circularity Test & Drift Benchmark | InputTest">
+    <meta property="og:description" content="Free online gamepad stick circularity tester. Benchmark outer circularity error percentage, Hall Effect joystick precision, stick drift jitter, and deadzone mapping online.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/controller-circularity-test">
+    <meta name="twitter:title" content="Controller Analog Stick Circularity Test & Drift Benchmark | InputTest">
+    <meta name="twitter:description" content="Test controller stick circularity error rate, analog stick drift, and Hall Effect sensor fidelity directly in your browser. Zero software download required.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- JSON-LD Structured Data: WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Controller Analog Stick Circularity & Drift Benchmark",
+      "url": "https://inputtest.online/controller-circularity-test",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Requires HTML5 Gamepad API.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Interactive browser diagnostic tool to calculate gamepad analog stick circularity error percentage, detect stick drift, benchmark Hall Effect sensors, and test cardinal deadzones."
+    }
+    </script>
+
+    <!-- JSON-LD FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is controller analog stick circularity error?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Analog stick circularity error measures how much a thumbstick's physical outer boundary deviates from a true mathematical circle. When you rotate a thumbstick 360 degrees around its plastic rim, the normalized coordinate radius (X² + Y²) should ideally equal exactly 1.000 across all angles. Circularity error percentage reflects the average deviation from this perfect circle."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a good circularity error percentage for a controller?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Premium Hall Effect controllers (like 8BitDo Ultimate, Flydigi Vader 4 Pro, or GameSir G7 SE) typically achieve 0.5% to 5.0% circularity error. Factory original OEM controllers (Sony PS5 DualSense and Xbox Series X/S) average between 6.0% and 11.0%, which is considered normal and well within factory tolerances. An error higher than 15% indicates worn potentiometers, off-axis sensor wear, or heavy diagonal square clipping."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are Hall Effect magnetic analog sticks better than potentiometer sticks?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Traditional analog sticks use physical carbon film wipers that physically grind away over 400 to 600 hours of gaming, eventually creating carbon debris and stick drift. Hall Effect joysticks use contactless permanent magnets and electrical Hall effect sensors. Because no physical parts rub against each other, Hall Effect sticks virtually eliminate stick drift and maintain consistent circularity for millions of cycles."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do some controllers show a squared outer pattern instead of a circle?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Many modern console gamepads utilize internal firmware algorithms that map diagonal stick inputs into a squircle or square bounding box (often with corners reaching up to 1.414). This design ensures players can reach maximum in-game sprinting and diagonal camera speeds without being limited by physical circular restrictor rings. While this causes a higher mathematical circularity error score (12% to 20%), it is intentional behavior for games that expect square stick gating."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://inputtest.online/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Controller Circularity Test",
+          "item": "https://inputtest.online/controller-circularity-test"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            850: '#151f32',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 90% 40%, rgba(59, 130, 246, 0.03) 0%, transparent 40%);
+        }
+        .dark .glow-bg {
+            background-color: #0b0f19 !important;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%) !important;
+        }
+        .radar-canvas {
+            touch-action: none;
+            background: radial-gradient(circle at center, rgba(30, 41, 59, 0.1) 0%, transparent 70%);
+        }
+        .dark .radar-canvas {
+            background: radial-gradient(circle at center, rgba(15, 23, 42, 0.8) 0%, rgba(2, 6, 23, 0.95) 100%);
+        }
+    </style>
+
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2485510445228691" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-2485510445228691">
+
+    <!-- Microsoft Clarity Tracking Code -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ynfnjomkxs");
+    </script>
+</head>
+<body class="glow-bg text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+    <!-- Top Sticky Header -->
+    <header class="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-slate-200/80 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+            <!-- Brand Logo -->
+            <a href="/" class="flex items-center gap-3 group shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
+                    <span class="text-xl font-black">IT</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">InputTest</span>
+                    <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold -mt-1 tracking-wider uppercase">Diagnostics</span>
+                </div>
+            </a>
+
+            <!-- Search Bar + Quick Auto-Suggest -->
+            <div class="relative flex-1 max-w-md hidden md:block">
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </span>
+                    <input type="text" id="header-search-bar" placeholder="Search diagnostic tools (e.g. controller, polling rate, ghosting)..." class="w-full pl-9 pr-4 py-1.5 text-xs rounded-xl bg-slate-100 dark:bg-slate-800 border border-transparent focus:border-blue-500 focus:bg-white dark:focus:bg-slate-900 focus:outline-none transition-all duration-200 text-slate-800 dark:text-slate-200">
+                </div>
+                <!-- Search Suggestions Dropdown -->
+                <div id="header-search-results" class="hidden absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-850 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700/80 p-2 z-50 flex flex-col gap-1 max-h-80 overflow-y-auto"></div>
+            </div>
+
+            <!-- Header Action Controls -->
+            <div class="flex items-center gap-2.5">
+                <a href="/report" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 hover:bg-blue-100 dark:hover:bg-blue-500/20 rounded-xl border border-blue-200 dark:border-blue-500/30 transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span>Full Report</span>
+                </a>
+
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" aria-label="Toggle Theme" class="p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <svg id="theme-icon-light" class="w-5 h-5 hidden dark:block text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path></svg>
+                    <svg id="theme-icon-dark" class="w-5 h-5 block dark:hidden text-slate-600" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                </button>
+
+                <!-- Mobile Navigation Menu Toggle -->
+                <button id="mobile-menu-toggle" aria-label="Toggle Mobile Menu" class="p-2 md:hidden rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    <svg id="hamburger-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Panel -->
+        <div id="mobile-nav-panel" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur px-4 pt-3 pb-6 flex flex-col gap-2">
+            <a href="/keyboard" class="px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Keyboard Tester</a>
+            <a href="/mouse" class="px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Mouse Tester</a>
+            <a href="/scroll-test" class="px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Scroll Wheel Test</a>
+            <a href="/mouse-polling-rate" class="px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Mouse Polling Rate (8000Hz)</a>
+            <a href="/mouse-angle-snapping-test" class="px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Mouse Angle Snapping</a>
+            <a href="/gamepad" class="px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Gamepad Tester</a>
+            <a href="/controller-circularity-test" class="px-3 py-2 rounded-lg font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm font-bold">Stick Circularity Test</a>
+            <a href="/monitor-ghosting-test" class="px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">UFO Ghosting Test</a>
+            <a href="/audio-frequency-test" class="px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Audio Frequency &amp; Bass Test</a>
+            <a href="/display" class="px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800 text-sm">Display Refresh &amp; Dead Pixel</a>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-8">
+        
+        <!-- Breadcrumbs -->
+        <nav class="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
+            <a href="/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</a>
+            <span>/</span>
+            <a href="/gamepad" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Gamepad</a>
+            <span>/</span>
+            <span class="text-slate-800 dark:text-slate-200 font-semibold">Controller Stick Circularity Test</span>
+        </nav>
+
+        <!-- Hero Title Section -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200/80 dark:border-slate-800 pb-6">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-700 dark:text-indigo-400 text-[11px] font-mono font-bold uppercase tracking-wider mb-3">
+                    <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+                    Gamepad API Polar Mapping
+                </div>
+                <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                    Controller Analog Stick Circularity Test
+                </h1>
+                <p class="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+                    Accurately benchmark analog stick circularity error percentage, detect resting stick drift jitter, and verify Hall Effect magnetic sensors. Rotate your thumbstick 360° to measure circular fidelity and cardinal deadzones.
+                </p>
+            </div>
+            <!-- Quick Action Badges -->
+            <div class="flex flex-wrap sm:flex-nowrap items-center gap-2 shrink-0">
+                <button id="rumble-btn" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 flex items-center gap-2 transition-all">
+                    <span>📳</span>
+                    <span>Test Rumble Motors</span>
+                </button>
+                <button id="reset-all-btn" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/20 flex items-center gap-2 transition-all">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    <span>Reset Calibration</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Controller Hardware Status Card -->
+        <div id="controller-status-banner" class="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 transition-all">
+            <div class="flex items-center gap-3.5 w-full sm:w-auto">
+                <div id="controller-status-icon" class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl shrink-0">
+                    🎮
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span id="controller-status-title" class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200">
+                            Waiting for Gamepad Input...
+                        </span>
+                        <span id="controller-status-badge" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-200/60 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300">
+                            DISCONNECTED
+                        </span>
+                    </div>
+                    <p id="controller-status-desc" class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                        Connect an Xbox, PlayStation, Nintendo, or PC gamepad via USB/Bluetooth and press any physical button (A, X, or Trigger) to activate.
+                    </p>
+                </div>
+            </div>
+            <!-- Controller Selector / Polling Telemetry -->
+            <div class="flex items-center gap-3 w-full sm:w-auto justify-end text-xs font-mono">
+                <div class="bg-white dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 flex items-center gap-2">
+                    <span class="text-slate-400">Index:</span>
+                    <span id="gamepad-index-label" class="font-bold text-slate-800 dark:text-slate-200">None</span>
+                </div>
+                <div class="bg-white dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 flex items-center gap-2">
+                    <span class="text-slate-400">Timestamp:</span>
+                    <span id="gamepad-timestamp-label" class="font-bold text-slate-800 dark:text-slate-200">0 ms</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dual Analog Stick Testing Canvas Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- LEFT ANALOG STICK PANEL -->
+            <div class="bg-white dark:bg-slate-850 rounded-3xl border border-slate-200/90 dark:border-slate-800/80 p-5 sm:p-6 shadow-xl shadow-slate-100/50 dark:shadow-none flex flex-col gap-5">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 font-mono font-bold flex items-center justify-center text-sm border border-blue-200 dark:border-blue-500/20">
+                            LS
+                        </span>
+                        <div>
+                            <h2 class="text-base font-bold text-slate-900 dark:text-white">Left Analog Stick (Axes 0, 1)</h2>
+                            <p class="text-[11px] text-slate-400 font-mono">Thumbstick Movement / Cardinal Gating</p>
+                        </div>
+                    </div>
+                    <button id="reset-left-btn" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors">
+                        Reset Left
+                    </button>
+                </div>
+
+                <!-- Radar Canvas -->
+                <div class="relative w-full aspect-square max-w-[360px] mx-auto rounded-2xl border border-slate-200 dark:border-slate-700/80 overflow-hidden shadow-inner flex items-center justify-center">
+                    <canvas id="left-stick-canvas" width="360" height="360" class="radar-canvas w-full h-full block"></canvas>
+                    <!-- Floating Coordinates Overlay -->
+                    <div class="absolute bottom-2 left-2 bg-slate-900/85 backdrop-blur text-white px-2.5 py-1 rounded-lg text-[10px] font-mono pointer-events-none flex items-center gap-2">
+                        <span>X: <strong id="left-x-raw">+0.0000</strong></span>
+                        <span>Y: <strong id="left-y-raw">+0.0000</strong></span>
+                    </div>
+                    <div class="absolute top-2 right-2 bg-slate-900/85 backdrop-blur text-white px-2 py-1 rounded-lg text-[10px] font-mono pointer-events-none">
+                        r: <strong id="left-r-val">0.000</strong> | <strong id="left-angle-val">0.0°</strong>
+                    </div>
+                </div>
+
+                <!-- Left Stick Real-Time Metrics Table -->
+                <div class="grid grid-cols-3 gap-2.5 text-center">
+                    <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200/70 dark:border-slate-800">
+                        <div class="text-[10px] font-mono text-slate-400 font-semibold uppercase tracking-wider">Avg Circularity Error</div>
+                        <div id="left-error-pct" class="text-xl font-extrabold text-blue-600 dark:text-blue-400 mt-0.5">0.0%</div>
+                        <div id="left-error-grade" class="text-[10px] font-bold text-slate-500 mt-0.5">Awaiting Rotation</div>
+                    </div>
+                    <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200/70 dark:border-slate-800">
+                        <div class="text-[10px] font-mono text-slate-400 font-semibold uppercase tracking-wider">Resting Center Jitter</div>
+                        <div id="left-drift-pct" class="text-xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-0.5">0.00%</div>
+                        <div id="left-drift-grade" class="text-[10px] font-bold text-emerald-600 mt-0.5">Perfect Center</div>
+                    </div>
+                    <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200/70 dark:border-slate-800">
+                        <div class="text-[10px] font-mono text-slate-400 font-semibold uppercase tracking-wider">Perimeter Samples</div>
+                        <div id="left-samples-count" class="text-xl font-extrabold text-indigo-600 dark:text-indigo-400 mt-0.5">0 / 360°</div>
+                        <div id="left-coverage-pct" class="text-[10px] font-bold text-slate-500 mt-0.5">0% Arc Traced</div>
+                    </div>
+                </div>
+
+                <!-- Left Stick Instructions -->
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 bg-slate-50/70 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800/80 flex items-start gap-2">
+                    <span class="text-blue-500 font-bold">💡</span>
+                    <span><strong>Test Tip:</strong> Slowly roll the left stick in a full complete circle against the outer boundary rim. The colored polygon reveals whether your stick is circular, squircle, or clipping.</span>
+                </div>
+            </div>
+
+            <!-- RIGHT ANALOG STICK PANEL -->
+            <div class="bg-white dark:bg-slate-850 rounded-3xl border border-slate-200/90 dark:border-slate-800/80 p-5 sm:p-6 shadow-xl shadow-slate-100/50 dark:shadow-none flex flex-col gap-5">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-mono font-bold flex items-center justify-center text-sm border border-indigo-200 dark:border-indigo-500/20">
+                            RS
+                        </span>
+                        <div>
+                            <h2 class="text-base font-bold text-slate-900 dark:text-white">Right Analog Stick (Axes 2, 3)</h2>
+                            <p class="text-[11px] text-slate-400 font-mono">Aim Look / Camera Targeting Precision</p>
+                        </div>
+                    </div>
+                    <button id="reset-right-btn" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors">
+                        Reset Right
+                    </button>
+                </div>
+
+                <!-- Radar Canvas -->
+                <div class="relative w-full aspect-square max-w-[360px] mx-auto rounded-2xl border border-slate-200 dark:border-slate-700/80 overflow-hidden shadow-inner flex items-center justify-center">
+                    <canvas id="right-stick-canvas" width="360" height="360" class="radar-canvas w-full h-full block"></canvas>
+                    <!-- Floating Coordinates Overlay -->
+                    <div class="absolute bottom-2 left-2 bg-slate-900/85 backdrop-blur text-white px-2.5 py-1 rounded-lg text-[10px] font-mono pointer-events-none flex items-center gap-2">
+                        <span>X: <strong id="right-x-raw">+0.0000</strong></span>
+                        <span>Y: <strong id="right-y-raw">+0.0000</strong></span>
+                    </div>
+                    <div class="absolute top-2 right-2 bg-slate-900/85 backdrop-blur text-white px-2 py-1 rounded-lg text-[10px] font-mono pointer-events-none">
+                        r: <strong id="right-r-val">0.000</strong> | <strong id="right-angle-val">0.0°</strong>
+                    </div>
+                </div>
+
+                <!-- Right Stick Real-Time Metrics Table -->
+                <div class="grid grid-cols-3 gap-2.5 text-center">
+                    <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200/70 dark:border-slate-800">
+                        <div class="text-[10px] font-mono text-slate-400 font-semibold uppercase tracking-wider">Avg Circularity Error</div>
+                        <div id="right-error-pct" class="text-xl font-extrabold text-indigo-600 dark:text-indigo-400 mt-0.5">0.0%</div>
+                        <div id="right-error-grade" class="text-[10px] font-bold text-slate-500 mt-0.5">Awaiting Rotation</div>
+                    </div>
+                    <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200/70 dark:border-slate-800">
+                        <div class="text-[10px] font-mono text-slate-400 font-semibold uppercase tracking-wider">Resting Center Jitter</div>
+                        <div id="right-drift-pct" class="text-xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-0.5">0.00%</div>
+                        <div id="right-drift-grade" class="text-[10px] font-bold text-emerald-600 mt-0.5">Perfect Center</div>
+                    </div>
+                    <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200/70 dark:border-slate-800">
+                        <div class="text-[10px] font-mono text-slate-400 font-semibold uppercase tracking-wider">Perimeter Samples</div>
+                        <div id="right-samples-count" class="text-xl font-extrabold text-indigo-600 dark:text-indigo-400 mt-0.5">0 / 360°</div>
+                        <div id="right-coverage-pct" class="text-[10px] font-bold text-slate-500 mt-0.5">0% Arc Traced</div>
+                    </div>
+                </div>
+
+                <!-- Right Stick Instructions -->
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 bg-slate-50/70 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-100 dark:border-slate-800/80 flex items-start gap-2">
+                    <span class="text-indigo-500 font-bold">🎯</span>
+                    <span><strong>Aim Precision:</strong> Right stick circularity is critical for FPS crosshair smoothness. A high error score indicates uneven diagonal tracking that hinders micro-adjustments.</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Triggers, Stick Buttons & Certified Report Generator Card -->
+        <div class="bg-white dark:bg-slate-850 rounded-3xl border border-slate-200/90 dark:border-slate-800/80 p-5 sm:p-6 shadow-xl shadow-slate-100/50 dark:shadow-none flex flex-col gap-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-4">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white">Trigger Telemetry &amp; Stick Click State</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Live trigger analog pressure, L3/R3 mechanical switches, and shareable hardware benchmark report.</p>
+                </div>
+                <button id="generate-report-btn" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 transition-all flex items-center gap-2 self-start sm:self-auto">
+                    <span>📋</span>
+                    <span>Copy Certified Benchmark Report</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Left Trigger LT / L2 -->
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800 flex flex-col gap-2">
+                    <div class="flex justify-between items-center text-xs font-mono">
+                        <span class="font-bold text-slate-600 dark:text-slate-300">Left Trigger (LT / L2)</span>
+                        <span id="lt-val" class="text-blue-600 font-extrabold">0%</span>
+                    </div>
+                    <div class="w-full h-3 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                        <div id="lt-bar" class="h-full bg-blue-600 rounded-full transition-all duration-75" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Right Trigger RT / R2 -->
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800 flex flex-col gap-2">
+                    <div class="flex justify-between items-center text-xs font-mono">
+                        <span class="font-bold text-slate-600 dark:text-slate-300">Right Trigger (RT / R2)</span>
+                        <span id="rt-val" class="text-indigo-600 font-extrabold">0%</span>
+                    </div>
+                    <div class="w-full h-3 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                        <div id="rt-bar" class="h-full bg-indigo-600 rounded-full transition-all duration-75" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- L3 Button Click State -->
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800 flex items-center justify-between">
+                    <div>
+                        <div class="text-xs font-bold text-slate-800 dark:text-slate-200">L3 Stick Click</div>
+                        <div class="text-[10px] font-mono text-slate-400">Left Thumbstick Press</div>
+                    </div>
+                    <span id="l3-badge" class="px-3 py-1 rounded-lg text-xs font-mono font-bold bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                        OFF
+                    </span>
+                </div>
+
+                <!-- R3 Button Click State -->
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/70 dark:border-slate-800 flex items-center justify-between">
+                    <div>
+                        <div class="text-xs font-bold text-slate-800 dark:text-slate-200">R3 Stick Click</div>
+                        <div class="text-[10px] font-mono text-slate-400">Right Thumbstick Press</div>
+                    </div>
+                    <span id="r3-badge" class="px-3 py-1 rounded-lg text-xs font-mono font-bold bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                        OFF
+                    </span>
+                </div>
+            </div>
+
+            <!-- Report Copied Toast -->
+            <div id="report-toast" class="hidden p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-semibold flex items-center gap-2">
+                <span>✅</span>
+                <span>Controller diagnostic summary copied to clipboard! You can paste it into Reddit, Discord, or customer support tickets.</span>
+            </div>
+        </div>
+
+        <!-- Reference Scale & Rating Benchmark -->
+        <div class="bg-white dark:bg-slate-850 rounded-3xl border border-slate-200/90 dark:border-slate-800/80 p-5 sm:p-6 shadow-xl shadow-slate-100/50 dark:shadow-none flex flex-col gap-4">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white">Circularity Error Rating Standards</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+                <div class="p-3.5 rounded-2xl bg-emerald-50/80 dark:bg-emerald-950/30 border border-emerald-200/80 dark:border-emerald-800/50 flex flex-col gap-1">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-emerald-800 dark:text-emerald-300">0.0% – 5.0%</span>
+                        <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-[10px] font-mono font-bold">ELITE</span>
+                    </div>
+                    <span class="font-semibold text-slate-700 dark:text-slate-200">Hall Effect Magnetic Sensors</span>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Exceptional circular precision with zero contact wear. Typical for Flydigi, 8BitDo Ultimate, and custom Hall Effect modules.</p>
+                </div>
+
+                <div class="p-3.5 rounded-2xl bg-blue-50/80 dark:bg-blue-950/30 border border-blue-200/80 dark:border-blue-800/50 flex flex-col gap-1">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-blue-800 dark:text-blue-300">5.1% – 10.0%</span>
+                        <span class="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-700 dark:text-blue-300 text-[10px] font-mono font-bold">OEM PASS</span>
+                    </div>
+                    <span class="font-semibold text-slate-700 dark:text-slate-200">Factory Spec Controllers</span>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Standard brand-new Sony DualSense (PS5) and Xbox Series X/S controllers. Fully compliant with OEM gaming requirements.</p>
+                </div>
+
+                <div class="p-3.5 rounded-2xl bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/50 flex flex-col gap-1">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-amber-800 dark:text-amber-300">10.1% – 18.0%</span>
+                        <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-700 dark:text-amber-300 text-[10px] font-mono font-bold">MODERATE</span>
+                    </div>
+                    <span class="font-semibold text-slate-700 dark:text-slate-200">Potentiometer Wear / Diagonal Gating</span>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Minor carbon wiper degradation or firmware squircle corner compensation. In-game aim may feel slightly inconsistent diagonally.</p>
+                </div>
+
+                <div class="p-3.5 rounded-2xl bg-rose-50/80 dark:bg-rose-950/30 border border-rose-200/80 dark:border-rose-800/50 flex flex-col gap-1">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-rose-800 dark:text-rose-300">&gt; 18.0%</span>
+                        <span class="px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-700 dark:text-rose-300 text-[10px] font-mono font-bold">HIGH ERROR</span>
+                    </div>
+                    <span class="font-semibold text-slate-700 dark:text-slate-200">Severe Drift / Defective Stick</span>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">Worn carbon tracks, loose gimbal springs, or heavy square deadzone mapping. Sensor module cleaning or replacement is strongly advised.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comprehensive 1,500+ Words Technical SEO Guide -->
+        <article class="bg-white dark:bg-slate-850 rounded-3xl border border-slate-200/90 dark:border-slate-800/80 p-6 sm:p-8 shadow-xl shadow-slate-100/50 dark:shadow-none prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300">
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mb-4">
+                The Definitive Guide to Controller Analog Stick Circularity &amp; Stick Drift
+            </h2>
+            <p class="leading-relaxed">
+                Whether you play competitive first-person shooters like <em>Call of Duty: Warzone</em>, <em>Apex Legends</em>, and <em>Fortnite</em>, or precision racing simulators and fighting games, your gamepad's analog sticks are the vital bridge between your thumbs and in-game camera motion. However, gamers frequently encounter two frustrating hardware issues: <strong>unintended stick drift</strong> and <strong>high stick circularity error</strong>.
+            </p>
+            <p class="leading-relaxed">
+                This diagnostic platform runs entirely within your browser utilizing the modern <strong>HTML5 Gamepad API</strong>. It requires zero driver installations, zero background software downloads, and no elevated permissions. By polling high-frequency axis coordinate states at your monitor's native refresh rate (up to 360Hz), this tool maps polar positions, calculates true mathematical circularity deviation, and monitors micro-jitter at rest.
+            </p>
+
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-8 mb-3">
+                1. What is Analog Stick Circularity Error?
+            </h3>
+            <p class="leading-relaxed">
+                When you move an analog thumbstick to its physical boundary and roll it around the outer bezel in a full 360° circle, the internal sensors register horizontal ($X$) and vertical ($Y$) coordinates normalized between $-1.0000$ and $+1.0000$.
+            </p>
+            <p class="leading-relaxed">
+                In a mathematically ideal joystick mechanism, every point along the circular physical boundary produces a radial distance ($r$) equal to exactly 1.000:
+            </p>
+            <div class="bg-slate-100 dark:bg-slate-900 p-4 rounded-xl font-mono text-xs sm:text-sm text-slate-800 dark:text-slate-200 my-4 border border-slate-200 dark:border-slate-800">
+                r = &radic;(X&sup2; + Y&sup2;) = 1.0000 &nbsp;&nbsp;|&nbsp;&nbsp; Circularity Error = |r - 1.0000| &times; 100%
+            </div>
+            <p class="leading-relaxed">
+                The <strong>Average Circularity Error Percentage</strong> represents the mean absolute deviation of all perimeter points recorded across 360 angular bins ($\theta = \text{atan2}(Y, X)$).
+            </p>
+            <ul class="list-disc pl-5 space-y-2 mt-2">
+                <li><strong>Radial Undershoot ($r < 1.0$):</strong> The stick physical movement cannot reach maximum coordinate values in certain angles (e.g. diagonal forward-right). In-game, this causes your character to suddenly drop from full sprint into a slow walk when moving diagonally.</li>
+                <li><strong>Radial Overshoot / Square Gating ($r > 1.0$):</strong> The coordinates push beyond the unit circle into corner values (e.g. $X = 1.0, Y = 1.0$ yielding $r = 1.414$). While this guarantees full sprint speed, it turns the circular response into a rounded square, distorting diagonal aim sensitivity and crosshair diagonal acceleration.</li>
+            </ul>
+
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-8 mb-3">
+                2. Hall Effect vs. Traditional Carbon Film Potentiometers
+            </h3>
+            <p class="leading-relaxed">
+                For over two decades, the gaming industry has relied almost exclusively on <strong>ALPS Alpine potentiometer-based joystick modules</strong> inside official PlayStation (DualShock 3, DualShock 4, DualSense), Xbox (Xbox 360, Xbox One, Xbox Series X/S), and Nintendo Switch Pro controllers.
+            </p>
+            <div class="overflow-x-auto my-6">
+                <table class="w-full text-left text-xs sm:text-sm border-collapse border border-slate-200 dark:border-slate-800">
+                    <thead>
+                        <tr class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200">
+                            <th class="p-3 border border-slate-200 dark:border-slate-800">Feature</th>
+                            <th class="p-3 border border-slate-200 dark:border-slate-800">ALPS Carbon Potentiometers</th>
+                            <th class="p-3 border border-slate-200 dark:border-slate-800">Hall Effect Magnetic Sensors</th>
+                            <th class="p-3 border border-slate-200 dark:border-slate-800">TMR (Tunneling Magnetoresistive)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                        <tr>
+                            <td class="p-3 font-semibold border border-slate-200 dark:border-slate-800">Sensing Principle</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-800">Friction contact wiper rubbing resistive carbon track</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-800">Contactless permanent magnet + Hall voltage IC</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-800">Magnetic quantum tunneling resistance</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-semibold border border-slate-200 dark:border-slate-800">Expected Lifespan</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-800">~400 to 600 hours before friction wear begins</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-800">5,000,000+ rotational cycles (virtually permanent)</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-800">10,000,000+ cycles with ultra-low power consumption</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-semibold border border-slate-200 dark:border-slate-800">Circularity Error %</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-800">7.0% – 13.0% (Factory OEM)</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-800">0.5% – 4.5% (Extremely precise circle)</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-800">0.3% – 3.0% (Sub-millimeter resolution)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-semibold border border-slate-200 dark:border-slate-800">Stick Drift Susceptibility</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-800">Very High (carbon dust shavings contaminate wiper)</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-800">Nearly Zero (only spring tension can fatigue over years)</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-800">Zero electrical drift</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-semibold border border-slate-200 dark:border-slate-800">Controllers Using It</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-800">Standard DualSense, Xbox Wireless, Switch Joy-Con</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-800">8BitDo Ultimate, Flydigi Vader 4 Pro, GameSir G7 SE</td>
+                            <td class="p-3 border border-slate-200 dark:border-slate-800">Next-gen elite esports pads (PB Tails, custom mods)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-8 mb-3">
+                3. Why Do Official PS5 &amp; Xbox Controllers Score 8%–12% Circularity Error Out of the Box?
+            </h3>
+            <p class="leading-relaxed">
+                Many gamers are startled when they connect a brand-new, unopened PlayStation 5 DualSense or Xbox Series controller to this test and observe an 8% to 11% circularity error. They immediately wonder: <em>"Is my brand-new controller defective?"</em>
+            </p>
+            <p class="leading-relaxed">
+                The answer is <strong>no</strong>. Mainstream console manufacturers intentionally tune their internal stick calibration algorithms to produce a slightly expanded squircle output. When human thumbs flick an analog stick diagonally, the physical angle of thumb flexion naturally exerts less outward leverage than pure horizontal pushing. By allowing a 5% to 10% diagonal coordinate push, console firmware guarantees that games with strict diagonal sprint thresholds never register unintended slowdowns.
+            </p>
+            <p class="leading-relaxed">
+                In contrast, dedicated Hall Effect controllers often come with dedicated calibration software (such as the 8BitDo Ultimate Software or Flydigi Space Station) where users can toggle between a <strong>Pure Circle</strong> (0.5%–4% error, best for precision FPS aiming) and an <strong>Expanded Diagonal Circle</strong> (for sports titles like FIFA/EA FC and NBA 2K).
+            </p>
+
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-8 mb-3">
+                4. How to Fix Controller Stick Drift and Improve Circularity
+            </h3>
+            <p class="leading-relaxed">
+                If your controller displays center drift above <strong>5%</strong> or circularity error exceeding <strong>15%</strong>, follow these proven maintenance and calibration steps before spending money on a replacement:
+            </p>
+            <ol class="list-decimal pl-5 space-y-3 mt-3">
+                <li>
+                    <strong>In-Game Deadzone Calibration:</strong> In competitive titles like <em>Call of Duty</em>, <em>Apex Legends</em>, and <em>Rocket League</em>, navigate to Controller Settings &gt; Deadzone. If your resting drift score on this test is 0.04 (4%), set your inner deadzone to <strong>0.05 (5%)</strong>. This creates a digital dead band where phantom micro-movements are silenced.
+                </li>
+                <li>
+                    <strong>Steam Controller Input Calibration:</strong> Open Steam &gt; Settings &gt; Controller &gt; Calibration &amp; Advanced Settings. Steam provides an interactive visual deadzone slider and an automatic stick re-centering tool that works across all PC titles.
+                </li>
+                <li>
+                    <strong>Windows 11 joy.cpl Re-centering:</strong> Press <kbd class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono text-[11px]">Win + R</kbd>, type <code class="text-blue-600 font-mono">joy.cpl</code>, hit Enter. Select your gamepad &gt; Properties &gt; Settings &gt; Calibrate. Follow the on-screen wizard to calibrate your stick axes and re-center the neutral resting point.
+                </li>
+                <li>
+                    <strong>99.9% Isopropyl Alcohol (IPA) Cleaning:</strong> If carbon shavings or debris have accumulated inside potentiometer discs, apply 2–3 drops of high-purity (99%+) electronic-grade isopropyl alcohol directly into the thumbstick ball joint without disassembly. Rotate the stick vigorously for 60 seconds and allow 15 minutes to fully evaporate.
+                </li>
+                <li>
+                    <strong>Hall Effect Module Upgrade (JH16 / K-Silver):</strong> If you possess basic soldering skills, you can replace failing ALPS modules with modern Hall Effect sensor assemblies (e.g. K-Silver or Ginfull modules available online for $4–$8 a pair).
+                </li>
+            </ol>
+
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-8 mb-3">
+                5. Frequently Asked Questions (FAQ)
+            </h3>
+            <div class="space-y-4 not-prose mt-4">
+                <details class="group bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 transition-all">
+                    <summary class="font-bold text-sm text-slate-900 dark:text-white cursor-pointer flex items-center justify-between">
+                        <span>Can stick circularity error be fixed with software alone?</span>
+                        <span class="text-slate-400 group-open:rotate-180 transition-transform">▼</span>
+                    </summary>
+                    <p class="mt-3 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Yes, if the error is caused by firmware square-gating or minor center bias. Re-centering via Steam Input, DS4Windows, or controller companion software can map the output coordinates back to a circular bounding limit. However, if the error is caused by physically worn potentiometer wipers, hardware cleaning or replacement is required.
+                    </p>
+                </details>
+
+                <details class="group bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 transition-all">
+                    <summary class="font-bold text-sm text-slate-900 dark:text-white cursor-pointer flex items-center justify-between">
+                        <span>Does 0.0% circularity error exist in the real world?</span>
+                        <span class="text-slate-400 group-open:rotate-180 transition-transform">▼</span>
+                    </summary>
+                    <p class="mt-3 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                        In pure mechanical physics, achieving an absolute 0.000% error across all 360 individual degree bins is impossible due to minor manufacturing tolerances of the plastic circular restrictor ring and gimbal springs. However, premium Hall Effect sticks calibrated with firmware circular clamping frequently reach between 0.4% and 1.5%, which is essentially imperceptible to human hands.
+                    </p>
+                </details>
+
+                <details class="group bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 transition-all">
+                    <summary class="font-bold text-sm text-slate-900 dark:text-white cursor-pointer flex items-center justify-between">
+                        <span>Why does my controller not register when connected?</span>
+                        <span class="text-slate-400 group-open:rotate-180 transition-transform">▼</span>
+                    </summary>
+                    <p class="mt-3 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                        By security design, web browsers do not grant Web Gamepad API access until the user provides an explicit physical input. Connect your controller via USB cable or Bluetooth, then press any physical button (such as A, B, X, Y or any bumper). Your operating system will immediately pass the gamepad stream to our diagnostic engine.
+                    </p>
+                </details>
+
+                <details class="group bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 transition-all">
+                    <summary class="font-bold text-sm text-slate-900 dark:text-white cursor-pointer flex items-center justify-between">
+                        <span>Does this tool work on Xbox, PlayStation, and Nintendo Switch controllers?</span>
+                        <span class="text-slate-400 group-open:rotate-180 transition-transform">▼</span>
+                    </summary>
+                    <p class="mt-3 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Yes! The HTML5 Gamepad API natively recognizes Xbox Wireless Controllers, Xbox Elite Series 2, Sony PlayStation DualSense, DualShock 4, Nintendo Switch Pro Controllers, Joy-Cons, and generic PC DirectInput/XInput fightsticks and arcade pads on Windows, macOS, Linux, ChromeOS, and Android.
+                    </p>
+                </details>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- Global Standard Navy Footer -->
+    <footer class="bg-[#0b1329] text-slate-400 text-sm mt-16 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+                <!-- Col 1: KEYBOARDS -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>⌨️</span> <span>KEYBOARDS</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/keyboard" class="hover:text-white transition-colors">Full Keyboard Layout</a></li>
+                        <li><a href="/keyboard-chatter-test" class="hover:text-white transition-colors">Switch Chatter Detector</a></li>
+                        <li><a href="/keyboard#latency" class="hover:text-white transition-colors">Key Switch Latency</a></li>
+                        <li><a href="/keyboard#n-key" class="hover:text-white transition-colors">NKRO Rollover Matrix</a></li>
+                        <li><a href="/keyboard#sound" class="hover:text-white transition-colors">Mechanical Switch Sound</a></li>
+                        <li><a href="/keyboard#shortcuts" class="hover:text-white transition-colors">Modifier &amp; Macro Keys</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 2: MICE & POINTERS -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🖱️</span> <span>MICE &amp; POINTERS</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/mouse" class="hover:text-white transition-colors">Mouse Button Switch Test</a></li>
+                        <li><a href="/mouse-double-click-test" class="hover:text-white transition-colors">Double Click Debounce</a></li>
+                        <li><a href="/scroll-test" class="hover:text-white transition-colors">Scroll Wheel Reverse-Tick</a></li>
+                        <li><a href="/mouse-dpi-tester" class="hover:text-white transition-colors">DPI Accuracy Analyzer</a></li>
+                        <li>
+                            <a href="/mouse-polling-rate" class="text-cyan-400 hover:text-cyan-300 transition-colors flex items-center justify-between group">
+                                <span>Polling Rate 8000Hz</span>
+                                <span class="px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-[9px] font-mono font-bold">NEW</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/mouse-angle-snapping-test" class="text-amber-400 hover:text-amber-300 transition-colors flex items-center justify-between group">
+                                <span>Angle Snapping Test</span>
+                                <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[9px] font-mono font-bold">HOT</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/mouse-double-click-fixer" class="text-cyan-400 hover:text-cyan-300 font-bold transition-colors flex items-center justify-between group">
+                                <span>ClickShield™ Fixer</span>
+                                <span class="px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-[9px] font-mono font-bold">EXE</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/software" class="text-slate-300 hover:text-white font-semibold transition-colors flex items-center justify-between group">
+                                <span>Desktop Software Suite</span>
+                                <span class="text-[10px] text-cyan-400">&rarr;</span>
+                            </a>
+                        </li>
+                        <li><a href="/gamepad" class="hover:text-white transition-colors">Gamepad Stick Drift</a></li>
+                        <li>
+                            <a href="/controller-circularity-test" class="text-indigo-400 hover:text-indigo-300 transition-colors flex items-center justify-between group">
+                                <span>Stick Circularity Test</span>
+                                <span class="px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-[9px] font-mono font-bold">NEW</span>
+                            </a>
+                        </li>
+                        <li><a href="/cps-test" class="hover:text-white transition-colors">CPS Speed Clicker</a></li>
+                        <li><a href="/typing" class="hover:text-white transition-colors">Typing Speed WPM</a></li>
+                        <li><a href="/reaction" class="hover:text-white transition-colors">Reaction Time Reflex</a></li>
+                        <li><a href="/draw" class="hover:text-white transition-colors">Stylus Pen Pressure</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: DISPLAYS & AUDIO -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🖥️</span> <span>DISPLAYS &amp; AUDIO</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/display" class="hover:text-white transition-colors">Display Refresh Rate (Hz)</a></li>
+                        <li>
+                            <a href="/monitor-ghosting-test" class="text-amber-400 hover:text-amber-300 transition-colors flex items-center justify-between group">
+                                <span>Monitor UFO Ghosting</span>
+                                <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[9px] font-mono font-bold">HOT</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/audio-frequency-test" class="text-emerald-400 hover:text-emerald-300 transition-colors flex items-center justify-between group">
+                                <span>Audio Frequency &amp; Bass</span>
+                                <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[9px] font-mono font-bold">NEW</span>
+                            </a>
+                        </li>
+                        <li><a href="/display#dead-pixel" class="hover:text-white transition-colors">Dead Pixel Sweeper</a></li>
+                        <li><a href="/sound" class="hover:text-white transition-colors">Stereo Speaker Balancer</a></li>
+                        <li><a href="/mic" class="hover:text-white transition-colors">Microphone Decibel Meter</a></li>
+                        <li><a href="/webcam" class="hover:text-white transition-colors">Webcam Resolution &amp; FPS</a></li>
+                        <li><a href="/latency" class="hover:text-white transition-colors">Bluetooth Audio Latency</a></li>
+                        <li><a href="/hdmi" class="hover:text-white transition-colors">HDMI &amp; DisplayPort Signal</a></li>
+                        <li><a href="/vr" class="hover:text-white transition-colors">WebVR Spatial Coordinates</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: SYSTEMS & PORTS -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>⚡</span> <span>SYSTEMS &amp; PORTS</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/specs#battery" class="hover:text-white transition-colors">Battery Wear &amp; Cycles</a></li>
+                        <li><a href="/usb" class="hover:text-white transition-colors">USB Device Inspector</a></li>
+                        <li><a href="/usb-c" class="hover:text-white transition-colors">USB-C Power Delivery</a></li>
+                        <li><a href="/lan" class="hover:text-white transition-colors">Network Jitter &amp; Ping</a></li>
+                        <li><a href="/biometric" class="hover:text-white transition-colors">Biometric Sensor Test</a></li>
+                        <li><a href="/printer" class="hover:text-white transition-colors">Printer CMYK Calibration</a></li>
+                        <li><a href="/scanner" class="hover:text-white transition-colors">Flatbed Scanner Driver</a></li>
+                        <li><a href="/vga" class="hover:text-white transition-colors">Analog VGA Geometry</a></li>
+                        <li><a href="/specs" class="hover:text-white transition-colors">Hardware Architecture</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 5: BENCHMARK SUITE -->
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>📊</span> <span>BENCHMARK SUITE</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/report" class="hover:text-white transition-colors">Full PDF Hardware Report</a></li>
+                        <li><a href="/blog" class="hover:text-white transition-colors">Diagnostic Knowledge Base</a></li>
+                        <li><a href="/about" class="hover:text-white transition-colors">Laboratory Mission</a></li>
+                        <li><a href="/contact" class="hover:text-white transition-colors">Engineering Contact</a></li>
+                        <li><a href="/privacy" class="hover:text-white transition-colors">Privacy &amp; Telemetry</a></li>
+                        <li><a href="/terms" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+                <p>&copy; 2026 InputTest.online &bull; Pure Browser Hardware Diagnostics &bull; Zero Telemetry</p>
+                <div class="flex items-center gap-6">
+                    <a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="/terms" class="hover:text-white transition-colors">Terms of Use</a>
+                    <a href="/about" class="hover:text-white transition-colors">About Engineering</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Gamepad Diagnostic Engine Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById("theme-toggle");
+            if (themeToggle) {
+                themeToggle.addEventListener("click", () => {
+                    const isDark = document.documentElement.classList.toggle("dark");
+                    localStorage.setItem("color-theme", isDark ? "dark" : "light");
+                });
+            }
+
+            // Stick State Trackers (360 bins of 1 degree)
+            class StickTracker {
+                constructor(canvasId, errorPctId, errorGradeId, driftPctId, driftGradeId, samplesCountId, coveragePctId, xRawId, yRawId, rValId, angleValId) {
+                    this.canvas = document.getElementById(canvasId);
+                    this.ctx = this.canvas.getContext("2d");
+                    this.errorPctEl = document.getElementById(errorPctId);
+                    this.errorGradeEl = document.getElementById(errorGradeId);
+                    this.driftPctEl = document.getElementById(driftPctId);
+                    this.driftGradeEl = document.getElementById(driftGradeId);
+                    this.samplesCountEl = document.getElementById(samplesCountId);
+                    this.coveragePctEl = document.getElementById(coveragePctId);
+                    this.xRawEl = document.getElementById(xRawId);
+                    this.yRawEl = document.getElementById(yRawId);
+                    this.rValEl = document.getElementById(rValId);
+                    this.angleValEl = document.getElementById(angleValId);
+
+                    this.bins = new Array(360).fill(null); // stores max radius at each degree (0 to 359)
+                    this.rawHistory = []; // last 120 points for smooth dynamic trail
+                    this.restingSamples = [];
+                    this.currentX = 0;
+                    this.currentY = 0;
+                    this.currentRadius = 0;
+                    this.currentAngle = 0;
+                    this.centerDrift = 0;
+                    this.avgCircularityError = 0;
+                }
+
+                reset() {
+                    this.bins.fill(null);
+                    this.rawHistory = [];
+                    this.restingSamples = [];
+                    this.currentX = 0;
+                    this.currentY = 0;
+                    this.currentRadius = 0;
+                    this.currentAngle = 0;
+                    this.centerDrift = 0;
+                    this.avgCircularityError = 0;
+
+                    this.errorPctEl.textContent = "0.0%";
+                    this.errorGradeEl.textContent = "Awaiting Rotation";
+                    this.errorGradeEl.className = "text-[10px] font-bold text-slate-500 mt-0.5";
+                    this.driftPctEl.textContent = "0.00%";
+                    this.driftGradeEl.textContent = "Perfect Center";
+                    this.driftGradeEl.className = "text-[10px] font-bold text-emerald-600 mt-0.5";
+                    this.samplesCountEl.textContent = "0 / 360°";
+                    this.coveragePctEl.textContent = "0% Arc Traced";
+                    this.xRawEl.textContent = "+0.0000";
+                    this.yRawEl.textContent = "+0.0000";
+                    this.rValEl.textContent = "0.000";
+                    this.angleValEl.textContent = "0.0°";
+                }
+
+                update(rawX, rawY) {
+                    this.currentX = rawX;
+                    this.currentY = rawY;
+
+                    const r = Math.sqrt(rawX * rawX + rawY * rawY);
+                    this.currentRadius = r;
+
+                    // Calculate angle 0 to 360 degrees
+                    let angleDeg = (Math.atan2(rawY, rawX) * 180 / Math.PI);
+                    if (angleDeg < 0) angleDeg += 360;
+                    this.currentAngle = angleDeg;
+
+                    // Update UI raw coordinates
+                    this.xRawEl.textContent = (rawX >= 0 ? "+" : "") + rawX.toFixed(4);
+                    this.yRawEl.textContent = (rawY >= 0 ? "+" : "") + rawY.toFixed(4);
+                    this.rValEl.textContent = r.toFixed(3);
+                    this.angleValEl.textContent = angleDeg.toFixed(1) + "°";
+
+                    // Center resting drift check (when stick is near center r < 0.15)
+                    if (r < 0.15) {
+                        this.centerDrift = r;
+                        const driftPercent = (r * 100).toFixed(2);
+                        this.driftPctEl.textContent = driftPercent + "%";
+                        if (r < 0.03) {
+                            this.driftGradeEl.textContent = "Flawless (No Drift)";
+                            this.driftGradeEl.className = "text-[10px] font-bold text-emerald-600 mt-0.5";
+                        } else if (r < 0.08) {
+                            this.driftGradeEl.textContent = "Normal Center Jitter";
+                            this.driftGradeEl.className = "text-[10px] font-bold text-blue-600 mt-0.5";
+                        } else {
+                            this.driftGradeEl.textContent = "Noticeable Drift";
+                            this.driftGradeEl.className = "text-[10px] font-bold text-rose-600 mt-0.5";
+                        }
+                    }
+
+                    // Outer perimeter sampling (when stick pushed outward r > 0.40)
+                    if (r >= 0.40) {
+                        const binIndex = Math.floor(angleDeg) % 360;
+                        if (this.bins[binIndex] === null || r > this.bins[binIndex]) {
+                            this.bins[binIndex] = r;
+                        }
+
+                        // Add to raw history
+                        this.rawHistory.push({ x: rawX, y: rawY });
+                        if (this.rawHistory.length > 150) this.rawHistory.shift();
+
+                        // Compute circularity error across filled bins
+                        this.computeCircularity();
+                    }
+                }
+
+                computeCircularity() {
+                    let filledCount = 0;
+                    let totalDeviation = 0;
+
+                    for (let i = 0; i < 360; i++) {
+                        if (this.bins[i] !== null) {
+                            filledCount++;
+                            totalDeviation += Math.abs(this.bins[i] - 1.0);
+                        }
+                    }
+
+                    this.samplesCountEl.textContent = `${filledCount} / 360°`;
+                    const coverage = ((filledCount / 360) * 100).toFixed(0);
+                    this.coveragePctEl.textContent = `${coverage}% Arc Traced`;
+
+                    if (filledCount >= 30) {
+                        const avgError = (totalDeviation / filledCount) * 100;
+                        this.avgCircularityError = avgError;
+                        this.errorPctEl.textContent = avgError.toFixed(1) + "%";
+
+                        if (avgError <= 5.0) {
+                            this.errorGradeEl.textContent = "Elite (Hall Effect Grade)";
+                            this.errorGradeEl.className = "text-[10px] font-bold text-emerald-600 dark:text-emerald-400 mt-0.5";
+                        } else if (avgError <= 10.0) {
+                            this.errorGradeEl.textContent = "OEM Factory Spec (Good)";
+                            this.errorGradeEl.className = "text-[10px] font-bold text-blue-600 dark:text-blue-400 mt-0.5";
+                        } else if (avgError <= 18.0) {
+                            this.errorGradeEl.textContent = "Moderate Wear / Squircle";
+                            this.errorGradeEl.className = "text-[10px] font-bold text-amber-600 dark:text-amber-400 mt-0.5";
+                        } else {
+                            this.errorGradeEl.textContent = "High Error / Defective";
+                            this.errorGradeEl.className = "text-[10px] font-bold text-rose-600 dark:text-rose-400 mt-0.5";
+                        }
+                    }
+                }
+
+                render(isDark) {
+                    const ctx = this.ctx;
+                    const w = this.canvas.width;
+                    const h = this.canvas.height;
+                    const cx = w / 2;
+                    const cy = h / 2;
+                    const maxRadiusPx = (w / 2) - 24; // boundary radius for unit circle (r = 1.0)
+
+                    ctx.clearRect(0, 0, w, h);
+
+                    // 1. Draw subtle concentric guide rings (25%, 50%, 75%, 100%)
+                    const ringColor = isDark ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.08)";
+                    const crossColor = isDark ? "rgba(255, 255, 255, 0.12)" : "rgba(0, 0, 0, 0.12)";
+                    
+                    ctx.lineWidth = 1;
+                    [0.25, 0.50, 0.75].forEach(fraction => {
+                        ctx.beginPath();
+                        ctx.arc(cx, cy, maxRadiusPx * fraction, 0, Math.PI * 2);
+                        ctx.strokeStyle = ringColor;
+                        ctx.stroke();
+                    });
+
+                    // 2. Draw Target Unit Circle (radius 1.0)
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, maxRadiusPx, 0, Math.PI * 2);
+                    ctx.strokeStyle = isDark ? "rgba(59, 130, 246, 0.5)" : "rgba(37, 99, 235, 0.5)";
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([4, 4]);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+
+                    // 3. Inner Deadzone Circle (5% and 10%)
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, maxRadiusPx * 0.08, 0, Math.PI * 2);
+                    ctx.strokeStyle = isDark ? "rgba(244, 63, 94, 0.3)" : "rgba(244, 63, 94, 0.3)";
+                    ctx.fillStyle = isDark ? "rgba(244, 63, 94, 0.05)" : "rgba(244, 63, 94, 0.05)";
+                    ctx.fill();
+                    ctx.stroke();
+
+                    // 4. Crosshairs
+                    ctx.beginPath();
+                    ctx.moveTo(cx - maxRadiusPx - 10, cy);
+                    ctx.lineTo(cx + maxRadiusPx + 10, cy);
+                    ctx.moveTo(cx, cy - maxRadiusPx - 10);
+                    ctx.lineTo(cx, cy + maxRadiusPx + 10);
+                    ctx.strokeStyle = crossColor;
+                    ctx.stroke();
+
+                    // 5. Draw Traced Outer Perimeter Polygon
+                    let hasPoints = false;
+                    ctx.beginPath();
+                    for (let i = 0; i < 360; i++) {
+                        if (this.bins[i] !== null) {
+                            const rad = (i * Math.PI) / 180;
+                            const rPx = this.bins[i] * maxRadiusPx;
+                            const px = cx + Math.cos(rad) * rPx;
+                            const py = cy + Math.sin(rad) * rPx;
+                            if (!hasPoints) {
+                                ctx.moveTo(px, py);
+                                hasPoints = true;
+                            } else {
+                                ctx.lineTo(px, py);
+                            }
+                        }
+                    }
+
+                    if (hasPoints) {
+                        ctx.closePath();
+                        // Color depending on error
+                        let strokeColor = "rgba(16, 185, 129, 0.85)"; // emerald
+                        let fillColor = "rgba(16, 185, 129, 0.12)";
+                        if (this.avgCircularityError > 5.0 && this.avgCircularityError <= 10.0) {
+                            strokeColor = "rgba(59, 130, 246, 0.85)"; // blue
+                            fillColor = "rgba(59, 130, 246, 0.12)";
+                        } else if (this.avgCircularityError > 10.0 && this.avgCircularityError <= 18.0) {
+                            strokeColor = "rgba(245, 158, 11, 0.85)"; // amber
+                            fillColor = "rgba(245, 158, 11, 0.12)";
+                        } else if (this.avgCircularityError > 18.0) {
+                            strokeColor = "rgba(239, 68, 68, 0.85)"; // red
+                            fillColor = "rgba(239, 68, 68, 0.12)";
+                        }
+                        ctx.fillStyle = fillColor;
+                        ctx.fill();
+                        ctx.strokeStyle = strokeColor;
+                        ctx.lineWidth = 2.5;
+                        ctx.stroke();
+                    }
+
+                    // 6. Draw dynamic point trail
+                    if (this.rawHistory.length > 1) {
+                        ctx.beginPath();
+                        for (let j = 0; j < this.rawHistory.length; j++) {
+                            const pt = this.rawHistory[j];
+                            const px = cx + pt.x * maxRadiusPx;
+                            const py = cy + pt.y * maxRadiusPx;
+                            if (j === 0) ctx.moveTo(px, py);
+                            else ctx.lineTo(px, py);
+                        }
+                        ctx.strokeStyle = isDark ? "rgba(168, 85, 247, 0.4)" : "rgba(147, 51, 234, 0.3)";
+                        ctx.lineWidth = 1.5;
+                        ctx.stroke();
+                    }
+
+                    // 7. Draw Current Live Position Cursor Dot
+                    const curX = cx + this.currentX * maxRadiusPx;
+                    const curY = cy + this.currentY * maxRadiusPx;
+
+                    // Polar connecting ray
+                    ctx.beginPath();
+                    ctx.moveTo(cx, cy);
+                    ctx.lineTo(curX, curY);
+                    ctx.strokeStyle = isDark ? "rgba(59, 130, 246, 0.4)" : "rgba(37, 99, 235, 0.4)";
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+
+                    // Outer halo glow
+                    ctx.beginPath();
+                    ctx.arc(curX, curY, 9, 0, Math.PI * 2);
+                    ctx.fillStyle = isDark ? "rgba(59, 130, 246, 0.25)" : "rgba(37, 99, 235, 0.25)";
+                    ctx.fill();
+
+                    // Inner solid cursor
+                    ctx.beginPath();
+                    ctx.arc(curX, curY, 5, 0, Math.PI * 2);
+                    ctx.fillStyle = isDark ? "#60a5fa" : "#2563eb";
+                    ctx.fill();
+                    ctx.strokeStyle = "#ffffff";
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+                }
+            }
+
+            // Initialize left and right stick trackers
+            const leftTracker = new StickTracker(
+                "left-stick-canvas", "left-error-pct", "left-error-grade", "left-drift-pct", "left-drift-grade", 
+                "left-samples-count", "left-coverage-pct", "left-x-raw", "left-y-raw", "left-r-val", "left-angle-val"
+            );
+            const rightTracker = new StickTracker(
+                "right-stick-canvas", "right-error-pct", "right-error-grade", "right-drift-pct", "right-drift-grade", 
+                "right-samples-count", "right-coverage-pct", "right-x-raw", "right-y-raw", "right-r-val", "right-angle-val"
+            );
+
+            // Telemetry Elements
+            const statusBanner = document.getElementById("controller-status-banner");
+            const statusIcon = document.getElementById("controller-status-icon");
+            const statusTitle = document.getElementById("controller-status-title");
+            const statusBadge = document.getElementById("controller-status-badge");
+            const statusDesc = document.getElementById("controller-status-desc");
+            const indexLabel = document.getElementById("gamepad-index-label");
+            const timestampLabel = document.getElementById("gamepad-timestamp-label");
+
+            // Buttons & Triggers
+            const ltBar = document.getElementById("lt-bar");
+            const ltVal = document.getElementById("lt-val");
+            const rtBar = document.getElementById("rt-bar");
+            const rtVal = document.getElementById("rt-val");
+            const l3Badge = document.getElementById("l3-badge");
+            const r3Badge = document.getElementById("r3-badge");
+
+            let activeGamepadIndex = null;
+            let activeGamepadName = "Standard Controller";
+
+            // Gamepad Connection Listeners
+            window.addEventListener("gamepadconnected", (e) => {
+                const gp = e.gamepad;
+                activeGamepadIndex = gp.index;
+                activeGamepadName = gp.id || "Controller";
+                updateStatusConnected(gp);
+            });
+
+            window.addEventListener("gamepaddisconnected", (e) => {
+                if (activeGamepadIndex === e.gamepad.index) {
+                    activeGamepadIndex = null;
+                    updateStatusDisconnected();
+                }
+            });
+
+            function updateStatusConnected(gp) {
+                statusBanner.className = "bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 transition-all";
+                statusIcon.className = "w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl shrink-0";
+                statusIcon.textContent = "🎮";
+                statusTitle.textContent = gp.id || "Gamepad Connected";
+                statusBadge.textContent = "ONLINE (Active)";
+                statusBadge.className = "px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-200/60 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300";
+                statusDesc.textContent = `Mapping: ${gp.mapping || "standard"} | Buttons: ${gp.buttons.length} | Axes: ${gp.axes.length}`;
+                indexLabel.textContent = "#" + gp.index;
+            }
+
+            function updateStatusDisconnected() {
+                statusBanner.className = "bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 transition-all";
+                statusIcon.className = "w-10 h-10 rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl shrink-0";
+                statusIcon.textContent = "🎮";
+                statusTitle.textContent = "Waiting for Gamepad Input...";
+                statusBadge.textContent = "DISCONNECTED";
+                statusBadge.className = "px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-200/60 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300";
+                statusDesc.textContent = "Connect your gamepad via USB/Bluetooth and press any physical button to activate.";
+                indexLabel.textContent = "None";
+            }
+
+            // Rumble / Haptic Feedback Trigger
+            const rumbleBtn = document.getElementById("rumble-btn");
+            if (rumbleBtn) {
+                rumbleBtn.addEventListener("click", () => {
+                    const gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
+                    let triggered = false;
+                    for (let i = 0; i < gamepads.length; i++) {
+                        const gp = gamepads[i];
+                        if (gp && gp.vibrationActuator && typeof gp.vibrationActuator.playEffect === "function") {
+                            gp.vibrationActuator.playEffect("dual-rumble", {
+                                startDelay: 0,
+                                duration: 450,
+                                weakMagnitude: 0.8,
+                                strongMagnitude: 0.8
+                            }).catch(() => {});
+                            triggered = true;
+                        }
+                    }
+                    if (!triggered) {
+                        alert("Haptic vibration actuator not detected or unsupported over the current browser connection. DualSense/Xbox rumble requires USB connection or compatible drivers.");
+                    }
+                });
+            }
+
+            // Reset Controls
+            document.getElementById("reset-all-btn").addEventListener("click", () => {
+                leftTracker.reset();
+                rightTracker.reset();
+            });
+            document.getElementById("reset-left-btn").addEventListener("click", () => leftTracker.reset());
+            document.getElementById("reset-right-btn").addEventListener("click", () => rightTracker.reset());
+
+            // Certified Report Generator
+            const generateReportBtn = document.getElementById("generate-report-btn");
+            const reportToast = document.getElementById("report-toast");
+            if (generateReportBtn) {
+                generateReportBtn.addEventListener("click", () => {
+                    const lErr = leftTracker.avgCircularityError.toFixed(1);
+                    const rErr = rightTracker.avgCircularityError.toFixed(1);
+                    const lDrift = (leftTracker.centerDrift * 100).toFixed(2);
+                    const rDrift = (rightTracker.centerDrift * 100).toFixed(2);
+
+                    const reportText = `[InputTest.online Certified Gamepad Benchmark]\n` +
+                        `Device: ${activeGamepadName}\n` +
+                        `Date: ${new Date().toUTCString()}\n` +
+                        `Left Stick Circularity Error: ${lErr}% | Center Jitter: ${lDrift}%\n` +
+                        `Right Stick Circularity Error: ${rErr}% | Center Jitter: ${rDrift}%\n` +
+                        `Benchmark Grade: ${lErr <= 5.0 && rErr <= 5.0 ? 'Elite Hall Effect' : lErr <= 10.0 && rErr <= 10.0 ? 'Factory OEM Pass' : 'Worn / High Error'}\n` +
+                        `Verification URL: https://inputtest.online/controller-circularity-test`;
+
+                    navigator.clipboard.writeText(reportText).then(() => {
+                        reportToast.classList.remove("hidden");
+                        setTimeout(() => reportToast.classList.add("hidden"), 5000);
+                    }).catch(() => {
+                        alert(reportText);
+                    });
+                });
+            }
+
+            // Real-Time High-Frequency Gamepad Polling Loop (requestAnimationFrame)
+            function pollGamepadLoop() {
+                const gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
+                let activeGp = null;
+
+                if (activeGamepadIndex !== null && gamepads[activeGamepadIndex]) {
+                    activeGp = gamepads[activeGamepadIndex];
+                } else {
+                    for (let i = 0; i < gamepads.length; i++) {
+                        if (gamepads[i]) {
+                            activeGp = gamepads[i];
+                            activeGamepadIndex = i;
+                            activeGamepadName = activeGp.id || "Controller";
+                            updateStatusConnected(activeGp);
+                            break;
+                        }
+                    }
+                }
+
+                const isDark = document.documentElement.classList.contains("dark");
+
+                if (activeGp) {
+                    timestampLabel.textContent = Math.round(activeGp.timestamp) + " ms";
+
+                    // Left Stick (Axes 0, 1)
+                    if (activeGp.axes.length >= 2) {
+                        const lx = activeGp.axes[0];
+                        const ly = activeGp.axes[1];
+                        leftTracker.update(lx, ly);
+                    }
+
+                    // Right Stick (Axes 2, 3 or Axes 3, 4 depending on standard mapping)
+                    if (activeGp.axes.length >= 4) {
+                        const rx = activeGp.axes[2];
+                        const ry = activeGp.axes[3];
+                        rightTracker.update(rx, ry);
+                    }
+
+                    // Triggers LT/L2 (button 6) & RT/R2 (button 7)
+                    if (activeGp.buttons.length > 7) {
+                        const ltPress = activeGp.buttons[6].value !== undefined ? activeGp.buttons[6].value : (activeGp.buttons[6].pressed ? 1 : 0);
+                        const rtPress = activeGp.buttons[7].value !== undefined ? activeGp.buttons[7].value : (activeGp.buttons[7].pressed ? 1 : 0);
+
+                        const ltPct = Math.round(ltPress * 100);
+                        const rtPct = Math.round(rtPress * 100);
+
+                        ltBar.style.width = ltPct + "%";
+                        ltVal.textContent = ltPct + "%";
+                        rtBar.style.width = rtPct + "%";
+                        rtVal.textContent = rtPct + "%";
+                    }
+
+                    // L3 (button 10) & R3 (button 11) Stick Presses
+                    if (activeGp.buttons.length > 11) {
+                        const l3Pressed = activeGp.buttons[10].pressed;
+                        const r3Pressed = activeGp.buttons[11].pressed;
+
+                        l3Badge.textContent = l3Pressed ? "PRESSED" : "OFF";
+                        l3Badge.className = l3Pressed ? 
+                            "px-3 py-1 rounded-lg text-xs font-mono font-bold bg-blue-600 text-white shadow-sm" : 
+                            "px-3 py-1 rounded-lg text-xs font-mono font-bold bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400";
+
+                        r3Badge.textContent = r3Pressed ? "PRESSED" : "OFF";
+                        r3Badge.className = r3Pressed ? 
+                            "px-3 py-1 rounded-lg text-xs font-mono font-bold bg-indigo-600 text-white shadow-sm" : 
+                            "px-3 py-1 rounded-lg text-xs font-mono font-bold bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400";
+                    }
+                }
+
+                // Render both stick canvases
+                leftTracker.render(isDark);
+                rightTracker.render(isDark);
+
+                requestAnimationFrame(pollGamepadLoop);
+            }
+
+            requestAnimationFrame(pollGamepadLoop);
+
+            // Header Search Database & Filtering
+            const searchDatabase = [
+                { title: "Keyboard Tester", desc: "Full keyboard key & switch check", url: "/keyboard" },
+                { title: "Keyboard Chatter Test", desc: "Switch bouncing & chatter detection", url: "/keyboard-chatter-test" },
+                { title: "Mouse Button Tester", desc: "Left, right, side clicks & CPS", url: "/mouse" },
+                { title: "Mouse Double Click Test", desc: "Switch debounce chatter analyzer", url: "/mouse-double-click-test" },
+                { title: "Mouse Scroll Wheel Test", desc: "Reverse-tick encoder jump tester", url: "/scroll-test" },
+                { title: "Mouse Polling Rate (8000Hz)", desc: "USB report frequency & interval jitter", url: "/mouse-polling-rate" },
+                { title: "Mouse Angle Snapping & Jitter", desc: "Hardware prediction & raw input test", url: "/mouse-angle-snapping-test" },
+                { title: "Gamepad & Joystick Drift", desc: "Stick drift analyzer & button map", url: "/gamepad" },
+                { title: "Controller Stick Circularity Test", desc: "Circularity error & Hall Effect benchmark", url: "/controller-circularity-test" },
+                { title: "Monitor Ghosting & UFO Tester", desc: "UFO ghosting, response time & MPRT", url: "/monitor-ghosting-test" },
+                { title: "Audio Frequency & Bass Test", desc: "Sub-bass sweep & hearing frequency test", url: "/audio-frequency-test" },
+                { title: "Display Refresh Rate (Hz)", desc: "Frames per second & dead pixels", url: "/display" },
+                { title: "Microphone Tester", desc: "Waveform & decibel input levels", url: "/mic" },
+                { title: "Webcam Quality Test", desc: "Camera resolution & framerate", url: "/webcam" },
+                { title: "Full System Report", desc: "Hardware diagnostics summary", url: "/report" },
+            ];
+
+            const searchBar = document.getElementById("header-search-bar");
+            const searchPanel = document.getElementById("header-search-results");
+
+            if (searchBar && searchPanel) {
+                searchBar.addEventListener("input", handleSearch);
+                searchBar.addEventListener("focus", handleSearch);
+
+                document.addEventListener("click", (e) => {
+                    if (!searchBar.contains(e.target) && !searchPanel.contains(e.target)) {
+                        searchPanel.classList.add("hidden");
+                    }
+                });
+
+                function handleSearch() {
+                    if (!searchBar.value.trim()) {
+                        searchPanel.classList.add("hidden");
+                        return;
+                    }
+
+                    const query = searchBar.value.toLowerCase().trim();
+                    searchPanel.innerHTML = '<div class="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2 mb-2">Instant Diagnostic Tools</div>';
+                    
+                    const filtered = searchDatabase.filter(item => 
+                        item.title.toLowerCase().includes(query) || 
+                        item.desc.toLowerCase().includes(query)
+                    );
+
+                    if (filtered.length === 0) {
+                        searchPanel.innerHTML += `
+                            <div class="px-2 py-3 text-center text-xs text-slate-400 font-semibold">
+                                No results found for "${searchBar.value}"
+                            </div>
+                        `;
+                    } else {
+                        filtered.forEach(item => {
+                            const itemEl = document.createElement("a");
+                            itemEl.href = item.url;
+                            itemEl.className = "flex flex-col px-3 py-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:border-slate-700 transition-all duration-150 select-none group";
+                            itemEl.innerHTML = `
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-blue-600 transition-colors">${item.title}</span>
+                                <span class="text-[10px] text-slate-400 font-semibold">${item.desc}</span>
+                            `;
+                            searchPanel.appendChild(itemEl);
+                        });
+                    }
+                    searchPanel.classList.remove("hidden");
+                }
+            }
+
+            // Mobile Navigation Toggle
+            const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+            const mobileNavPanel = document.getElementById("mobile-nav-panel");
+            const hamburgerIcon = document.getElementById("hamburger-icon");
+            const hamburgerClose = document.getElementById("hamburger-close");
+
+            if (mobileMenuToggle && mobileNavPanel && hamburgerIcon && hamburgerClose) {
+                mobileMenuToggle.addEventListener("click", () => {
+                    mobileNavPanel.classList.toggle("hidden");
+                    hamburgerIcon.classList.toggle("hidden");
+                    hamburgerClose.classList.toggle("hidden");
+                });
+            }
+        });
+
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('[PWA] Service Worker registered scope:', reg.scope))
+                    .catch(err => console.error('[PWA] Service Worker registration failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>

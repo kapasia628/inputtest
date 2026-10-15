@@ -454,6 +454,10 @@
                                         <span class="text-sm">🛸</span>
                                         <span>UFO Ghosting Test</span>
                                     </a>
+                                    <a href="/audio-frequency-test" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">🔊</span>
+                                        <span>Audio Frequency &amp; Bass</span>
+                                    </a>
 
                                     <div class="col-span-2 text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pt-2 pb-1 mb-1 border-b border-slate-100 dark:border-slate-800">
                                         Performance &amp; Hardware Ports
@@ -461,6 +465,10 @@
                                     <a href="/mouse-angle-snapping-test" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
                                         <span class="text-sm">🎯</span>
                                         <span>Angle Snapping Test</span>
+                                    </a>
+                                    <a href="/controller-circularity-test" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
+                                        <span class="text-sm">🎮</span>
+                                        <span>Stick Circularity Test</span>
                                     </a>
                                     <a href="/cps-test" class="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 hover:text-blue-600 dark:hover:text-blue-400 text-slate-700 dark:text-slate-300 font-semibold transition-colors">
                                         <span class="text-sm">âš¡</span>
@@ -2232,6 +2240,12 @@
                             </a>
                         </li>
                         <li><a href="/gamepad" class="hover:text-white transition-colors">Gamepad Stick Drift</a></li>
+                        <li>
+                            <a href="/controller-circularity-test" class="text-indigo-400 hover:text-indigo-300 transition-colors flex items-center justify-between group">
+                                <span>Stick Circularity Test</span>
+                                <span class="px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-[9px] font-mono font-bold">NEW</span>
+                            </a>
+                        </li>
                         <li><a href="/cps-test" class="hover:text-white transition-colors">CPS Speed Clicker</a></li>
                         <li><a href="/typing" class="hover:text-white transition-colors">Typing Speed WPM</a></li>
                         <li><a href="/reaction" class="hover:text-white transition-colors">Reaction Time Reflex</a></li>
@@ -2242,7 +2256,7 @@
                 <!-- Col 3: DISPLAYS & AUDIO -->
                 <div>
                     <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <span>ðŸ–¥ï¸</span> <span>DISPLAYS &amp; AUDIO</span>
+                        <span>🖥️</span> <span>DISPLAYS &amp; AUDIO</span>
                     </h4>
                     <ul class="space-y-2.5 text-xs">
                         <li><a href="/display" class="hover:text-white transition-colors">Display Refresh Rate (Hz)</a></li>
@@ -2250,6 +2264,12 @@
                             <a href="/monitor-ghosting-test" class="text-amber-400 hover:text-amber-300 transition-colors flex items-center justify-between group">
                                 <span>Monitor UFO Ghosting</span>
                                 <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[9px] font-mono font-bold">HOT</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/audio-frequency-test" class="text-emerald-400 hover:text-emerald-300 transition-colors flex items-center justify-between group">
+                                <span>Audio Frequency &amp; Bass</span>
+                                <span class="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[9px] font-mono font-bold">NEW</span>
                             </a>
                         </li>
                         <li><a href="/display#dead-pixel" class="hover:text-white transition-colors">Dead Pixel Sweeper</a></li>
@@ -2603,7 +2623,9 @@
                     { title: "Mouse Polling Rate (Hz)", desc: "1000Hz to 8000Hz report rate", url: "/mouse-polling-rate" },
                     { title: "Mouse Angle Snapping & Jitter", desc: "Hardware prediction & raw input test", url: "/mouse-angle-snapping-test" },
                     { title: "Gamepad & Joystick Drift", desc: "Stick drift analyzer", url: "/gamepad" },
+                    { title: "Controller Stick Circularity Test", desc: "Circularity error & Hall Effect benchmark", url: "/controller-circularity-test" },
                     { title: "Monitor UFO Ghosting & Motion Blur", desc: "Pixel response time GtG & MPRT test", url: "/monitor-ghosting-test" },
+                    { title: "Audio Frequency & Bass Test", desc: "Sub-bass sweep & hearing frequency test", url: "/audio-frequency-test" },
                     { title: "Display & Monitor Tester", desc: "Dead pixels, refresh Hz", url: "/display" },
                     { title: "Microphone Audio Check", desc: "Decibel meter & gain staging", url: "/mic" },
                     { title: "Speaker & Sound Test", desc: "Stereo balance frequency sweep", url: "/sound" },

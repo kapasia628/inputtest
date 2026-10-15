@@ -336,5 +336,17 @@
       <changefreq>weekly</changefreq>
       <priority>0.9</priority>
    </url>
+   <url>
+      <loc>https://inputtest.online/audio-frequency-test</loc>
+      <lastmod>2026-10-15</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
+   </url>
+   <url>
+      <loc>https://inputtest.online/controller-circularity-test</loc>
+      <lastmod>2026-10-15</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
+   </url>
 </urlset>
 
