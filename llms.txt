@@ -46,6 +46,7 @@
 - [Full Report](https://inputtest.online/report): Generate a complete hardware health report.
 - [Desktop Software Suite](https://inputtest.online/software): Free lightweight portable Windows utilities for gamers and power users.
 - [InputTest ClickShield™](https://inputtest.online/mouse-double-click-fixer): Free portable Windows utility to eliminate mouse double-clicking and switch debounce chatter in real time.
+- [InputTest Hardware Store](https://inputtest.online/store): Curated laboratory-tested mechanical keyboards, optical gaming mice, Hall Effect anti-drift controllers, webcams, and studio microphones with Amazon links.
 
 ## Mini Games & Speed Tests
 

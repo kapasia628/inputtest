@@ -68,6 +68,7 @@ const urlList = [
   "https://inputtest.online/mouse-angle-snapping-test",
   "https://inputtest.online/audio-frequency-test",
   "https://inputtest.online/controller-circularity-test",
+  "https://inputtest.online/store",
 ];
 
 const payload = JSON.stringify({
