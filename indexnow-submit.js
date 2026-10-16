@@ -72,6 +72,12 @@ const urlList = [
   "https://inputtest.online/blog-hall-effect-vs-optical-mechanical",
   "https://inputtest.online/blog-stick-drift-hall-effect",
   "https://inputtest.online/blog-mouse-polling-rate-8000hz",
+  "https://inputtest.online/headphone-test",
+  "https://inputtest.online/mouse-acceleration-test",
+  "https://inputtest.online/mic-clipping-test",
+  "https://inputtest.online/monitor-black-level-test",
+  "https://inputtest.online/controller-trigger-test",
+  "https://inputtest.online/keyboard-polling-rate",
 ];
 
 const payload = JSON.stringify({

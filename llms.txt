@@ -46,6 +46,12 @@
 - [Full Report](https://inputtest.online/report): Generate a complete hardware health report.
 - [Desktop Software Suite](https://inputtest.online/software): Free lightweight portable Windows utilities for gamers and power users.
 - [InputTest ClickShield™](https://inputtest.online/mouse-double-click-fixer): Free portable Windows utility to eliminate mouse double-clicking and switch debounce chatter in real time.
+- [Headphone 3D Spatial Audio & Polarity Test](https://inputtest.online/headphone-test): Benchmark headphone 360° spatial positioning, HRTF soundstage azimuth, Left/Right channel isolation, and 180° acoustic phase cancellation in browser.
+- [Mouse Acceleration & Raw Input Test](https://inputtest.online/mouse-acceleration-test): Detect positive/negative mouse acceleration, verify 1:1 raw input linear tracking, and measure DPI consistency using Pointer Lock API.
+- [Microphone Gain Clipping & Noise Floor Meter](https://inputtest.online/mic-clipping-test): Real-time decibel (dBFS) VU meter to measure background ambient room noise floor, detect digital clipping distortion at 0 dBFS, and monitor live microphone loopback.
+- [Monitor Black Level & Contrast Calibration](https://inputtest.online/monitor-black-level-test): Calibrate monitor black levels, detect shadow black crush (RGB 1-16), test white highlight clipping, check color banding, and verify Gamma 2.2 curves with interactive optical patterns.
+- [Controller Trigger Deadzone & Throttle Test](https://inputtest.online/controller-trigger-test): Test gamepad LT/RT (L2/R2) analog triggers for stickiness, deadzones, hair-trigger microswitches, and verify 100% full throttle acceleration.
+- [Keyboard Polling Rate & Scan Latency Test](https://inputtest.online/keyboard-polling-rate): Test keyboard USB report polling rates from 125Hz to 8000Hz and internal matrix scan latency with microsecond event timestamp tracking.
 - [InputTest Hardware Store](https://inputtest.online/store): Curated laboratory-tested mechanical keyboards, optical gaming mice, Hall Effect anti-drift controllers, webcams, and studio microphones with Amazon links.
 
 ## Mini Games & Speed Tests
