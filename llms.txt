@@ -52,6 +52,12 @@
 - [Monitor Black Level & Contrast Calibration](https://inputtest.online/monitor-black-level-test): Calibrate monitor black levels, detect shadow black crush (RGB 1-16), test white highlight clipping, check color banding, and verify Gamma 2.2 curves with interactive optical patterns.
 - [Controller Trigger Deadzone & Throttle Test](https://inputtest.online/controller-trigger-test): Test gamepad LT/RT (L2/R2) analog triggers for stickiness, deadzones, hair-trigger microswitches, and verify 100% full throttle acceleration.
 - [Keyboard Polling Rate & Scan Latency Test](https://inputtest.online/keyboard-polling-rate): Test keyboard USB report polling rates from 125Hz to 8000Hz and internal matrix scan latency with microsecond event timestamp tracking.
+- [Bluetooth Audio Delay & Lip-Sync Test](https://inputtest.online/audio-latency-test): Measure wireless headphone latency in milliseconds (ms), calibrate audio-visual sync, and test gaming headset lag.
+- [Monitor Micro-Stutter & Frame Pacing Jitter Test](https://inputtest.online/monitor-frame-pacing-test): Diagnose display hitching, measure frame time consistency in milliseconds, and detect dropped v-sync frames in real time across 60Hz to 360Hz.
+- [Mouse Lift-Off Distance (LOD) & Sensor Cutoff Test](https://inputtest.online/mouse-lod-test): Test optical mouse sensor cutoff height, measure unwanted cursor jitter during mouse swipe resets, and verify sub-1mm esports LOD.
+- [Monitor Size, PPI & Aspect Ratio Calculator](https://inputtest.online/monitor-ppi-calculator): Compare computer monitors side-by-side to true physical scale, calculate Pixels Per Inch (PPI), dot pitch, physical dimensions, and aspect ratio workspace differences.
+- [Room Reverb & Echo RT60 Acoustics Tester](https://inputtest.online/room-acoustics-test): Analyze room echo reflections, measure acoustic decay time (RT60), and check vocal clarity for streaming and Discord.
+- [Human Reaction Time & Reflex Benchmark](https://inputtest.online/reflex-reaction-test): Benchmark visual click speed against auditory sound reaction time with microsecond event timers and global percentile ranking.
 - [InputTest Hardware Store](https://inputtest.online/store): Curated laboratory-tested mechanical keyboards, optical gaming mice, Hall Effect anti-drift controllers, webcams, and studio microphones with Amazon links.
 
 ## Mini Games & Speed Tests

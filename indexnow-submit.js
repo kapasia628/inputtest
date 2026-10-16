@@ -78,6 +78,12 @@ const urlList = [
   "https://inputtest.online/monitor-black-level-test",
   "https://inputtest.online/controller-trigger-test",
   "https://inputtest.online/keyboard-polling-rate",
+  "https://inputtest.online/audio-latency-test",
+  "https://inputtest.online/monitor-frame-pacing-test",
+  "https://inputtest.online/mouse-lod-test",
+  "https://inputtest.online/monitor-ppi-calculator",
+  "https://inputtest.online/room-acoustics-test",
+  "https://inputtest.online/reflex-reaction-test",
 ];
 
 const payload = JSON.stringify({

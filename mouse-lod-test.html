@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/mouse-lod-test">
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- SEO Meta Tags -->
+    <title>Mouse Lift-Off Distance (LOD) &amp; Sensor Cutoff Test Online | InputTest.online</title>
+    <meta name="description" content="Test your gaming mouse lift-off distance (LOD), sensor cutoff height, and cursor jitter during mouse resets online. Free Pointer Lock precision testing tool.">
+    <meta name="keywords" content="mouse lod test, mouse lift off distance test online, test mouse sensor cutoff, check mouse jitter during lift, esports mouse lod benchmark">
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://inputtest.online/mouse-lod-test">
+    <meta property="og:title" content="Mouse Lift-Off Distance (LOD) &amp; Sensor Cutoff Test Online">
+    <meta property="og:description" content="Test gaming mouse lift-off distance (LOD), detect crosshair drift during repositioning, and benchmark sensor cutoff height in browser.">
+    <meta property="og:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/mouse-lod-test">
+    <meta name="twitter:title" content="Mouse Lift-Off Distance (LOD) &amp; Sensor Cutoff Test Online">
+    <meta name="twitter:description" content="Online mouse lift-off distance (LOD) tester. Check sensor cutoff height and cursor drift.">
+    <meta name="twitter:image" content="https://inputtest.online/icon-512.png">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://inputtest.online/mouse-lod-test#app",
+          "name": "Mouse Lift-Off Distance (LOD) & Sensor Cutoff Tester",
+          "url": "https://inputtest.online/mouse-lod-test",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All",
+          "description": "In-browser diagnostic to test gaming mouse lift-off distance (LOD), calculate unwanted sensor displacement during repositioning swipes, and benchmark sensor cutoff.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://inputtest.online/mouse-lod-test#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is mouse Lift-Off Distance (LOD) and why does it matter?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Lift-Off Distance (LOD) is the height above the mousepad at which your optical mouse sensor stops tracking movement. Low-sensitivity competitive gamers frequently pick up and reposition their mouse. If the LOD is too high (> 2mm), the crosshair jerks unexpectedly whenever the mouse is lifted, throwing off your aim."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is an ideal LOD for esports (CS2, Valorant)?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "An ideal esports gaming mouse LOD is less than 1.0 millimeter (often tested as '1 DVD thickness'). High-tier optical sensors (like PixArt PAW3950 or Razer Focus Pro) feature adjustable LOD down to 0.5mm."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does the DVD / coin test work?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A standard CD or DVD is exactly 1.2 millimeters thick. Place one CD on your mouse pad and move your mouse on top of it. If the sensor still tracks, your LOD is higher than 1.2mm. An elite gaming mouse should completely stop tracking when resting on a single CD."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-rose-500 selection:text-white">
+
+    <header class="sticky top-0 z-50 bg-white/90 dark:bg-[#070b14]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-18">
+                
+                <!-- Brand Logo (Left) -->
+                <div class="flex items-center gap-3 shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none" aria-label="InputTest.online Home">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/20 border border-blue-500/30 group-hover:scale-105 transition-transform duration-200">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="font-black text-xl tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Desktop Mega Menu Navigation (Center - Spacious, Single Line, No Clutter) -->
+                <nav class="hidden lg:flex items-center gap-1 xl:gap-3 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                    
+                    <!-- 1. KEYBOARDS MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>⌨️ Keyboards</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute left-0 top-full pt-2 z-50 w-[560px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/keyboard" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">⌨️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Keyboard Tester</div>
+                                            <div class="text-[11px] text-slate-400">Test all keys, ghosting, &amp; 1000Hz latency</div>
+                                        </div>
+                                    </a>
+                                    <a href="/keyboard-chatter-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600">⚡</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-amber-500 text-xs">Switch Chatter Test</div>
+                                            <div class="text-[11px] text-slate-400">Detect multi-click chatter &amp; debounce failure</div>
+                                        </div>
+                                    </a>
+                                    <a href="/typing" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600">⏱️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-purple-500 text-xs">Typing Speed WPM</div>
+                                            <div class="text-[11px] text-slate-400">Words per minute &amp; keypress accuracy test</div>
+                                        </div>
+                                    </a>
+                                    <a href="/keyboard-polling-rate" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-600">⚡</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-teal-500 text-xs">Polling Rate (8000Hz)</div>
+                                            <div class="text-[11px] text-slate-400">Measure packet Δt interval &amp; scan rate</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">RAPID TRIGGER</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹11,999</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/61kL06WjF-L._SL1500_.jpg" alt="DrunkDeer A75" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">DrunkDeer A75 Magnetic</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Hall Effect switches eliminate key chatter forever.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B0C8V29V63?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=keyboard" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore 10+ Keyboards &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. MICE MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>🖱️ Mice</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute -left-12 top-full pt-2 z-50 w-[580px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/mouse" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">🖱️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Mouse &amp; CPS Test</div>
+                                            <div class="text-[11px] text-slate-400">Test buttons, drag-lock, &amp; clicks per second</div>
+                                        </div>
+                                    </a>
+                                    <a href="/mouse-double-click-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600">🛡️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-rose-500 text-xs">Double Click Tester</div>
+                                            <div class="text-[11px] text-slate-400">Detect microswitch bounce under 80ms</div>
+                                        </div>
+                                    </a>
+                                    <a href="/mouse-polling-rate" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-cyan-50 dark:bg-cyan-950/60 text-cyan-600">⚡</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-cyan-500 text-xs">Polling Rate (8000Hz)</div>
+                                            <div class="text-[11px] text-slate-400">Measure USB report Hz &amp; interval latency</div>
+                                        </div>
+                                    </a>
+                                    <a href="/scroll-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600">🔄</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-amber-500 text-xs">Scroll Wheel Jump Test</div>
+                                            <div class="text-[11px] text-slate-400">Measure encoder chatter &amp; reverse bounce</div>
+                                        </div>
+                                    </a>
+                                    <a href="/mouse-acceleration-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-cyan-50 dark:bg-cyan-950/60 text-cyan-600">🎯</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-cyan-500 text-xs">Mouse Acceleration</div>
+                                            <div class="text-[11px] text-slate-400">Pointer Lock 1:1 raw input linear check</div>
+                                        </div>
+                                    </a>
+                                    <a href="/mouse-lod-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600">🔬</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-rose-500 text-xs">Lift-Off Distance (LOD)</div>
+                                            <div class="text-[11px] text-slate-400">Sensor cutoff height &amp; swipe jitter check</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">ZERO DOUBLE-CLICK</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹5,499</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/61U0T7uN9eL._SL1500_.jpg" alt="Razer DeathAdder V3" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">Razer DeathAdder V3</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Gen-3 Optical switches eliminate double-clicking.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B0B6Y7X9G1?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=mouse" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore 10+ Mice &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. CONTROLLERS MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>🎮 Gamepads</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50 w-[560px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/gamepad" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">🎮</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Gamepad Tester</div>
+                                            <div class="text-[11px] text-slate-400">Xbox, PlayStation, Nintendo button &amp; rumble</div>
+                                        </div>
+                                    </a>
+                                    <a href="/controller-stick-drift-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600">🎯</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-rose-500 text-xs">Stick Drift Test</div>
+                                            <div class="text-[11px] text-slate-400">Measure resting axis drift &amp; deadzones</div>
+                                        </div>
+                                    </a>
+                                    <a href="/controller-circularity-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600">⭕</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-purple-500 text-xs">Circularity Test</div>
+                                            <div class="text-[11px] text-slate-400">Stick error % &amp; polar cardinal accuracy</div>
+                                        </div>
+                                    </a>
+                                    <a href="/controller-trigger-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600">🎮</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-indigo-500 text-xs">Trigger &amp; Throttle Test</div>
+                                            <div class="text-[11px] text-slate-400">LT/RT analog deadzone &amp; 100% reach check</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">ZERO STICK DRIFT</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹4,799</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/61N8Z+k-f3L._SL1500_.jpg" alt="GameSir G7 SE" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">GameSir G7 SE Hall Effect</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Magnetic sensors permanently prevent stick drift.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B0C7GW9F88?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=gamepad" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore 10+ Gamepads &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. AUDIO & VIDEO MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>🎙️ Audio &amp; Cam</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute -right-12 top-full pt-2 z-50 w-[560px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/mic" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">🎙️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Microphone Test</div>
+                                            <div class="text-[11px] text-slate-400">Real-time waveform, decibel meter &amp; echo</div>
+                                        </div>
+                                    </a>
+                                    <a href="/webcam" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-600">📷</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-teal-500 text-xs">Webcam Test</div>
+                                            <div class="text-[11px] text-slate-400">Resolution, FPS sensor &amp; video clarity</div>
+                                        </div>
+                                    </a>
+                                    <a href="/sound" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600">🔊</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-indigo-500 text-xs">Stereo Speakers</div>
+                                            <div class="text-[11px] text-slate-400">Left/Right audio balance &amp; channel sweep</div>
+                                        </div>
+                                    </a>
+                                    <a href="/audio-frequency-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600">🎧</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-amber-500 text-xs">Frequency Sweep</div>
+                                            <div class="text-[11px] text-slate-400">20Hz–20kHz tone generator &amp; hearing test</div>
+                                        </div>
+                                    </a>
+                                    <a href="/headphone-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600">🎧</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-purple-500 text-xs">Headphone 3D Audio</div>
+                                            <div class="text-[11px] text-slate-400">360° HRTF soundstage &amp; polarity test</div>
+                                        </div>
+                                    </a>
+                                    <a href="/mic-clipping-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600">🎙️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-rose-500 text-xs">Mic Gain Clipping &amp; dB</div>
+                                            <div class="text-[11px] text-slate-400">Real-time dBFS VU meter &amp; noise floor</div>
+                                        </div>
+                                    </a>
+                                    <a href="/audio-latency-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600">⚡</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-purple-500 text-xs">Bluetooth Audio Delay</div>
+                                            <div class="text-[11px] text-slate-400">Lip-sync calibrator &amp; earbud latency ms</div>
+                                        </div>
+                                    </a>
+                                    <a href="/room-acoustics-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600">👏</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-amber-500 text-xs">Room Reverb &amp; Echo RT60</div>
+                                            <div class="text-[11px] text-slate-400">Hand-clap acoustic impulse decay meter</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">STUDIO USB MIC</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹3,190</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/610h63d0cIL._SL1500_.jpg" alt="Fifine AmpliGame A6V" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">Fifine A6V Condenser</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Tap-to-mute with included shock mount.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B09JG59W4M?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=mic" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore Audio &amp; Cam &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. DISPLAY & UTILITIES DROPDOWN -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>📺 Display &amp; Tools</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute right-0 top-full pt-2 z-50 w-72">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-3 space-y-1">
+                                <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1 mb-1 border-b border-slate-100 dark:border-slate-800">
+                                    Display &amp; System Tools
+                                </div>
+                                <a href="/display" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">📺</span>
+                                    <span>Display &amp; Dead Pixels</span>
+                                </a>
+                                <a href="/monitor-ghosting-test" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">🛸</span>
+                                    <span>UFO Monitor Ghosting</span>
+                                </a>
+                                <a href="/monitor-black-level-test" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">🖥️</span>
+                                    <span>Black Level &amp; Contrast</span>
+                                </a>
+                                <a href="/monitor-frame-pacing-test" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">🛸</span>
+                                    <span>Micro-Stutter Frame Pacing</span>
+                                </a>
+                                <a href="/monitor-ppi-calculator" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">📐</span>
+                                    <span>Monitor PPI &amp; Size Compare</span>
+                                </a>
+                                <a href="/battery" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">🔋</span>
+                                    <span>Battery Health &amp; Cycles</span>
+                                </a>
+                                <a href="/latency" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">⚡</span>
+                                    <span>Bluetooth Latency</span>
+                                </a>
+                                <a href="/cps-test" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">⏱️</span>
+                                    <span>CPS Click Speed Test</span>
+                                </a>
+                                <a href="/software" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-cyan-50 dark:hover:bg-cyan-950/40 text-cyan-600 dark:text-cyan-400 font-bold transition-colors border-t border-slate-100 dark:border-slate-800/80 mt-1 pt-2">
+                                    <span class="text-sm">⚡</span>
+                                    <span>Desktop Software Utilities</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </nav>
+
+                <!-- Right Action Controls (Ultra-Clean, Spacious & Premium) -->
+                <div class="flex items-center gap-3 shrink-0">
+                    
+                    <!-- Hardware Store Golden Pill CTA Button -->
+                    <a href="/store" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl whitespace-nowrap bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-extrabold text-xs xl:text-sm shadow-md hover:shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
+                        <span class="text-base">🛍️</span>
+                        <span>Hardware Store</span>
+                        <span class="text-[10px] bg-slate-950/15 text-slate-950 px-1.5 py-0.5 rounded-full font-black uppercase tracking-wider">50+ Gear</span>
+                    </a>
+
+                    <!-- Subtle Vertical Divider -->
+                    <div class="hidden sm:block h-6 w-px bg-slate-200 dark:bg-slate-800 mx-0.5"></div>
+
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#0c1220] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none cursor-pointer" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <!-- Mobile Hamburger -->
+                    <button id="mobile-menu-toggle" class="p-2.5 lg:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#0c1220] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none cursor-pointer" aria-label="Open mobile menu">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <nav id="mobile-nav-panel" class="hidden lg:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#070b14]/95 backdrop-blur-xl px-4 py-4 space-y-3 shadow-2xl">
+            <!-- Full-Width Store CTA Card in Mobile -->
+            <a href="/store" class="block p-3 rounded-2xl bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500/40 text-amber-800 dark:text-amber-300 font-extrabold text-xs flex items-center justify-between shadow-xs">
+                <span class="flex items-center gap-2">
+                    <span class="text-base">🛍️</span>
+                    <span>InputTest Hardware Store (50+ Tested Gear)</span>
+                </span>
+                <span>&rarr;</span>
+            </a>
+            <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+                <a href="/keyboard" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⌨️ Keyboard Test</a>
+                <a href="/keyboard-chatter-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⚡ Key Chatter</a>
+                <a href="/mouse" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🖱️ Mouse Test</a>
+                <a href="/mouse-double-click-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🛡️ Double Click</a>
+                <a href="/mouse-polling-rate" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⚡ 8K Polling Rate</a>
+                <a href="/scroll-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🔄 Scroll Jump</a>
+                <a href="/gamepad" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎮 Gamepad Test</a>
+                <a href="/controller-stick-drift-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎯 Stick Drift</a>
+                <a href="/controller-circularity-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⭕ Circularity</a>
+                <a href="/mic" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎙️ Microphone</a>
+                <a href="/webcam" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">📷 Webcam</a>
+                <a href="/display" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">📺 Display Test</a>
+                <a href="/headphone-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎧 3D Audio</a>
+                <a href="/mouse-acceleration-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎯 Mouse Accel</a>
+                <a href="/mic-clipping-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎙️ Mic Clipping</a>
+                <a href="/monitor-black-level-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🖥️ Black Level</a>
+                <a href="/controller-trigger-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎮 Trigger Test</a>
+                <a href="/keyboard-polling-rate" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⚡ Key Polling</a>
+                <a href="/audio-latency-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎧 Audio Delay</a>
+                <a href="/monitor-frame-pacing-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🛸 Frame Pacing</a>
+                <a href="/mouse-lod-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎯 Mouse LOD</a>
+                <a href="/monitor-ppi-calculator" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">📐 Monitor PPI</a>
+                <a href="/room-acoustics-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">👏 Room Echo</a>
+                <a href="/reflex-reaction-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⚡ Reflex Test</a>
+                <a href="/software" class="p-2.5 rounded-xl bg-cyan-50 dark:bg-cyan-950/40 border border-cyan-200 dark:border-cyan-800 text-cyan-700 dark:text-cyan-300 font-bold flex items-center gap-2">⚡ Free Utilities</a>
+                <a href="/report" class="p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400 font-bold flex items-center gap-2">🛡️ PDF Report</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Title Header -->
+    <div class="relative bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white py-12 border-b border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs sm:text-sm font-semibold mb-4 shadow-sm">
+                <span>🎯 Optical Sensor Calibration</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span>
+                <span>Cutoff Height Profiler</span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight mb-4 text-white">
+                Mouse Lift-Off Distance (LOD) &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-pink-400 to-amber-300">Sensor Cutoff Test</span>
+            </h1>
+            <p class="text-sm sm:text-base md:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
+                Test your optical mouse sensor cutoff height, measure unwanted cursor jitter during mouse swipe resets, and verify if your mouse has competitive sub-1mm LOD.
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Workspace Container -->
+    <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-8">
+
+        <!-- SCOREBOARD / TELEMETRY SUMMARY -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Lift Jitter Displaced</span>
+                <div class="text-3xl sm:text-4xl font-black font-mono text-rose-500" id="statDisplacement">
+                    0 <span class="text-base font-normal text-slate-400">px</span>
+                </div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 font-mono" id="statDeltaVec">
+                    ΔX: 0 | ΔY: 0
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">LOD Rating Tier</span>
+                <div class="text-2xl sm:text-3xl font-black font-mono text-amber-400 mt-1" id="statLodTier">
+                    Awaiting Lift
+                </div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                    Based on Cutoff Sensitivity
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Reposition Swipes</span>
+                <div class="text-3xl sm:text-4xl font-black font-mono text-teal-400" id="statSwipes">
+                    0 <span class="text-base font-normal text-slate-400">lifts</span>
+                </div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                    <button id="btnResetLod" class="text-rose-500 hover:text-rose-400 font-semibold underline underline-offset-2 cursor-pointer">Reset Test</button>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Competitive Verdict</span>
+                <div class="text-base sm:text-lg font-black mt-2 text-slate-800 dark:text-white" id="statVerdict">
+                    ⚪ Not Tested
+                </div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                    CS2 / Valorant Suitability
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN INTERACTIVE TESTBENCH -->
+        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-200 dark:border-slate-800 shadow-xl space-y-6">
+            
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+                        <span>🔬</span> Lift-Off Distance Precision Capture Arena
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+                        Click inside the capture zone to lock pointer. Then <strong>lift your mouse straight up</strong> off your mousepad. A perfect sensor will register <strong>0 pixels of movement</strong>!
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <span id="lockBadge" class="px-3.5 py-1.5 rounded-full text-xs font-bold font-mono bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                        CLICK TO ENGAGE POINTER LOCK
+                    </span>
+                </div>
+            </div>
+
+            <!-- INTERACTIVE CAPTURE ARENA (Pointer Lock) -->
+            <div id="lodArena" class="relative w-full h-64 bg-slate-950 rounded-2xl overflow-hidden border-2 border-dashed border-slate-700 hover:border-rose-500 transition-colors shadow-inner flex items-center justify-center cursor-crosshair group select-none">
+                <canvas id="lodCanvas" width="900" height="260" class="w-full h-full block"></canvas>
+                
+                <div id="arenaPrompt" class="absolute inset-0 bg-slate-950/70 backdrop-blur-xs flex flex-col items-center justify-center p-6 text-center space-y-2 pointer-events-none group-focus:hidden">
+                    <span class="text-4xl group-hover:scale-110 transition-transform">🖱️</span>
+                    <span class="text-base font-bold text-white">Click Here to Lock Cursor &amp; Begin Test</span>
+                    <p class="text-xs text-slate-400 max-w-md">Once locked, lift your mouse 1mm - 2mm. Press <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-rose-300 font-mono">ESC</kbd> anytime to exit.</p>
+                </div>
+            </div>
+
+            <!-- HARDWARE CD / DVD THICKNESS BENCHMARK GUIDE -->
+            <div class="p-6 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+                <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <span>📏</span> How to Run the Physical DVD Thickness Verification Test:
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1.5">
+                        <span class="font-bold text-emerald-500 flex items-center gap-1.5"><span>📀</span> Step 1: Place 1 CD / DVD</span>
+                        <p class="text-slate-600 dark:text-slate-400">A standard optical disc is exactly <strong>1.2mm thick</strong>. Place one disc flat on your mousepad and glide the mouse over it.</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1.5">
+                        <span class="font-bold text-blue-500 flex items-center gap-1.5"><span>🔍</span> Step 2: Observe Tracking</span>
+                        <p class="text-slate-600 dark:text-slate-400">If the cursor does NOT move, your mouse has <strong>Sub-1.2mm Low LOD</strong> (ideal for competitive FPS gaming).</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1.5">
+                        <span class="font-bold text-rose-500 flex items-center gap-1.5"><span>⚠️</span> Step 3: Test 2 CDs (2.4mm)</span>
+                        <p class="text-slate-600 dark:text-slate-400">If your mouse still tracks on top of 2 stacked CDs (&gt;2.4mm), you have extreme high LOD causing crosshair drift.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TIER LATENCY GUIDE -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                <div class="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 space-y-1">
+                    <span class="font-black text-emerald-600 dark:text-emerald-400">&lt; 1.0 mm &mdash; Esports Standard</span>
+                    <p class="text-slate-600 dark:text-slate-300 leading-tight">PAW3950 / Focus Pro sensors. Absolute zero crosshair drift when picking up the mouse during 180° flick resets.</p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 space-y-1">
+                    <span class="font-black text-amber-600 dark:text-amber-400">1.2 &ndash; 2.0 mm &mdash; Acceptable</span>
+                    <p class="text-slate-600 dark:text-slate-300 leading-tight">Decent for casual gaming. Noticeable 5-15 pixel crosshair nudge when lifting quickly during arm swipes.</p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800/50 space-y-1">
+                    <span class="font-black text-rose-600 dark:text-rose-400">&gt; 2.5 mm &mdash; High / Flawed LOD</span>
+                    <p class="text-slate-600 dark:text-slate-300 leading-tight">Common on cheap office sensors. Mouse keeps tracking mid-air, destroying crosshair placement and micro-adjustments.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Flagship Hardware Recommendation Card -->
+        <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-rose-950/40 rounded-3xl p-6 sm:p-8 border border-rose-500/30 shadow-xl text-white">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+                <div class="space-y-3 max-w-2xl text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 border border-rose-500/40 text-rose-300 text-xs font-bold">
+                        <span>⭐ Pro Esports Optical Sensor</span>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-black text-white">
+                        Flawless Sub-0.7mm Cutoff: Razer Viper V3 Pro
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        Say goodbye to crosshair shake during mouse resets. The <strong>Razer Viper V3 Pro</strong> features the flagship <em>Focus Pro 35K Gen-2 Optical Sensor</em> with <strong>26-level granular asymmetrical lift-off and landing distance calibration</strong>, 54-gram ultra-lightweight chassis, and true 8000Hz hyper-polling.
+                    </p>
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs font-semibold text-rose-300 pt-1">
+                        <span class="flex items-center gap-1.5">✓ 26-Step Granular LOD Tuning</span>
+                        <span class="flex items-center gap-1.5">✓ 54g Ultra-Lightweight Esports Shell</span>
+                        <span class="flex items-center gap-1.5">✓ True 8000Hz Wireless Polling</span>
+                    </div>
+                </div>
+
+                <div class="shrink-0 flex flex-col items-center gap-3 w-full sm:w-auto">
+                    <a href="https://www.amazon.com/dp/B0D1898VSC?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-extrabold text-sm text-center shadow-lg shadow-rose-500/25 transition-all flex items-center justify-center gap-2">
+                        <span>🛒 View Razer Viper V3 Pro on Amazon</span>
+                        <span>&rarr;</span>
+                    </a>
+                    <span class="text-[11px] text-slate-400">Verified authentic pricing via Amazon Prime</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deep Educational & SEO Content Section -->
+        <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-200 dark:border-slate-800 shadow-sm space-y-8">
+            <div>
+                <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-4">
+                    The Importance of Lift-Off Distance in Competitive Gaming
+                </h2>
+                <div class="prose dark:prose-invert max-w-none text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-4 leading-relaxed">
+                    <p>
+                        In games like <em>Counter-Strike 2, Valorant, and Tom Clancy's Rainbow Six Siege</em>, professional players utilize low sensitivity (such as 400 or 800 DPI with low in-game multipliers) for pinpoint headshot accuracy. At low sensitivity, turning 180 degrees requires sweeping your entire arm across a 45cm mousepad, rapidly lifting the mouse, and setting it down in the center.
+                    </p>
+                    
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-6">
+                        Asymmetrical Cutoff: Lift-Off vs Landing Distance
+                    </h3>
+                    <p>
+                        Traditional mice use a single fixed focal threshold. When lifting, the sensor cuts off at 1.5mm, and when setting it down, it resumes tracking at 1.5mm. Modern esports mice feature <strong>Asymmetrical Cut-off</strong>:
+                    </p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>
+                            <strong>Lift Distance:</strong> Set to a low 1.0mm or 0.7mm so tracking cuts off the instant your hand begins elevating.
+                        </li>
+                        <li>
+                            <strong>Landing Distance:</strong> Configured to wait until the mouse is within 0.5mm of the surface before resuming tracking, eliminating accidental cursor jerks upon surface touchdown.
+                        </li>
+                    </ul>
+
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mt-6">
+                        The "Tape Trick": Quick DIY Fix for High LOD
+                    </h3>
+                    <p>
+                        If you are stuck playing on a budget mouse with high lift-off distance (&gt; 3mm), take a small piece of opaque black electrical tape and cover the bottom half of the clear sensor lens opening. This partially blocks the reflection angle of the infrared LED, lowering the focal plane and reducing the effective LOD down to ~1.2mm.
+                    </p>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="border-t border-slate-200 dark:border-slate-800 pt-8">
+                <h3 class="text-xl font-black text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                    <span>❓</span> Frequently Asked Questions (FAQ)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm">
+                    <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 space-y-2">
+                        <h4 class="font-bold text-slate-900 dark:text-white">Why is my cursor shaking when I lift my mouse?</h4>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Your mouse sensor has a high lift-off distance. While your mouse is mid-air, the optical sensor's LED continues illuminating microscopic texture variations on your desk, translating hand tilt into erratic crosshair displacement.
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 space-y-2">
+                        <h4 class="font-bold text-slate-900 dark:text-white">Can mouse skates (feet) alter LOD?</h4>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Yes! Installing thicker aftermarket PTFE or glass skates (e.g. 0.8mm instead of 0.6mm) raises the sensor further off the surface, effectively lowering the remaining usable tracking height.
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 space-y-2">
+                        <h4 class="font-bold text-slate-900 dark:text-white">How do I change mouse LOD in software?</h4>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            In your mouse software (Razer Synapse, Logitech G HUB, Wooting, or Pulsar Fusion), open the Sensor / Calibration tab and look for "Lift-off Distance" or "Surface Tuning". Select "Low" or "1mm".
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 space-y-2">
+                        <h4 class="font-bold text-slate-900 dark:text-white">Does mousepad surface texture affect LOD?</h4>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Yes. Deep soft cloth pads (such as Artisan XSoft or SteelSeries QcK Heavy) allow the mouse to sink into the foam when pressed down, increasing the perceived lift travel compared to hard plastic or glass mousepads.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-10 mt-12 transition-colors">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500 dark:text-slate-400 space-y-4">
+            <div class="flex flex-wrap justify-center gap-6 font-semibold">
+                <a href="/" class="hover:text-rose-500 transition-colors">Keyboard Test</a>
+                <a href="/mouse-test" class="hover:text-rose-500 transition-colors">Mouse Test</a>
+                <a href="/mouse-lod-test" class="text-rose-500 font-bold">Mouse LOD Test</a>
+                <a href="/mouse-acceleration-test" class="hover:text-rose-500 transition-colors">Mouse Acceleration</a>
+                <a href="/mouse-polling-rate" class="hover:text-rose-500 transition-colors">Mouse Polling Rate</a>
+                <a href="/mouse-angle-snapping-test" class="hover:text-rose-500 transition-colors">Angle Snapping</a>
+                <a href="/audio-latency-test" class="hover:text-rose-500 transition-colors">Audio Latency</a>
+                <a href="/monitor-frame-pacing-test" class="hover:text-rose-500 transition-colors">Frame Pacing</a>
+                <a href="/blog" class="hover:text-rose-500 transition-colors">Hardware Blog</a>
+                <a href="/privacy" class="hover:text-rose-500 transition-colors">Privacy Policy</a>
+            </div>
+            <p>&copy; 2026 InputTest.online &mdash; Complete In-Browser Peripheral &amp; Display Testing Suite. Built with pure browser Web APIs.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Engine -->
+    <script>
+    (function() {
+        const arena = document.getElementById('lodArena');
+        const canvas = document.getElementById('lodCanvas');
+        const ctx = canvas.getContext('2d');
+        const arenaPrompt = document.getElementById('arenaPrompt');
+        const lockBadge = document.getElementById('lockBadge');
+
+        const statDisplacement = document.getElementById('statDisplacement');
+        const statDeltaVec = document.getElementById('statDeltaVec');
+        const statLodTier = document.getElementById('statLodTier');
+        const statSwipes = document.getElementById('statSwipes');
+        const statVerdict = document.getElementById('statVerdict');
+        const btnResetLod = document.getElementById('btnResetLod');
+
+        let isPointerLocked = false;
+        let liftEvents = 0;
+        let totalJitterPixels = 0;
+        let trail = [];
+        let currentDisplacement = 0;
+
+        btnResetLod.addEventListener('click', () => {
+            liftEvents = 0;
+            totalJitterPixels = 0;
+            trail = [];
+            currentDisplacement = 0;
+            statDisplacement.innerHTML = '0 <span class="text-base font-normal text-slate-400">px</span>';
+            statDeltaVec.textContent = 'ΔX: 0 | ΔY: 0';
+            statLodTier.textContent = 'Awaiting Lift';
+            statSwipes.innerHTML = '0 <span class="text-base font-normal text-slate-400">lifts</span>';
+            statVerdict.innerHTML = '⚪ Not Tested';
+            drawArena();
+        });
+
+        arena.addEventListener('click', () => {
+            if (!isPointerLocked) {
+                arena.requestPointerLock = arena.requestPointerLock || arena.mozRequestPointerLock;
+                arena.requestPointerLock();
+            }
+        });
+
+        document.addEventListener('pointerlockchange', handleLockChange);
+        document.addEventListener('mozpointerlockchange', handleLockChange);
+
+        function handleLockChange() {
+            if (document.pointerLockElement === arena || document.mozPointerLockElement === arena) {
+                isPointerLocked = true;
+                arenaPrompt.classList.add('hidden');
+                lockBadge.textContent = '● POINTER LOCKED (LIFT MOUSE NOW)';
+                lockBadge.className = 'px-3.5 py-1.5 rounded-full text-xs font-bold font-mono bg-rose-500/20 text-rose-400 border border-rose-500/30 animate-pulse';
+            } else {
+                isPointerLocked = false;
+                arenaPrompt.classList.remove('hidden');
+                lockBadge.textContent = 'CLICK TO ENGAGE POINTER LOCK';
+                lockBadge.className = 'px-3.5 py-1.5 rounded-full text-xs font-bold font-mono bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400';
+            }
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isPointerLocked) return;
+
+            const dx = e.movementX || e.mozMovementX || 0;
+            const dy = e.movementY || e.mozMovementY || 0;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist > 0.01) {
+                totalJitterPixels += dist;
+                currentDisplacement = dist;
+
+                statDisplacement.innerHTML = Math.round(totalJitterPixels) + ' <span class="text-base font-normal text-slate-400">px</span>';
+                statDeltaVec.textContent = `ΔX: ${dx.toFixed(1)} | ΔY: ${dy.toFixed(1)}`;
+
+                // Add to trail history
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                trail.push({ x: centerX + dx * 8, y: centerY + dy * 8, age: 1.0 });
+                if (trail.length > 50) trail.shift();
+
+                updateLODVerdict(totalJitterPixels);
+            }
+        });
+
+        function updateLODVerdict(totalPx) {
+            if (totalPx < 15) {
+                statLodTier.innerHTML = '<span class="text-emerald-400 font-bold">&lt; 1.0mm (Low LOD)</span>';
+                statVerdict.innerHTML = '<span class="text-emerald-400 font-bold">🏆 Pro Esports Grade</span>';
+            } else if (totalPx < 70) {
+                statLodTier.innerHTML = '<span class="text-amber-400 font-bold">1.2 &ndash; 1.8mm (Medium)</span>';
+                statVerdict.innerHTML = '<span class="text-blue-400 font-bold">✓ Good Casual Gaming</span>';
+            } else {
+                statLodTier.innerHTML = '<span class="text-rose-500 font-bold">&gt; 2.2mm (High LOD)</span>';
+                statVerdict.innerHTML = '<span class="text-rose-500 font-bold">❌ Crosshair Drift Warning</span>';
+            }
+        }
+
+        function drawArena() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const w = canvas.width;
+            const h = canvas.height;
+            const cx = w / 2;
+            const cy = h / 2;
+
+            // Draw radar / target rings (10px, 30px, 60px)
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = '#1e293b';
+
+            [30, 60, 90].forEach(r => {
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.stroke();
+            });
+
+            // Crosshair axes
+            ctx.beginPath();
+            ctx.moveTo(cx, 15);
+            ctx.lineTo(cx, h - 15);
+            ctx.moveTo(30, cy);
+            ctx.lineTo(w - 30, cy);
+            ctx.stroke();
+
+            // Center target pin
+            ctx.fillStyle = '#f43f5e';
+            ctx.beginPath();
+            ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Draw jitter displacement points
+            trail.forEach(pt => {
+                ctx.fillStyle = `rgba(244, 63, 94, ${pt.age})`;
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+                pt.age *= 0.95;
+            });
+
+            requestAnimationFrame(drawArena);
+        }
+
+        drawArena();
+    })();
+    </script>
+</body>
+</html>
