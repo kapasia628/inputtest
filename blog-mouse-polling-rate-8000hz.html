@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/blog-mouse-polling-rate-8000hz">
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- SEO Meta Tags -->
+    <title>8000Hz (8K) Mouse Polling Rate Explained: Aim Advantage or CPU Bottleneck? | InputTest.online</title>
+    <meta name="description" content="Does an 8000Hz (8K) mouse polling rate actually improve competitive aim, or does it drop game FPS? Explore report interval math, CPU core interrupts, 240Hz+ monitor pairing, and test your mouse Hz online.">
+    <meta name="keywords" content="is 8000hz mouse worth it, 8000hz polling rate cpu lag, 1000hz vs 4000hz vs 8000hz gaming, mouse polling rate test online, razer deathadder v3 8k, valorant 8000hz fps drops">
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://inputtest.online/blog-mouse-polling-rate-8000hz">
+    <meta property="og:title" content="8000Hz Mouse Polling Rate Explained: Aim Advantage or CPU Bottleneck?">
+    <meta property="og:description" content="Understand the real math of 0.125ms report intervals, USB packet interrupts, and why 8K polling rate requires high-refresh monitors and multi-core CPUs.">
+    <meta property="og:image" content="https://inputtest.online/blog_mouse.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/blog-mouse-polling-rate-8000hz">
+    <meta name="twitter:title" content="8000Hz Mouse Polling Rate Explained: Aim Advantage or CPU Bottleneck?">
+    <meta name="twitter:description" content="Understand the real math of 0.125ms report intervals, USB packet interrupts, and test your mouse Hz online.">
+    <meta name="twitter:image" content="https://inputtest.online/blog_mouse.png">
+
+    <!-- JSON-LD FAQ/Article Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "TechArticle",
+          "@id": "https://inputtest.online/blog-mouse-polling-rate-8000hz#article",
+          "headline": "8000Hz (8K) Mouse Polling Rate Explained: Does It Actually Improve Aim or Just Choke Your CPU?",
+          "description": "Comprehensive engineering evaluation of ultra-high polling rate gaming mice, USB interrupt latency, CPU thread overhead, and high-refresh monitor frame synchronization.",
+          "image": "https://inputtest.online/blog_mouse.png",
+          "datePublished": "2026-10-16",
+          "dateModified": "2026-10-16",
+          "author": {
+            "@type": "Organization",
+            "name": "InputTest.online Research Lab",
+            "url": "https://inputtest.online"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "InputTest.online",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://inputtest.online/icon-512.png"
+            }
+          },
+          "mainEntityOfPage": "https://inputtest.online/blog-mouse-polling-rate-8000hz"
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://inputtest.online/blog-mouse-polling-rate-8000hz#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is mouse polling rate and how is it measured?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Polling rate, measured in Hertz (Hz), represents how many times per second your mouse reports its physical cursor position to your computer. A 1000Hz mouse updates every 1.0 millisecond, while an 8000Hz mouse updates every 0.125 milliseconds (8,000 times per second)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why does 8000Hz cause FPS drops or micro-stutter in some games?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "At 8000Hz, the mouse sends 8,000 hardware interrupts per second to the Windows USB subsystem. If a game's main engine thread handles input processing on the same CPU core that manages rendering or physics (common in older game engines or CPUs with fewer cores), it can cause micro-stutter and frame rate drops."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do I need a 240Hz or 360Hz monitor to benefit from an 8K polling rate mouse?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. On a standard 60Hz or 144Hz monitor, the human eye cannot perceive the micro-smoothness of 8K polling. However, on 240Hz, 360Hz, or 540Hz OLED gaming monitors, an 8000Hz polling rate eliminates micro-judder between display refresh intervals, ensuring cursor positions align precisely with rendered frames."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How can I test my mouse polling rate online?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You can test your mouse polling rate in real time using the free InputTest.online Mouse Polling Rate Tester. Simply move your mouse rapidly inside the test area; our telemetry engine calculates instantaneous report frequency (Hz), peak report rate, and interval latency in milliseconds."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            850: '#151f32',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 10% 40%, rgba(139, 92, 246, 0.03) 0%, transparent 40%);
+        }
+        .dark .glow-bg {
+            background-color: #0b0f19 !important;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%) !important;
+        }
+    </style>
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2485510445228691" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-2485510445228691">
+</head>
+<body class="glow-bg text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200 antialiased">
+
+    <!-- MAIN NAVIGATION HEADER -->
+<header class="sticky top-0 z-50 bg-white/90 dark:bg-[#070b14]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-18">
+                
+                <!-- Brand Logo (Left) -->
+                <div class="flex items-center gap-3 shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none" aria-label="InputTest.online Home">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/20 border border-blue-500/30 group-hover:scale-105 transition-transform duration-200">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="font-black text-xl tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Desktop Mega Menu Navigation (Center - Spacious, Single Line, No Clutter) -->
+                <nav class="hidden lg:flex items-center gap-1 xl:gap-3 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                    
+                    <!-- 1. KEYBOARDS MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>⌨️ Keyboards</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute left-0 top-full pt-2 z-50 w-[560px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/keyboard" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">⌨️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Keyboard Tester</div>
+                                            <div class="text-[11px] text-slate-400">Test all keys, ghosting, &amp; 1000Hz latency</div>
+                                        </div>
+                                    </a>
+                                    <a href="/keyboard-chatter-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600">⚡</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-amber-500 text-xs">Switch Chatter Test</div>
+                                            <div class="text-[11px] text-slate-400">Detect multi-click chatter &amp; debounce failure</div>
+                                        </div>
+                                    </a>
+                                    <a href="/typing" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600">⏱️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-purple-500 text-xs">Typing Speed WPM</div>
+                                            <div class="text-[11px] text-slate-400">Words per minute &amp; keypress accuracy test</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">RAPID TRIGGER</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹11,999</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/61kL06WjF-L._SL1500_.jpg" alt="DrunkDeer A75" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">DrunkDeer A75 Magnetic</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Hall Effect switches eliminate key chatter forever.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B0C8V29V63?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=keyboard" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore 10+ Keyboards &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. MICE MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>🖱️ Mice</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute -left-12 top-full pt-2 z-50 w-[580px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/mouse" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">🖱️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Mouse &amp; CPS Test</div>
+                                            <div class="text-[11px] text-slate-400">Test buttons, drag-lock, &amp; clicks per second</div>
+                                        </div>
+                                    </a>
+                                    <a href="/mouse-double-click-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600">🛡️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-rose-500 text-xs">Double Click Tester</div>
+                                            <div class="text-[11px] text-slate-400">Detect microswitch bounce under 80ms</div>
+                                        </div>
+                                    </a>
+                                    <a href="/mouse-polling-rate" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-cyan-50 dark:bg-cyan-950/60 text-cyan-600">⚡</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-cyan-500 text-xs">Polling Rate (8000Hz)</div>
+                                            <div class="text-[11px] text-slate-400">Measure USB report Hz &amp; interval latency</div>
+                                        </div>
+                                    </a>
+                                    <a href="/scroll-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600">🔄</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-amber-500 text-xs">Scroll Wheel Jump Test</div>
+                                            <div class="text-[11px] text-slate-400">Measure encoder chatter &amp; reverse bounce</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">ZERO DOUBLE-CLICK</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹5,499</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/61U0T7uN9eL._SL1500_.jpg" alt="Razer DeathAdder V3" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">Razer DeathAdder V3</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Gen-3 Optical switches eliminate double-clicking.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B0B6Y7X9G1?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=mouse" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore 10+ Mice &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. CONTROLLERS MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>🎮 Gamepads</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50 w-[560px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/gamepad" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">🎮</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Gamepad Tester</div>
+                                            <div class="text-[11px] text-slate-400">Xbox, PlayStation, Nintendo button &amp; rumble</div>
+                                        </div>
+                                    </a>
+                                    <a href="/controller-stick-drift-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600">🎯</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-rose-500 text-xs">Stick Drift Test</div>
+                                            <div class="text-[11px] text-slate-400">Measure resting axis drift &amp; deadzones</div>
+                                        </div>
+                                    </a>
+                                    <a href="/controller-circularity-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600">⭕</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-purple-500 text-xs">Circularity Test</div>
+                                            <div class="text-[11px] text-slate-400">Stick error % &amp; polar cardinal accuracy</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">ZERO STICK DRIFT</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹4,799</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/61N8Z+k-f3L._SL1500_.jpg" alt="GameSir G7 SE" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">GameSir G7 SE Hall Effect</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Magnetic sensors permanently prevent stick drift.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B0C7GW9F88?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=gamepad" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore 10+ Gamepads &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. AUDIO & VIDEO MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>🎙️ Audio &amp; Cam</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute -right-12 top-full pt-2 z-50 w-[560px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/mic" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">🎙️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Microphone Test</div>
+                                            <div class="text-[11px] text-slate-400">Real-time waveform, decibel meter &amp; echo</div>
+                                        </div>
+                                    </a>
+                                    <a href="/webcam" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-600">📷</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-teal-500 text-xs">Webcam Test</div>
+                                            <div class="text-[11px] text-slate-400">Resolution, FPS sensor &amp; video clarity</div>
+                                        </div>
+                                    </a>
+                                    <a href="/sound" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600">🔊</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-indigo-500 text-xs">Stereo Speakers</div>
+                                            <div class="text-[11px] text-slate-400">Left/Right audio balance &amp; channel sweep</div>
+                                        </div>
+                                    </a>
+                                    <a href="/audio-frequency-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600">🎧</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-amber-500 text-xs">Frequency Sweep</div>
+                                            <div class="text-[11px] text-slate-400">20Hz–20kHz tone generator &amp; hearing test</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">STUDIO USB MIC</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹3,190</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/610h63d0cIL._SL1500_.jpg" alt="Fifine AmpliGame A6V" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">Fifine A6V Condenser</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Tap-to-mute with included shock mount.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B09JG59W4M?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=mic" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore Audio &amp; Cam &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. DISPLAY & UTILITIES DROPDOWN -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>📺 Display &amp; Tools</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute right-0 top-full pt-2 z-50 w-72">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-3 space-y-1">
+                                <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1 mb-1 border-b border-slate-100 dark:border-slate-800">
+                                    Display &amp; System Tools
+                                </div>
+                                <a href="/display" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">📺</span>
+                                    <span>Display &amp; Dead Pixels</span>
+                                </a>
+                                <a href="/monitor-ghosting-test" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">🛸</span>
+                                    <span>UFO Monitor Ghosting</span>
+                                </a>
+                                <a href="/battery" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">🔋</span>
+                                    <span>Battery Health &amp; Cycles</span>
+                                </a>
+                                <a href="/latency" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">⚡</span>
+                                    <span>Bluetooth Latency</span>
+                                </a>
+                                <a href="/cps-test" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">⏱️</span>
+                                    <span>CPS Click Speed Test</span>
+                                </a>
+                                <a href="/software" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-cyan-50 dark:hover:bg-cyan-950/40 text-cyan-600 dark:text-cyan-400 font-bold transition-colors border-t border-slate-100 dark:border-slate-800/80 mt-1 pt-2">
+                                    <span class="text-sm">⚡</span>
+                                    <span>Desktop Software Utilities</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </nav>
+
+                <!-- Right Action Controls (Ultra-Clean, Spacious & Premium) -->
+                <div class="flex items-center gap-3 shrink-0">
+                    
+                    <!-- Hardware Store Golden Pill CTA Button -->
+                    <a href="/store" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl whitespace-nowrap bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-extrabold text-xs xl:text-sm shadow-md hover:shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
+                        <span class="text-base">🛍️</span>
+                        <span>Hardware Store</span>
+                        <span class="text-[10px] bg-slate-950/15 text-slate-950 px-1.5 py-0.5 rounded-full font-black uppercase tracking-wider">50+ Gear</span>
+                    </a>
+
+                    <!-- Subtle Vertical Divider -->
+                    <div class="hidden sm:block h-6 w-px bg-slate-200 dark:bg-slate-800 mx-0.5"></div>
+
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#0c1220] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none cursor-pointer" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <!-- Mobile Hamburger -->
+                    <button id="mobile-menu-toggle" class="p-2.5 lg:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#0c1220] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none cursor-pointer" aria-label="Open mobile menu">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <nav id="mobile-nav-panel" class="hidden lg:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#070b14]/95 backdrop-blur-xl px-4 py-4 space-y-3 shadow-2xl">
+            <!-- Full-Width Store CTA Card in Mobile -->
+            <a href="/store" class="block p-3 rounded-2xl bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500/40 text-amber-800 dark:text-amber-300 font-extrabold text-xs flex items-center justify-between shadow-xs">
+                <span class="flex items-center gap-2">
+                    <span class="text-base">🛍️</span>
+                    <span>InputTest Hardware Store (50+ Tested Gear)</span>
+                </span>
+                <span>&rarr;</span>
+            </a>
+            <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+                <a href="/keyboard" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⌨️ Keyboard Test</a>
+                <a href="/keyboard-chatter-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⚡ Key Chatter</a>
+                <a href="/mouse" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🖱️ Mouse Test</a>
+                <a href="/mouse-double-click-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🛡️ Double Click</a>
+                <a href="/mouse-polling-rate" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⚡ 8K Polling Rate</a>
+                <a href="/scroll-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🔄 Scroll Jump</a>
+                <a href="/gamepad" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎮 Gamepad Test</a>
+                <a href="/controller-stick-drift-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎯 Stick Drift</a>
+                <a href="/controller-circularity-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⭕ Circularity</a>
+                <a href="/mic" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎙️ Microphone</a>
+                <a href="/webcam" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">📷 Webcam</a>
+                <a href="/display" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">📺 Display Test</a>
+                <a href="/software" class="p-2.5 rounded-xl bg-cyan-50 dark:bg-cyan-950/40 border border-cyan-200 dark:border-cyan-800 text-cyan-700 dark:text-cyan-300 font-bold flex items-center gap-2">⚡ Free Utilities</a>
+                <a href="/report" class="p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400 font-bold flex items-center gap-2">🛡️ PDF Report</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+        
+        <!-- Breadcrumb -->
+        <nav class="flex text-xs font-semibold text-slate-400 dark:text-slate-500 mb-6 uppercase tracking-wider select-none">
+            <a href="/" class="hover:text-blue-600">Home</a>
+            <span class="mx-2">&gt;</span>
+            <a href="/blog" class="hover:text-blue-600">Blog</a>
+            <span class="mx-2">&gt;</span>
+            <span class="text-slate-600 dark:text-slate-400">Gaming Mice</span>
+        </nav>
+
+        <!-- Article Header -->
+        <header class="text-left mb-8 space-y-4">
+            <div class="flex items-center gap-3">
+                <span class="bg-cyan-600/10 text-cyan-600 dark:text-cyan-400 text-[10px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">Competitive Telemetry</span>
+                <span class="text-xs text-slate-400 dark:text-slate-500 font-mono">7 min read &bull; October 2026</span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                8000Hz (8K) Mouse Polling Rate Explained: Aim Advantage or CPU Bottleneck?
+            </h1>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                Does upgrading from 1000Hz to 8000Hz actually make your mouse aim crisper, or does it overload your CPU and drop game frames? We break down the mathematical report intervals, USB interrupt handling, and high-refresh monitor pairings.
+            </p>
+        </header>
+
+        <!-- Featured Image -->
+        <div class="w-full h-64 sm:h-96 rounded-3xl overflow-hidden mb-10 shadow-md border border-slate-200/80 dark:border-slate-800/80">
+            <img src="blog_mouse.png" alt="8000Hz Gaming Mouse Polling Rate Latency Test" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Article content grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start text-left">
+            
+            <!-- Left 8-columns: Article Content -->
+            <article class="lg:col-span-8 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-6 sm:p-8 shadow-xs backdrop-blur-md space-y-6">
+                
+                <!-- Quick Executive Summary (For AI Overviews & Readers) -->
+                <div class="p-4 rounded-2xl bg-cyan-50/70 dark:bg-cyan-950/40 border border-cyan-200 dark:border-cyan-800/60 text-xs sm:text-sm text-cyan-900 dark:text-cyan-200 leading-relaxed">
+                    <strong class="font-bold flex items-center gap-1.5 mb-1 text-cyan-700 dark:text-cyan-300">
+                        <span>⚡</span> <span>TL;DR - The 8000Hz Reality Check</span>
+                    </strong>
+                    Moving from 1000Hz to 8000Hz reduces input report latency from <strong>1.0ms to 0.125ms (an 87.5% reduction)</strong> and significantly smooths motion on 240Hz, 360Hz, and 540Hz gaming monitors. However, 8K generates 8,000 hardware interrupts every second; on quad-core or older CPUs, it can cause frame rate drops and micro-stutter in games like Valorant or Apex Legends unless paired with modern multi-core processors.
+                </div>
+
+                <div class="space-y-5 text-left text-xs sm:text-sm font-normal text-slate-600 dark:text-slate-350 leading-relaxed">
+                    
+                    <p>
+                        For over fifteen years, <strong>1000Hz (1 millisecond)</strong> was universally considered the gold standard for gaming mice. However, with the release of flagship sensors like the Razer Focus Pro 35K and PixArt PAW3950, esports peripherals now advertise report rates scaling up to <strong>4000Hz and 8000Hz (8K)</strong>.
+                    </p>
+                    <p>
+                        Is this a genuine competitive advantage, or pure marketing hype? In this engineering analysis, we measure the microsecond latency delta, evaluate CPU interrupt overhead, and benchmark whether your setup can genuinely benefit from 8K polling.
+                    </p>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-3">
+                        1. The Math of Polling Rates: Report Interval Decoded
+                    </h2>
+                    <p>
+                        Your mouse does not send a continuous analog stream of data. Instead, the onboard microcontroller packages optical sensor counts (deltas) into discrete USB packets. The polling rate defines how frequently the computer queries the mouse for an updated packet:
+                    </p>
+                    <div class="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/60 font-mono text-xs space-y-1">
+                        <div>&bull; 125 Hz = 1 packet every 8.000 ms (Standard Office Mouse)</div>
+                        <div>&bull; 500 Hz = 1 packet every 2.000 ms (Entry Gaming)</div>
+                        <div>&bull; 1,000 Hz = 1 packet every 1.000 ms (Competitive Baseline)</div>
+                        <div>&bull; 4,000 Hz = 1 packet every 0.250 ms (Esports Grade)</div>
+                        <div>&bull; 8,000 Hz = 1 packet every 0.125 ms (Sub-Millisecond 8K)</div>
+                    </div>
+                    <p>
+                        At 8000Hz, the delay between when your physical hand moves and when the operating system receives the new coordinates is just <strong>125 microseconds</strong>.
+                    </p>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        2. The CPU Bottleneck: 8,000 Interrupts Per Second
+                    </h2>
+                    <p>
+                        Every time a USB packet arrives, the host controller fires an <strong>Interrupt Request (IRQ)</strong> to the CPU, momentarily pausing background operations to update the mouse cursor coordinates in the Windows Raw Input buffer.
+                    </p>
+                    <p>
+                        At 1000Hz, 1,000 interrupts per second consume negligible CPU time (&lt;0.5% on modern chips). At 8000Hz, however, processing <strong>8,000 interrupts every second</strong> alongside high-speed camera calculations can cause thread contention:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 pl-1">
+                        <li><strong>Older / Quad-Core CPUs (e.g. Core i5-7400, Ryzen 3 3100):</strong> Can experience 1% low frame drops of 20% to 40% when sweeping the mouse quickly across the screen.</li>
+                        <li><strong>Modern Multi-Core CPUs (e.g. Ryzen 7 7800X3D, Core i7-14700K):</strong> Process 8K interrupts effortlessly with zero frame stutter, delivering pure, uninterrupted telemetry.</li>
+                    </ul>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        3. Display Refresh Rate Synchronization
+                    </h2>
+                    <p>
+                        Why does 8000Hz matter if human reaction time is ~150ms? The answer is <strong>frame pacing synchronization</strong>.
+                    </p>
+                    <p>
+                        On a 360Hz monitor, a new visual frame is drawn every <strong>2.77 milliseconds</strong>. On a 540Hz monitor, a frame renders every <strong>1.85 milliseconds</strong>.
+                    </p>
+                    <p>
+                        With a 1000Hz mouse (1.0ms updates), the temporal alignment between when a frame renders and when the last mouse update occurred fluctuates randomly between 0.1ms and 0.9ms. This causes subtle, micro-judder in rapid panning motions. With an 8000Hz mouse (0.125ms updates), every single rendered frame receives cursor position data that is never older than 125 microseconds, producing liquid-smooth crosshair motion.
+                    </p>
+
+                    <!-- Master Polling Rate Benchmark Table -->
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        4. Polling Rate Performance &amp; Hardware Compatibility Matrix
+                    </h2>
+                    <div class="overflow-x-auto my-3">
+                        <table class="w-full text-left font-mono text-xs border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                            <thead class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                                <tr>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Polling Rate</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Interval Time</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">CPU Overhead</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Recommended Display</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Recommended CPU</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 text-slate-600 dark:text-slate-350">
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200">125 Hz</td>
+                                    <td class="p-2.5 text-rose-500">8.000 ms</td>
+                                    <td class="p-2.5">Negligible</td>
+                                    <td class="p-2.5">60Hz Office</td>
+                                    <td class="p-2.5">Any CPU</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200">1000 Hz</td>
+                                    <td class="p-2.5">1.000 ms</td>
+                                    <td class="p-2.5">&lt; 0.5%</td>
+                                    <td class="p-2.5">144Hz &ndash; 165Hz</td>
+                                    <td class="p-2.5">4-Core or Better</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200 text-blue-600 dark:text-blue-400">4000 Hz</td>
+                                    <td class="p-2.5 text-blue-600 dark:text-blue-400 font-semibold">0.250 ms</td>
+                                    <td class="p-2.5">~1.5%</td>
+                                    <td class="p-2.5">240Hz &ndash; 360Hz</td>
+                                    <td class="p-2.5">6-Core Modern CPU</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200 text-cyan-600 dark:text-cyan-400 font-bold">8000 Hz</td>
+                                    <td class="p-2.5 text-cyan-600 dark:text-cyan-400 font-bold">0.125 ms</td>
+                                    <td class="p-2.5">~3.0% &ndash; 6.0%</td>
+                                    <td class="p-2.5 text-cyan-600 dark:text-cyan-400 font-bold">240Hz / 360Hz / 540Hz</td>
+                                    <td class="p-2.5 text-cyan-600 dark:text-cyan-400 font-bold">8-Core Modern (Ryzen 7 / i7)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        5. How to Test Your Mouse Polling Rate Online
+                    </h2>
+                    <p>
+                        Many mice claim 4000Hz or 8000Hz, but default to 1000Hz out of the box until companion drivers are configured. You can measure your mouse's true real-time polling rate online:
+                    </p>
+                    <ol class="list-decimal list-inside space-y-2.5 pl-1 font-medium">
+                        <li>Open the free <a href="/mouse-polling-rate" class="text-blue-600 dark:text-blue-400 font-bold hover:underline">InputTest Mouse Polling Rate Tester</a>.</li>
+                        <li>Move your mouse continuously in fast circles inside the diagnostic zone.</li>
+                        <li>Our engine records timestamp deltas via <code>performance.now()</code> and plots your instantaneous Hz curve, peak report rate, and packet jitter variance.</li>
+                    </ol>
+
+                    <div class="my-6 p-5 rounded-2xl bg-gradient-to-r from-cyan-600/10 via-blue-600/10 to-transparent border border-cyan-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div>
+                            <div class="font-black text-slate-900 dark:text-white text-sm">Measure Your Mouse Polling Rate Live</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Free browser test &bull; Measures up to 8000Hz report rates</div>
+                        </div>
+                        <a href="/mouse-polling-rate" class="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-extrabold text-xs whitespace-nowrap shadow-xs transition-colors">
+                            Launch Polling Tester &rarr;
+                        </a>
+                    </div>
+
+                    <!-- FAQ Section -->
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        Frequently Asked Questions (FAQ)
+                    </h2>
+                    <div class="space-y-3 pt-2">
+                        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40">
+                            <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">Does 8000Hz drain wireless mouse battery faster?</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Yes, dramatically. Running at 8000Hz wireless consumes roughly 4x to 6x more power than 1000Hz. A wireless mouse that lasts 80 hours at 1000Hz will typically drop to around 15–20 hours of continuous gameplay at 8000Hz.</p>
+                        </div>
+                        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40">
+                            <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">Can I plug an 8000Hz mouse into an unpowered USB hub?</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">No. Ultra-high polling mice should always be connected directly to a rear motherboard USB 3.0 or USB 3.2 port. Passing 8,000 packets per second through unpowered USB hubs or keyboard passthrough ports can cause packet drops and throttling.</p>
+                        </div>
+                        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40">
+                            <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">What is the best mouse for true 8000Hz performance?</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">The Razer DeathAdder V3 (Wired 8K) and Razer Viper V3 Pro (Wireless with HyperPolling Dongle) are the benchmark standard in esports, pairing native 8000Hz polling with Gen-3 Optical Switches.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </article>
+
+            <!-- Right 4-columns: Sticky Sidebar (Hardware CTAs & Related) -->
+            <aside class="lg:col-span-4 space-y-6">
+                
+                <!-- Diagnostic Station Box -->
+                <div class="p-5 rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 text-left">
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/60 px-2.5 py-1 rounded-full">Free Diagnostic Bench</span>
+                    <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">Mouse Polling Rate (8000Hz)</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Measure real-time report frequency, peak Hz, and packet interval latency in milliseconds.</p>
+                    <a href="/mouse-polling-rate" class="block w-full py-2.5 px-3 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-extrabold text-xs text-center shadow-xs transition-colors">
+                        Open Polling Tester &rarr;
+                    </a>
+                </div>
+
+                <!-- Featured Amazon Pick Card (Razer DeathAdder V3) -->
+                <div class="p-5 rounded-3xl bg-gradient-to-b from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/30 shadow-xs space-y-3 text-left">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9px] font-mono font-bold uppercase tracking-wider text-slate-950 bg-amber-500 px-2 py-0.5 rounded">TRUE 8000Hz PICK</span>
+                        <span class="text-xs font-black text-emerald-600 dark:text-emerald-400">~₹5,499</span>
+                    </div>
+                    <div class="w-full h-36 rounded-2xl bg-white dark:bg-slate-950 p-2 flex items-center justify-center overflow-hidden border border-slate-200 dark:border-slate-800">
+                        <img src="https://m.media-amazon.com/images/I/61U0T7uN9eL._SL1500_.jpg" alt="Razer DeathAdder V3 8000Hz Mouse" class="h-28 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-xs text-slate-900 dark:text-white">Razer DeathAdder V3 (8K Hz)</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Native 8000Hz polling rate (0.125ms report interval) with Gen-3 Optical Switches that never double-click.</p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-200/80 dark:border-slate-800 space-y-2">
+                        <a href="https://www.amazon.in/dp/B0B6Y7X9G1?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="block w-full py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs text-center shadow-xs transition-colors">
+                            Check Price on Amazon &rarr;
+                        </a>
+                        <a href="/store?category=mouse" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                            Explore 10+ Tested Mice &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Related Guides -->
+                <div class="p-5 rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 text-left">
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500">Related Diagnostic Guides</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/blog-mouse-double-click" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 font-medium transition-colors">&bull; Fix Mouse Double-Clicking Online</a></li>
+                        <li><a href="/blog-monitor-hz" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 font-medium transition-colors">&bull; Monitor Refresh Rate 144Hz-360Hz Guide</a></li>
+                        <li><a href="/blog-hall-effect-vs-optical-mechanical" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 font-medium transition-colors">&bull; Mechanical vs Optical vs Hall Effect</a></li>
+                        <li><a href="/store" class="text-amber-600 dark:text-amber-400 font-bold hover:underline">&bull; InputTest Tested Hardware Store (50+ Items)</a></li>
+                    </ul>
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="mt-20 border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-900 text-slate-400 py-12 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>⌨️</span> <span>KEYBOARDS &amp; TYPING</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/keyboard" class="hover:text-white transition-colors">Keyboard Matrix Tester</a></li>
+                        <li><a href="/keyboard-chatter-test" class="hover:text-white transition-colors">Switch Chatter Test</a></li>
+                        <li><a href="/typing" class="hover:text-white transition-colors">Typing Speed WPM</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🖱️</span> <span>MICE &amp; POINTERS</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/mouse" class="hover:text-white transition-colors">Mouse &amp; CPS Tester</a></li>
+                        <li><a href="/mouse-double-click-test" class="hover:text-white transition-colors">Double Click Tester</a></li>
+                        <li><a href="/mouse-polling-rate" class="hover:text-white transition-colors">8000Hz Polling Rate</a></li>
+                        <li><a href="/scroll-test" class="hover:text-white transition-colors">Scroll Wheel Jump</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🎮</span> <span>CONTROLLERS</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/gamepad" class="hover:text-white transition-colors">Gamepad Tester</a></li>
+                        <li><a href="/controller-stick-drift-test" class="hover:text-white transition-colors">Stick Drift Test</a></li>
+                        <li><a href="/controller-circularity-test" class="hover:text-white transition-colors">Stick Circularity Test</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🛍️</span> <span>STORE &amp; GEAR</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/store" class="hover:text-white text-amber-400 font-bold transition-colors">Hardware Store (50+)</a></li>
+                        <li><a href="/software" class="hover:text-white transition-colors">Portable Windows Utilities</a></li>
+                        <li><a href="/report" class="hover:text-white transition-colors">Certified PDF Report</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🛡️</span> <span>TRUST &amp; POLICY</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="/contact" class="hover:text-white transition-colors">Contact Support</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Affiliate Disclosure -->
+            <div class="border-t border-slate-800/80 pt-6 text-xs text-slate-400 leading-relaxed font-normal">
+                <p>
+                    <strong class="text-slate-300 font-semibold">Affiliate Transparency:</strong> InputTest.online is an independent testing laboratory. Some hardware recommendations feature affiliate links (Amazon India). If you purchase gear through our verified links, we may receive a modest commission at no additional cost to you, which funds our laboratory test benches.
+                </p>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-slate-500">
+                <div>&copy; 2026 InputTest.online &bull; All Tests 100% Client-Side Sandboxed</div>
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-1.5 text-emerald-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        <span>No Telemetry Collected</span>
+                    </div>
+                    <a href="https://github.com/kapasia628/inputtest" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/blog-stick-drift-hall-effect">
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- SEO Meta Tags -->
+    <title>How to Fix PS5 & Xbox Stick Drift: Potentiometer vs Hall Effect Joysticks | InputTest.online</title>
+    <meta name="description" content="Why do PS5 DualSense and Xbox controllers develop stick drift? Discover why potentiometer carbon tracks wear out at 400 hours, how to test drift and deadzones online, and why Hall Effect joysticks eliminate drift permanently.">
+    <meta name="keywords" content="fix ps5 controller drift, xbox stick drift repair, potentiometer vs hall effect joysticks, controller stick drift test online, dualsense stick drift permanent fix, gamesir g7 se hall effect">
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://inputtest.online/blog-stick-drift-hall-effect">
+    <meta property="og:title" content="Fix PS5 & Xbox Stick Drift: Potentiometer vs Hall Effect Joysticks">
+    <meta property="og:description" content="Discover the root cause of controller stick drift, test deadzone accuracy online, and see how Hall Effect magnetic joysticks prevent drift forever.">
+    <meta property="og:image" content="https://inputtest.online/blog_gamepad.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/blog-stick-drift-hall-effect">
+    <meta name="twitter:title" content="Fix PS5 & Xbox Stick Drift: Potentiometer vs Hall Effect Joysticks">
+    <meta name="twitter:description" content="Discover the root cause of controller stick drift, test deadzone accuracy online, and see how Hall Effect magnetic joysticks prevent drift forever.">
+    <meta name="twitter:image" content="https://inputtest.online/blog_gamepad.png">
+
+    <!-- JSON-LD FAQ/Article Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "TechArticle",
+          "@id": "https://inputtest.online/blog-stick-drift-hall-effect#article",
+          "headline": "How to Detect & Fix PS5 DualSense and Xbox Stick Drift: Potentiometer vs Hall Effect Joysticks",
+          "description": "Comprehensive engineering teardown of analog joystick potentiometer wear, deadzone degradation, and contactless Hall Effect magnetic sensor solutions.",
+          "image": "https://inputtest.online/blog_gamepad.png",
+          "datePublished": "2026-10-16",
+          "dateModified": "2026-10-16",
+          "author": {
+            "@type": "Organization",
+            "name": "InputTest.online Research Lab",
+            "url": "https://inputtest.online"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "InputTest.online",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://inputtest.online/icon-512.png"
+            }
+          },
+          "mainEntityOfPage": "https://inputtest.online/blog-stick-drift-hall-effect"
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://inputtest.online/blog-stick-drift-hall-effect#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Why do PS5 and Xbox controllers start drifting so quickly?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Most modern console controllers use Alps Alpine potentiometer joysticks rated for approximately 400 to 500 hours of operating life. Inside, metal contact wipers physically rub against resistive carbon tracks. Over time, friction grinds off microscopic carbon dust, altering resistance readings and causing the resting stick position to register movement."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is a Hall Effect joystick and how does it prevent stick drift?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Hall Effect joysticks replace friction-based carbon film with contactless permanent magnets and electrical Hall sensors. As you push the joystick, the sensor measures changes in magnetic flux density without any physical contact between electrical parts, eliminating mechanical wear and stick drift permanently."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can stick drift be fixed without taking the controller apart?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, mild drift can often be managed by cleaning the ball joint with 99% isopropyl alcohol, calibrating deadzones in game settings or Steam Input, or expanding the deadzone threshold via controller companion apps."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do I test my controller for stick drift online?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You can connect your PS5, PS4, Xbox, or Switch controller to your PC via USB or Bluetooth and open the InputTest.online Controller Stick Drift Tester. It reads real-time raw axis coordinates from the HTML5 Gamepad API, showing your exact resting drift percentage and stick circularity error."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            850: '#151f32',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 10% 40%, rgba(139, 92, 246, 0.03) 0%, transparent 40%);
+        }
+        .dark .glow-bg {
+            background-color: #0b0f19 !important;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%) !important;
+        }
+    </style>
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2485510445228691" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-2485510445228691">
+</head>
+<body class="glow-bg text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200 antialiased">
+
+    <!-- MAIN NAVIGATION HEADER -->
+<header class="sticky top-0 z-50 bg-white/90 dark:bg-[#070b14]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-18">
+                
+                <!-- Brand Logo (Left) -->
+                <div class="flex items-center gap-3 shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none" aria-label="InputTest.online Home">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/20 border border-blue-500/30 group-hover:scale-105 transition-transform duration-200">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="font-black text-xl tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Desktop Mega Menu Navigation (Center - Spacious, Single Line, No Clutter) -->
+                <nav class="hidden lg:flex items-center gap-1 xl:gap-3 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                    
+                    <!-- 1. KEYBOARDS MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>⌨️ Keyboards</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute left-0 top-full pt-2 z-50 w-[560px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/keyboard" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">⌨️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Keyboard Tester</div>
+                                            <div class="text-[11px] text-slate-400">Test all keys, ghosting, &amp; 1000Hz latency</div>
+                                        </div>
+                                    </a>
+                                    <a href="/keyboard-chatter-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600">⚡</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-amber-500 text-xs">Switch Chatter Test</div>
+                                            <div class="text-[11px] text-slate-400">Detect multi-click chatter &amp; debounce failure</div>
+                                        </div>
+                                    </a>
+                                    <a href="/typing" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600">⏱️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-purple-500 text-xs">Typing Speed WPM</div>
+                                            <div class="text-[11px] text-slate-400">Words per minute &amp; keypress accuracy test</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">RAPID TRIGGER</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹11,999</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/61kL06WjF-L._SL1500_.jpg" alt="DrunkDeer A75" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">DrunkDeer A75 Magnetic</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Hall Effect switches eliminate key chatter forever.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B0C8V29V63?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=keyboard" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore 10+ Keyboards &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. MICE MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>🖱️ Mice</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute -left-12 top-full pt-2 z-50 w-[580px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/mouse" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">🖱️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Mouse &amp; CPS Test</div>
+                                            <div class="text-[11px] text-slate-400">Test buttons, drag-lock, &amp; clicks per second</div>
+                                        </div>
+                                    </a>
+                                    <a href="/mouse-double-click-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600">🛡️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-rose-500 text-xs">Double Click Tester</div>
+                                            <div class="text-[11px] text-slate-400">Detect microswitch bounce under 80ms</div>
+                                        </div>
+                                    </a>
+                                    <a href="/mouse-polling-rate" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-cyan-50 dark:bg-cyan-950/60 text-cyan-600">⚡</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-cyan-500 text-xs">Polling Rate (8000Hz)</div>
+                                            <div class="text-[11px] text-slate-400">Measure USB report Hz &amp; interval latency</div>
+                                        </div>
+                                    </a>
+                                    <a href="/scroll-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600">🔄</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-amber-500 text-xs">Scroll Wheel Jump Test</div>
+                                            <div class="text-[11px] text-slate-400">Measure encoder chatter &amp; reverse bounce</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">ZERO DOUBLE-CLICK</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹5,499</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/61U0T7uN9eL._SL1500_.jpg" alt="Razer DeathAdder V3" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">Razer DeathAdder V3</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Gen-3 Optical switches eliminate double-clicking.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B0B6Y7X9G1?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=mouse" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore 10+ Mice &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. CONTROLLERS MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>🎮 Gamepads</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50 w-[560px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/gamepad" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">🎮</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Gamepad Tester</div>
+                                            <div class="text-[11px] text-slate-400">Xbox, PlayStation, Nintendo button &amp; rumble</div>
+                                        </div>
+                                    </a>
+                                    <a href="/controller-stick-drift-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600">🎯</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-rose-500 text-xs">Stick Drift Test</div>
+                                            <div class="text-[11px] text-slate-400">Measure resting axis drift &amp; deadzones</div>
+                                        </div>
+                                    </a>
+                                    <a href="/controller-circularity-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600">⭕</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-purple-500 text-xs">Circularity Test</div>
+                                            <div class="text-[11px] text-slate-400">Stick error % &amp; polar cardinal accuracy</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">ZERO STICK DRIFT</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹4,799</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/61N8Z+k-f3L._SL1500_.jpg" alt="GameSir G7 SE" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">GameSir G7 SE Hall Effect</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Magnetic sensors permanently prevent stick drift.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B0C7GW9F88?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=gamepad" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore 10+ Gamepads &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. AUDIO & VIDEO MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>🎙️ Audio &amp; Cam</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute -right-12 top-full pt-2 z-50 w-[560px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/mic" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">🎙️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Microphone Test</div>
+                                            <div class="text-[11px] text-slate-400">Real-time waveform, decibel meter &amp; echo</div>
+                                        </div>
+                                    </a>
+                                    <a href="/webcam" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-600">📷</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-teal-500 text-xs">Webcam Test</div>
+                                            <div class="text-[11px] text-slate-400">Resolution, FPS sensor &amp; video clarity</div>
+                                        </div>
+                                    </a>
+                                    <a href="/sound" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600">🔊</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-indigo-500 text-xs">Stereo Speakers</div>
+                                            <div class="text-[11px] text-slate-400">Left/Right audio balance &amp; channel sweep</div>
+                                        </div>
+                                    </a>
+                                    <a href="/audio-frequency-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600">🎧</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-amber-500 text-xs">Frequency Sweep</div>
+                                            <div class="text-[11px] text-slate-400">20Hz–20kHz tone generator &amp; hearing test</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">STUDIO USB MIC</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹3,190</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/610h63d0cIL._SL1500_.jpg" alt="Fifine AmpliGame A6V" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">Fifine A6V Condenser</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Tap-to-mute with included shock mount.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B09JG59W4M?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=mic" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore Audio &amp; Cam &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. DISPLAY & UTILITIES DROPDOWN -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>📺 Display &amp; Tools</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute right-0 top-full pt-2 z-50 w-72">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-3 space-y-1">
+                                <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1 mb-1 border-b border-slate-100 dark:border-slate-800">
+                                    Display &amp; System Tools
+                                </div>
+                                <a href="/display" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">📺</span>
+                                    <span>Display &amp; Dead Pixels</span>
+                                </a>
+                                <a href="/monitor-ghosting-test" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">🛸</span>
+                                    <span>UFO Monitor Ghosting</span>
+                                </a>
+                                <a href="/battery" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">🔋</span>
+                                    <span>Battery Health &amp; Cycles</span>
+                                </a>
+                                <a href="/latency" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">⚡</span>
+                                    <span>Bluetooth Latency</span>
+                                </a>
+                                <a href="/cps-test" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">⏱️</span>
+                                    <span>CPS Click Speed Test</span>
+                                </a>
+                                <a href="/software" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-cyan-50 dark:hover:bg-cyan-950/40 text-cyan-600 dark:text-cyan-400 font-bold transition-colors border-t border-slate-100 dark:border-slate-800/80 mt-1 pt-2">
+                                    <span class="text-sm">⚡</span>
+                                    <span>Desktop Software Utilities</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </nav>
+
+                <!-- Right Action Controls (Ultra-Clean, Spacious & Premium) -->
+                <div class="flex items-center gap-3 shrink-0">
+                    
+                    <!-- Hardware Store Golden Pill CTA Button -->
+                    <a href="/store" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl whitespace-nowrap bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-extrabold text-xs xl:text-sm shadow-md hover:shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
+                        <span class="text-base">🛍️</span>
+                        <span>Hardware Store</span>
+                        <span class="text-[10px] bg-slate-950/15 text-slate-950 px-1.5 py-0.5 rounded-full font-black uppercase tracking-wider">50+ Gear</span>
+                    </a>
+
+                    <!-- Subtle Vertical Divider -->
+                    <div class="hidden sm:block h-6 w-px bg-slate-200 dark:bg-slate-800 mx-0.5"></div>
+
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#0c1220] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none cursor-pointer" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <!-- Mobile Hamburger -->
+                    <button id="mobile-menu-toggle" class="p-2.5 lg:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#0c1220] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none cursor-pointer" aria-label="Open mobile menu">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <nav id="mobile-nav-panel" class="hidden lg:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#070b14]/95 backdrop-blur-xl px-4 py-4 space-y-3 shadow-2xl">
+            <!-- Full-Width Store CTA Card in Mobile -->
+            <a href="/store" class="block p-3 rounded-2xl bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500/40 text-amber-800 dark:text-amber-300 font-extrabold text-xs flex items-center justify-between shadow-xs">
+                <span class="flex items-center gap-2">
+                    <span class="text-base">🛍️</span>
+                    <span>InputTest Hardware Store (50+ Tested Gear)</span>
+                </span>
+                <span>&rarr;</span>
+            </a>
+            <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+                <a href="/keyboard" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⌨️ Keyboard Test</a>
+                <a href="/keyboard-chatter-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⚡ Key Chatter</a>
+                <a href="/mouse" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🖱️ Mouse Test</a>
+                <a href="/mouse-double-click-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🛡️ Double Click</a>
+                <a href="/mouse-polling-rate" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⚡ 8K Polling Rate</a>
+                <a href="/scroll-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🔄 Scroll Jump</a>
+                <a href="/gamepad" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎮 Gamepad Test</a>
+                <a href="/controller-stick-drift-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎯 Stick Drift</a>
+                <a href="/controller-circularity-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⭕ Circularity</a>
+                <a href="/mic" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎙️ Microphone</a>
+                <a href="/webcam" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">📷 Webcam</a>
+                <a href="/display" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">📺 Display Test</a>
+                <a href="/software" class="p-2.5 rounded-xl bg-cyan-50 dark:bg-cyan-950/40 border border-cyan-200 dark:border-cyan-800 text-cyan-700 dark:text-cyan-300 font-bold flex items-center gap-2">⚡ Free Utilities</a>
+                <a href="/report" class="p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400 font-bold flex items-center gap-2">🛡️ PDF Report</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+        
+        <!-- Breadcrumb -->
+        <nav class="flex text-xs font-semibold text-slate-400 dark:text-slate-500 mb-6 uppercase tracking-wider select-none">
+            <a href="/" class="hover:text-blue-600">Home</a>
+            <span class="mx-2">&gt;</span>
+            <a href="/blog" class="hover:text-blue-600">Blog</a>
+            <span class="mx-2">&gt;</span>
+            <span class="text-slate-600 dark:text-slate-400">Gamepad &amp; Controllers</span>
+        </nav>
+
+        <!-- Article Header -->
+        <header class="text-left mb-8 space-y-4">
+            <div class="flex items-center gap-3">
+                <span class="bg-rose-600/10 text-rose-600 dark:text-rose-400 text-[10px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">Gamepad Diagnostics</span>
+                <span class="text-xs text-slate-400 dark:text-slate-500 font-mono">8 min read &bull; October 2026</span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                How to Fix PS5 &amp; Xbox Stick Drift: Potentiometer vs Hall Effect Joysticks Explained
+            </h1>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                Is your in-game crosshair or character drifting across the screen? Discover why traditional potentiometer joysticks wear out at ~400 hours, test your analog stick deadzones and circularity error online, and learn why contactless Hall Effect sensors permanently eliminate stick drift.
+            </p>
+        </header>
+
+        <!-- Featured Image -->
+        <div class="w-full h-64 sm:h-96 rounded-3xl overflow-hidden mb-10 shadow-md border border-slate-200/80 dark:border-slate-800/80">
+            <img src="blog_gamepad.png" alt="PS5 DualSense and Xbox Stick Drift Teardown" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Article content grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start text-left">
+            
+            <!-- Left 8-columns: Article Content -->
+            <article class="lg:col-span-8 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-6 sm:p-8 shadow-xs backdrop-blur-md space-y-6">
+                
+                <!-- Quick Executive Summary (For AI Overviews & Readers) -->
+                <div class="p-4 rounded-2xl bg-rose-50/70 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/60 text-xs sm:text-sm text-rose-900 dark:text-rose-200 leading-relaxed">
+                    <strong class="font-bold flex items-center gap-1.5 mb-1 text-rose-700 dark:text-rose-300">
+                        <span>🎯</span> <span>TL;DR - The Root Cause of Stick Drift</span>
+                    </strong>
+                    Standard PS5 DualSense and Xbox Series X/S controllers rely on <strong>Alps Alpine potentiometer thumbsticks</strong> that scrape physical metal wipers against carbon resistive film. After roughly 400 hours of gameplay, friction wears grooves into the carbon tracks, shedding conductive dust that disrupts electrical voltage readings—causing the cursor to wander. <strong>Hall Effect joysticks</strong> replace physical contacts with permanent magnets, delivering zero friction and zero stick drift permanently.
+                </div>
+
+                <div class="space-y-5 text-left text-xs sm:text-sm font-normal text-slate-600 dark:text-slate-350 leading-relaxed">
+                    
+                    <p>
+                        Stick drift is the most notorious hardware flaw of current-generation gaming consoles. Players invest $70 or more into official Sony PlayStation 5 DualSense and Microsoft Xbox Series wireless controllers, only to find their character creeping forward or looking at the sky unprompted after just a few months of intense gaming.
+                    </p>
+                    <p>
+                        In this comprehensive engineering breakdown, we explore the internal mechanics of analog joysticks, quantify potentiometer lifespans, demonstrate how to measure resting drift percentage using the HTML5 Gamepad API, and explain why Hall Effect joysticks have become the gold standard for competitive gaming.
+                    </p>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-3">
+                        1. Anatomy of an Analog Stick: Why Potentiometers Fail
+                    </h2>
+                    <p>
+                        Both the PS5 DualSense and Xbox Wireless Controller use analog joystick modules manufactured primarily by Alps Alpine. Inside each joystick module sit two potentiometers (one for the horizontal X-axis, one for the vertical Y-axis).
+                    </p>
+                    <p>
+                        A potentiometer is an electro-mechanical variable resistor. It consists of:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 pl-1">
+                        <li><strong>A Curved Carbon Film Track:</strong> A horseshoe-shaped resistive track printed with conductive carbon paste.</li>
+                        <li><strong>A Spring-Loaded Metal Wiper:</strong> A tiny fork with metallic prongs that presses directly against the carbon surface.</li>
+                        <li><strong>Center Centering Spring:</strong> A coil spring and plastic gimbal that physically pushes the stick back toward the 0,0 resting center.</li>
+                    </ul>
+                    <p>
+                        When you push the stick, the wiper glides across the carbon track, altering electrical resistance and varying the output voltage (from 0V to 3.3V). The console's onboard microcontroller converts this voltage into coordinate points on an X/Y grid from -1.0 to +1.0.
+                    </p>
+
+                    <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-300">
+                        <strong class="font-bold text-xs uppercase tracking-wider block mb-1">The 400-Hour Operating Limit:</strong>
+                        According to Alps Alpine official component datasheets, the operational life of their standard thumbstick potentiometer is rated at <strong>2,000,000 cycles</strong> (or approximately 400 to 500 hours of gameplay). For an active gamer playing 2 to 3 hours daily, physical degradation begins within just 6 months.
+                    </div>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        2. The 3 Primary Modes of Potentiometer Degradation
+                    </h2>
+                    <ol class="list-decimal list-inside space-y-2.5 pl-1 font-medium">
+                        <li><strong>Carbon Track Scraping:</strong> Repeated friction carves microscopic valleys into the carbon film. As the resistive material is ground away, electrical resistance becomes erratic, causing false voltage spikes.</li>
+                        <li><strong>Conductive Debris Contamination:</strong> The worn carbon particles and metallic flakes mix with lubricating silicone grease to form conductive sludge that creates phantom short circuits across the track.</li>
+                        <li><strong>Spring Fatigue &amp; Mechanical Gimbal Play:</strong> The central return spring loses tension over time. Instead of returning to the true 0.00 center, the stick settles at (0.08, 0.04), which breaches the game's default deadzone threshold.</li>
+                    </ol>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        3. Hall Effect Joysticks: The Contactless Revolution
+                    </h2>
+                    <p>
+                        Instead of scraping physical metal wipers against carbon paste, <strong>Hall Effect joysticks rely on contactless magnetic physics</strong>.
+                    </p>
+                    <p>
+                        At the base of the thumbstick shaft sits a high-grade permanent neodymium magnet. Positioned beneath the magnet on the module PCB are dual-axis Hall sensor integrated circuits (ICs).
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 pl-1">
+                        <li><strong>No Friction:</strong> The magnet and sensor never touch. There is zero physical wear on the electrical measurement surface.</li>
+                        <li><strong>Infinite Electrical Lifespan:</strong> Because there is no carbon film to erode, Hall Effect joysticks are rated for <strong>over 5,000,000 to 10,000,000 cycles</strong> without any drift.</li>
+                        <li><strong>Sub-Millimeter Deadzones:</strong> Because resting values return to pure baseline magnetic equilibrium, you can configure tight 1% or 2% deadzones without crosshair jitter.</li>
+                    </ul>
+
+                    <!-- Master Joystick Benchmark Table -->
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        4. Controller Joystick Architecture Comparison
+                    </h2>
+                    <div class="overflow-x-auto my-3">
+                        <table class="w-full text-left font-mono text-xs border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                            <thead class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                                <tr>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Joystick Type</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Sensing Technology</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Expected Lifespan</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Drift Vulnerability</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Circularity Error</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 text-slate-600 dark:text-slate-350">
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200">Standard OEM (PS5 / Xbox)</td>
+                                    <td class="p-2.5">Alps Potentiometer (Wiper/Carbon)</td>
+                                    <td class="p-2.5 text-rose-500">400 &ndash; 500 Hours</td>
+                                    <td class="p-2.5 text-rose-500 font-bold">Very High (Inevitable)</td>
+                                    <td class="p-2.5">8% &ndash; 15%</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200">Switch Joy-Con (Mini-Pot)</td>
+                                    <td class="p-2.5">Miniature Potentiometer</td>
+                                    <td class="p-2.5 text-rose-500">200 &ndash; 300 Hours</td>
+                                    <td class="p-2.5 text-rose-500 font-bold">Extreme</td>
+                                    <td class="p-2.5">10% &ndash; 20%</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200 text-emerald-600 dark:text-emerald-400">Hall Effect Magnetic (GameSir, 8BitDo)</td>
+                                    <td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-semibold">Contactless Magnetic Flux IC</td>
+                                    <td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">5,000+ Hours (Indefinite)</td>
+                                    <td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">0% (Electrically Immune)</td>
+                                    <td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">&lt; 0.5% (Perfect Circle)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        5. How to Test Your Gamepad for Drift in 3 Simple Steps
+                    </h2>
+                    <p>
+                        You do not need to install proprietary controller software. You can measure your resting drift and joystick polar circularity directly in your browser:
+                    </p>
+                    <ol class="list-decimal list-inside space-y-2.5 pl-1 font-medium">
+                        <li>Plug your PS5, Xbox, or third-party controller into your PC via USB cable (or connect via Bluetooth).</li>
+                        <li>Open the free <a href="/controller-stick-drift-test" class="text-blue-600 dark:text-blue-400 font-bold hover:underline">InputTest Gamepad Stick Drift Tester</a>.</li>
+                        <li>Press any button to activate the HTML5 Gamepad API. Our telemetry engine reads your raw X/Y resting position and highlights drift if resting variance exceeds <strong>0.05 (5%)</strong>.</li>
+                        <li>Rotate your analog sticks in a complete 360&deg; circle to view your <a href="/controller-circularity-test" class="text-blue-600 dark:text-blue-400 font-bold hover:underline">Circularity Error Percentage</a>.</li>
+                    </ol>
+
+                    <div class="my-6 p-5 rounded-2xl bg-gradient-to-r from-rose-600/10 via-purple-600/10 to-transparent border border-rose-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div>
+                            <div class="font-black text-slate-900 dark:text-white text-sm">Measure Your Stick Drift Live</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Free HTML5 Gamepad telemetry &bull; Supports PS5, Xbox, Switch &amp; PC</div>
+                        </div>
+                        <a href="/controller-stick-drift-test" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-xs whitespace-nowrap shadow-xs transition-colors">
+                            Launch Drift Tester &rarr;
+                        </a>
+                    </div>
+
+                    <!-- FAQ Section -->
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        Frequently Asked Questions (FAQ)
+                    </h2>
+                    <div class="space-y-3 pt-2">
+                        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40">
+                            <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">Does blowing into the joystick fix stick drift?</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Blowing with your mouth introduces moisture and saliva into the module, which oxidizes the metal wiper and ruins the carbon track faster. If you must clean it, use a can of dry compressed air or 99% anhydrous isopropyl alcohol.</p>
+                        </div>
+                        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40">
+                            <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">Can I solder Hall Effect joysticks into my existing PS5 controller?</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Yes! Drop-in replacement Hall Effect modules (like K-Silver or GuliKit) are available for DualSense and Xbox controllers. However, they require desoldering 14 through-hole pins and performing manual calibration to align center voltage.</p>
+                        </div>
+                        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40">
+                            <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">What controller comes with Hall Effect joysticks out of the box?</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">The GameSir G7 SE (officially licensed for Xbox and PC) and the 8BitDo Ultimate Wireless come equipped with factory-calibrated Hall Effect joysticks and triggers, making them immune to stick drift out of the box.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </article>
+
+            <!-- Right 4-columns: Sticky Sidebar (Hardware CTAs & Related) -->
+            <aside class="lg:col-span-4 space-y-6">
+                
+                <!-- Diagnostic Station Box -->
+                <div class="p-5 rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 text-left">
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/60 px-2.5 py-1 rounded-full">Free Diagnostic Bench</span>
+                    <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">Stick Drift &amp; Deadzones</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Real-time axis coordinates, resting drift percentage, and circularity error measurement.</p>
+                    <a href="/controller-stick-drift-test" class="block w-full py-2.5 px-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-xs text-center shadow-xs transition-colors">
+                        Open Drift Tester &rarr;
+                    </a>
+                </div>
+
+                <!-- Featured Amazon Pick Card (GameSir G7 SE) -->
+                <div class="p-5 rounded-3xl bg-gradient-to-b from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/30 shadow-xs space-y-3 text-left">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9px] font-mono font-bold uppercase tracking-wider text-slate-950 bg-amber-500 px-2 py-0.5 rounded">ZERO STICK DRIFT PICK</span>
+                        <span class="text-xs font-black text-emerald-600 dark:text-emerald-400">~₹4,799</span>
+                    </div>
+                    <div class="w-full h-36 rounded-2xl bg-white dark:bg-slate-950 p-2 flex items-center justify-center overflow-hidden border border-slate-200 dark:border-slate-800">
+                        <img src="https://m.media-amazon.com/images/I/61N8Z+k-f3L._SL1500_.jpg" alt="GameSir G7 SE Hall Effect Controller" class="h-28 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-xs text-slate-900 dark:text-white">GameSir G7 SE Hall Effect</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Officially licensed for Xbox and PC. Contactless Hall sensors permanently eliminate stick drift.</p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-200/80 dark:border-slate-800 space-y-2">
+                        <a href="https://www.amazon.in/dp/B0C7GW9F88?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="block w-full py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs text-center shadow-xs transition-colors">
+                            Check Price on Amazon &rarr;
+                        </a>
+                        <a href="/store?category=gamepad" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                            Explore 10+ Tested Gamepads &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Related Guides -->
+                <div class="p-5 rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 text-left">
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500">Related Diagnostic Guides</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/blog-dualshock-drift" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 font-medium transition-colors">&bull; DualShock 4 Controller Drift Repair</a></li>
+                        <li><a href="/blog-gamepad-drift" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 font-medium transition-colors">&bull; Quick Gamepad Calibration Manual</a></li>
+                        <li><a href="/blog-hall-effect-vs-optical-mechanical" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 font-medium transition-colors">&bull; Mechanical vs Optical vs Hall Effect</a></li>
+                        <li><a href="/store" class="text-amber-600 dark:text-amber-400 font-bold hover:underline">&bull; InputTest Tested Hardware Store (50+ Items)</a></li>
+                    </ul>
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="mt-20 border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-900 text-slate-400 py-12 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>⌨️</span> <span>KEYBOARDS &amp; TYPING</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/keyboard" class="hover:text-white transition-colors">Keyboard Matrix Tester</a></li>
+                        <li><a href="/keyboard-chatter-test" class="hover:text-white transition-colors">Switch Chatter Test</a></li>
+                        <li><a href="/typing" class="hover:text-white transition-colors">Typing Speed WPM</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🖱️</span> <span>MICE &amp; POINTERS</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/mouse" class="hover:text-white transition-colors">Mouse &amp; CPS Tester</a></li>
+                        <li><a href="/mouse-double-click-test" class="hover:text-white transition-colors">Double Click Tester</a></li>
+                        <li><a href="/mouse-polling-rate" class="hover:text-white transition-colors">8000Hz Polling Rate</a></li>
+                        <li><a href="/scroll-test" class="hover:text-white transition-colors">Scroll Wheel Jump</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🎮</span> <span>CONTROLLERS</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/gamepad" class="hover:text-white transition-colors">Gamepad Tester</a></li>
+                        <li><a href="/controller-stick-drift-test" class="hover:text-white transition-colors">Stick Drift Test</a></li>
+                        <li><a href="/controller-circularity-test" class="hover:text-white transition-colors">Stick Circularity Test</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🛍️</span> <span>STORE &amp; GEAR</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/store" class="hover:text-white text-amber-400 font-bold transition-colors">Hardware Store (50+)</a></li>
+                        <li><a href="/software" class="hover:text-white transition-colors">Portable Windows Utilities</a></li>
+                        <li><a href="/report" class="hover:text-white transition-colors">Certified PDF Report</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🛡️</span> <span>TRUST &amp; POLICY</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="/contact" class="hover:text-white transition-colors">Contact Support</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Affiliate Disclosure -->
+            <div class="border-t border-slate-800/80 pt-6 text-xs text-slate-400 leading-relaxed font-normal">
+                <p>
+                    <strong class="text-slate-300 font-semibold">Affiliate Transparency:</strong> InputTest.online is an independent testing laboratory. Some hardware recommendations feature affiliate links (Amazon India). If you purchase gear through our verified links, we may receive a modest commission at no additional cost to you, which funds our laboratory test benches.
+                </p>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-slate-500">
+                <div>&copy; 2026 InputTest.online &bull; All Tests 100% Client-Side Sandboxed</div>
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-1.5 text-emerald-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        <span>No Telemetry Collected</span>
+                    </div>
+                    <a href="https://github.com/kapasia628/inputtest" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

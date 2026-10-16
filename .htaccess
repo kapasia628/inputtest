@@ -12,6 +12,12 @@ RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$ [NC]
 RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
+
+# 2. Rewrite clean extensionless URLs to .html files
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html [L]
+
 # Custom 404 page redirection
 ErrorDocument 404 /index.html
 

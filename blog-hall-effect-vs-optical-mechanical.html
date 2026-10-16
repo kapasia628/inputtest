@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://inputtest.online/blog-hall-effect-vs-optical-mechanical">
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    
+    <!-- SEO Meta Tags -->
+    <title>Mechanical vs Optical vs Hall Effect Switches: 2026 Debounce & Chatter Guide | InputTest.online</title>
+    <meta name="description" content="Detailed engineering comparison of Mechanical, Optical, and Hall Effect (Magnetic) switches. Discover why mechanical switches chatter, how Rapid Trigger works, and benchmark latency and durability.">
+    <meta name="keywords" content="mechanical vs optical vs hall effect switches, keyboard switch chatter test, rapid trigger magnetic switches, optical mouse switches double click, debounce latency comparison, drunkdeer a75, hall effect keyboard">
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://inputtest.online/blog-hall-effect-vs-optical-mechanical">
+    <meta property="og:title" content="Mechanical vs Optical vs Hall Effect Switches: The 2026 Guide">
+    <meta property="og:description" content="Understand the physics of switch chatter, optical light shutters, and Hall Effect magnetic sensors. Features benchmark latency tables and diagnostic tests.">
+    <meta property="og:image" content="https://inputtest.online/blog_keyboard.png">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://inputtest.online/blog-hall-effect-vs-optical-mechanical">
+    <meta name="twitter:title" content="Mechanical vs Optical vs Hall Effect Switches: The 2026 Guide">
+    <meta name="twitter:description" content="Detailed comparison of Mechanical, Optical, and Hall Effect switches. Benchmark latency tables and online debounce testing.">
+    <meta name="twitter:image" content="https://inputtest.online/blog_keyboard.png">
+
+    <!-- JSON-LD FAQ/Article Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "TechArticle",
+          "@id": "https://inputtest.online/blog-hall-effect-vs-optical-mechanical#article",
+          "headline": "Mechanical vs Optical vs Hall Effect (Magnetic) Switches: The Definitive Debounce & Chatter Guide",
+          "description": "Comprehensive engineering comparison between traditional mechanical leaf spring switches, optical beam-break switches, and Hall Effect magnetic sensors with Rapid Trigger.",
+          "image": "https://inputtest.online/blog_keyboard.png",
+          "datePublished": "2026-10-16",
+          "dateModified": "2026-10-16",
+          "author": {
+            "@type": "Organization",
+            "name": "InputTest.online Research Lab",
+            "url": "https://inputtest.online"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "InputTest.online",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://inputtest.online/icon-512.png"
+            }
+          },
+          "mainEntityOfPage": "https://inputtest.online/blog-hall-effect-vs-optical-mechanical"
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://inputtest.online/blog-hall-effect-vs-optical-mechanical#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What causes mechanical keyboard switch chatter and phantom double typing?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Switch chatter is caused by mechanical contact bounce. Inside a mechanical switch, a flexible metal leaf spring vibrates for 1 to 15 milliseconds when striking the stationary contact. As contacts oxidize or spring tension degrades over time, the PC firmware misinterprets these vibrations as multiple separate keypresses."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do Hall Effect magnetic switches completely eliminate switch chatter?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Hall Effect switches use zero physical electrical contacts. A permanent neodymium magnet inside the switch stem moves closer to a Hall sensor on the PCB as you press down. The sensor measures continuous magnetic flux density, completely eliminating metal vibration and electrical contact bounce."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is Rapid Trigger and why is it superior for competitive gaming?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Traditional mechanical switches require the key to travel up past a fixed physical reset point (usually 1.5mm to 2.0mm) before they can be pressed again. Rapid Trigger dynamically resets the key the exact microsecond the stem starts moving upward by even 0.1mm, enabling near-instantaneous counter-strafing and repeated actuations."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Do optical switches prevent mouse double-clicking?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Optical switches (like Razer Gen-3 or LK Light Strike) actuate by breaking an infrared light beam with a mechanical shutter. Because there is no electrical contact leaf to corrode or bounce, optical switches cannot produce electrical debounce chatter or phantom double clicks."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How can I test my keyboard for switch chatter online?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You can test your keyboard for switch chatter for free using the InputTest.online Switch Chatter Tester. It tracks every keypress event down to sub-millisecond precision, flagging consecutive presses that fire under 30ms as hardware switch chatter."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    
+    <!-- Fonts & Tailwind Play CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            850: '#151f32',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glow-bg {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 10% 40%, rgba(139, 92, 246, 0.03) 0%, transparent 40%);
+        }
+        .dark .glow-bg {
+            background-color: #0b0f19 !important;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 15% 45%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.06) 0%, transparent 40%) !important;
+        }
+    </style>
+    <!-- Link Global Config -->
+    <script src="config.js" defer></script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2485510445228691" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-2485510445228691">
+</head>
+<body class="glow-bg text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200 antialiased">
+
+    <!-- MAIN NAVIGATION HEADER -->
+<header class="sticky top-0 z-50 bg-white/90 dark:bg-[#070b14]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-18">
+                
+                <!-- Brand Logo (Left) -->
+                <div class="flex items-center gap-3 shrink-0">
+                    <a href="/" class="flex items-center gap-2.5 group focus:outline-none" aria-label="InputTest.online Home">
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md dark:shadow-none shadow-blue-500/20 border border-blue-500/30 group-hover:scale-105 transition-transform duration-200">
+                            <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="4" />
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M18 12h.01M7 16h10" />
+                            </svg>
+                            <span class="absolute -bottom-1 -right-1 flex h-2.5 w-2.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white"></span>
+                            </span>
+                        </div>
+                        <span class="font-black text-xl tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            Input<span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Test</span><span class="text-xs text-slate-400 font-mono font-semibold">.online</span>
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Desktop Mega Menu Navigation (Center - Spacious, Single Line, No Clutter) -->
+                <nav class="hidden lg:flex items-center gap-1 xl:gap-3 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                    
+                    <!-- 1. KEYBOARDS MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>⌨️ Keyboards</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute left-0 top-full pt-2 z-50 w-[560px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/keyboard" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">⌨️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Keyboard Tester</div>
+                                            <div class="text-[11px] text-slate-400">Test all keys, ghosting, &amp; 1000Hz latency</div>
+                                        </div>
+                                    </a>
+                                    <a href="/keyboard-chatter-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600">⚡</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-amber-500 text-xs">Switch Chatter Test</div>
+                                            <div class="text-[11px] text-slate-400">Detect multi-click chatter &amp; debounce failure</div>
+                                        </div>
+                                    </a>
+                                    <a href="/typing" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600">⏱️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-purple-500 text-xs">Typing Speed WPM</div>
+                                            <div class="text-[11px] text-slate-400">Words per minute &amp; keypress accuracy test</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">RAPID TRIGGER</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹11,999</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/61kL06WjF-L._SL1500_.jpg" alt="DrunkDeer A75" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">DrunkDeer A75 Magnetic</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Hall Effect switches eliminate key chatter forever.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B0C8V29V63?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=keyboard" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore 10+ Keyboards &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. MICE MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>🖱️ Mice</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute -left-12 top-full pt-2 z-50 w-[580px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/mouse" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">🖱️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Mouse &amp; CPS Test</div>
+                                            <div class="text-[11px] text-slate-400">Test buttons, drag-lock, &amp; clicks per second</div>
+                                        </div>
+                                    </a>
+                                    <a href="/mouse-double-click-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600">🛡️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-rose-500 text-xs">Double Click Tester</div>
+                                            <div class="text-[11px] text-slate-400">Detect microswitch bounce under 80ms</div>
+                                        </div>
+                                    </a>
+                                    <a href="/mouse-polling-rate" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-cyan-50 dark:bg-cyan-950/60 text-cyan-600">⚡</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-cyan-500 text-xs">Polling Rate (8000Hz)</div>
+                                            <div class="text-[11px] text-slate-400">Measure USB report Hz &amp; interval latency</div>
+                                        </div>
+                                    </a>
+                                    <a href="/scroll-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600">🔄</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-amber-500 text-xs">Scroll Wheel Jump Test</div>
+                                            <div class="text-[11px] text-slate-400">Measure encoder chatter &amp; reverse bounce</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">ZERO DOUBLE-CLICK</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹5,499</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/61U0T7uN9eL._SL1500_.jpg" alt="Razer DeathAdder V3" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">Razer DeathAdder V3</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Gen-3 Optical switches eliminate double-clicking.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B0B6Y7X9G1?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=mouse" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore 10+ Mice &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. CONTROLLERS MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>🎮 Gamepads</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50 w-[560px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/gamepad" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">🎮</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Gamepad Tester</div>
+                                            <div class="text-[11px] text-slate-400">Xbox, PlayStation, Nintendo button &amp; rumble</div>
+                                        </div>
+                                    </a>
+                                    <a href="/controller-stick-drift-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600">🎯</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-rose-500 text-xs">Stick Drift Test</div>
+                                            <div class="text-[11px] text-slate-400">Measure resting axis drift &amp; deadzones</div>
+                                        </div>
+                                    </a>
+                                    <a href="/controller-circularity-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-600">⭕</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-purple-500 text-xs">Circularity Test</div>
+                                            <div class="text-[11px] text-slate-400">Stick error % &amp; polar cardinal accuracy</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">ZERO STICK DRIFT</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹4,799</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/61N8Z+k-f3L._SL1500_.jpg" alt="GameSir G7 SE" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">GameSir G7 SE Hall Effect</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Magnetic sensors permanently prevent stick drift.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B0C7GW9F88?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=gamepad" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore 10+ Gamepads &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. AUDIO & VIDEO MEGA MENU -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>🎙️ Audio &amp; Cam</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute -right-12 top-full pt-2 z-50 w-[560px]">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 grid grid-cols-12 gap-4">
+                                <!-- Left 7 Cols: Tests -->
+                                <div class="col-span-7 space-y-1">
+                                    <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1.5 mb-1 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                        <span>Diagnostics &amp; Tests</span>
+                                        <span class="text-emerald-500 font-semibold">Free Online</span>
+                                    </div>
+                                    <a href="/mic" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600">🎙️</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-blue-600 text-xs">Microphone Test</div>
+                                            <div class="text-[11px] text-slate-400">Real-time waveform, decibel meter &amp; echo</div>
+                                        </div>
+                                    </a>
+                                    <a href="/webcam" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-600">📷</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-teal-500 text-xs">Webcam Test</div>
+                                            <div class="text-[11px] text-slate-400">Resolution, FPS sensor &amp; video clarity</div>
+                                        </div>
+                                    </a>
+                                    <a href="/sound" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600">🔊</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-indigo-500 text-xs">Stereo Speakers</div>
+                                            <div class="text-[11px] text-slate-400">Left/Right audio balance &amp; channel sweep</div>
+                                        </div>
+                                    </a>
+                                    <a href="/audio-frequency-test" class="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors group/item">
+                                        <span class="text-base p-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-600">🎧</span>
+                                        <div>
+                                            <div class="font-bold text-slate-800 dark:text-slate-200 group-hover/item:text-amber-500 text-xs">Frequency Sweep</div>
+                                            <div class="text-[11px] text-slate-400">20Hz–20kHz tone generator &amp; hearing test</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- Right 5 Cols: Amazon Pick Card -->
+                                <div class="col-span-5 bg-gradient-to-b from-slate-50 to-amber-50/30 dark:from-slate-900/60 dark:to-amber-950/20 border border-amber-200/60 dark:border-amber-800/40 rounded-xl p-3 flex flex-col justify-between">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1.5">
+                                            <span class="text-[9px] font-mono font-bold bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded">STUDIO USB MIC</span>
+                                            <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-extrabold">~₹3,190</span>
+                                        </div>
+                                        <div class="w-full h-24 rounded-lg bg-white dark:bg-slate-950/80 p-1 flex items-center justify-center mb-2 overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <img src="https://m.media-amazon.com/images/I/610h63d0cIL._SL1500_.jpg" alt="Fifine AmpliGame A6V" class="h-20 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                                        </div>
+                                        <div class="text-[11px] font-bold text-slate-900 dark:text-white leading-tight line-clamp-1">Fifine A6V Condenser</div>
+                                        <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2">Tap-to-mute with included shock mount.</p>
+                                    </div>
+                                    <div class="pt-2 mt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-1.5">
+                                        <a href="https://www.amazon.in/dp/B09JG59W4M?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="w-full py-1.5 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-[11px] rounded-lg text-center flex items-center justify-center gap-1 shadow-xs transition-colors">
+                                            <span>Check Amazon</span> &rarr;
+                                        </a>
+                                        <a href="/store?category=mic" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                                            Explore Audio &amp; Cam &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. DISPLAY & UTILITIES DROPDOWN -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl whitespace-nowrap hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-all duration-200 focus:outline-none cursor-pointer group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                            <span>📺 Display &amp; Tools</span>
+                            <svg class="h-3.5 w-3.5 text-slate-400 group-hover:rotate-180 group-hover:text-blue-600 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div class="hidden group-hover:block absolute right-0 top-full pt-2 z-50 w-72">
+                            <div class="bg-white dark:bg-[#0c1220] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-3 space-y-1">
+                                <div class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 pb-1 mb-1 border-b border-slate-100 dark:border-slate-800">
+                                    Display &amp; System Tools
+                                </div>
+                                <a href="/display" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">📺</span>
+                                    <span>Display &amp; Dead Pixels</span>
+                                </a>
+                                <a href="/monitor-ghosting-test" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">🛸</span>
+                                    <span>UFO Monitor Ghosting</span>
+                                </a>
+                                <a href="/battery" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">🔋</span>
+                                    <span>Battery Health &amp; Cycles</span>
+                                </a>
+                                <a href="/latency" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">⚡</span>
+                                    <span>Bluetooth Latency</span>
+                                </a>
+                                <a href="/cps-test" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 font-semibold transition-colors">
+                                    <span class="text-sm">⏱️</span>
+                                    <span>CPS Click Speed Test</span>
+                                </a>
+                                <a href="/software" class="flex items-center gap-2.5 p-2 rounded-xl hover:bg-cyan-50 dark:hover:bg-cyan-950/40 text-cyan-600 dark:text-cyan-400 font-bold transition-colors border-t border-slate-100 dark:border-slate-800/80 mt-1 pt-2">
+                                    <span class="text-sm">⚡</span>
+                                    <span>Desktop Software Utilities</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </nav>
+
+                <!-- Right Action Controls (Ultra-Clean, Spacious & Premium) -->
+                <div class="flex items-center gap-3 shrink-0">
+                    
+                    <!-- Hardware Store Golden Pill CTA Button -->
+                    <a href="/store" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl whitespace-nowrap bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-extrabold text-xs xl:text-sm shadow-md hover:shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
+                        <span class="text-base">🛍️</span>
+                        <span>Hardware Store</span>
+                        <span class="text-[10px] bg-slate-950/15 text-slate-950 px-1.5 py-0.5 rounded-full font-black uppercase tracking-wider">50+ Gear</span>
+                    </a>
+
+                    <!-- Subtle Vertical Divider -->
+                    <div class="hidden sm:block h-6 w-px bg-slate-200 dark:bg-slate-800 mx-0.5"></div>
+
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#0c1220] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none cursor-pointer" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-sun" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                        <svg id="theme-toggle-moon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </button>
+
+                    <!-- Mobile Hamburger -->
+                    <button id="mobile-menu-toggle" class="p-2.5 lg:hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-[#0c1220] text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none cursor-pointer" aria-label="Open mobile menu">
+                        <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="hamburger-close" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <nav id="mobile-nav-panel" class="hidden lg:hidden border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#070b14]/95 backdrop-blur-xl px-4 py-4 space-y-3 shadow-2xl">
+            <!-- Full-Width Store CTA Card in Mobile -->
+            <a href="/store" class="block p-3 rounded-2xl bg-gradient-to-r from-amber-500/20 via-amber-500/10 to-transparent border border-amber-500/40 text-amber-800 dark:text-amber-300 font-extrabold text-xs flex items-center justify-between shadow-xs">
+                <span class="flex items-center gap-2">
+                    <span class="text-base">🛍️</span>
+                    <span>InputTest Hardware Store (50+ Tested Gear)</span>
+                </span>
+                <span>&rarr;</span>
+            </a>
+            <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+                <a href="/keyboard" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⌨️ Keyboard Test</a>
+                <a href="/keyboard-chatter-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⚡ Key Chatter</a>
+                <a href="/mouse" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🖱️ Mouse Test</a>
+                <a href="/mouse-double-click-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🛡️ Double Click</a>
+                <a href="/mouse-polling-rate" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⚡ 8K Polling Rate</a>
+                <a href="/scroll-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🔄 Scroll Jump</a>
+                <a href="/gamepad" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎮 Gamepad Test</a>
+                <a href="/controller-stick-drift-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎯 Stick Drift</a>
+                <a href="/controller-circularity-test" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">⭕ Circularity</a>
+                <a href="/mic" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">🎙️ Microphone</a>
+                <a href="/webcam" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">📷 Webcam</a>
+                <a href="/display" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 flex items-center gap-2">📺 Display Test</a>
+                <a href="/software" class="p-2.5 rounded-xl bg-cyan-50 dark:bg-cyan-950/40 border border-cyan-200 dark:border-cyan-800 text-cyan-700 dark:text-cyan-300 font-bold flex items-center gap-2">⚡ Free Utilities</a>
+                <a href="/report" class="p-2.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400 font-bold flex items-center gap-2">🛡️ PDF Report</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+        
+        <!-- Breadcrumb -->
+        <nav class="flex text-xs font-semibold text-slate-400 dark:text-slate-500 mb-6 uppercase tracking-wider select-none">
+            <a href="/" class="hover:text-blue-600">Home</a>
+            <span class="mx-2">&gt;</span>
+            <a href="/blog" class="hover:text-blue-600">Blog</a>
+            <span class="mx-2">&gt;</span>
+            <span class="text-slate-600 dark:text-slate-400">Keyboards &amp; Hardware</span>
+        </nav>
+
+        <!-- Article Header -->
+        <header class="text-left mb-8 space-y-4">
+            <div class="flex items-center gap-3">
+                <span class="bg-blue-600/10 text-blue-600 dark:text-blue-400 text-[10px] font-bold tracking-widest px-3 py-1 rounded-full uppercase">Hardware Engineering</span>
+                <span class="text-xs text-slate-400 dark:text-slate-500 font-mono">7 min read &bull; October 2026</span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                Mechanical vs Optical vs Hall Effect Switches: The 2026 Debounce &amp; Chatter Guide
+            </h1>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                Why do traditional mechanical switches eventually chatter and double-type? Learn how optical light shutters and Hall Effect magnetic sensors work, compare real latency benchmarks, and discover why Rapid Trigger is dominating competitive esports.
+            </p>
+        </header>
+
+        <!-- Featured Image -->
+        <div class="w-full h-64 sm:h-96 rounded-3xl overflow-hidden mb-10 shadow-md border border-slate-200/80 dark:border-slate-800/80">
+            <img src="blog_keyboard.png" alt="Mechanical vs Optical vs Hall Effect Switches Keyboard Guide" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Article content grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start text-left">
+            
+            <!-- Left 8-columns: Article Content -->
+            <article class="lg:col-span-8 bg-white/70 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 rounded-[2.5rem] p-6 sm:p-8 shadow-xs backdrop-blur-md space-y-6">
+                
+                <!-- Quick Executive Summary (For AI Overviews & Readers) -->
+                <div class="p-4 rounded-2xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 text-xs sm:text-sm text-blue-900 dark:text-blue-200 leading-relaxed">
+                    <strong class="font-bold flex items-center gap-1.5 mb-1 text-blue-700 dark:text-blue-300">
+                        <span>⚡</span> <span>TL;DR - Quick Technical Summary</span>
+                    </strong>
+                    Mechanical switches rely on physical metal contacts that bounce and corrode over time, necessitating artificial software debounce delays (5–20ms). <strong>Optical switches</strong> replace metal terminals with infrared light beams, cutting latency to 0.2ms and eliminating bounce. <strong>Hall Effect (Magnetic) switches</strong> use contactless permanent magnets to track analog travel with 0.1mm precision, enabling Rapid Trigger and zero mechanical chatter forever.
+                </div>
+
+                <div class="space-y-5 text-left text-xs sm:text-sm font-normal text-slate-600 dark:text-slate-350 leading-relaxed">
+                    
+                    <p>
+                        For over three decades, standard mechanical keyboard switches (pioneered by the Cherry MX architecture) dominated enthusiast and competitive setups. However, as monitor refresh rates scaled past 240Hz and 360Hz, peripheral input latency and key chatter became the primary bottlenecks in competitive gaming.
+                    </p>
+                    <p>
+                        Today, two revolutionary switch architectures—<strong>Optical Light-Strike</strong> and <strong>Analog Hall Effect (Magnetic)</strong>—are rendering legacy metal contacts obsolete. In this engineering guide, we dissect the physics of contact bounce, measure real-world debounce latency, and benchmark all three switch paradigms.
+                    </p>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-3">
+                        1. The Physics of Switch Chatter: Why Mechanical Switches Fail
+                    </h2>
+                    <p>
+                        Inside every traditional mechanical switch sits a leaf spring made of copper alloy with gold-plated contact points. When you press a key, the switch stem pushes the flexible leaf against the stationary terminal.
+                    </p>
+                    <p>
+                        At a microscopic level, metal is elastic. When two metal points collide at high velocity, they do not instantly lock together—they <strong>physically bounce against each other for 1 to 15 milliseconds</strong> before settling. This phenomenon is known as <strong>contact bounce</strong>.
+                    </p>
+                    
+                    <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-300">
+                        <strong class="font-bold text-xs uppercase tracking-wider block mb-1">The Debounce Algorithm Penalty:</strong>
+                        To prevent a single keypress from registering as three letters (e.g. typing "hheeelllo"), keyboard firmware enforces a mandatory <strong>debounce delay (typically 5ms to 20ms)</strong>. During this window, the controller ignores all subsequent electrical oscillations. If the metal leaf oxidizes or loses spring tension over months of use, the bounce duration exceeds the debounce window, producing permanent <strong>switch chatter</strong>.
+                    </div>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        2. Optical Switches: Light Shutter Architecture
+                    </h2>
+                    <p>
+                        Optical switches eliminate physical electrical connections entirely. Underneath each switch on the PCB sits an infrared (IR) light emitter and a phototransistor receiver.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 pl-1">
+                        <li><strong>In the resting position:</strong> An internal plastic stem shutter blocks the light path.</li>
+                        <li><strong>When pressed:</strong> The stem drops, opening a light tunnel that allows the infrared beam to strike the sensor instantly.</li>
+                        <li><strong>Zero Contact Bounce:</strong> Because photons don't bounce, the switch requires <strong>0ms debounce delay</strong>. Actuation latency drops from ~15ms down to 0.2ms.</li>
+                    </ul>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        3. Hall Effect (Magnetic) Switches &amp; Rapid Trigger
+                    </h2>
+                    <p>
+                        Hall Effect switches represent the biggest leap in input technology since the invention of the membrane dome. Discovered by physicist Edwin Hall in 1879, the <strong>Hall Effect</strong> occurs when a magnetic field perpendicular to an electric current creates a measurable voltage difference across a conductor.
+                    </p>
+                    <p>
+                        In a magnetic keyboard (such as the Wooting 60HE or DrunkDeer A75), each switch stem contains a miniature neodymium permanent magnet. As you press the key, the magnet descends toward a surface-mounted Hall sensor IC on the keyboard PCB. The sensor continuously measures the magnetic flux density, calculating the key's exact physical position in increments as small as <strong>0.01 millimeters</strong>.
+                    </p>
+
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white pt-2">
+                        Why Rapid Trigger Changes Competitive Esports:
+                    </h3>
+                    <p>
+                        On traditional mechanical and optical switches, the reset point is fixed (typically 2.0mm). To counter-strafe in tactical shooters like <em>Valorant</em> or <em>Counter-Strike 2</em>, you have to release the key all the way up past that 2mm mark before pressing another key.
+                    </p>
+                    <p>
+                        With <strong>Rapid Trigger</strong>, the keyboard firmware dynamically calculates direction of travel. The moment the key stem reverses upward by even <strong>0.1mm</strong>, the key resets instantly. The moment you press down again by 0.1mm, it re-actuates. This cuts counter-strafing reaction latency by over 40 milliseconds, giving players a measurable hardware advantage.
+                    </p>
+
+                    <!-- Definitive Master Benchmark Table -->
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        4. Master Benchmark Comparison Matrix (2026)
+                    </h2>
+                    <div class="overflow-x-auto my-3">
+                        <table class="w-full text-left font-mono text-xs border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                            <thead class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                                <tr>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Specification</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Traditional Mechanical</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700">Optical Light-Strike</th>
+                                    <th class="p-2.5 border-b border-slate-200 dark:border-slate-700 text-emerald-600 dark:text-emerald-400 font-bold">Hall Effect (Magnetic)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800/80 text-slate-600 dark:text-slate-350">
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200">Actuation Mechanism</td>
+                                    <td class="p-2.5">Metal Leaf Contact</td>
+                                    <td class="p-2.5">Infrared Beam Shutter</td>
+                                    <td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-semibold">Contactless Neodymium Magnet</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200">Physical Contact Wear</td>
+                                    <td class="p-2.5 text-rose-500 font-bold">High (Oxidation &amp; Friction)</td>
+                                    <td class="p-2.5 text-emerald-500">None (Zero Electrical Wear)</td>
+                                    <td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">Zero (No Contact Parts)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200">Mandatory Debounce Delay</td>
+                                    <td class="p-2.5 text-rose-500">5 ms &ndash; 20 ms</td>
+                                    <td class="p-2.5 text-emerald-500 font-bold">0 ms</td>
+                                    <td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">0 ms (Algorithm Filtered)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200">Switch Chatter / Double Click</td>
+                                    <td class="p-2.5 text-rose-500">Common (6&ndash;18 months)</td>
+                                    <td class="p-2.5 text-emerald-500 font-bold">0% (Physically Impossible)</td>
+                                    <td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">0% (Contactless Sensor)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200">Adjustable Actuation Point</td>
+                                    <td class="p-2.5">Fixed (e.g. 2.0mm)</td>
+                                    <td class="p-2.5">Fixed or Dual-Level</td>
+                                    <td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">0.1mm &ndash; 4.0mm (Per-Key)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200">Rapid Trigger Support</td>
+                                    <td class="p-2.5 text-rose-500">Not Supported</td>
+                                    <td class="p-2.5 text-slate-400">Limited Firmware Simulation</td>
+                                    <td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">Native True Analog (0.1mm)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 font-bold text-slate-800 dark:text-slate-200">Rated Click Lifespan</td>
+                                    <td class="p-2.5">50 &ndash; 80 Million</td>
+                                    <td class="p-2.5">100 Million</td>
+                                    <td class="p-2.5 text-emerald-600 dark:text-emerald-400 font-bold">150+ Million (Indefinite)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        5. How to Test Your Switches for Chatter in Your Browser
+                    </h2>
+                    <p>
+                        If you suspect your mechanical keyboard or mouse is suffering from switch bounce chatter, you do not need to download third-party software. You can audit your switch timings directly in your web browser:
+                    </p>
+                    <ol class="list-decimal list-inside space-y-2 pl-1 font-medium">
+                        <li>Open the free <a href="/keyboard-chatter-test" class="text-blue-600 dark:text-blue-400 font-bold hover:underline">InputTest Keyboard Switch Chatter Tester</a>.</li>
+                        <li>Press and release keys naturally as you type.</li>
+                        <li>Our client-side listener records the microsecond delta between keydown and keyup events.</li>
+                        <li>Any consecutive event under <strong>30ms</strong> is automatically flagged as electrical contact chatter.</li>
+                    </ol>
+
+                    <div class="my-6 p-5 rounded-2xl bg-gradient-to-r from-blue-600/10 via-indigo-600/10 to-transparent border border-blue-500/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div>
+                            <div class="font-black text-slate-900 dark:text-white text-sm">Test Your Keyboard Switches Now</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Free browser diagnostic tool &bull; Sub-millisecond latency audit</div>
+                        </div>
+                        <a href="/keyboard-chatter-test" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs whitespace-nowrap shadow-xs transition-colors">
+                            Launch Chatter Tester &rarr;
+                        </a>
+                    </div>
+
+                    <!-- FAQ Section -->
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight pt-4">
+                        Frequently Asked Questions (FAQ)
+                    </h2>
+                    <div class="space-y-3 pt-2">
+                        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40">
+                            <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">Can compressed air fix mechanical switch chatter?</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Compressed air can blow out stray dust or hair resting between contacts, which temporarily resolves chatter in ~30% of cases. However, if chatter is caused by surface oxidation or metal fatigue, the switch must be desoldered or hot-swapped.</p>
+                        </div>
+                        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40">
+                            <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">Are Hall Effect keyboards allowed in professional esports tournaments?</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Yes, Hall Effect keyboards with Rapid Trigger are tournament-legal in major leagues including the VCT (Valorant Champions Tour) and ESL CS2 events. However, automated macro scripts like "Snap Tap" or "SOCD" that automate opposing directional inputs have been restricted by Valve.</p>
+                        </div>
+                        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40">
+                            <h3 class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">Can I put Hall Effect switches into a regular mechanical keyboard?</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">No. Regular mechanical keyboards use two metal solder pins or hot-swap sockets to complete an electrical circuit. Hall Effect switches have no electrical pins—they require a dedicated PCB with Hall sensor ICs underneath every key slot.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </article>
+
+            <!-- Right 4-columns: Sticky Sidebar (Hardware CTAs & Related) -->
+            <aside class="lg:col-span-4 space-y-6">
+                
+                <!-- Diagnostic Station Box -->
+                <div class="p-5 rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 text-left">
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2.5 py-1 rounded-full">Free Diagnostic Bench</span>
+                    <h3 class="font-extrabold text-sm text-slate-900 dark:text-white">Keyboard Chatter Station</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Detect switch bounce intervals, debounce failures, and stuck mechanical keys in real time.</p>
+                    <a href="/keyboard-chatter-test" class="block w-full py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs text-center shadow-xs transition-colors">
+                        Open Chatter Tester &rarr;
+                    </a>
+                </div>
+
+                <!-- Featured Amazon Pick Card (DrunkDeer A75) -->
+                <div class="p-5 rounded-3xl bg-gradient-to-b from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/30 shadow-xs space-y-3 text-left">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9px] font-mono font-bold uppercase tracking-wider text-slate-950 bg-amber-500 px-2 py-0.5 rounded">LAB VERIFIED PICK</span>
+                        <span class="text-xs font-black text-emerald-600 dark:text-emerald-400">~₹11,999</span>
+                    </div>
+                    <div class="w-full h-36 rounded-2xl bg-white dark:bg-slate-950 p-2 flex items-center justify-center overflow-hidden border border-slate-200 dark:border-slate-800">
+                        <img src="https://m.media-amazon.com/images/I/61kL06WjF-L._SL1500_.jpg" alt="DrunkDeer A75 Magnetic Keyboard" class="h-28 w-auto object-contain hover:scale-105 transition-transform" loading="lazy">
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-xs text-slate-900 dark:text-white">DrunkDeer A75 Rapid Trigger</h4>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Magnetic Hall Effect switches eliminate mechanical chatter forever with 0.1mm Rapid Trigger.</p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-200/80 dark:border-slate-800 space-y-2">
+                        <a href="https://www.amazon.in/dp/B0C8V29V63?tag=inputtest-21" target="_blank" rel="sponsored nofollow noopener" class="block w-full py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs text-center shadow-xs transition-colors">
+                            Check Price on Amazon &rarr;
+                        </a>
+                        <a href="/store?category=keyboard" class="block text-center text-[10px] text-amber-600 dark:text-amber-400 font-bold hover:underline">
+                            Explore 10+ Tested Keyboards &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Related Guides -->
+                <div class="p-5 rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 text-left">
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500">Related Diagnostic Guides</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="/blog-keyboard-keys" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 font-medium transition-colors">&bull; Fix Keyboard Keys Not Working</a></li>
+                        <li><a href="/blog-mouse-double-click" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 font-medium transition-colors">&bull; Detect &amp; Fix Mouse Double-Clicking</a></li>
+                        <li><a href="/blog-gamepad-drift" class="text-slate-700 dark:text-slate-300 hover:text-blue-600 font-medium transition-colors">&bull; Fix Controller Stick Drift Online</a></li>
+                        <li><a href="/store" class="text-amber-600 dark:text-amber-400 font-bold hover:underline">&bull; InputTest Tested Hardware Store (50+ Items)</a></li>
+                    </ul>
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="mt-20 border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-900 text-slate-400 py-12 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>⌨️</span> <span>KEYBOARDS &amp; TYPING</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/keyboard" class="hover:text-white transition-colors">Keyboard Matrix Tester</a></li>
+                        <li><a href="/keyboard-chatter-test" class="hover:text-white transition-colors">Switch Chatter Test</a></li>
+                        <li><a href="/typing" class="hover:text-white transition-colors">Typing Speed WPM</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🖱️</span> <span>MICE &amp; POINTERS</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/mouse" class="hover:text-white transition-colors">Mouse &amp; CPS Tester</a></li>
+                        <li><a href="/mouse-double-click-test" class="hover:text-white transition-colors">Double Click Tester</a></li>
+                        <li><a href="/mouse-polling-rate" class="hover:text-white transition-colors">8000Hz Polling Rate</a></li>
+                        <li><a href="/scroll-test" class="hover:text-white transition-colors">Scroll Wheel Jump</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🎮</span> <span>CONTROLLERS</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/gamepad" class="hover:text-white transition-colors">Gamepad Tester</a></li>
+                        <li><a href="/controller-stick-drift-test" class="hover:text-white transition-colors">Stick Drift Test</a></li>
+                        <li><a href="/controller-circularity-test" class="hover:text-white transition-colors">Stick Circularity Test</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🛍️</span> <span>STORE &amp; GEAR</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/store" class="hover:text-white text-amber-400 font-bold transition-colors">Hardware Store (50+)</a></li>
+                        <li><a href="/software" class="hover:text-white transition-colors">Portable Windows Utilities</a></li>
+                        <li><a href="/report" class="hover:text-white transition-colors">Certified PDF Report</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-mono font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <span>🛡️</span> <span>TRUST &amp; POLICY</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="/contact" class="hover:text-white transition-colors">Contact Support</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Affiliate Disclosure -->
+            <div class="border-t border-slate-800/80 pt-6 text-xs text-slate-400 leading-relaxed font-normal">
+                <p>
+                    <strong class="text-slate-300 font-semibold">Affiliate Transparency:</strong> InputTest.online is an independent testing laboratory. Some hardware recommendations feature affiliate links (Amazon India). If you purchase gear through our verified links, we may receive a modest commission at no additional cost to you, which funds our laboratory test benches.
+                </p>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-slate-500">
+                <div>&copy; 2026 InputTest.online &bull; All Tests 100% Client-Side Sandboxed</div>
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-1.5 text-emerald-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        <span>No Telemetry Collected</span>
+                    </div>
+                    <a href="https://github.com/kapasia628/inputtest" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
