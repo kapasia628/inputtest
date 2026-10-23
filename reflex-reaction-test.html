@@ -713,8 +713,8 @@
             </div>
 
             <!-- 5-ROUND BREAKDOWN TABLE -->
-            <div class="p-6 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800">
-                <div class="flex items-center justify-between mb-3 text-xs font-bold text-slate-400 uppercase tracking-wider">
+            <div class="p-6 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+                <div class="flex items-center justify-between text-xs font-bold text-slate-400 uppercase tracking-wider">
                     <span>Round-by-Round Log</span>
                     <span id="logSummary">5 Trials Complete a Full Diagnostic</span>
                 </div>
@@ -724,6 +724,26 @@
                     <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono font-bold text-slate-400">R3: --</div>
                     <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono font-bold text-slate-400">R4: --</div>
                     <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono font-bold text-slate-400">R5: --</div>
+                </div>
+
+                <!-- Viral Gamer Share Card Banner (Revealed after 5 rounds) -->
+                <div id="shareBanner" class="hidden pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-blue-500/10 p-4 rounded-xl border border-emerald-500/30">
+                    <div class="text-center sm:text-left">
+                        <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5 justify-center sm:justify-start">
+                            <span>🏆</span> Verified Session Complete!
+                        </span>
+                        <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
+                            Show off your reflex speed to friends on Discord, Reddit, or Twitter.
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-2 w-full sm:w-auto">
+                        <button id="btnDownloadCard" class="flex-1 sm:flex-initial px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-slate-950 font-black text-xs shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                            <span>📸</span> <span>Download Gamer Pass (PNG)</span>
+                        </button>
+                        <button id="btnCopyDiscord" class="px-3.5 py-2 rounded-xl bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white font-bold text-xs border border-slate-700 transition-colors flex items-center gap-1.5 cursor-pointer" title="Copy Discord-formatted text">
+                            <span>📋</span> <span id="copyBtnText">Copy Text</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -841,7 +861,70 @@
             </div>
         </div>
 
-    </main>
+    
+        <!-- SMART NEXT RECOMMENDED TESTS HUB -->
+        <section class="mt-12 mb-6 p-6 sm:p-8 bg-gradient-to-br from-slate-50 via-slate-100/50 to-blue-50/30 dark:from-slate-900/80 dark:via-slate-900/40 dark:to-blue-950/20 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 shadow-xs">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-slate-200/80 dark:border-slate-800">
+                <div>
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-full">Complete Your Hardware Diagnostic Suite</span>
+                    <h3 class="text-xl font-extrabold text-slate-900 dark:text-white mt-1.5 flex items-center gap-2">
+                        <span>⚡</span> Next Recommended Tests
+                    </h3>
+                </div>
+                <div class="text-xs text-slate-500 font-medium">
+                    Complementary benchmarks to audit your setup
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+                <a href="/mouse-polling-rate" class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800/90 hover:border-blue-500/80 hover:shadow-md transition-all duration-200 group flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl p-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/80">⚡</span>
+                            <span class="text-[10px] font-mono font-bold text-slate-400 group-hover:text-blue-500 transition-colors uppercase tracking-wider">Mouse</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">8000Hz Polling Rate</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Measure real USB report rate & microsecond intervals.</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-bold text-blue-600 dark:text-blue-400">
+                        <span>Launch Diagnostic</span>
+                        <span class="group-hover:translate-x-1 transition-transform duration-200">&rarr;</span>
+                    </div>
+                </a>
+
+                <a href="/keyboard-polling-rate" class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800/90 hover:border-blue-500/80 hover:shadow-md transition-all duration-200 group flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl p-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/80">⚡</span>
+                            <span class="text-[10px] font-mono font-bold text-slate-400 group-hover:text-blue-500 transition-colors uppercase tracking-wider">Keyboard</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Keyboard Polling Rate</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Measure USB interrupt frequency & scan intervals.</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-bold text-blue-600 dark:text-blue-400">
+                        <span>Launch Diagnostic</span>
+                        <span class="group-hover:translate-x-1 transition-transform duration-200">&rarr;</span>
+                    </div>
+                </a>
+
+                <a href="/audio-latency-test" class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800/90 hover:border-blue-500/80 hover:shadow-md transition-all duration-200 group flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl p-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/80">⏱️</span>
+                            <span class="text-[10px] font-mono font-bold text-slate-400 group-hover:text-blue-500 transition-colors uppercase tracking-wider">Audio</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Audio Delay & Latency</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Measure millisecond audio-visual desync delay.</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-bold text-blue-600 dark:text-blue-400">
+                        <span>Launch Diagnostic</span>
+                        <span class="group-hover:translate-x-1 transition-transform duration-200">&rarr;</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+</main>
 
     <!-- Footer -->
     <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-10 mt-12 transition-colors">
@@ -1026,6 +1109,17 @@
                     : 'Click anywhere to continue to Round ' + (sessionScores.length + 1);
 
                 if (sessionScores.length >= 5) {
+                    completedSessionAvg = avg;
+                    completedSessionBest = bestScore;
+                    completedSessionScores = [...sessionScores];
+                    completedSessionMode = currentMode;
+                    completedSessionTier = statVerdict.textContent.trim();
+                    completedSessionPercentile = statPercentile.textContent.trim();
+
+                    // Reveal Viral Share Card Banner
+                    const shareBanner = document.getElementById('shareBanner');
+                    if (shareBanner) shareBanner.classList.remove('hidden');
+
                     sessionScores = []; // Reset for next loop
                 }
             }
@@ -1072,6 +1166,171 @@
                 statPercentile.textContent = 'Bottom 30%';
                 statVerdict.innerHTML = '<span class="text-amber-400 font-bold">Slow / Hardware Lag</span>';
             }
+        }
+
+                let completedSessionAvg = 0;
+        let completedSessionBest = 0;
+        let completedSessionScores = [];
+        let completedSessionMode = 'visual';
+        let completedSessionTier = '';
+        let completedSessionPercentile = '';
+
+        const btnDownloadCard = document.getElementById('btnDownloadCard');
+        const btnCopyDiscord = document.getElementById('btnCopyDiscord');
+        const copyBtnText = document.getElementById('copyBtnText');
+
+        if (btnDownloadCard) {
+            btnDownloadCard.addEventListener('click', generateGamerCard);
+        }
+
+        if (btnCopyDiscord) {
+            btnCopyDiscord.addEventListener('click', () => {
+                const text = '⚡ My InputTest Reflex Benchmark: ' + completedSessionAvg + 'ms (' + completedSessionPercentile + ')\nMode: ' + completedSessionMode.toUpperCase() + ' | Best Round: ' + completedSessionBest + 'ms\nBenchmark your reflexes at: https://inputtest.online/reflex-reaction-test';
+                navigator.clipboard.writeText(text).then(() => {
+                    copyBtnText.textContent = 'Copied!';
+                    setTimeout(() => { copyBtnText.textContent = 'Copy Text'; }, 2000);
+                });
+            });
+        }
+
+        function generateGamerCard() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1200;
+            canvas.height = 630;
+            const ctx = canvas.getContext('2d');
+
+            // 1. Sleek Cyberpunk Background
+            const bgGrad = ctx.createLinearGradient(0, 0, 1200, 630);
+            bgGrad.addColorStop(0, '#090d16');
+            bgGrad.addColorStop(0.5, '#0c1322');
+            bgGrad.addColorStop(1, '#050811');
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, 1200, 630);
+
+            // Tech Grid Pattern
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < 1200; x += 40) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, 630);
+                ctx.stroke();
+            }
+            for (let y = 0; y < 630; y += 40) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(1200, y);
+                ctx.stroke();
+            }
+
+            // Outer Neon Border
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(20, 20, 1160, 590);
+
+            // Decorative Corner Accents
+            ctx.fillStyle = '#10b981';
+            ctx.fillRect(15, 15, 30, 6);
+            ctx.fillRect(15, 15, 6, 30);
+            ctx.fillRect(1155, 15, 30, 6);
+            ctx.fillRect(1179, 15, 6, 30);
+            ctx.fillRect(15, 609, 30, 6);
+            ctx.fillRect(15, 585, 6, 30);
+            ctx.fillRect(1155, 609, 30, 6);
+            ctx.fillRect(1179, 585, 6, 30);
+
+            // 2. Header Branding
+            ctx.fillStyle = '#10b981';
+            ctx.font = 'bold 20px monospace';
+            ctx.textAlign = 'left';
+            ctx.fillText('INPUTTEST.ONLINE // NEURAL REFLEX BENCHMARK', 60, 75);
+
+            ctx.fillStyle = '#64748b';
+            ctx.font = '14px monospace';
+            ctx.fillText('OFFICIAL VERIFIED GAMER HEALTH REPORT', 60, 102);
+
+            // Right Verification Stamp
+            ctx.textAlign = 'right';
+            ctx.fillStyle = '#10b981';
+            ctx.font = 'bold 15px monospace';
+            ctx.fillText('STATUS: VERIFIED HARDWARE TEST', 1140, 75);
+            ctx.fillStyle = '#64748b';
+            ctx.font = '13px monospace';
+            ctx.fillText(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }), 1140, 100);
+
+            // Divider Line
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(60, 125);
+            ctx.lineTo(1140, 125);
+            ctx.stroke();
+
+            // 3. Center Score Display
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#64748b';
+            ctx.font = 'bold 18px monospace';
+            ctx.fillText(completedSessionMode.toUpperCase() + ' REACTION TIME (AVERAGE)', 600, 180);
+
+            // Big Glowing Score
+            ctx.shadowColor = '#10b981';
+            ctx.shadowBlur = 30;
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '900 120px sans-serif';
+            ctx.fillText(completedSessionAvg + ' ms', 600, 300);
+            ctx.shadowBlur = 0;
+
+            // Tier Badge Box
+            const tierText = (completedSessionPercentile + ' • ' + completedSessionTier);
+            ctx.fillStyle = 'rgba(16, 185, 129, 0.15)';
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(380, 335, 440, 50, 12);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#34d399';
+            ctx.font = 'bold 20px monospace';
+            ctx.fillText(tierText, 600, 368);
+
+            // 4. Session Breakdown Cards (Bottom)
+            const boxY = 430;
+            const boxW = 190;
+            const boxH = 90;
+            const startX = 85;
+            const gap = 20;
+
+            completedSessionScores.slice(0, 5).forEach((score, i) => {
+                const bx = startX + i * (boxW + gap);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+                ctx.strokeStyle = score === completedSessionBest ? '#10b981' : 'rgba(255, 255, 255, 0.08)';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.roundRect(bx, boxY, boxW, boxH, 10);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#64748b';
+                ctx.font = 'bold 12px monospace';
+                ctx.fillText('ROUND ' + (i + 1) + (score === completedSessionBest ? ' (BEST)' : ''), bx + boxW / 2, boxY + 30);
+
+                ctx.fillStyle = score === completedSessionBest ? '#34d399' : '#ffffff';
+                ctx.font = 'bold 28px monospace';
+                ctx.fillText(score + ' ms', bx + boxW / 2, boxY + 68);
+            });
+
+            // 5. Footer Watermark & URL
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#64748b';
+            ctx.font = '14px monospace';
+            ctx.fillText('Benchmark your own reflexes for free at https://inputtest.online/reflex-reaction-test', 600, 575);
+
+            // Trigger Download
+            const link = document.createElement('a');
+            link.download = 'inputtest-reflex-' + completedSessionAvg + 'ms.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
         }
 
         pad.addEventListener('mousedown', handlePadAction);

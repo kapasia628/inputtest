@@ -84,6 +84,8 @@ const urlList = [
   "https://inputtest.online/monitor-ppi-calculator",
   "https://inputtest.online/room-acoustics-test",
   "https://inputtest.online/reflex-reaction-test",
+  "https://inputtest.online/blog-best-rapid-trigger-keyboards-2026",
+  "https://inputtest.online/blog-best-hall-effect-controllers-2026",
 ];
 
 const payload = JSON.stringify({
