@@ -674,9 +674,19 @@
                 </div>
             </div>
             <div id="wpm-rating" class="text-base font-bold text-indigo-600 mb-6"></div>
-            <button id="retry-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3 rounded-2xl transition-colors text-sm">
-                🔄 Try Again
-            </button>
+
+            <!-- Viral Share & Certificate Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <button id="btnDownloadTypingCert" class="w-full sm:w-auto px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-black text-xs shadow-md hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                    <span>🏆</span> <span>Download Speed Certificate (PNG)</span>
+                </button>
+                <button id="btnCopyTypingDiscord" class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white font-bold text-xs border border-slate-700 transition-colors flex items-center justify-center gap-2 cursor-pointer">
+                    <span>📋</span> <span id="copyTypingBtnText">Copy Discord / Twitter</span>
+                </button>
+                <button id="retry-btn" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-2xl transition-colors text-xs cursor-pointer">
+                    🔄 Try Again
+                </button>
+            </div>
         </div>
 
         <!-- SEO Content -->
@@ -1080,6 +1090,16 @@
             document.getElementById('result-errors').textContent = errorCount;
             document.getElementById('result-best').textContent = personalBest;
             document.getElementById('wpm-rating').textContent = getRating(finalWpm);
+
+            // Store completed metrics for certificate
+            lastTypingResult = {
+                wpm: finalWpm,
+                accuracy: accuracy,
+                errors: errorCount,
+                duration: selectedTime,
+                rating: getRating(finalWpm)
+            };
+
             resultModal.classList.remove('hidden');
         }
 
@@ -1141,6 +1161,187 @@
 
         initTest();
     });
+    
+        // ============================================
+        // VIRAL TYPING CERTIFICATE GENERATOR (PNG)
+        // ============================================
+        let lastTypingResult = {
+            wpm: 0,
+            accuracy: 100,
+            errors: 0,
+            duration: 60,
+            rating: 'Average Typist'
+        };
+
+        const btnDownloadTypingCert = document.getElementById('btnDownloadTypingCert');
+        const btnCopyTypingDiscord = document.getElementById('btnCopyTypingDiscord');
+        const copyTypingBtnText = document.getElementById('copyTypingBtnText');
+
+        if (btnDownloadTypingCert) {
+            btnDownloadTypingCert.addEventListener('click', generateTypingCertificate);
+        }
+
+        if (btnCopyTypingDiscord) {
+            btnCopyTypingDiscord.addEventListener('click', () => {
+                const text = '⚡ My InputTest Typing Speed: ' + lastTypingResult.wpm + ' WPM (' + lastTypingResult.accuracy + '% Accuracy)\nRating: ' + lastTypingResult.rating + ' | Duration: ' + lastTypingResult.duration + 's\nTest your typing speed at: https://inputtest.online/typing';
+                navigator.clipboard.writeText(text).then(() => {
+                    copyTypingBtnText.textContent = 'Copied!';
+                    setTimeout(() => { copyTypingBtnText.textContent = 'Copy Discord / Twitter'; }, 2000);
+                });
+            });
+        }
+
+        function generateTypingCertificate() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1200;
+            canvas.height = 630;
+            const ctx = canvas.getContext('2d');
+
+            // 1. Luxury Gold & Indigo Background
+            const bgGrad = ctx.createLinearGradient(0, 0, 1200, 630);
+            bgGrad.addColorStop(0, '#0a0d18');
+            bgGrad.addColorStop(0.5, '#0f172a');
+            bgGrad.addColorStop(1, '#080a12');
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, 1200, 630);
+
+            // Subtle Diagonal Tech Grid
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < 1200; x += 40) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, 630);
+                ctx.stroke();
+            }
+            for (let y = 0; y < 630; y += 40) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(1200, y);
+                ctx.stroke();
+            }
+
+            // Outer Golden Border
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(24, 24, 1152, 582);
+
+            // Inner Accent Border
+            ctx.strokeStyle = 'rgba(245, 158, 11, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(34, 34, 1132, 562);
+
+            // Corner Accents
+            ctx.fillStyle = '#f59e0b';
+            ctx.fillRect(18, 18, 30, 6);
+            ctx.fillRect(18, 18, 6, 30);
+            ctx.fillRect(1152, 18, 30, 6);
+            ctx.fillRect(1176, 18, 6, 30);
+            ctx.fillRect(18, 606, 30, 6);
+            ctx.fillRect(18, 582, 6, 30);
+            ctx.fillRect(1152, 606, 30, 6);
+            ctx.fillRect(1176, 582, 6, 30);
+
+            // Header Branding
+            ctx.fillStyle = '#f59e0b';
+            ctx.font = 'bold 20px monospace';
+            ctx.textAlign = 'left';
+            ctx.fillText('INPUTTEST.ONLINE // OFFICIAL TYPING SPEED CERTIFICATE', 65, 80);
+
+            ctx.fillStyle = '#64748b';
+            ctx.font = '14px monospace';
+            ctx.fillText('STANDARDIZED GLOBAL TOUCH TYPING BENCHMARK', 65, 105);
+
+            // Top Right Stamp
+            ctx.textAlign = 'right';
+            ctx.fillStyle = '#f59e0b';
+            ctx.font = 'bold 15px monospace';
+            ctx.fillText('STATUS: VERIFIED CLIENT-SIDE BENCHMARK', 1135, 80);
+            ctx.fillStyle = '#64748b';
+            ctx.font = '13px monospace';
+            ctx.fillText(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }), 1135, 105);
+
+            // Divider Line
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(65, 130);
+            ctx.lineTo(1135, 130);
+            ctx.stroke();
+
+            // Center Speed Display
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = 'bold 18px monospace';
+            ctx.fillText('CERTIFIED WORDS PER MINUTE (NET SPEED)', 600, 185);
+
+            // Giant Glowing Score
+            ctx.shadowColor = '#f59e0b';
+            ctx.shadowBlur = 35;
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '900 125px sans-serif';
+            ctx.fillText(lastTypingResult.wpm + ' WPM', 600, 310);
+            ctx.shadowBlur = 0;
+
+            // Rating Badge Box
+            const badgeText = lastTypingResult.rating + ' • ' + lastTypingResult.accuracy + '% Accuracy';
+            ctx.fillStyle = 'rgba(245, 158, 11, 0.12)';
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.roundRect(360, 345, 480, 50, 12);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#fbbf24';
+            ctx.font = 'bold 20px monospace';
+            ctx.fillText(badgeText, 600, 378);
+
+            // 4 Stats Breakdown Boxes
+            const stats = [
+                { label: 'ACCURACY', val: lastTypingResult.accuracy + '%' },
+                { label: 'KEYSTROKES (CPM)', val: (lastTypingResult.wpm * 5) + ' CPM' },
+                { label: 'ERRORS', val: lastTypingResult.errors + ' Words' },
+                { label: 'TEST DURATION', val: lastTypingResult.duration + ' Seconds' }
+            ];
+
+            const boxW = 230;
+            const boxH = 90;
+            const startX = 85;
+            const gap = 30;
+            const boxY = 430;
+
+            stats.forEach((st, i) => {
+                const bx = startX + i * (boxW + gap);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.roundRect(bx, boxY, boxW, boxH, 10);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#64748b';
+                ctx.font = 'bold 12px monospace';
+                ctx.fillText(st.label, bx + boxW / 2, boxY + 30);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 26px monospace';
+                ctx.fillText(st.val, bx + boxW / 2, boxY + 68);
+            });
+
+            // Footer Watermark & URL
+            ctx.fillStyle = '#64748b';
+            ctx.font = '14px monospace';
+            ctx.fillText('Test your typing speed and download your certificate at https://inputtest.online/typing', 600, 580);
+
+            // Trigger Download
+            const link = document.createElement('a');
+            link.download = 'inputtest-typing-certificate-' + lastTypingResult.wpm + 'wpm.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
     </script>
 </body>
 </html>

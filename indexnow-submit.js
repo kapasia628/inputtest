@@ -86,6 +86,8 @@ const urlList = [
   "https://inputtest.online/reflex-reaction-test",
   "https://inputtest.online/blog-best-rapid-trigger-keyboards-2026",
   "https://inputtest.online/blog-best-hall-effect-controllers-2026",
+  "https://inputtest.online/click-technique-test",
+  "https://inputtest.online/blog-best-lightweight-gaming-mice-2026",
 ];
 
 const payload = JSON.stringify({

@@ -58,6 +58,7 @@
 - [Monitor Size, PPI & Aspect Ratio Calculator](https://inputtest.online/monitor-ppi-calculator): Compare computer monitors side-by-side to true physical scale, calculate Pixels Per Inch (PPI), dot pitch, physical dimensions, and aspect ratio workspace differences.
 - [Room Reverb & Echo RT60 Acoustics Tester](https://inputtest.online/room-acoustics-test): Analyze room echo reflections, measure acoustic decay time (RT60), and check vocal clarity for streaming and Discord.
 - [Human Reaction Time & Reflex Benchmark](https://inputtest.online/reflex-reaction-test): Benchmark visual click speed against auditory sound reaction time with microsecond event timers and global percentile ranking.
+- [Jitter, Butterfly & Drag Click Technique Tester](https://inputtest.online/click-technique-test): Competitive CPS technique benchmark with dedicated modes for Normal, Jitter, Butterfly, and Drag clicking, live wave canvas graph, debounce detection, and downloadable gamer pass.
 - [InputTest Hardware Store](https://inputtest.online/store): Curated laboratory-tested mechanical keyboards, optical gaming mice, Hall Effect anti-drift controllers, webcams, and studio microphones with Amazon links.
 
 ## Mini Games & Speed Tests
@@ -68,6 +69,7 @@
 
 ## Blog Articles
 
+- [Best Lightweight Wireless Gaming Mice 2026](https://inputtest.online/blog-best-lightweight-gaming-mice-2026): Lab evaluation of sub-50g wireless esports mice including Razer Viper V3 Pro, Logitech G Pro X Superlight 2, Ninjutso Sora V2, and Beast X Max with 8000Hz polling and optical switch benchmarks.
 - [Best Rapid Trigger Keyboards 2026](https://inputtest.online/blog-best-rapid-trigger-keyboards-2026): Comprehensive laboratory test & buyer's guide comparing Wooting 60HE+, DrunkDeer A75, Razer Huntsman V3 Pro, and Keychron Q1 HE with 0.1mm actuation, latency benchmarks, and snap tap rules.
 - [Best Hall Effect Controllers 2026](https://inputtest.online/blog-best-hall-effect-controllers-2026): Lab evaluation of zero-drift electromagnetic controllers including GameSir G7 SE, Flydigi Vader 4 Pro, and 8BitDo Ultimate 2C with circularity error rates and hair-trigger responsiveness.
 - [Mechanical vs Optical vs Hall Effect Guide](https://inputtest.online/blog-hall-effect-vs-optical-mechanical): Engineering comparison between traditional mechanical leaf spring switches, optical beam-break switches, and Hall Effect magnetic sensors with Rapid Trigger.
